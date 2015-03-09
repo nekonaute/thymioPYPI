@@ -14,3 +14,4 @@ To run the simulation on all robots, run the script "scripts/start_all.sh". To s
 To stop the simulation on all robots, run the script "scripts/stop_all.sh". To stop it on just one robot, run "python src/run_simulation.py ipAddress port --stop".
 During the simulation a log file is generated and placed under the /log folder.
 
+Video of the system running: https://www.youtube.com/watch?v=0-_z4oV1vno
