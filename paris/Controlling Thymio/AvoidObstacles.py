@@ -6,13 +6,11 @@ import time
 from ThymioFunctions import *
 from optparse import OptionParser
 
-def avoiding_obstacles():
+def avoidingObstacles():
 
     for i in xrange(7):
-	prox_sensors[i]=get_sensor_value(i)
-
-
-   """
+	proxSensors[i]=getSensorValue(i)
+    """
    Pour ameliorer    
 
     weight1=[1,2,3,2,1]
@@ -21,9 +19,9 @@ def avoiding_obstacles():
     temp_braitenberg=0
 
     if acc[]>0: # thymio is moving forward
-	temp_braitenberg=np.dot(weight1, prox_sensors[0:5])
+	temp_braitenberg=np.dot(weight1, proxSensors[0:5])
 	temp_braitenberg/=16
-	temp_braitenberg_turn=np.dot(weight2, prox_sensors[0:5])
+	temp_braitenberg_turn=np.dot(weight2, proxSensors[0:5])
 	temp_braitenberg_turn/=16
 	temp_bratenberg_left=
 
@@ -40,35 +38,28 @@ def avoiding_obstacles():
     totalLeft=0
     totalRight=0
     for i in range(7):
-         totalLeft=totalLeft+(prox_sensors[i]*leftWheel[i])
-         totalRight=totalRight+(prox_sensors[i]*rightWheel[i])
+         totalLeft=totalLeft+(proxSensors[i]*leftWheel[i])
+         totalRight=totalRight+(proxSensors[i]*rightWheel[i])
 
-    #add a constant speed to each wheels so the robot moves always forward
+    # add a constant speed to each wheels so the robot moves always forward
     totalRight=totalRight+100
     totalLeft=totalLeft+100
 
-    #send motor value to the robot  
-    set_motor_speed(totalLeft, totalRight)
+    # send motor value to the robot 
+    setMotorSpeed(totalLeft, totalRight)
     if time.time()-start>=run_time:
-	set_motor_speed(0, 0)
-	print time.time()-start
-	loop.quit()
-	return False
+	   setMotorSpeed(0, 0)
+	   print time.time()-start
+	   loop.quit()
+	   return False
 
     return True
 
 
-"""
-    if time.time()-start>=run_time:
-	set_motor_speed(0, 0)
-	print time.time()-start
-	loop.quit()
-	return False
-"""
-
-
 if __name__ == '__main__':
- 
+
+    start = time.time()
+    run_time = 10
     parser = OptionParser()
     parser.add_option("-s", "--system", action="store_true", dest="system", default=False,help="use the system bus instead of the session bus")
  
@@ -91,6 +82,6 @@ if __name__ == '__main__':
     print 'starting loop'
     loop = gobject.MainLoop()
     #call the callback of Braitenberg algorithm
-    handle = gobject.timeout_add (100, avoiding_obstacles) #every 0.1 sec
+    handle = gobject.timeout_add (100, avoidingObstacles) #every 0.1 sec
     loop.run()
 
