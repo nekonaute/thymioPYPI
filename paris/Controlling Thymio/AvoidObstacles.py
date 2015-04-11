@@ -16,14 +16,14 @@ def avoidingObstacles():
     weight1=[1,2,3,2,1]
     weight2=[-4,-3,0,3,4]
 
-    temp_braitenberg=0
+    tempBraitenberg=0
 
     if acc[]>0: # thymio is moving forward
-	temp_braitenberg=np.dot(weight1, proxSensors[0:5])
-	temp_braitenberg/=16
-	temp_braitenberg_turn=np.dot(weight2, proxSensors[0:5])
-	temp_braitenberg_turn/=16
-	temp_bratenberg_left=
+	tempBraitenberg=np.dot(weight1, proxSensors[0:5])
+	tempBraitenberg/=16
+	tempBraitenberg_turn=np.dot(weight2, proxSensors[0:5])
+	tempBraitenberg_turn/=16
+	tempBratenberg_left=
 
 	leftWheel=[0.01,0.05,-0.07,-0.05,-0.01, 0.03, 0.04]
 	rightWheel=[-0.01,-0.05,-0.07,0.05,0.01,0.04, 0.03]
@@ -47,7 +47,7 @@ def avoidingObstacles():
 
     # send motor value to the robot 
     setMotorSpeed(totalLeft, totalRight)
-    if time.time()-start>=run_time:
+    if time.time()-start>=runTime:
 	   setMotorSpeed(0, 0)
 	   print time.time()-start
 	   loop.quit()
@@ -59,22 +59,7 @@ def avoidingObstacles():
 if __name__ == '__main__':
 
     start = time.time()
-    run_time = 10
-    parser = OptionParser()
-    parser.add_option("-s", "--system", action="store_true", dest="system", default=False,help="use the system bus instead of the session bus")
- 
-    (options, args) = parser.parse_args()
- 
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
- 
-    if options.system:
-        bus = dbus.SystemBus()
-    else:
-        bus = dbus.SessionBus()
- 
-    #Create Aseba network 
-    network = dbus.Interface(bus.get_object('ch.epfl.mobots.Aseba', '/'), dbus_interface='ch.epfl.mobots.AsebaNetwork')
- 
+    runTime = 10
     #print in the terminal the name of each Aseba NOde
     print network.GetNodesList()
  

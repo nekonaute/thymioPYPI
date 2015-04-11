@@ -1,9 +1,9 @@
 import dbus
 import dbus.mainloop.glib
 import gobject
-#import sys
 import time
 from optparse import OptionParser
+
 
 # peripheral sensors
 leftSensor = 0
@@ -96,7 +96,6 @@ def getDeltaValue():
 
 
 
-
 def updateButtonValue(r):
     global buttons
     buttons = r
@@ -130,10 +129,16 @@ def setMotorSpeed(left, right):
 	network.SetVariable("thymio-II", "motor.left.target", [left])
 	network.SetVariable("thymio-II", "motor.right.target", [right])
 
-#def setMotorSpeed2(translationalSpeed, rotationalSpeed):
-
-
-
+# give thymio a direction
+# thymio turns in one second
+def turn(angle):
+	actualLeftSpeed, actualRightSpeed = getMotorSpeed()
+	angularSpeed=(angle*51.)/9
+	if angle > 0:
+		setMotorSpeed(angularSpeed+actualLeftSpeed,actualRightSpeed)
+	else :
+		setMotorSpeed(actualLeftSpeed,angularSpeed+actualRightSpeed)
+	setMotorSpeed(actualLeftSpeed, actualRightSpeed)
 
 def updateAccelerometerValue(r):
     global acc
@@ -144,7 +149,6 @@ def getAccelerometerValue(direction):
 	return acc[direction]
 
 
-
 def updateTemperatureValue(r):
     global temperature
     temperature = r
@@ -153,4 +157,21 @@ def updateTemperatureValue(r):
 def getTemperatureValue():
 	network.GetVariable("thymio-II", "temperature", reply_handler = updateTemperatureValue, error_handler = getVariablesError)
 	return int(temperature[0])/10
+
+
+parser = OptionParser()
+parser.add_option("-s", "--system", action="store_true", dest="system", default=False,help="use the system bus instead of the session bus")
+
+(options, args) = parser.parse_args()
+
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+if options.system:
+    bus = dbus.SystemBus()
+else:
+    bus = dbus.SessionBus()
+
+#Create Aseba network 
+network = dbus.Interface(bus.get_object('ch.epfl.mobots.Aseba', '/'), dbus_interface='ch.epfl.mobots.AsebaNetwork')
+
 
