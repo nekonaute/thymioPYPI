@@ -18,7 +18,7 @@ class MessageRequest() :
 	SENSORS, GROUND, STOP = range(0, 3)
 
 	# Read requests
-	MOTORS, COLOR, SOUND = range(0, 3)
+	MOTORS, COLOR, SOUND = range(10, 13)
 
 
 class ThymioController(threading.Thread):
@@ -122,9 +122,14 @@ class ThymioController(threading.Thread):
 		try :
 			with self.__performActionReq:
 				# Wait for requests:
-				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
+				self.__mainLogger.debug('Request ?')
+				self.__mainLogger.debug('What : ' + str(self.__request))
+				while self.__request == MessageRequest.NONE :
+					self.__mainLogger.debug('Before : ' + str(self.__request))
 					self.__performActionReq.wait()
+					self.__mainLogger.debug('After : ' + str(self.__request))
 
+				self.__mainLogger.debug('Request : ' + str(self.__request))
 				if self.__request == MessageRequest.SENSORS :
 					# Read sensor values
 					self.__dbusGetProxSensors()
@@ -134,9 +139,6 @@ class ThymioController(threading.Thread):
 				elif self.__request == MessageRequest.MOTORS :
 					# Write motorspeed
 					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
-
-					# Make sure that Thymio moved for 1 timestep
-					time.sleep(classes.TIME_STEP) # TODO: more precise -> thymio should notify controller when it moved for 50 ms
 				elif self.__request == MessageRequest.COLOR :
 					self.__dbusSetColor()
 				elif self.__request == MessageRequest.STOP :
@@ -148,7 +150,7 @@ class ThymioController(threading.Thread):
 				# Notifying that simulation has been set
 				self.__simulation.thymioControllerPerformedAction()
 		except :
-			mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		if self.__stop.isSet() :
 			self.killController()
@@ -167,8 +169,10 @@ class ThymioController(threading.Thread):
 			self.__performActionReq.notify()
 
 	def writeMotorsSpeedRequest(self, motorspeed):
+		self.__mainLogger.debug('MOTORS REQUEST')
 		with self.__performActionReq:
 			self.__motorspeed = motorspeed
+			self.__mainLogger.debug(motorspeed)
 			self.__request = MessageRequest.MOTORS
 			self.__performActionReq.notify()
 

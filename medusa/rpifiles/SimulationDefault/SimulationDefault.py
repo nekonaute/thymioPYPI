@@ -8,43 +8,44 @@ class SimulationDefault(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 	def preActions(self) :
-		self.mainLogger.debug('yop ?')
-		self.thymioController.writeMotorsSpeedRequest([300, 300])
+		self.waitForControllerResponse()
+		self.tController.writeMotorsSpeedRequest([300, 300])
 
 	def step(self) :
+		self.mainLogger.debug('yop ?')
 		try :
 			self.waitForControllerResponse()
 			action = random.randint(0, 5)
 
 			# Go forward
 			if action == 0 :
-				self.thymioController.writeMotorsSpeedRequest([300, 300])
+				self.tController.writeMotorsSpeedRequest([300, 300])
 			# Turn Left
 			elif action == 1 :
-				self.thymioController.writeMotorsSpeedRequest([-300, 300])
+				self.tController.writeMotorsSpeedRequest([-300, 300])
 				self.waitForControllerResponse()
-				self.thymioController.writeMotorsSpeedRequest([300, 300])
+				self.tController.writeMotorsSpeedRequest([300, 300])
 			# Turn Right
 			elif action == 2 :
-				self.thymioController.writeMotorsSpeedRequest([300, -300])
+				self.tController.writeMotorsSpeedRequest([300, -300])
 				self.waitForControllerResponse()
-				self.thymioController.writeMotorsSpeedRequest([300, 300])
+				self.tController.writeMotorsSpeedRequest([300, 300])
 			# Go backward
 			elif action == 3 :
-				self.thymioController.writeMotorsSpeedRequest([-300, -300])
+				self.tController.writeMotorsSpeedRequest([-300, -300])
 			# Stop
 			elif action == 4 :
-				self.thymioController.writeMotorsSpeedRequest([0, 0])
+				self.tController.writeMotorsSpeedRequest([0, 0])
 			# Sound
 			elif action == 5 :
-				self.thymioController.writeSoundRequest([440, 1])
+				self.tController.writeSoundRequest([440, 1])
 
 			self.waitForControllerResponse()
 
 			randR = random.randint(0, 32)
 			randG = random.randint(0, 32)
 			randB = random.randint(0, 32)
-			self.thymioController.writeColorRequest([R, G, B])
+			self.tController.writeColorRequest([R, G, B])
 
 
 			sleepTime = random.randint(0, 5)
