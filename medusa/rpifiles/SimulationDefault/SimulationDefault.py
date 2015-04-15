@@ -8,6 +8,7 @@ class SimulationDefault(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 	def __preActions(self) :
+		self.__mainLogger.debug('yop ?')
 		self.__thymioController.writeMotorsSpeedRequest([300, 300])
 
 	def step(self) :

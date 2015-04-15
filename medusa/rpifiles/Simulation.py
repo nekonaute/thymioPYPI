@@ -29,6 +29,7 @@ class Simulation(threading.Thread) :
 		self.__mainLogger = mainLogger
 
 	def run(self) :
+		self.__mainLogger.debug('hep la !')
 		self.__preActions()
 
 		while not self.__stop.isSet() :
@@ -39,6 +40,7 @@ class Simulation(threading.Thread) :
 		self.__tController.stop()
 
 	def __preActions(self) :
+		self.__mainLogger.debug('pas en arriere')
 		pass
 
 	def __postActions(self) :
