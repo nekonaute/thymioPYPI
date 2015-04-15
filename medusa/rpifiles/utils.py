@@ -7,7 +7,7 @@ class MessageType :
     NONE = -1
 
     # Query messages
-    INIT, START, STOP, KILL, QUERY = range(0, 5)
+    INIT, START, STOP, KILL, QUERY, LOAD = range(0, 6)
 
     # Info message
     ACK, LISTENING, STARTED = range(10, 13)
@@ -43,7 +43,6 @@ def recvOneMessage(socket):
 
 def sendOneMessage(conn, data):
     packed_data = pickle.dumps(data)
-    print(packed_data)
     length = len(packed_data)
     conn.sendall(struct.pack('!I', length))
     conn.sendall(packed_data)

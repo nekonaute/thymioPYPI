@@ -16,13 +16,14 @@ import ipaddress
 import paramiko
 import cmd
 
-from utils import *
+import utils
+from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 HOSTNAMES_TABLE_FILE_PATH = os.path.join(CURRENT_FILE_PATH, 'hostnames_table.json')
 
-LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'medusa.log')
+LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'thymioControl.log')
 
 THYMIO_SCRIPTS_PATH = '/home/pi/dev/thymioPYPI/medusa/rpifiles'
 
@@ -207,48 +208,66 @@ def sendMessage(message, IPs) :
 		for destIP in dest :
 			logging.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
-			optSend = Message()
+			optSend = utils.Message()
 
 			try :
 				# Init thymio
 				if message == MessageType.INIT :
-					ssh = paramiko.SSHClient()
-					ssh.load_system_host_keys()
-					ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+					# ssh = paramiko.SSHClient()
+					# ssh.load_system_host_keys()
+					# ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-					# We don't want to be bothered with paramiko logging unless it's critical
-					paramikoLogger = logging.getLogger('paramiko')
-					paramikoLogger.setLevel('CRITICAL')
+					# # We don't want to be bothered with paramiko logging unless it's critical
+					# paramikoLogger = logging.getLogger('paramiko')
+					# paramikoLogger.setLevel('CRITICAL')
 
-					# Connection on the raspberry
-					ssh.connect(str(destIP), username = PIUSERNAME, password = PIPASSWORD)
+					# # Connection on the raspberry
+					# ssh.connect(str(destIP), username = PIUSERNAME, password = PIPASSWORD)
+					# transport = ssh.get_transport()
+					# session = transport.open_session()
+					# session.request_x11(single_connection=True)
 
-					# We get our IP address on this network
+					# # We get our IP address on this network
+					# if myIP == None :
+					# 	stdin, stdout, stderr = ssh.exec_command('echo $SSH_CLIENT')
+					# 	myIP = ipaddress.ip_address(u'' + stdout.read().split(' ')[0])
+
+					# # Executing command hostname
+					# # stdin, stdout, stderr = ssh.exec_command('sh ' + os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh') + ' ' + str(myIP))
+					# session.exec_command('sh ' + os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh') + ' ' + str(myIP))
+
+					# session.close()
+					# ssh.close()
+
+					sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
 					if myIP == None :
-						stdin, stdout, stderr = ssh.exec_command('echo $SSH_CLIENT')
-						myIP = ipaddress.ip_address(u'' + stdout.read().split(' ')[0])
+						proc = subprocess.Popen(["hostname", "-I"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+						(out, err) = proc.communicate()
 
-					# Executing command hostname
-					stdin, stdout, stderr = ssh.exec_command('sh ' + os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh') + ' ' + str(myIP))
+						myIP = ipaddress.ip_address(u'' + out.split(' ')[0])
 
-					ssh.close()
+					# proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", "/home/pi/pithymio.py"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'exchange_seq.py'), '-d', '-i', str(myIP), '&'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					# proc = subprocess.Popen(sshcommand + ["sh", os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh'), str(myIP)], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					# proc.wait()
 
 				# Start simulation
 				elif message == MessageType.START :
+					optSend.msgType = MessageType.START
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
 				# Stop simulation
 				elif message == MessageType.STOP :
-					optSend.running = False
+					optSend.msgType = MessageType.STOP
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
 				# Kill thymio
 				elif message == MessageType.KILL :
-					optSend.kill = True
+					optSend.msgType = MessageType.KILL
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
@@ -406,7 +425,7 @@ class MedusaInteractive(cmd.Cmd) :
 			if not(text[0].isdigit()) :
 				# If the user has begun to type a hostname, we complete it
 				if hashThymiosHostnames != None :
-					completions = [hostname for hostname in hashThymiosHostnames.keys() if hostname.startswith(args[-1])]
+					completions = [hostname for hostname in hashThymiosHostnames.keys() if hostname.startswith(text)]
 		else :
 			args = line.split(' ')
 

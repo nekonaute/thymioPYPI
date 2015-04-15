@@ -2,13 +2,12 @@ import struct
 import pickle
 import inspect
 
-
 class MessageType :
     # Special
     NONE = -1
 
     # Query messages
-    INIT, START, STOP, KILL, QUERY = range(0, 5)
+    INIT, START, STOP, KILL, QUERY, LOAD = range(0, 6)
 
     # Info message
     ACK, LISTENING, STARTED = range(10, 13)
@@ -37,12 +36,11 @@ def recvOneMessage(socket):
     lengthbuf = recvall(socket, 4)
     if not lengthbuf: return None
     length, = struct.unpack('!I', lengthbuf)
-    recvD = recvall(socket, length)
     data = pickle.loads(recvD)
     return data
 
 def sendOneMessage(conn, data):
-	packed_data = pickle.dumps(data)
-	length = len(packed_data)
-	conn.sendall(struct.pack('!I', length))
-	conn.sendall(packed_data)
+    packed_data = pickle.dumps(data)
+    length = len(packed_data)
+    conn.sendall(struct.pack('!I', length))
+    conn.sendall(packed_data)

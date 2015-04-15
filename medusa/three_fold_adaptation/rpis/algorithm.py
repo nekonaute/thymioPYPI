@@ -1078,6 +1078,7 @@ if __name__ == '__main__':
 
 		tC = ThymioController(mainLogger)
 		tC.run()
+		
 		# ThymioController is the main loop now (needed for communication with the Thymio).
 		mainLogger.debug("ThymioController stopped -> main stops.")
 	except:
