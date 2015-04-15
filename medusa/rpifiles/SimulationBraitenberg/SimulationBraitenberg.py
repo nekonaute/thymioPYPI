@@ -16,10 +16,15 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		self.tController.writeColorRequest([32, 32, 32])
 		self.waitForControllerResponse()
 
-	def Braitenberg(self, proxSensors):
+	def Braitenberg(self, proxSensors, avoidance = False):
 	    #Parameters of the Braitenberg, to give weight to each wheels
-	    leftWheel=[-0.01,-0.005,-0.0001,0.006,0.015]
-	    rightWheel=[0.012,+0.007,-0.0002,-0.0055,-0.011]
+	    if not avoidance :
+		    leftWheel=[-0.01,-0.005,-0.0001,0.006,0.015]
+		    rightWheel=[0.012,+0.007,-0.0002,-0.0055,-0.011]
+		  else :
+		    leftWheel=[0.01,0.005,0.0001,-0.006,-0.015]
+		    rightWheel=[-s0.012,-0.007,0.0002,0.0055,0.011]
+
 	 
 	    #Braitenberg algorithm
 	    totalLeft=0
@@ -29,8 +34,8 @@ class SimulationBraitenberg(Simulation.Simulation) :
 	         totalRight=totalRight+(proxSensors[i]*rightWheel[i])
 	 
 	    #add a constant speed to each wheels so the robot moves always forward
-	    totalRight=totalRight+50
-	    totalLeft=totalLeft+50
+	    totalRight=totalRight+200
+	    totalLeft=totalLeft+200
 
 	    self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
 	 
@@ -44,7 +49,7 @@ class SimulationBraitenberg(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
 
-			self.Braitenberg(PSValues)			
+			self.Braitenberg(PSValues, bool(Params.params.avoidance))			
 		except :
 			self.mainLogger.critical('SimulationDefault - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
