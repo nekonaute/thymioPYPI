@@ -23,6 +23,7 @@ class MessageRequest() :
 
 class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
+		threading.Thread.__init__(self)
 		self.__simulation = simulation
 		self.__mainLogger = mainLogger
 

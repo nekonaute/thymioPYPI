@@ -30,20 +30,21 @@ class Simulation(threading.Thread) :
 
 	def run(self) :
 		self.__mainLogger.debug('hep la !')
-		self.__preActions()
+		self.preActions()
+		self.__mainLogger.debug('beuh ?')
 
 		while not self.__stop.isSet() :
 			self.step()
 
-		self.__postActions()
+		self.postActions()
 
 		self.__tController.stop()
 
-	def __preActions(self) :
+	def preActions(self) :
 		self.__mainLogger.debug('pas en arriere')
 		pass
 
-	def __postActions(self) :
+	def postActions(self) :
 		pass
 
 	@abstractmethod
