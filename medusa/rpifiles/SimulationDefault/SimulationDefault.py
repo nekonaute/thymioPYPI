@@ -17,7 +17,6 @@ class SimulationDefault(Simulation.Simulation) :
 		self.tController.writeColorRequest([32, 32, 32])
 		self.waitForControllerResponse()
 
-
 	def step(self) :
 		try :
 			self.waitForControllerResponse()

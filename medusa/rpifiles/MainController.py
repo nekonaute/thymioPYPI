@@ -22,7 +22,8 @@ CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
@@ -35,7 +36,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, STOP, KILL = range(0, 3)
+	START, STOP, KILL, SET = range(0, 4)
 
 class MainController() :
 	def __init__(self) :
@@ -63,6 +64,12 @@ class MainController() :
 
 			mainLogger.info('MainController - Starting simulation')
 			self.__simulation.start()
+
+	def __setSimulation(self, configFile) :
+		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, configFile)) :
+			self.__simulationConfig = os.path.join(CURRENT_FILE_PATH, configFile)
+		else :
+			mainLogger.error('MainController - No configuration file named ' + configFile)
 
 	def __stopSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
@@ -113,6 +120,8 @@ class MainController() :
 					# We treat the command corresponding to the message
 					if self.__command == MessageCommand.START :
 						self.__startSimulation()
+					elif self.__command == MessageCommand.SET :
+						self.__setSimulation()
 					elif self.__command == MessageCommand.STOP :
 						self.__stopSimulation()
 					elif self.__command == MessageCommand.KILL :
@@ -166,6 +175,8 @@ class CommandsListener(threading.Thread) :
 				messageCommand = MessageCommand.NONE
 				if message.msgType == MessageType.START :
 					messageCommand = MessageCommand.START
+				elif message.msgType == MessageType.SET :
+					messageCommand = MessageCommand.SET
 				elif message.msgType == MessageType.STOP :
 					messageCommand = MessageCommand.STOP
 				elif message.msgType == MessageType.KILL :
