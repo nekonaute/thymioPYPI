@@ -128,8 +128,6 @@ class ThymioController(threading.Thread):
 				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
 					self.__performActionReq.wait()
 
-				self.__mainLogger.debug('Request : ' + str(self.__request))
-
 				if self.__request == MessageRequest.SENSORS :
 					# Read sensor values
 					self.__dbusGetProxSensors()
@@ -155,7 +153,6 @@ class ThymioController(threading.Thread):
 			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		if self.__stop.isSet() :
-			self.__mainLogger.debug('Time to die')
 			self.killController()
 			return False
 		else :
@@ -180,7 +177,6 @@ class ThymioController(threading.Thread):
 	def writeColorRequest(self, color):
 		with self.__performActionReq:
 			self.__color = color
-			self.__mainLogger.debug('Color : ' + str(self.__color))
 			self.__request = MessageRequest.COLOR
 			self.__performActionReq.notify()
 
