@@ -60,13 +60,17 @@ class Simulation(threading.Thread) :
 	def thymioControllerPerformedAction(self) :
 		with self.__tcPerformedAction:
 			self.__tcPA = True
+			self.mainLogger.debug('Je vais notifier')
 			self.__tcPerformedAction.notify()
+			self.mainLogger.debug('Jai notifie')
 
 	def waitForControllerResponse(self) :
 		# Wait for ThymioController response
 		with self.__tcPerformedAction :
 			while not self.__tcPA and not self.__stop.isSet() :
+				self.mainLogger.debug('ok on attend')
 				self.__tcPerformedAction.wait()
+			self.mainLogger.debug('ok c kool')
 			self.__tcPA = False
 
 	def startThymioController(self) :

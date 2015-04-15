@@ -90,7 +90,9 @@ class ThymioController(threading.Thread):
 		self.__dbusSendEventName("SetSpeed", self.__motorspeed)
 
 	def __dbusSetColor(self):
+		self.__mainLogger.debug('yip')
 		self.__dbusSendEventName("SetColor", self.__color)
+		self.__mainLogger.debug('youp')
 
 	def __dbusSetSound(self):
 		self.__dbusSendEventName("SetSound", self.__sound)
@@ -141,6 +143,8 @@ class ThymioController(threading.Thread):
 					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
 				elif self.__request == MessageRequest.COLOR :
 					self.__dbusSetColor()
+				elif self.__request == MessageRequest.SOUND :
+					self.__dbusSetSound()
 				elif self.__request == MessageRequest.STOP :
 					# Stop Thymio
 					self.__stopThymio()
@@ -177,9 +181,11 @@ class ThymioController(threading.Thread):
 			self.__performActionReq.notify()
 
 	def writeColorRequest(self, color):
+		self.__mainLogger.debug('COLOR : ' + str(color))
 		with self.__performActionReq:
 			self.__color = color
 			self.__request = MessageRequest.COLOR
+			self.__mainLogger.debug('ALLEZ OUAIS')
 			self.__performActionReq.notify()
 
 	def writeSoundRequest(self, sound):
