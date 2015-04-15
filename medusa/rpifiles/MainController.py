@@ -12,11 +12,12 @@ import dbus, dbus.mainloop.glib
 import time
 
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
-
+import Params
+import Simulation
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'medusa.log')
+LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
 DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
 
@@ -49,7 +50,7 @@ class MainController() :
 			mainLogger.error('MainController - Request for simulation start while a simulation is already running.')
 		else :
 			if not self.__simulation :
-				if not self._simulationConfig :
+				if not self.__simulationConfig :
 					mainLogger.info('MainController - No simulation configuration file loaded. Loading default simulation ' + DEFAULT_SIMULATION_CFG)
 					self.__simulationConfig = DEFAULT_SIMULATION_CFG
 
@@ -109,11 +110,11 @@ class MainController() :
 
 					# We treat the command corresponding to the message
 					if self.__command == MessageCommand.START :
-						__startSimulation()
+						self.__startSimulation()
 					elif self.__command == MessageCommand.STOP :
-						__stopSimulation()
+						self.__stopSimulation()
 					elif self.__command == MessageCommand.KILL :
-						__killController()
+						self.__killController()
 						break
 
 					self.__command = MessageCommand.NONE
@@ -157,16 +158,16 @@ class CommandsListener(threading.Thread) :
 				# Receive one message
 				mainLogger.debug('CommandsListener - Receiving command...')
 				message = recvOneMessage(conn)
-				mainLogger.debug('CommandsListener - Received ' + str(recvOptions))
+				mainLogger.debug('CommandsListener - Received ' + str(message))
 
 				# The listener transmits the desired command
-				messageCommand = MainController.MessageCommand.NONE
+				messageCommand = MessageCommand.NONE
 				if message.msgType == MessageType.START :
-					messageCommand = MainController.MessageCommand.START
+					messageCommand = MessageCommand.START
 				elif message.msgType == MessageType.STOP :
-					messageCommand = MainController.MessageCommand.STOP
+					messageCommand = MessageCommand.STOP
 				elif message.msgType == MessageType.KILL :
-					messageCommand = MainController.MessageCommand.KILL
+					messageCommand = MessageCommand.KILL
 
 				mainLogger.debug('CommandsListener - Transmitting command ' + str(messageCommand)+ ' to controller.')
 				self.__controller.getCommand(messageCommand)
@@ -180,6 +181,7 @@ if __name__ == '__main__' :
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-L', '--log', default = True, action = "store_true", help = "Log messages in a file")
 	parser.add_argument('-d', '--debug', default = True, action = "store_true", help = "Debug mode")
+	parser.add_argument('-i', '--hostIP', default = None, help = "Host IP address")
 	args = parser.parse_args()
 
 	# Creation of the logging handlers
