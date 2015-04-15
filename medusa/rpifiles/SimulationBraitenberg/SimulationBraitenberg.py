@@ -20,7 +20,7 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		if not avoidance :
 			leftWheel = [-0.01, -0.005, -0.0001, 0.006, 0.015]
 			rightWheel = [0.012, 0.007, -0.0002, -0.0055, -0.011]
-		else
+		else :
 			leftWheel = [0.01, 0.005, 0.0001, -0.006, -0.015]
 			rightWheel = [-0.012, -0.007, 0.0002, 0.0055, 0.011]
 
