@@ -3,14 +3,14 @@ import time
 import Params
 import Simulation
 
-class SimulationDefault(Simulation) :
+class SimulationDefault(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
-		Simulation.__init__(self, controller, mainLogger)
+		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 	def __preActions(self) :
 		self.__thymioController.writeMotorsSpeedRequest([300, 300])
 
-	def __step(self) :
+	def step(self) :
 		try :
 			self.__waitForControllerResponse()
 			action = random.randint(0, 5)

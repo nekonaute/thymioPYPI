@@ -23,7 +23,7 @@ class Simulation(threading.Thread) :
 		# Thymio controller
 		self.__tcPA = False
 		self.__tcPerformedAction = threading.Condition()
-		self.__tController = ThymioController(self) 
+		self.__tController = ThymioController.ThymioController(self, mainLogger) 
 		self.__tController.run()
 
 		self.__mainLogger = mainLogger
@@ -32,7 +32,7 @@ class Simulation(threading.Thread) :
 		self.__preActions()
 
 		while not self.__stop.isSet() :
-			self.__step()
+			self.step()
 
 		self.__postActions()
 
@@ -45,7 +45,7 @@ class Simulation(threading.Thread) :
 		pass
 
 	@abstractmethod
-	def __step(self) :
+	def step(self) :
 		pass
 
 	def stop(self) :
