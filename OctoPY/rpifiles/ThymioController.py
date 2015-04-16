@@ -97,7 +97,7 @@ class ThymioController(threading.Thread):
 
 	def __dbusSetSound(self):
 		self.__mainLogger.debug('Sound sent : ' + str(self.__sound))
-		# self.__dbusSendEventName("SetSound", self.__sound)
+		self.__dbusSendEventName("SetSound", self.__sound)
 	
 	def __dbusGetProxSensorsReply(self, r):
 		self.__psValue = r
