@@ -33,27 +33,20 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.__camera.capture(stream, 'jpeg', use_video_port = True)
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
-			cv2.imwrite("./ImageRGB.jpg", img)
 
 			# Blurring and converting to HSV values
 			image = cv2.GaussianBlur(img, (5, 5), 0)
 			image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-			cv2.imwrite("./HSVImage1.jpg", image_HSV)
 			
 			# Locate the color
 			mask = cv2.inRange(image_HSV, np.array([40, 40, 40]), np.array([80, 255, 255]))
 			mask = cv2.GaussianBlur(mask, (5, 5), 0)
-			cv2.imwrite("./HSVImage2.jpg", image_HSV)
-			cv2.imwrite("./Mask.jpg", mask)
-			self.stop()
-			return
 			
 			# We get a list of the outlines of the white shapes in the mask
 			contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
 			# If we have at least one contour, we look through each one and pick the biggest
 			if len(contours) > 0 :
-				self.mainLogger.debug("Nb contours : " + str(len(contours)))
 				largest = 0
 				area = 0
 
@@ -77,7 +70,6 @@ class SimulationDetectColor(Simulation.Simulation) :
 				self.mainLogger.debug("Yay !")
 				self.move2(angle, area, minSize, maxSize, 100, 100)
 			else :
-				self.mainLogger.debug("Nop")
 				self.tController.writeMotorsSpeedRequest([0, 0])
 				self.waitForControllerResponse()
 
