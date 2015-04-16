@@ -8,7 +8,7 @@ import Simulation
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-class SimulationGoT(Simulation.Simulation) :
+class SimulationMusic(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
@@ -38,7 +38,6 @@ class SimulationGoT(Simulation.Simulation) :
 			if self.__curLine < len(self.__sounds) :
 				self.mainLogger.debug('Sound : ' + str(self.__sounds[self.__curLine][0]) + '/' + str(self.__sounds[self.__curLine][1]/float(1000)))
 				self.tController.writeSoundRequest([self.__sounds[self.__curLine][0], self.__sounds[self.__curLine][1]/float(1000)])
-				self.__curLine += 1
 			else :
 				self.stop()
 
@@ -50,5 +49,6 @@ class SimulationGoT(Simulation.Simulation) :
 			self.tController.writeColorRequest([randR, randG, randB])
 
 			time.sleep(self.__sounds[self.__curLine][1]/float(1000))
+			self.__curLine += 1
 		except :
 			self.mainLogger.critical('SimulationDefault - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
