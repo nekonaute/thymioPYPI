@@ -41,7 +41,7 @@ class MessageCommand() :
 	START, STOP, KILL, SET = range(0, 4)
 
 class MainController() :
-	def __init__(self, distant) :
+	def __init__(self) :
 		self.__simulation = None
 		self.__simulationConfig = None
 
