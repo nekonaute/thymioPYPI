@@ -37,7 +37,7 @@ class SimulationGoT(Simulation.Simulation) :
 
 			if self.__curLine < len(self.__sounds) :
 				self.mainLogger.debug('Sound : ' + str(self.__sounds[self.__curLine][0]) + '/' + str(self.__sounds[self.__curLine][0]/float(60)))
-				self.tController.writeSoundRequest(self.__sounds[self.__curLine][0], self.__sounds[self.__curLine][0]/float(60))
+				self.tController.writeSoundRequest([int(self.__sounds[self.__curLine][0])], [int(self.__sounds[self.__curLine][0]/float(60))])
 				self.__curLine += 1
 			else :
 				self.stopEv.set()
