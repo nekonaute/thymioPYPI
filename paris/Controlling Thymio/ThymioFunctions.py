@@ -3,6 +3,9 @@ import dbus.mainloop.glib
 import gobject
 import time
 from optparse import OptionParser
+import os
+
+AESL_PATH=os.path.join(os.path.dirname(__file__), 'ledEvent.aesl')
 
 
 # peripheral sensors
@@ -13,6 +16,7 @@ frontRightSensor = 3
 rightSensor = 4
 backLeftSensor = 5
 backRightSensor = 6
+
 
 # buttons on the thymio
 backwardButton = 0
@@ -27,7 +31,8 @@ frontToBack = 1
 topToBottom = 2
 
 # variables to get from ASEBA variables (or to set)
-speed = dbus.Array([0])
+leftSpeed = dbus.Array([0])
+rightSpeed = dbus.Array([0])
 proxSensors = [0, 0, 0, 0, 0, 0, 0]
 acc = [0, 0, 0]
 ambiant = [0,0]
@@ -35,6 +40,18 @@ reflected = [0,0]
 delta = [0,0]
 buttons = [0, 0, 0, 0, 0]
 temperature = dbus.Array([0])
+
+
+red=[32,1,0]
+green=[5,32,0]
+blue=[0,0,32]
+yellow=[32, 32, 0]
+turquoise=[0,32, 32]
+pink=[32,1,5]
+white=[32, 32, 32]
+purple=[15, 0, 32]
+orange=[32, 5, 0]
+skyBlue=[5,32,25]
 
 def dbusReply():
     pass
@@ -110,18 +127,20 @@ def getButtonValue(buttonName):
 	return buttons[buttonName]
 
 
-def updateSpeedValue(r):
-    global speed
-    speed = r
+def updateLeftSpeedValue(left):
+    global leftSpeed
+    leftSpeed = left
+
+def updateRightSpeedValue(right):
+    global rightSpeed
+    rightSpeed = right
 
 # Returns a list [leftWheelSpeed, rightWheelSpeed]
 def getMotorSpeed():
-	network.GetVariable("thymio-II", "motor.left.speed",reply_handler = updateSpeedValue, error_handler = getVariablesError)
-	actualLeftSpeed = int(speed[0])
-	#print "type speed : ", type(actualLeftSpeed[0])
-	#print "changing type : ", a, "its type : ", type(a)
-	network.GetVariable("thymio-II", "motor.right.speed", reply_handler = updateSpeedValue, error_handler = getVariablesError)
-	actualRightSpeed = int(speed[0])
+	network.GetVariable("thymio-II", "motor.left.speed",reply_handler = updateLeftSpeedValue, error_handler = getVariablesError)
+	actualLeftSpeed = int(leftSpeed[0])
+	network.GetVariable("thymio-II", "motor.right.speed", reply_handler = updateRightSpeedValue, error_handler = getVariablesError)
+	actualRightSpeed = int(rightSpeed[0])
 	return [actualLeftSpeed, actualRightSpeed]
 
 # Modify the speed of each wheel as asked
@@ -157,6 +176,35 @@ def updateTemperatureValue(r):
 def getTemperatureValue():
 	network.GetVariable("thymio-II", "temperature", reply_handler = updateTemperatureValue, error_handler = getVariablesError)
 	return int(temperature[0])/10
+
+# leds : 
+# options are : 
+# "red", "blue", "green", "turquoise", "yellow", 
+# "pink", "white", "purple", "orange", "skyBlue"
+
+
+def setLeds(color):
+	network.LoadScripts(AESL_PATH, reply_handler=updateLed, error_handler=getVariablesError)
+	network.SendEventName("SetColor", eval(color), reply_handler=updateLed, error_handler=getVariablesError)
+
+def turnOffLeds():
+	network.LoadScripts(AESL_PATH, reply_handler=updateLed, error_handler=getVariablesError)
+	network.SendEventName("SetColor", [0,0,0], reply_handler=updateLed, error_handler=getVariablesError)
+
+
+def flash(color1, color2):
+    setLeds(color1)
+    setLeds(color1)
+    turnOffLeds()
+    turnOffLeds()
+    setLeds(color2)
+    setLeds(color2)
+    turnOffLeds()
+
+
+def updateLed():
+	pass
+
 
 
 parser = OptionParser()
