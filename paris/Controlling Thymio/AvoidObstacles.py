@@ -1,7 +1,6 @@
 import dbus
 import dbus.mainloop.glib
 import gobject
-#import sys
 import time
 from ThymioFunctions import *
 from optparse import OptionParser
@@ -9,28 +8,9 @@ from optparse import OptionParser
 def avoidingObstacles():
 
     for i in xrange(7):
-	proxSensors[i]=getSensorValue(i)
-    """
-   Pour ameliorer    
-
-    weight1=[1,2,3,2,1]
-    weight2=[-4,-3,0,3,4]
-
-    tempBraitenberg=0
-
-    if acc[]>0: # thymio is moving forward
-	tempBraitenberg=np.dot(weight1, proxSensors[0:5])
-	tempBraitenberg/=16
-	tempBraitenberg_turn=np.dot(weight2, proxSensors[0:5])
-	tempBraitenberg_turn/=16
-	tempBratenberg_left=
-
-	leftWheel=[0.01,0.05,-0.07,-0.05,-0.01, 0.03, 0.04]
-	rightWheel=[-0.01,-0.05,-0.07,0.05,0.01,0.04, 0.03]
-
-    """
+        proxSensors[i]=getSensorValue(i)
 	
-    #Parameters of the Braitenberg, to give weight to each wheels 
+   #Parameters of the Braitenberg, to give weight to each wheels 
     leftWheel=[0.01,0.05,-0.07,-0.05,-0.01, 0.03, 0.04]
     rightWheel=[-0.01,-0.05,-0.07,0.05,0.01,0.04, 0.03]
 
@@ -38,8 +18,8 @@ def avoidingObstacles():
     totalLeft=0
     totalRight=0
     for i in range(7):
-         totalLeft=totalLeft+(proxSensors[i]*leftWheel[i])
-         totalRight=totalRight+(proxSensors[i]*rightWheel[i])
+        totalLeft=totalLeft+(proxSensors[i]*leftWheel[i])
+        totalRight=totalRight+(proxSensors[i]*rightWheel[i])
 
     # add a constant speed to each wheels so the robot moves always forward
     totalRight=totalRight+100
@@ -48,10 +28,10 @@ def avoidingObstacles():
     # send motor value to the robot 
     setMotorSpeed(totalLeft, totalRight)
     if time.time()-start>=runTime:
-	   setMotorSpeed(0, 0)
-	   print time.time()-start
-	   loop.quit()
-	   return False
+        setMotorSpeed(0, 0)
+        print time.time()-start
+        loop.quit()
+        return False
 
     return True
 
