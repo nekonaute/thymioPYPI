@@ -1,0 +1,9 @@
+2015-06-08 13:42:19,892 - INFO: queryThymios - launching nmap
+2015-06-08 13:42:19,981 - INFO: queryThymios - nmap done
+2015-06-08 13:42:19,982 - DEBUG: queryThymios - IP address for up thymios found :
+2015-06-08 13:42:19,982 - DEBUG: 	 192.168.0.111
+2015-06-08 13:42:19,982 - INFO: queryThymios - Gathering thymios' hostnames
+2015-06-08 13:42:19,982 - DEBUG: queryThymios - ssh on 192.168.0.111
+2015-06-08 13:42:20,835 - INFO: queryThymios - active thymio : pi2no01 - 192.168.0.111
+2015-06-08 13:42:20,835 - DEBUG: queryThymios - hostname/IP table :
+2015-06-08 13:42:20,835 - DEBUG: 	 pi2no01 : 192.168.0.111
