@@ -586,17 +586,20 @@ if __name__ == '__main__':
 	logging.debug("OK LOGGING")
 
 	# Create socket to send ACK to the host if need be
-	if options.hostIP != None:
-		try:
-			logging.debug('Sending ACK to ' + options.hostIP)
-			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			sock.connect((options.hostIP, SERVER_PORT))
-			optSend = DirtyMessage()
-			optSend.message = 99
-			sendOneMessage(sock, optSend) 
-		except:
-			logging.critical('Error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-		logging.debug('Done !')
+	# if options.hostIP != None:
+	# 	try:
+	# 		logging.debug('Sending ACK to ' + options.hostIP)
+	# 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	# 		sock.connect((options.hostIP, SERVER_PORT))
+	# 		optSend = DirtyMessage()
+	# 		optSend.message = 99
+	# 		sendOneMessage(sock, optSend) 
+	# 	except:
+	# 		logging.critical('Error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+	# 	logging.debug('Done !')
+	global TRUSTED_CLIENTS
+	if options.hostIP != None :
+		TRUSTED_CLIENTS.append(hostIP)
 
 
 	# Create socket for listening to simulation commands

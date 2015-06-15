@@ -14,6 +14,7 @@ import pickle
 
 import ipaddress
 import paramiko
+import cmd
 
 from utils import *
 
@@ -36,6 +37,7 @@ TIMEOUT_QUERY = 5
 
 logger = None
 hashThymiosHostnames = None
+listThymiosStates = None
 
 
 
@@ -67,12 +69,12 @@ def loadHostnamesTable() :
 		logger.critical("Unexpected error in loadHostnamesTable : " + str(sys.exc_info()[0]) + ' - ' +traceback.format_exc())
 
 
-def queryThymios(options) :
+def queryThymios(rangeArg) :
 	try :
 		logger.info("queryThymios - excuting nmap")
 
-		# Popen calls the nmap command in the range specified by options.look
-		proc = subprocess.Popen(["nmap", "-sn", options.look], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+		# Popen calls the nmap command in the range specified by rangeArg
+		proc = subprocess.Popen(["nmap", "-sn", rangeArg], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 
 		(out, err) = proc.communicate()
 
@@ -150,250 +152,312 @@ def queryThymios(options) :
 		logger.critical("Unexpected error in queryThymios : " + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc()) 
 
 
-def sendMessage(options) :
+def getHostnameFromIP(IP) :
+	if hashThymiosHostnames :
+		for hostname in hashThymiosHostnames.keys() :
+			if hashThymiosHostnames[hostname] == IP :
+				return hostname
+
+	return None
+
+def resolveAddresses(IPs) :
 	# We first load the hostnames table (if it exists)
 	if os.path.isfile(HOSTNAMES_TABLE_FILE_PATH) :
 		loadHostnamesTable()
 	else :
-		logging.warning("sendMessage - there is no hostnames table")
+		logging.warning("resolveAddresses - there is no hostnames table")
 
+	# List of recipients
+	dest = []
+	if len(IPs) > 0 :
+		recipList = IPs
+
+		logging.debug("resolveAddresses - recipients list : " + ' '.join(recipList))
+
+		# Resolution of hostnames to IP address
+		for recip in recipList :
+			if hashThymiosHostnames != None and recip in hashThymiosHostnames.keys() :
+				dest.append(hashThymiosHostnames[recip])
+			else :
+				# We verify that this is a correct IP address
+				try :
+					dest.append(ipaddress.ip_address(u'' + recip))
+				except :
+					logging.error("resolveAddresses - " + recip + " is not a known host nor a valid IP address")
+					continue
+	else :
+		# If no host was specified, we send to every known hosts
+		if hashThymiosHostnames != None :
+			dest = [ipaddress.ip_address(u'' + IP) for IP in hashThymiosHostnames.values()]
+		else :
+			logging.critical("resolveAddresses - No hosts specified and no existing hostnames table")
+			return None
+
+	return dest
+
+
+def sendMessage(message, IPs) :
 	# Message
-	message = int(options.send[0])
+	message = int(message)
 
-	# List of recipients
-	dest = []
-	if len(options.send) > 1 :
-		recipList = options.send[1:]
+	# Addresses resolution
+	dest = resolveAddresses(IPs)
 
-		logging.debug("sendMessage - recipients list : " + ' '.join(recipList))
-
-		# Resolution of hostnames to IP address
-		for recip in recipList :
-			if hashThymiosHostnames != None and recip in hashThymiosHostnames.keys() :
-				dest.append(hashThymiosHostnames[recip])
-			else :
-				# We verify that this is a correct IP address
-				try :
-					dest.append(ipaddress.ip_address(u'' + recip))
-				except :
-					logging.error("sendMessage - " + recip + " is not a known host nor a valid IP address")
-					continue
-	else :
-		# If no host was specified, we send to every known hosts
-		if hashThymiosHostnames != None :
-			dest = [ipaddress.ip_address(u'' + IP) for IP in hashThymiosHostnames.values()]
-		else :
-			logging.critical("sendMessage - No hosts specified and no existing hostnames table")
-			exit(1)
-
-	
 	myIP = None
+	if dest != None :
+		sockACK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sockACK.setblocking(0)
+		sockACK.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
+		sockACK.listen(5)
 
-	sockACK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sockACK.setblocking(0)
-	sockACK.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
-	sockACK.listen(5)
+		for destIP in dest :
+			logging.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
-	waitingACK = []
-	for destIP in dest :
-		logging.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
+			optSend = DirtyMessage()
 
-		optSend = DirtyMessage()
+			try :
+				# Init thymio
+				if message == MessageType.INIT :
+					ssh = paramiko.SSHClient()
+					ssh.load_system_host_keys()
+					ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+					# We don't want to be bothered with paramiko logging unless it's critical
+					paramikoLogger = logging.getLogger('paramiko')
+					paramikoLogger.setLevel('CRITICAL')
+
+					# Connection on the raspberry
+					ssh.connect(str(destIP), username = PIUSERNAME, password = PIPASSWORD)
+
+					# We get our IP address on this network
+					if myIP == None :
+						stdin, stdout, stderr = ssh.exec_command('echo $SSH_CLIENT')
+						myIP = ipaddress.ip_address(u'' + stdout.read().split(' ')[0])
+
+					# Executing command hostname
+					stdin, stdout, stderr = ssh.exec_command('sh ' + os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh') + ' ' + str(myIP))
+
+					ssh.close()
+
+				# Start simulation
+				elif message == MessageType.START :
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
+				# Stop simulation
+				elif message == MessageType.STOP :
+					optSend.running = False
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
+				# Kill thymio
+				elif message == MessageType.KILL :
+					optSend.kill = True
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
+				else :
+					logging.critical("sendMessage - not a known message id : " + str(message))
+					return
+			except :
+				logging.error("sendMessage - Unexpected error while sending message " + str(message) + " to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+				continue
+
+
+def ping(IPs) :
+	dest = resolveAddresses(IPs)
+
+	if dest != None :
 		try :
-			# Init thymio
-			if message == MessageType.INIT :
-				ssh = paramiko.SSHClient()
-				ssh.load_system_host_keys()
-				ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+			newDest = dest
+			for destIP in dest :
+				# We first ping each recipient
+				logging.info("ping - pinging " + str(destIP))
+				proc = subprocess.Popen(['ping', str(destIP), '-c1', '-W2'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+				(stdout, stderr) = proc.communicate()
+				
+				if proc.returncode != 0 :
+					logging.info("ping - " + str(destIP) + " is not up")
+					newDest.remove(destIP)
+				else :
+					logging.info("ping - " + str(destIP) + " is up")
 
-				# We don't want to be bothered with paramiko logging unless it's critical
-				paramikoLogger = logging.getLogger('paramiko')
-				paramikoLogger.setLevel('CRITICAL')
-
-				# Connection on the raspberry
-				ssh.connect(str(destIP), username = PIUSERNAME, password = PIPASSWORD)
-
-				# We get our IP address on this network
-				if myIP == None :
-					stdin, stdout, stderr = ssh.exec_command('echo $SSH_CLIENT')
-					myIP = ipaddress.ip_address(u'' + stdout.read().split(' ')[0])
-
-				# Executing command hostname
-				stdin, stdout, stderr = ssh.exec_command('sh ' + os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh') + ' ' + str(myIP))
-
-				ssh.close()
-
-				waitingACK.append(str(destIP))
-
-			# Start simulation
-			elif message == MessageType.START :
-				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				sock.connect((str(destIP), 55555))
-				sendOneMessage(sock, optSend)
-
-			# Stop simulation
-			elif message == MessageType.STOP :
-				optSend.running = False
-				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				sock.connect((str(destIP), 55555))
-				sendOneMessage(sock, optSend)
-
-			# Kill thymio
-			elif message == MessageType.KILL :
-				optSend.kill = True
-				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				sock.connect((str(destIP), 55555))
-				sendOneMessage(sock, optSend)
-
-			else :
-				logging.critical("sendMessage - not a known message id : " + str(message))
-				exit(1)
+			dest = newDest
 		except :
-			logging.error("sendMessage - Unexpected error while sending message " + str(message) + " to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
-			continue
-
-	# Waiting for ACK
-	if message == MessageType.INIT :
-		timeOut = TIMEOUT_ACK
-		while len(waitingACK) > 0 :
-			logging.debug('sendMessage - Waiting ACK from ' + ' '.join(waitingACK))
-			readable, writable, exceptional = select.select([sockACK], [], [], timeOut)
-
-			# If a timeout happend
-			if not (readable or writable or exceptional) :
-				logging.warning('sendMessage - No ACK from ' + ' '.join(waitingACK) + ' after ' + str(timeOut) + ' seconds')
-				break
-			else :
-				for sock in readable :
-					conn, (addr, port) = sock.accept()
-					logging.debug('sendMessage - Receiving message from ' + str(addr))
-
-					data = recvOneMessage(conn)
-					if data.message == MessageType.ACK :
-						logging.info('sendMessage - ACK received from ' + str(addr))
-						waitingACK.remove(addr)
-
-
-def ping(options) :
-	# We first load the hostnames table (if it exists)
-	if os.path.isfile(HOSTNAMES_TABLE_FILE_PATH) :
-		loadHostnamesTable()
-	else :
-		logging.warning("ping - there is no hostnames table")
-
-	# List of recipients
-	dest = []
-	if len(options.send) > 0 :
-		recipList = options.send
-
-		logging.debug("ping - recipients list : " + ' '.join(recipList))
-
-		# Resolution of hostnames to IP address
-		for recip in recipList :
-			if hashThymiosHostnames != None and recip in hashThymiosHostnames.keys() :
-				dest.append(hashThymiosHostnames[recip])
-			else :
-				# We verify that this is a correct IP address
-				try :
-					dest.append(ipaddress.ip_address(u'' + recip))
-				except :
-					logging.error("ping - " + recip + " is not a known host nor a valid IP address")
-					continue
-	else :
-		# If no host was specified, we send to every known hosts
-		if hashThymiosHostnames != None :
-			dest = [ipaddress.ip_address(u'' + IP) for IP in hashThymiosHostnames.values()]
-		else :
-			logging.critical("ping - No hosts specified and no existing hostnames table")
+			logging.critical("ping - Unexpected error while pinging " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc())
 			exit(1)
 
-	try :
-		newDest = dest
-		for destIP in dest :
-			# We first ping each recipient
-			logging.info("ping - pinging " + str(destIP))
-			proc = subprocess.Popen(['ping', str(destIP), '-c1', '-W2'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-			(stdout, stderr) = proc.communicate()[0]
-			
-			if proc.returncode != 0 :
-				logging.info("ping - " + str(destIP) + " is not up")
-				newDest.remove(destIP)
-			else :
-				logging.info("ping - " + str(destIP) + " is up")
 
-		dest = newDest
-	except :
-		logging.critical("ping - Unexpected error while pinging " + str(destIP))
-		exit(1)
-
-
-	waitingAnswer = []
-	sockAnswer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	sockAnswer.setblocking(0)
-	sockAnswer.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
-	sockAnswer.listen(5)
-
-	try :
+		waitingAnswer = []
+		sockAnswer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sockAnswer.setblocking(0)
+		sockAnswer.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
+		sockAnswer.listen(5)
 
 		optSend = DirtyMessage()
 		optSend.message = MessageType.QUERY
 		for destIP in dest :
-			# We send a message to each recipient
-			logging.info("ping - sending query to " + str(destIP))
-			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			sock.connect((str(destIP), 55555))
-			sendOneMessage(sock, optSend)
-			waitingAnswer.append(str(destIP))
-	except :
-			logging.error("ping - Unexpected error while sending query to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
-			continue
+			try :
+				# We send a message to each recipient
+				logging.info("ping - sending query to " + str(destIP))
+				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				sock.connect((str(destIP), 55555))
+				sendOneMessage(sock, optSend)
+				waitingAnswer.append(str(destIP))
+			except :
+				logging.error("ping - Unexpected error while sending query to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+				continue
 
 
-	# Waiting for answers
-	timeOut = TIMEOUT_QUERY
-	listeningHosts = []
-	startedHosts = []
-	sleepingHosts = []
-	while len(waitingAnswer) > 0 :
-		logging.debug('ping - Waiting answer from ' + ' '.join(waitingAnswer))
-		readable, writable, exceptional = select.select([sockAnswer], [], [], timeOut)
+		# Waiting for answers
+		timeOut = TIMEOUT_QUERY
+		listeningHosts = []
+		startedHosts = []
+		sleepingHosts = []
+		while len(waitingAnswer) > 0 :
+			logging.debug('ping - Waiting answer from ' + ' '.join(waitingAnswer))
+			readable, writable, exceptional = select.select([sockAnswer], [], [], timeOut)
 
-		# If a timeout happend
-		if not (readable or writable or exceptional) :
-			logging.debug('ping - No answer from ' + ' '.join(waitingAnswer) + ' after ' + str(timeOut) + ' seconds')
-			sleepingHosts = waitingAnswer
-			break
+			# If a timeout happend
+			if not (readable or writable or exceptional) :
+				logging.debug('ping - No answer from ' + ' '.join(waitingAnswer) + ' after ' + str(timeOut) + ' seconds')
+				sleepingHosts = waitingAnswer
+				break
+			else :
+				for sock in readable :
+					conn, (addr, port) = sock.accept()
+					logging.debug('ping - Receiving message from ' + str(addr))
+
+					data = recvOneMessage(conn)
+					if data.message == MessageType.LISTENING :
+						logging.debug('ping - LISTENING received from ' + str(addr))
+						waitingAnswer.remove(addr)
+						listeningHosts.append(addr)
+					elif data.message == MessageType.STARTED :
+						logging.debug('ping - STARTED received from ' + str(addr))
+						waitingAnswer.remove(addr)
+						startedHosts.append(addr)
+					else :
+						logging.error("ping - not an expected message " + str(message) + " from " + str(addr))
+						waitingAnswer.remove(addr)
+						continue
+
+		global listThymiosStates
+		listThymiosStates = []
+		for IP in sleepingHosts :
+			hostname = getHostnameFromIP(IP)
+			hostTuple = (hostname, IP, 'Sleeping')
+			listThymiosStates.append(hostTuple)
+			logging.info('ping - ' + str(addr) + ' is sleeping')
+
+		for IP in listeningHosts :
+			hostname = getHostnameFromIP(IP)
+			hostTuple = (hostname, IP, 'Listening')
+			listThymiosStates.append(hostTuple)
+			logging.info('ping - ' + str(addr) + ' is listening')
+
+		for IP in startedHosts :
+			hostname = getHostnameFromIP(IP)
+			hostTuple = (hostname, IP, 'Started')
+			listThymiosStates.append(hostTuple)
+			logging.info('ping - ' + str(addr) + ' is started')
+
+
+
+class MedusaInteractive(cmd.Cmd) :
+	prompt = ">> "
+
+
+	# --- Thymios look-up ---
+	def do_look(self, args) :
+		lookRange = "192.168.0.111-150"
+		if args :
+			lookRange = args
+
+		queryThymios(lookRange)
+
+	def help_look(self) :
+		print '\n'.join([ 'look [range]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default).', ])
+
+
+	# --- Send message ---
+	def do_send(self, args) :
+		if args :
+			args = args.split(' ')
+			message = args[0]
+
+			IPs = []
+			if len(args) > 1 :
+				IPs = args[1:]
+
+			sendMessage(message, IPs)
 		else :
-			for sock in readable :
-				conn, (addr, port) = sock.accept()
-				logging.debug('ping - Receiving message from ' + str(addr))
+			logging.critical('sendMessage - No message specified !')
 
-				data = recvOneMessage(conn)
-				if data.message == MessageType.LISTENING :
-					logging.debug('ping - LISTENING received from ' + str(addr))
-					waitingAnswer.remove(addr)
-					listeningHosts.append(addr)
-				elif data.message == MessageType.STARTED :
-					logging.debug('ping - STARTED received from ' + str(addr))
-					waitingAnswer.remove(addr)
-					startedHosts.append(addr)
-				else :
-					logging.error("ping - not an expected message " + str(message) + " from " + str(addr))
-					waitingAnswer.remove(addr)
-					continue
-
-	for IP in sleepingHosts :
-		logging.info('ping - ' + str(addr) + ' is sleeping')
-	for IP in listeningHosts :
-		logging.info('ping - ' + str(addr) + ' is listening')
-	for IP in startedHosts :
-		logging.info('ping - ' + str(addr) + ' is started')
+	def help_send(self) :
+		print '\n'.join([ 'send message [hosts list]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
 
 
+	# --- Ping thymios ---
+	def do_ping(self, args) :
+		hosts = []
+
+		if args :
+			args = args.split(' ')
+			if len(args) > 0 :
+				hosts = args
+
+		ping(hosts)
+
+	def help_ping(self) :
+		print '\n'.join([ 'ping [hosts list]', 'Ping a specified list of hosts or all host saved in the hostnames table.'])
 
 
+	# --- Get thymios state ---
+	def do_state(self, args) :
+		hosts = []
 
+		if args :
+			args = args.split(' ')
+			if len(args) > 0 :
+				hosts = args
+
+		# If listThymiosStates does not exist, we ping the specified thymios to create it
+		if listThymiosStates == None :
+			do_ping(self, hosts)
+
+		listStates = []
+		# We look for the relevant lines if need be
+		if len(hosts) > 0 :
+			listIPs = resolveAddresses(hosts)
+			for IP in listIPs :
+				for (hostname, hostIP, state) in listThymiosStates :
+					if IP == hostIP :
+						listStates.append((hostname, hostIP, state))
+						break
+		else :
+			listStates = listThymiosStates
+
+		print '\n'.join([ hostname + '\t' + str(IP) + '\t' + state for (hostname, IP, state) in listStates])
+
+	def help_state(self) :
+		print '\n'.join([ 'state [hosts lists]', 'Get the state of specified hosts or all hosts saved in the hostnames table.', ])
+
+
+	# --- Exit ---
+	def do_exit(self, line) :
+		return True
+
+	def help_exit(self) :
+		print '\n'.join([ 'exit', 'Exits medusa.', ])
+
+
+	# --- EOF exit ---
+	def do_EOF(self, line) :
+		return True
 
 
 if __name__ == '__main__' :
@@ -401,6 +465,7 @@ if __name__ == '__main__' :
 	parser.add_argument('-l', '--look', default = None, const = "192.168.0.111-150", nargs = '?', help = "Look for the alive thymios")
 	parser.add_argument('-s', '--send', default = None, nargs = '+', help = "Send a message to a specified thymio or all thymios")
 	parser.add_argument('-p', '--ping', default = None, nargs = '*', help = "Get the state of a specified thymio or all thymios")
+	parser.add_argument('-I', '--interactive', default = False, action = "store_true", help = "Starts medusa in interactive mode")
 	parser.add_argument('-L', '--log', default = False, action = "store_true", help = "Log messages in a file")
 	parser.add_argument('-d', '--debug', default = True, action = "store_true", help = "Debug mode")
 	args = parser.parse_args()
@@ -426,11 +491,21 @@ if __name__ == '__main__' :
 	consoleHandler.setLevel(level)
 	logger.addHandler(consoleHandler)
 
-	if args.look != None :
-		queryThymios(args)
-	elif args.send != None :
-		sendMessage(args)
-	elif args.ping != None :
-		ping(args)
+	if args.interactive :
+		MedusaInteractive().cmdloop()
 	else :
-		logger.error("No query specified !")
+		if args.look != None :
+			queryThymios(args.look)
+		elif args.send != None :
+			message = args.send[0]
+			IPs = []
+
+			if len(args.send) > 1 :
+				IPs = args.send[1:]
+
+			sendMessage(message, IPs)
+		elif args.ping != None :
+			IPs = args.send
+			ping(IPs)
+		else :
+			logger.error("No query specified !")
