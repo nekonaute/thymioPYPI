@@ -8,7 +8,7 @@ import logging
 
 import os, time, random, sys, traceback, datetime
 
-import utils
+from utils import *
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(CURRENT_FILE_PATH, '..', 'config.json')
@@ -583,8 +583,7 @@ if __name__ == '__main__':
 	# 	lev = logging.DEBUG
 	logging.basicConfig(filename=LOG_PATH, format='%(asctime)s - %(levelname)s: %(message)s', level=logging.DEBUG)
 
-	try :
-		logging.debug("OK LOGGING")
+	logging.debug("OK LOGGING")
 
 	# Create socket to send ACK to the host if need be
 	# if options.hostIP != None:
@@ -599,22 +598,20 @@ if __name__ == '__main__':
 	# 		logging.critical('Error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 	# 	logging.debug('Done !')
 
-		global TRUSTED_CLIENTS
-		if options.hostIP != None :
-			TRUSTED_CLIENTS.append(options.hostIP)
+	global TRUSTED_CLIENTS
+	if options.hostIP != None :
+		TRUSTED_CLIENTS.append(options.hostIP)
 
-		logging.debug("INITIATING SOCKET")
+	logging.debug("INITIATING SOCKET")
 
-		# Create socket for listening to simulation commands
-		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-		sock.bind((SERVER_HOST, SERVER_PORT))
-		sock.listen(5)
-		simulation = None
+	# Create socket for listening to simulation commands
+	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	sock.bind((SERVER_HOST, SERVER_PORT))
+	sock.listen(5)
+	simulation = None
 
-		logging.debug("OK SOCKET")
-	except:
-		logging.critical('Error in main: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+	logging.debug("OK SOCKET")
 
 	cpt = 0
 	while 1:

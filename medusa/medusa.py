@@ -24,13 +24,13 @@ HOSTNAMES_TABLE_FILE_PATH = os.path.join(CURRENT_FILE_PATH, 'hostnames_table.jso
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'medusa.log')
 
-THYMIO_SCRIPTS_PATH = '/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/scripts'
+THYMIO_SCRIPTS_PATH = '/home/pi/dev/thymioPYPI/medusa/rpifiles'
 
 PIUSERNAME = 'pi'
 PIPASSWORD = 'pi'
 
-ACKLISTENER_HOST = ''
-ACKLISTENER_PORT = 55555
+LISTENER_HOST = ''
+LISTENER_PORT = 55555
 
 TIMEOUT_ACK = 10
 TIMEOUT_QUERY = 5
@@ -69,9 +69,9 @@ def loadHostnamesTable() :
 		logger.critical("Unexpected error in loadHostnamesTable : " + str(sys.exc_info()[0]) + ' - ' +traceback.format_exc())
 
 
-def queryThymios(rangeArg) :
+def lookUp(rangeArg) :
 	try :
-		logger.info("queryThymios - excuting nmap")
+		logger.info("lookUp - excuting nmap")
 
 		# Popen calls the nmap command in the range specified by rangeArg
 		proc = subprocess.Popen(["nmap", "-sn", rangeArg], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -79,7 +79,7 @@ def queryThymios(rangeArg) :
 		(out, err) = proc.communicate()
 
 		if proc.returncode < 0 :
-			logger.error("queryThymios - Error executing nmap : " + str(err))
+			logger.error("lookUp - Error executing nmap : " + str(err))
 			exit(1)
 
 		# We look for all up hosts
@@ -99,24 +99,24 @@ def queryThymios(rangeArg) :
 
 			cpt += 1
 
-		logger.info("queryThymios - nmap done")
+		logger.info("lookUp - nmap done")
 
 		if len(tabIP) == 0 :
-			logger.info("queryThymios - no up thymios were found !")
+			logger.info("lookUp - no up thymios were found !")
 			return
 
-		logger.debug("queryThymios - IP address for up thymios found :")
+		logger.debug("lookUp - IP address for up thymios found :")
 		for IP in tabIP :
 			logger.debug("\t " + str(IP))
 
-		logger.info("queryThymios - Gathering thymios' hostnames")
+		logger.info("lookUp - Gathering thymios' hostnames")
 
 		global hashThymiosHostnames
 		hashThymiosHostnames = {}
 
 		# We query each thymio for its hostname
 		for IP in tabIP :
-			logger.info("queryThymios - ssh on " + str(IP))
+			logger.info("lookUp - ssh on " + str(IP))
 
 			ssh = paramiko.SSHClient()
 			ssh.load_system_host_keys()
@@ -135,21 +135,21 @@ def queryThymios(rangeArg) :
 			hostname = str(stdout.read()).rstrip('\n')
 			ssh.close()
 
-			logger.info("queryThymios - active thymio: " + hostname + " - " + str(IP))
+			logger.info("lookUp - active thymio: " + hostname + " - " + str(IP))
 
 			if hostname in hashThymiosHostnames.keys() :
-				logger.warning("queryThymios - warning: multiple thymios with hostname " + hostname + " : " + str(hashThymiosHostnames[hostname]) + " and " + str(IP))
+				logger.warning("lookUp - warning: multiple thymios with hostname " + hostname + " : " + str(hashThymiosHostnames[hostname]) + " and " + str(IP))
 
 			hashThymiosHostnames[hostname] = IP
 
-		logger.debug("queryThymios - hostname/IP table :")
+		logger.debug("lookUp - hostname/IP table :")
 		for hostname in hashThymiosHostnames :
 			logger.debug("\t " + hostname + " : " + str(hashThymiosHostnames[hostname]))
 
 		saveHostnamesTable()
 
 	except :	
-		logger.critical("Unexpected error in queryThymios : " + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc()) 
+		logger.critical("Unexpected error in lookUp : " + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc()) 
 
 
 def getHostnameFromIP(IP) :
@@ -161,12 +161,6 @@ def getHostnameFromIP(IP) :
 	return None
 
 def resolveAddresses(IPs) :
-	# We first load the hostnames table (if it exists)
-	if os.path.isfile(HOSTNAMES_TABLE_FILE_PATH) :
-		loadHostnamesTable()
-	else :
-		logging.warning("resolveAddresses - there is no hostnames table")
-
 	# List of recipients
 	dest = []
 	if len(IPs) > 0 :
@@ -205,15 +199,15 @@ def sendMessage(message, IPs) :
 
 	myIP = None
 	if dest != None :
-		sockACK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sockACK.setblocking(0)
-		sockACK.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
-		sockACK.listen(5)
+		# sockACK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		# sockACK.setblocking(0)
+		# sockACK.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
+		# sockACK.listen(5)
 
 		for destIP in dest :
 			logging.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
-			optSend = DirtyMessage()
+			optSend = Message()
 
 			try :
 				# Init thymio
@@ -267,48 +261,50 @@ def sendMessage(message, IPs) :
 				continue
 
 
-def ping(IPs) :
+def queryThymios(IPs) :
 	dest = resolveAddresses(IPs)
 
 	if dest != None :
 		try :
 			newDest = dest
+			downHosts = []
 			for destIP in dest :
 				# We first ping each recipient
-				logging.info("ping - pinging " + str(destIP))
+				logging.info("queryThymios - pinging " + str(destIP))
 				proc = subprocess.Popen(['ping', str(destIP), '-c1', '-W2'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 				(stdout, stderr) = proc.communicate()
 				
 				if proc.returncode != 0 :
-					logging.info("ping - " + str(destIP) + " is not up")
+					logging.info("queryThymios - " + str(destIP) + " is not up")
+					downHosts.append(destIP)
 					newDest.remove(destIP)
 				else :
-					logging.info("ping - " + str(destIP) + " is up")
+					logging.info("queryThymios - " + str(destIP) + " is up")
 
 			dest = newDest
 		except :
-			logging.critical("ping - Unexpected error while pinging " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc())
+			logging.critical("queryThymios - Unexpected error while pinging " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc())
 			exit(1)
 
 
 		waitingAnswer = []
 		sockAnswer = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		sockAnswer.setblocking(0)
-		sockAnswer.bind((ACKLISTENER_HOST, ACKLISTENER_PORT))
+		sockAnswer.bind((LISTENER_HOST, LISTENER_PORT))
 		sockAnswer.listen(5)
 
-		optSend = DirtyMessage()
+		optSend = Message()
 		optSend.message = MessageType.QUERY
 		for destIP in dest :
 			try :
 				# We send a message to each recipient
-				logging.info("ping - sending query to " + str(destIP))
+				logging.info("queryThymios - sending query to " + str(destIP))
 				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				sock.connect((str(destIP), 55555))
 				sendOneMessage(sock, optSend)
 				waitingAnswer.append(str(destIP))
 			except :
-				logging.error("ping - Unexpected error while sending query to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+				logging.error("queryThymios - Unexpected error while sending query to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
 				continue
 
 
@@ -318,52 +314,58 @@ def ping(IPs) :
 		startedHosts = []
 		sleepingHosts = []
 		while len(waitingAnswer) > 0 :
-			logging.debug('ping - Waiting answer from ' + ' '.join(waitingAnswer))
+			logging.debug('queryThymios - Waiting answer from ' + ' '.join(waitingAnswer))
 			readable, writable, exceptional = select.select([sockAnswer], [], [], timeOut)
 
 			# If a timeout happend
 			if not (readable or writable or exceptional) :
-				logging.debug('ping - No answer from ' + ' '.join(waitingAnswer) + ' after ' + str(timeOut) + ' seconds')
+				logging.debug('queryThymios - No answer from ' + ' '.join(waitingAnswer) + ' after ' + str(timeOut) + ' seconds')
 				sleepingHosts = waitingAnswer
 				break
 			else :
 				for sock in readable :
 					conn, (addr, port) = sock.accept()
-					logging.debug('ping - Receiving message from ' + str(addr))
+					logging.debug('queryThymios - Receiving message from ' + str(addr))
 
 					data = recvOneMessage(conn)
 					if data.message == MessageType.LISTENING :
-						logging.debug('ping - LISTENING received from ' + str(addr))
+						logging.debug('queryThymios - LISTENING received from ' + str(addr))
 						waitingAnswer.remove(addr)
 						listeningHosts.append(addr)
 					elif data.message == MessageType.STARTED :
-						logging.debug('ping - STARTED received from ' + str(addr))
+						logging.debug('queryThymios - STARTED received from ' + str(addr))
 						waitingAnswer.remove(addr)
 						startedHosts.append(addr)
 					else :
-						logging.error("ping - not an expected message " + str(message) + " from " + str(addr))
+						logging.error("queryThymios - not an expected message " + str(message) + " from " + str(addr))
 						waitingAnswer.remove(addr)
 						continue
 
 		global listThymiosStates
 		listThymiosStates = []
+		for IP in downHosts :
+			hostname = getHostnameFromIP(IP)
+			hostTuple = (hostname, IP, 'Down')
+			listThymiosStates.append(hostTuple)
+			logging.info('queryThymios - ' + str(addr) + ' is down')
+
 		for IP in sleepingHosts :
 			hostname = getHostnameFromIP(IP)
 			hostTuple = (hostname, IP, 'Sleeping')
 			listThymiosStates.append(hostTuple)
-			logging.info('ping - ' + str(addr) + ' is sleeping')
+			logging.info('queryThymios - ' + str(addr) + ' is sleeping')
 
 		for IP in listeningHosts :
 			hostname = getHostnameFromIP(IP)
 			hostTuple = (hostname, IP, 'Listening')
 			listThymiosStates.append(hostTuple)
-			logging.info('ping - ' + str(addr) + ' is listening')
+			logging.info('queryThymios - ' + str(addr) + ' is listening')
 
 		for IP in startedHosts :
 			hostname = getHostnameFromIP(IP)
 			hostTuple = (hostname, IP, 'Started')
 			listThymiosStates.append(hostTuple)
-			logging.info('ping - ' + str(addr) + ' is started')
+			logging.info('queryThymios - ' + str(addr) + ' is started')
 
 
 
@@ -377,7 +379,7 @@ class MedusaInteractive(cmd.Cmd) :
 		if args :
 			lookRange = args
 
-		queryThymios(lookRange)
+		lookUp(lookRange)
 
 	def help_look(self) :
 		print '\n'.join([ 'look [range]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default).', ])
@@ -397,12 +399,36 @@ class MedusaInteractive(cmd.Cmd) :
 		else :
 			logging.critical('sendMessage - No message specified !')
 
+	def complete_send(self, text, line, beidx, endidx) :
+		completions = []
+
+		if text :
+			if not(text[0].isdigit()) :
+				# If the user has begun to type a hostname, we complete it
+				if hashThymiosHostnames != None :
+					completions = [hostname for hostname in hashThymiosHostnames.keys() if hostname.startswith(args[-1])]
+		else :
+			args = line.split(' ')
+
+			if args < 2 or not(args[1].isdigit()) :
+				# We propose the list of all the messages
+				completions = MessageType.getAllAttributes()
+				completions = [str(att[0] + ":" + str(att[1])) for att in completions]
+			else :
+				# Else we return all the hostnames
+				if hashThymiosHostnames != None :
+					completions = hashThymiosHostnames.keys()
+
+		return completions
+				
+
+
 	def help_send(self) :
 		print '\n'.join([ 'send message [hosts list]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
 
 
 	# --- Ping thymios ---
-	def do_ping(self, args) :
+	def do_query(self, args) :
 		hosts = []
 
 		if args :
@@ -410,10 +436,10 @@ class MedusaInteractive(cmd.Cmd) :
 			if len(args) > 0 :
 				hosts = args
 
-		ping(hosts)
+		queryThymios(hosts)
 
-	def help_ping(self) :
-		print '\n'.join([ 'ping [hosts list]', 'Ping a specified list of hosts or all host saved in the hostnames table.'])
+	def help_query(self) :
+		print '\n'.join([ 'query [hosts list]', 'Query the state of a specified list of hosts or of all host saved in the hostnames table.'])
 
 
 	# --- Get thymios state ---
@@ -427,7 +453,7 @@ class MedusaInteractive(cmd.Cmd) :
 
 		# If listThymiosStates does not exist, we ping the specified thymios to create it
 		if listThymiosStates == None :
-			do_ping(self, hosts)
+			self.do_query(hosts)
 
 		listStates = []
 		# We look for the relevant lines if need be
@@ -444,7 +470,7 @@ class MedusaInteractive(cmd.Cmd) :
 		print '\n'.join([ hostname + '\t' + str(IP) + '\t' + state for (hostname, IP, state) in listStates])
 
 	def help_state(self) :
-		print '\n'.join([ 'state [hosts lists]', 'Get the state of specified hosts or all hosts saved in the hostnames table.', ])
+		print '\n'.join([ 'state [hosts lists]', 'Show the state of specified hosts or all hosts saved in the hostnames table.', ])
 
 
 	# --- Exit ---
@@ -464,7 +490,7 @@ if __name__ == '__main__' :
 	parser = argparse.ArgumentParser()
 	parser.add_argument('-l', '--look', default = None, const = "192.168.0.111-150", nargs = '?', help = "Look for the alive thymios")
 	parser.add_argument('-s', '--send', default = None, nargs = '+', help = "Send a message to a specified thymio or all thymios")
-	parser.add_argument('-p', '--ping', default = None, nargs = '*', help = "Get the state of a specified thymio or all thymios")
+	parser.add_argument('-q', '--query', default = None, nargs = '*', help = "Query the state of a specified thymio or all thymios")
 	parser.add_argument('-I', '--interactive', default = False, action = "store_true", help = "Starts medusa in interactive mode")
 	parser.add_argument('-L', '--log', default = False, action = "store_true", help = "Log messages in a file")
 	parser.add_argument('-d', '--debug', default = True, action = "store_true", help = "Debug mode")
@@ -491,11 +517,18 @@ if __name__ == '__main__' :
 	consoleHandler.setLevel(level)
 	logger.addHandler(consoleHandler)
 
+	# We load the hostnames table (if it exists)
+	if os.path.isfile(HOSTNAMES_TABLE_FILE_PATH) :
+		loadHostnamesTable()
+	else :
+		logging.debug("No existing hostnames table found")
+
+
 	if args.interactive :
 		MedusaInteractive().cmdloop()
 	else :
 		if args.look != None :
-			queryThymios(args.look)
+			lookUp(args.look)
 		elif args.send != None :
 			message = args.send[0]
 			IPs = []
@@ -504,8 +537,8 @@ if __name__ == '__main__' :
 				IPs = args.send[1:]
 
 			sendMessage(message, IPs)
-		elif args.ping != None :
-			IPs = args.send
-			ping(IPs)
+		elif args.query != None :
+			IPs = args.query
+			queryThymios(IPs)
 		else :
 			logger.error("No query specified !")
