@@ -8,7 +8,8 @@ import logging
 
 import os, time, random, sys, traceback, datetime
 
-from utils import *
+import utils
+from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 CONFIG_PATH = os.path.join(CURRENT_FILE_PATH, '..', 'config.json')

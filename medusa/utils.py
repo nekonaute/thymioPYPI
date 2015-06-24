@@ -2,7 +2,6 @@ import struct
 import pickle
 import inspect
 
-
 class MessageType :
     # Special
     NONE = -1

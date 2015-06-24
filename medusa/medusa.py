@@ -16,7 +16,8 @@ import ipaddress
 import paramiko
 import cmd
 
-from utils import *
+import utils
+from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -207,7 +208,7 @@ def sendMessage(message, IPs) :
 		for destIP in dest :
 			logging.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
-			optSend = Message()
+			optSend = utils.Message()
 
 			try :
 				# Init thymio
@@ -235,20 +236,21 @@ def sendMessage(message, IPs) :
 
 				# Start simulation
 				elif message == MessageType.START :
+					optSend.msgType = MessageType.START
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
 				# Stop simulation
 				elif message == MessageType.STOP :
-					optSend.running = False
+					optSend.msgType = MessageType.STOP
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
 				# Kill thymio
 				elif message == MessageType.KILL :
-					optSend.kill = True
+					optSend.msgType = MessageType.KILL
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
