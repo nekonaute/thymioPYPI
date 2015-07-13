@@ -4,6 +4,7 @@
 <!--list of global events-->
 <event size="2" name="SetSpeed"/>
 <event size="3" name="SetColor"/>
+<event size="2" name="SetSound"/>
 
 <!--list of constants-->
 <constant value="50" name="TIME_STEP"/>
@@ -21,6 +22,9 @@ onevent SetColor
 call leds.top(event.args[0], event.args[1], event.args[2])
 call leds.bottom.left(event.args[0], event.args[1], event.args[2])
 call leds.bottom.right(event.args[0], event.args[1], event.args[2])
+
+onevent SetSound
+call sound.freq(event.args[0], event.args[1]*60)
 </node>
 
 </network>

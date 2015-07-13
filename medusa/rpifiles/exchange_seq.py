@@ -342,6 +342,10 @@ class ThymioController(object):
 		self.__msgSenders = msgSenders
 		self.__nEval = 0
 
+		# This seems to be somehow necessary when no X server is running		
+		# os.environ['DBUS_SESSION_BUS_ADDRESS'] = "unix:path=/run/dbus/system_bus_socket"
+		# os.environ["DISPLAY"] = ":0"
+
 		# Init the main loop
 		dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 		
@@ -569,7 +573,7 @@ class Simulation(threading.Thread):
 
 SERVER_HOST = ''
 SERVER_PORT = 55555
-TRUSTED_CLIENTS = ['127.0.0.1', '192.168.1.100', '192.168.0.110']
+TRUSTED_CLIENTS = ['127.0.0.1', '192.168.1.100', '192.168.0.110', '192.168.0.210']
 
 if __name__ == '__main__':
 	# Checking for debug:
@@ -631,16 +635,19 @@ if __name__ == '__main__':
 			recvOptions = pickle.loads(recvall(conn, length))
 			logging.debug('Received ' + str(recvOptions))
 
-			if recvOptions.kill:
+			if recvOptions.msgType == MessageType.KILL:
+				logging.critical("KILL")
 				if simulation:
 					simulation.stop()
 				break
 
-			if recvOptions.running and not simulation: # TODO: or simulation.isFinished()
+			if recvOptions.msgType == MessageType.START and not simulation: # TODO: or simulation.isFinished()
 				# start the simulation
 				simulation = Simulation()
 				simulation.start()
-			elif not recvOptions.running and simulation:
+				print("OUI ?")
+			elif not recvOptions.msgType == MessageType.STOP and simulation:
+				logging.critical("STOP")
 				# stop the simulation
 				simulation.stop()
 				simulation = None
