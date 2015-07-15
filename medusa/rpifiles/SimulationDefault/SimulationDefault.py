@@ -39,7 +39,7 @@ class SimulationDefault(Simulation.Simulation) :
 			# Sound
 			elif action == 5 :
 				duration = random.randint(1, 2)
-				freq = random.randin(200, 600)
+				freq = random.randint(200, 600)
 				self.tController.writeSoundRequest([freq, duration])
 
 			self.waitForControllerResponse()
