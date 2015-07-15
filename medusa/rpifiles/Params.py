@@ -1,5 +1,7 @@
 import os
 import re
+import sys, traceback
+import logging
 
 params = None
 
@@ -19,7 +21,7 @@ class Params :
 				configFile = configFile.readlines()
 
 				# We get a list of tuple, each one of them being as follows : ([type, ]name, value)
-				configFile = [tuple(re.sub('\s+', ' ', re.sub('=', ' ', line)).rstrip('\n').split(' ')) for line in configFile if (line[0] != '#' and reLine.search(line))]
+				configFile = [tuple(re.sub('\s+', ' ', re.sub('=', ' ', line.rstrip('\n'))).split(' ')) for line in configFile if (line[0] != '#' and reLine.search(line))]
 
 				try :
 					for param in configFile :
@@ -38,14 +40,27 @@ class Params :
 
 
 	def checkParam(self, param) :
-		if name in self.__params.keys() :
+		if param in self.__params.keys() :
 			return True
 		else :
 			return False
 
 	def __getattr__(self, name) :
-		if checkParam(name) :
+		if self.checkParam(name) :
 			return self.__params[name]
 		else :
-			self.__mainLogger.critical(Params - 'No parameter ' + name + ' found.')
+			self.__mainLogger.critical("Params - No parameter " + name + " found.")
 			return None
+
+
+
+if __name__ == "__main__" :
+	mainLogger = logging.getLogger()
+	mainLogger.setLevel(logging.DEBUG)
+
+	consoleHandler = logging.StreamHandler()
+	consoleHandler.setLevel(logging.DEBUG)
+	mainLogger.addHandler(consoleHandler)
+	params = Params("./default_simulation.cfg", mainLogger)
+	print("simulation_name : " + params.simulation_name)
+	print("simulation_path : " + params.simulation_path)
