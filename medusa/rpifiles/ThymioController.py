@@ -21,7 +21,7 @@ class MessageRequest() :
 	MOTORS, COLOR, SOUND = range(0, 3)
 
 
-class ThymioController(object):
+class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
 		self.__simulation = simulation
 		self.__mainLogger = mainLogger

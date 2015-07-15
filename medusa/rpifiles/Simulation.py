@@ -24,7 +24,7 @@ class Simulation(threading.Thread) :
 		self.__tcPA = False
 		self.__tcPerformedAction = threading.Condition()
 		self.__tController = ThymioController.ThymioController(self, mainLogger) 
-		self.__tController.run()
+		self.__tController.start()
 
 		self.__mainLogger = mainLogger
 
