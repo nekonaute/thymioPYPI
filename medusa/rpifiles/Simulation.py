@@ -15,7 +15,7 @@ class Simulation(threading.Thread) :
 	def __init__(self, controller, mainLogger) :
 		threading.Thread.__init__(self)
 
-		# Main controller
+		# Main controller
 		self.__controller = controller
 
 		self.__stop = threading.Event()

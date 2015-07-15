@@ -1,10 +1,12 @@
 import time
 import glib, gobject
 import dbus, dbus.mainloop.glib
+import os
 
 import Simulation
 import Params
 
+CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 AESL_PATH = os.path.join(CURRENT_FILE_PATH, ('asebaCommands.aesl'))
 
 class ThymioController(object):
@@ -15,7 +17,7 @@ class ThymioController(object):
 		# Write requests
 		SENSORS, GROUND, STOP = range(0, 3)
 
-		# Read requests
+		# Read requests
 		MOTORS, COLOR, SOUND = range(0, 3)
 
 
@@ -116,33 +118,33 @@ class ThymioController(object):
 		self.__simulation.thymioControllerPerformedAction()
 
 		try :
-		with self.__performActionReq:
-			# Wait for requests:
-			while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
-				self.__performActionReq.wait()
+			with self.__performActionReq:
+				# Wait for requests:
+				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
+					self.__performActionReq.wait()
 
-			if self.__request == MessageRequest.SENSORS :
-				# Read sensor values
-				self.__dbusGetProxSensors()
-			elif self.__request == MessageRequest.GROUND :
-				# Read ground sensor values
-				self.__dbusGetGroundSensors()
-			elif self.__request == MessageRequest.MOTORS :
-				# Write motorspeed
-				self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
+				if self.__request == MessageRequest.SENSORS :
+					# Read sensor values
+					self.__dbusGetProxSensors()
+				elif self.__request == MessageRequest.GROUND :
+					# Read ground sensor values
+					self.__dbusGetGroundSensors()
+				elif self.__request == MessageRequest.MOTORS :
+					# Write motorspeed
+					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
 
-				# Make sure that Thymio moved for 1 timestep
-				time.sleep(classes.TIME_STEP) # TODO: more precise -> thymio should notify controller when it moved for 50 ms
-			elif self.__request == MessageRequest.COLOR :
-				self.__dbusSetColor()
-			elif self.__request == MessageRequest.STOP :
-				# Stop Thymio
-				self.__stopThymio()
+					# Make sure that Thymio moved for 1 timestep
+					time.sleep(classes.TIME_STEP) # TODO: more precise -> thymio should notify controller when it moved for 50 ms
+				elif self.__request == MessageRequest.COLOR :
+					self.__dbusSetColor()
+				elif self.__request == MessageRequest.STOP :
+					# Stop Thymio
+					self.__stopThymio()
 
-			self.__request = MessageRequest.NONE
+				self.__request = MessageRequest.NONE
 
-			# Notifying that simulation has been set
-			self.__simulation.thymioControllerPerformedAction()
+				# Notifying that simulation has been set
+				self.__simulation.thymioControllerPerformedAction()
 		except :
 			mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
