@@ -9,13 +9,15 @@ class SimulationDefault(Simulation.Simulation) :
 
 	def preActions(self) :
 		self.waitForControllerResponse()
-		self.tController.writeMotorsSpeedRequest([300, 300])
+		# self.tController.writeMotorsSpeedRequest([300, 300])
+		self.tController.writeSoundRequest([440, 1])
 
 	def step(self) :
 		self.mainLogger.debug('yop ?')
 		try :
 			self.waitForControllerResponse()
 			action = random.randint(0, 5)
+			action = 5
 
 			# Go forward
 			if action == 0 :
@@ -38,6 +40,7 @@ class SimulationDefault(Simulation.Simulation) :
 				self.tController.writeMotorsSpeedRequest([0, 0])
 			# Sound
 			elif action == 5 :
+				duration = random.randint(1, 3)
 				self.tController.writeSoundRequest([440, 1])
 
 			self.waitForControllerResponse()

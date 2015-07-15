@@ -30,7 +30,7 @@ class ThymioController(threading.Thread):
 		self.__performActionReq = threading.Condition()
 		self.__request = MessageRequest.NONE
 
-		self.__stop = threading.Condition()
+		self.__stop = threading.Event()
 
 
 		self.__psValue = [0,0,0,0,0,0,0]
@@ -124,7 +124,7 @@ class ThymioController(threading.Thread):
 				# Wait for requests:
 				self.__mainLogger.debug('Request ?')
 				self.__mainLogger.debug('What : ' + str(self.__request))
-				while self.__request == MessageRequest.NONE :
+				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
 					self.__mainLogger.debug('Before : ' + str(self.__request))
 					self.__performActionReq.wait()
 					self.__mainLogger.debug('After : ' + str(self.__request))
