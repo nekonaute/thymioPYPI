@@ -79,7 +79,6 @@ class MainController() :
 		if Simulation.Simulation.checkForCompParams() :
 			simModule = importlib.import_module(Params.params.simulation_path)
 			simClass = getattr(simModule, Params.params.simulation_name)
-			# print(simClass)
 			self.__simulation = simClass(self, mainLogger)
 		else :
 			mainLogger.error('MainController - Couldn\'t load simulation, compulsory parameter missing.')
@@ -104,8 +103,6 @@ class MainController() :
 
 		# Start listening to commands
 		self.__cmdListener.start()
-
-		self.__startSimulation()
 
 		while 1 :
 			try :
