@@ -16,32 +16,32 @@ class Simulation(threading.Thread) :
 		threading.Thread.__init__(self)
 
 		# Main controller
-		self.__controller = controller
+		self.controller = controller
 
 		self.__stop = threading.Event()
 
 		# Thymio controller
 		self.__tcPA = False
 		self.__tcPerformedAction = threading.Condition()
-		self.__tController = ThymioController.ThymioController(self, mainLogger) 
-		self.__tController.start()
+		self.tController = ThymioController.ThymioController(self, mainLogger) 
+		self.tController.start()
 
-		self.__mainLogger = mainLogger
+		self.mainLogger = mainLogger
 
 	def run(self) :
-		self.__mainLogger.debug('hep la !')
+		self.mainLogger.debug('hep la !')
 		self.preActions()
-		self.__mainLogger.debug('beuh ?')
+		self.mainLogger.debug('beuh ?')
 
 		while not self.__stop.isSet() :
 			self.step()
 
 		self.postActions()
 
-		self.__tController.stop()
+		self.tController.stop()
 
 	def preActions(self) :
-		self.__mainLogger.debug('pas en arriere')
+		self.mainLogger.debug('pas en arriere')
 		pass
 
 	def postActions(self) :
@@ -62,7 +62,7 @@ class Simulation(threading.Thread) :
 			self.__tcPA = True
 			self.__tcPerformedAction.notify()
 
-	def __waitForControllerResponse(self) :
+	def waitForControllerResponse(self) :
 		# Wait for ThymioController response
 		with self.__tcPerformedAction :
 			while not self.__tcPA and not self.__stop.isSet() :
@@ -70,16 +70,16 @@ class Simulation(threading.Thread) :
 			self.__tcPA = False
 
 	def startThymioController(self) :
-		self.__tController.start()
+		self.tController.start()
 
 	def stopThymioController(self) :
-		self.__tController.stop()
+		self.tController.stop()
 
 	@staticmethod
 	def checkForCompParams() :
 		for param in Simulation.compParams :
 			if not Params.params.checkParam(param) :
-				self.__mainLogger.error("Simulation - Parameter " + param + " not found.")
+				self.mainLogger.error("Simulation - Parameter " + param + " not found.")
 				return False
 
 		return True
