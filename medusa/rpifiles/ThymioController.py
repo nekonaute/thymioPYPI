@@ -90,9 +90,7 @@ class ThymioController(threading.Thread):
 		self.__dbusSendEventName("SetSpeed", self.__motorspeed)
 
 	def __dbusSetColor(self):
-		self.__mainLogger.debug('yip')
 		self.__dbusSendEventName("SetColor", self.__color)
-		self.__mainLogger.debug('youp')
 
 	def __dbusSetSound(self):
 		self.__dbusSendEventName("SetSound", self.__sound)
@@ -124,14 +122,9 @@ class ThymioController(threading.Thread):
 		try :
 			with self.__performActionReq:
 				# Wait for requests:
-				self.__mainLogger.debug('Request ?')
-				self.__mainLogger.debug('What : ' + str(self.__request))
 				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
-					self.__mainLogger.debug('Before : ' + str(self.__request))
 					self.__performActionReq.wait()
-					self.__mainLogger.debug('After : ' + str(self.__request))
 
-				self.__mainLogger.debug('Request : ' + str(self.__request))
 				if self.__request == MessageRequest.SENSORS :
 					# Read sensor values
 					self.__dbusGetProxSensors()
@@ -173,19 +166,15 @@ class ThymioController(threading.Thread):
 			self.__performActionReq.notify()
 
 	def writeMotorsSpeedRequest(self, motorspeed):
-		self.__mainLogger.debug('MOTORS REQUEST')
 		with self.__performActionReq:
 			self.__motorspeed = motorspeed
-			self.__mainLogger.debug(motorspeed)
 			self.__request = MessageRequest.MOTORS
 			self.__performActionReq.notify()
 
 	def writeColorRequest(self, color):
-		self.__mainLogger.debug('COLOR : ' + str(color))
 		with self.__performActionReq:
 			self.__color = color
 			self.__request = MessageRequest.COLOR
-			self.__mainLogger.debug('ALLEZ OUAIS')
 			self.__performActionReq.notify()
 
 	def writeSoundRequest(self, sound):
