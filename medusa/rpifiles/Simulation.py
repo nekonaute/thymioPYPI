@@ -72,8 +72,9 @@ class Simulation(threading.Thread) :
 	def stopThymioController(self) :
 		self.__tController.stop()
 
+	@staticmethod
 	def checkForCompParams() :
-		for param in compParams :
+		for param in Simulation.compParams :
 			if not params.checkParam(param) :
 				self.__mainLogger.error("Simulation - Parameter " + param + " not found.")
 				return False
