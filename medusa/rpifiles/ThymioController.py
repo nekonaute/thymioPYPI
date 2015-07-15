@@ -2,6 +2,7 @@ import time
 import glib, gobject
 import dbus, dbus.mainloop.glib
 import os
+import threading
 
 import Simulation
 import Params
@@ -9,18 +10,18 @@ import Params
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 AESL_PATH = os.path.join(CURRENT_FILE_PATH, ('asebaCommands.aesl'))
 
+# Requests from the simulation
+class MessageRequest() :
+	NONE = -1
+
+	# Write requests
+	SENSORS, GROUND, STOP = range(0, 3)
+
+	# Read requests
+	MOTORS, COLOR, SOUND = range(0, 3)
+
+
 class ThymioController(object):
-	# Messages from CommandsListener
-	class MessageRequest() :
-		NONE = -1
-
-		# Write requests
-		SENSORS, GROUND, STOP = range(0, 3)
-
-		# Read requests
-		MOTORS, COLOR, SOUND = range(0, 3)
-
-
 	def __init__(self, simulation, mainLogger):
 		self.__simulation = simulation
 		self.__mainLogger = mainLogger

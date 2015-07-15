@@ -10,6 +10,7 @@ import argparse
 import glib, gobject
 import dbus, dbus.mainloop.glib
 import time
+import importlib
 
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 import Params
@@ -76,8 +77,9 @@ class MainController() :
 
 		# We check for the basic parameters
 		if Simulation.Simulation.checkForCompParams() :
-			simModule = __import__(Params.params.simulation_path)
+			simModule = importlib.import_module(Params.params.simulation_path)
 			simClass = getattr(simModule, Params.params.simulation_name)
+			# print(simClass)
 			self.__simulation = simClass(self, mainLogger)
 		else :
 			mainLogger.error('MainController - Couldn\'t load simulation, compulsory parameter missing.')
@@ -102,6 +104,8 @@ class MainController() :
 
 		# Start listening to commands
 		self.__cmdListener.start()
+
+		self.__startSimulation()
 
 		while 1 :
 			try :
