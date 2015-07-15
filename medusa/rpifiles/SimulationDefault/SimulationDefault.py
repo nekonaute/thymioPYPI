@@ -10,15 +10,12 @@ class SimulationDefault(Simulation.Simulation) :
 
 	def preActions(self) :
 		self.waitForControllerResponse()
-		# self.tController.writeMotorsSpeedRequest([300, 300])
-		self.tController.writeMotorsSpeedRequest([0, 0])
+		self.tController.writeMotorsSpeedRequest([300, 300])
 
 	def step(self) :
 		try :
 			self.waitForControllerResponse()
-			action = random.randint(0, 5)
-			action = 5
-
+			action = random.randint(0, 4)
 
 			# Go forward
 			if action == 0 :
@@ -52,7 +49,7 @@ class SimulationDefault(Simulation.Simulation) :
 			self.tController.writeColorRequest([randR, randG, randB])
 
 
-			sleepTime = random.randint(0, 5)
+			sleepTime = random.randint(0, 2)
 			time.sleep(sleepTime)
 		except :
 			self.mainLogger.critical('SimulationDefault - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
