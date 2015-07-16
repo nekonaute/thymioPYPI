@@ -20,6 +20,8 @@ class MessageRequest() :
 	# Read requests
 	MOTORS, COLOR, SOUND = range(10, 13)
 
+	KILL = 99
+
 
 class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
@@ -32,6 +34,7 @@ class ThymioController(threading.Thread):
 
 		self.__stop = threading.Event()
 
+		self.daemon = True
 
 		self.__psValue = [0,0,0,0,0,0,0]
 		self.__psGroundAmbiantSensors = [0,0]
@@ -125,6 +128,8 @@ class ThymioController(threading.Thread):
 				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
 					self.__performActionReq.wait()
 
+				self.__mainLogger.debug('Request : ' + str(self.__request))
+
 				if self.__request == MessageRequest.SENSORS :
 					# Read sensor values
 					self.__dbusGetProxSensors()
@@ -150,6 +155,7 @@ class ThymioController(threading.Thread):
 			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		if self.__stop.isSet() :
+			self.__mainLogger.debug('Time to die')
 			self.killController()
 			return False
 		else :
@@ -183,6 +189,11 @@ class ThymioController(threading.Thread):
 			self.__request = MessageRequest.SOUND
 			self.__performActionReq.notify()
 
+	def killRequest(self) :
+		with self.__performActionReq :
+			self.__request = MessageRequest.Kill
+			self.__performActionReq.notify()
+
 	def stopThymioRequest(self):
 		with self.__performActionReq:
 			self.__request = MessageRequest.STOP
@@ -211,6 +222,7 @@ class ThymioController(threading.Thread):
 	def killController(self) :
 		self.__mainLogger.debug("ThymioController - Killing controller.")
 		self.__stopThymio()
+		self.__mainLogger.debug('Quit thymioController')
 		self.__loop.quit()
 
 	def run(self):

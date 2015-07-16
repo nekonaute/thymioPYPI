@@ -15,6 +15,8 @@ class Simulation(threading.Thread) :
 	def __init__(self, controller, mainLogger) :
 		threading.Thread.__init__(self)
 
+		self.daemon = True
+
 		# Main controller
 		self.controller = controller
 

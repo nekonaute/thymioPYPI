@@ -13,6 +13,11 @@ class SimulationDefault(Simulation.Simulation) :
 		# self.waitForControllerResponse()
 		# self.tController.writeMotorsSpeedRequest([300, 300])
 
+	def postActions(self) :
+		self.waitForControllerResponse()
+		self.tController.writeColorRequest([0, 0, 0])
+
+
 	def step(self) :
 		try :
 			self.waitForControllerResponse()
