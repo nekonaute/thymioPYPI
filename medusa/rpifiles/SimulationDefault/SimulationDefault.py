@@ -15,7 +15,7 @@ class SimulationDefault(Simulation.Simulation) :
 
 	def postActions(self) :
 		self.waitForControllerResponse()
-		self.tController.writeColorRequest([0, 0, 0])
+		self.tController.writeColorRequest([32, 32, 32])
 		self.waitForControllerResponse()
 
 

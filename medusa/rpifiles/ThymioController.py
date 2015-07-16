@@ -180,7 +180,7 @@ class ThymioController(threading.Thread):
 	def writeColorRequest(self, color):
 		with self.__performActionReq:
 			self.__color = color
-			print('Color : ' + str(self.__color))
+			self.__mainLogger.debug('Color : ' + str(self.__color))
 			self.__request = MessageRequest.COLOR
 			self.__performActionReq.notify()
 
