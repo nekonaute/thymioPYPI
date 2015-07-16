@@ -9,6 +9,7 @@ class SimulationDefault(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 	def preActions(self) :
+		pass
 		# self.waitForControllerResponse()
 		# self.tController.writeMotorsSpeedRequest([300, 300])
 
