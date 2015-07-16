@@ -16,6 +16,7 @@ class SimulationDefault(Simulation.Simulation) :
 		try :
 			self.waitForControllerResponse()
 			action = random.randint(0, 5)
+			action = 6
 
 			# Go forward
 			if action == 0 :
