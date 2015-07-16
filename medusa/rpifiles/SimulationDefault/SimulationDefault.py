@@ -9,7 +9,7 @@ class SimulationDefault(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 	def preActions(self) :
-		self.waitForControllerResponse()
+		# self.waitForControllerResponse()
 		# self.tController.writeMotorsSpeedRequest([300, 300])
 
 	def step(self) :
@@ -43,7 +43,7 @@ class SimulationDefault(Simulation.Simulation) :
 				freq = random.randint(200, 600)
 				self.tController.writeSoundRequest([freq, duration])
 
-			self.waitForControllerResponse()
+			# self.waitForControllerResponse()
 
 			randR = random.randint(0, 32)
 			randG = random.randint(0, 32)

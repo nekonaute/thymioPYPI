@@ -85,9 +85,8 @@ class MainController() :
 
 	def __killController(self) :
 		mainLogger.debug("MainController - Killing controller.")
-		if self.__simulation and self.__simulation.isStarted() :
+		if self.__simulation and not self.__simulation.isStopped() :
 			mainLogger.debug("MainController - Killing simulation.")
-			self.__simulation.stopThymioController()
 			self.__simulation.stop()
 
 
