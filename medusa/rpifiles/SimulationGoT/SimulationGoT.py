@@ -1,6 +1,7 @@
 import time
 import random
 import re
+import os
 
 import Params
 import Simulation
