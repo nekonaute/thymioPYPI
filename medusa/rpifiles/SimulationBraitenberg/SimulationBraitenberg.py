@@ -4,7 +4,7 @@ import random
 import Params
 import Simulation
 
-class SimulationDefault(Simulation.Simulation) :
+class SimulationBraitenberg(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
