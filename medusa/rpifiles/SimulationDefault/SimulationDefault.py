@@ -10,7 +10,7 @@ class SimulationDefault(Simulation.Simulation) :
 
 	def preActions(self) :
 		self.waitForControllerResponse()
-		self.tController.writeMotorsSpeedRequest([300, 300])
+		# self.tController.writeMotorsSpeedRequest([300, 300])
 
 	def step(self) :
 		try :
