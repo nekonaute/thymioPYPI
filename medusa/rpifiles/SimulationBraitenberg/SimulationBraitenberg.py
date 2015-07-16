@@ -17,12 +17,14 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		self.waitForControllerResponse()
 
 	def Braitenberg(self, proxSensors, avoidance = False) :
+		self.mainLogger.debug("Avoidance : " + str(avoidance))
+		
 		if not avoidance :
-			leftWheel = [-0.01, -0.005, -0.0001, 0.006, 0.015]
-			rightWheel = [0.012, 0.007, -0.0002, -0.0055, -0.011]
+			leftWheel = [-0.1, -0.05, -0.001, 0.06, 0.15]
+			rightWheel = [0.12, 0.07, -0.002, -0.055, -0.11]
 		else :
-			leftWheel = [0.01, 0.005, 0.0001, -0.006, -0.015]
-			rightWheel = [-0.012, -0.007, 0.0002, 0.0055, 0.011]
+			leftWheel = [0.1, 0.05, 0.001, -0.06, -0.15]
+			rightWheel = [-0.12, -0.07, 0.002, 0.055, 0.11]
 
 		# Braitenberg algorithm
 		totalLeft = 0
