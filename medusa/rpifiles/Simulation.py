@@ -20,7 +20,7 @@ class Simulation(threading.Thread) :
 		# Main controller
 		self.controller = controller
 
-		self.stop = threading.Event()
+		self.stopEv = threading.Event()
 
 		# Thymio controller
 		self.__tcPA = False
@@ -33,7 +33,7 @@ class Simulation(threading.Thread) :
 	def run(self) :
 		self.preActions()
 
-		while not self.stop.isSet() :
+		while not self.stopEv.isSet() :
 			self.step()
 
 		self.postActions()
@@ -51,10 +51,10 @@ class Simulation(threading.Thread) :
 		pass
 
 	def stop(self) :
-		self.stop.set()
+		self.stopEv.set()
 
 	def isStopped(self) :
-		return self.stop.isSet()
+		return self.stopEv.isSet()
 
 	def reset(self) :
 		pass
@@ -67,7 +67,7 @@ class Simulation(threading.Thread) :
 	def waitForControllerResponse(self) :
 		# Wait for ThymioController response
 		with self.__tcPerformedAction :
-			while not self.__tcPA and not self.stop.isSet() :
+			while not self.__tcPA and not self.stopEv.isSet() :
 				self.__tcPerformedAction.wait()
 			self.__tcPA = False
 
