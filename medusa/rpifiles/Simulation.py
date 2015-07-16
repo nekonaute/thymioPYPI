@@ -51,6 +51,9 @@ class Simulation(threading.Thread) :
 	def stop(self) :
 		self.__stop.set()
 
+	def isStopped(self) :
+		return self.__stop.isSet()
+
 	def reset(self) :
 		pass
 		
