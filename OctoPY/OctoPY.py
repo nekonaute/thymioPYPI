@@ -247,7 +247,7 @@ def sendMessage(message, IPs, data = None) :
 						myIP = ipaddress.ip_address(u'' + out.split(' ')[0])
 
 					# proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", "/home/pi/pithymio.py"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-					proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'MainController.py'), '-d', , '-D', '-i', str(myIP), '&'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+					proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'MainController.py'), '-d', '-i', str(myIP), '&'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 					# proc = subprocess.Popen(sshcommand + ["sh", os.path.join(THYMIO_SCRIPTS_PATH, '_init_thymio.sh'), str(myIP)], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 					# proc.wait()
 
