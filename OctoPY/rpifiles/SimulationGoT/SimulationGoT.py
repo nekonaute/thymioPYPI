@@ -36,8 +36,8 @@ class SimulationGoT(Simulation.Simulation) :
 			self.waitForControllerResponse()
 
 			if self.__curLine < len(self.__sounds) :
-				self.mainLogger.debug('Sound : ' + str(self.__sounds[self.__curLine][0]) + '/' + str(self.__sounds[self.__curLine][0]/float(1000)))
-				self.tController.writeSoundRequest([int(self.__sounds[self.__curLine][0]), self.__sounds[self.__curLine][0]/float(1000)])
+				self.mainLogger.debug('Sound : ' + str(self.__sounds[self.__curLine][0]) + '/' + str(self.__sounds[self.__curLine][1]/float(1000)))
+				self.tController.writeSoundRequest([int(self.__sounds[self.__curLine][0]), self.__sounds[self.__curLine][1]/float(1000)])
 				self.__curLine += 1
 			else :
 				self.stop()
@@ -49,6 +49,6 @@ class SimulationGoT(Simulation.Simulation) :
 			randB = random.randint(0, 32)
 			self.tController.writeColorRequest([randR, randG, randB])
 
-			time.sleep(self.__sounds[self.__curLine][0]/float(1000))
+			time.sleep(self.__sounds[self.__curLine][1]/float(1000))
 		except :
 			self.mainLogger.critical('SimulationDefault - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
