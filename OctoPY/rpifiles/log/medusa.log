@@ -1,0 +1,77 @@
+2015-07-13 15:07:44,690 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "./MainController.py", line 205, in <module>
+    gobject.threads_init()
+NameError: name 'gobject' is not defined
+
+2015-07-13 15:08:57,357 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    tC = ThymioController(mainLogger)
+NameError: name 'ThymioController' is not defined
+
+2015-07-13 15:09:52,998 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    controller = MainController(mainLogger)
+TypeError: __init__() takes exactly 1 argument (2 given)
+
+2015-07-13 15:09:55,544 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    controller = MainController(mainLogger)
+TypeError: __init__() takes exactly 1 argument (2 given)
+
+2015-07-13 15:10:11,354 - DEBUG: Yep
+2015-07-13 15:10:11,354 - DEBUG: Wip
+2015-07-13 15:10:11,354 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    controller = MainController()
+  File "./MainController.py", line 46, in __init__
+    self.__command = MessageCommand.NONE
+NameError: global name 'MessageCommand' is not defined
+
+2015-07-13 15:11:10,238 - DEBUG: Yep
+2015-07-13 15:11:10,238 - DEBUG: Wip
+2015-07-13 15:11:10,238 - DEBUG: Caca
+2015-07-13 15:11:10,238 - DEBUG: MainController - Running.
+2015-07-13 15:11:10,238 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:11:10,239 - DEBUG: Yo
+2015-07-13 15:13:42,670 - DEBUG: MainController - Running.
+2015-07-13 15:13:42,670 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:20:04,824 - DEBUG: MainController - Running.
+2015-07-13 15:20:04,824 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:20:45,500 - DEBUG: MainController - Running.
+2015-07-13 15:20:45,501 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:21:07,997 - DEBUG: MainController - Running.
+2015-07-13 15:21:07,997 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:21:46,136 - DEBUG: MainController - Running.
+2015-07-13 15:21:46,136 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:23:04,544 - DEBUG: MainController - Running.
+2015-07-13 15:23:04,544 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:24:58,400 - DEBUG: MainController - Running.
+2015-07-13 15:24:58,400 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:24:59,715 - DEBUG: HE HO HEIN
+2015-07-13 15:25:40,894 - DEBUG: MainController - Running.
+2015-07-13 15:25:40,894 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:25:41,927 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    controller.run()
+  File "./MainController.py", line 121, in run
+    __killController()
+NameError: global name '_MainController__killController' is not defined
+
+2015-07-13 15:26:02,032 - DEBUG: MainController - Running.
+2015-07-13 15:26:02,033 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:26:11,803 - DEBUG: MainController - Killing controller.
+2015-07-13 15:26:11,804 - CRITICAL: Error in main: <type 'exceptions.AttributeError'> - Traceback (most recent call last):
+  File "./MainController.py", line 211, in <module>
+    controller.run()
+  File "./MainController.py", line 126, in run
+    self.__cmdListener.stop()
+AttributeError: 'CommandsListener' object has no attribute 'stop'
+
+2015-07-13 15:31:55,607 - DEBUG: MainController - Running.
+2015-07-13 15:31:55,607 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:31:57,101 - DEBUG: MainController - Killing controller.
+2015-07-13 15:31:57,101 - DEBUG: MainController - Exiting
+2015-07-13 15:32:29,038 - DEBUG: MainController - Running.
+2015-07-13 15:32:29,038 - DEBUG: CommandsListener - Waiting on accept...
+2015-07-13 15:32:30,211 - DEBUG: MainController - Killing controller.
+2015-07-13 15:32:30,212 - DEBUG: MainController - Exiting

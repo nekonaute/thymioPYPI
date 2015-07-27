@@ -1,0 +1,20 @@
+name = Eduroam
+author = UPMC
+version = 1
+require username *Username password *Password
+-----
+ctrl_interface=/var/run/wpa_supplicant
+network={
+	ssid="$_ESSID"
+	scan_ssid=$_SCAN
+	key_mgmt=WPA-EAP
+	proto=WPA2
+	pairwise=CCMP
+	eap=PEAP
+	anonymous_identity="anonymous@upmc.fr"
+	identity="$_USERNAME"
+	password="$_PASSWORD"
+	phase1="peaplabel=0"
+	phase2="autho=MSCHAPV2"
+	priority=1
+}
