@@ -25,7 +25,7 @@ LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationGoT.cfg')
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationMusic.cfg')
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555

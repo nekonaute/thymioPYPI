@@ -8,7 +8,7 @@ import Simulation
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-class SimulationGoT(Simulation.Simulation) :
+class SimulationMusic(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
