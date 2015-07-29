@@ -11,7 +11,7 @@ import glib, gobject
 import dbus, dbus.mainloop.glib
 import time
 import importlib
-import cmd
+import subprocess
 
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 import Params
@@ -98,6 +98,10 @@ class MainController() :
 		if self.__simulation and not self.__simulation.isStopped() :
 			mainLogger.debug("MainController - Killing simulation.")
 			self.__simulation.stop()
+
+		mainLogger.debug("MainController - Killing asebamedulla.")
+		proc = subprocess.Popen(["kill", "$(pgrep asebamedulla)"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+		(out, err) = proc.communicate()
 
 
 	def getCommand(self, command, data = None) :
