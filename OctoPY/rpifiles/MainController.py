@@ -68,6 +68,22 @@ class MainController() :
 			mainLogger.info('MainController - Starting simulation')
 			self.__simulation.start()
 
+	def __pauseSimulation(self) :
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for simulation pause while no simulation started.')
+		else :
+			mainLogger.info('MainController - Pausing simulation')
+			self.__simulation.pause()
+
+	def __restartSimulation(self) :
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for simulation restart while no simulation started.')
+		elif self.__simulation and not self.__simulation.isPaused() :
+			mainLogger.error('MainController - Request for simulation restart while no simulation paused.')
+		else :
+			mainLogger.info('MainController - Restarting simulation')
+			self.__simulation.restart()
+
 	def __setSimulation(self, configFile) :
 		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, configFile)) :
 			self.__simulationConfig = os.path.join(CURRENT_FILE_PATH, configFile)
@@ -128,6 +144,10 @@ class MainController() :
 					# We treat the command corresponding to the message
 					if self.__command == MessageCommand.START :
 						self.__startSimulation()
+					elif self.__command == MessageCommand.PAUSE :
+						self.__pauseSimulation()
+					elif self.__command == MessageCommand.RESTART :
+						self.__restartSimulation()
 					elif self.__command == MessageCommand.SET :
 						self.__setSimulation(self.__commandData)
 					elif self.__command == MessageCommand.STOP :
@@ -184,6 +204,10 @@ class CommandsListener(threading.Thread) :
 				data = None
 				if message.msgType == MessageType.START :
 					messageCommand = MessageCommand.START
+				elif message.msgType == MessageType.PAUSE :
+					messageCommand = MessageCommand.PAUSE
+				elif message.msgType == MessageType.RESTART :
+					messageCommand = MessageCommand.RESTART
 				elif message.msgType == MessageType.SET :
 					messageCommand = MessageCommand.SET
 					data = message.data

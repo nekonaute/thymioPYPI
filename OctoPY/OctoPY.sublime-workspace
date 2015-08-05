@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"__sim",
+				"__simulation"
+			],
+			[
 				"__c",
 				"__cmdListener"
 			],
@@ -46,10 +50,6 @@
 			[
 				"Me",
 				"MessageCommand"
-			],
-			[
-				"__sim",
-				"__simulationConfig"
 			],
 			[
 				"con",
@@ -399,62 +399,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "rpifiles/SimulationGoT/SimulationGoT.py",
-			"settings":
-			{
-				"buffer_size": 1742,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/MainController.py",
-			"settings":
-			{
-				"buffer_size": 7695,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/Simulation.py",
-			"settings":
-			{
-				"buffer_size": 1750,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/asebaCommands.aesl",
-			"settings":
-			{
-				"buffer_size": 691,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "OctoPY.py",
-			"settings":
-			{
-				"buffer_size": 18729,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/SimulationGoT/script.sh",
-			"settings":
-			{
-				"buffer_size": 9824,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/ThymioController.py",
-			"settings":
-			{
-				"buffer_size": 6867,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -480,13 +424,21 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
+		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/script.sh",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/SimulationGoT.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/LocalOctoPY.py",
 		"/home/arthur/thymioPYPI/OctoPY/thymio_exchange_seq/src/exchange_seq.py",
-		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
-		"/home/arthur/thymioPYPI/OctoPY/utils.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/script.sh",
 		"/home/arthur/Misc/EvolutionaryDrawing/Params.py",
 		"/home/arthur/Misc/EvolutionaryDrawing/EvolDrawing.py",
 		"/home/arthur/thymioPYPI/OctoPY/medusa.py",
@@ -599,15 +551,7 @@
 		"/home/arthur/sferes2-0.99/sferes/misc/rand.hpp",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionGen.hpp",
 		"/home/arthur/sferes2-0.99/sferes/ea/nsga2.hpp",
-		"/home/arthur/sferes2-0.99/sferes/ea/ea.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/Elitist-CoEvo.hpp",
-		"/home/arthur/sferes2-0.99/sferes/phen/indiv.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/PhenChasseur.hpp",
-		"/home/arthur/sferes2-0.99/sferes/misc.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Following/ElitistGen.hpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/rmGen.py",
-		"/home/arthur/sferes2-0.99/sferes/gen/evo_float.hpp",
-		"/home/arthur/sferes2-0.99/test.py"
+		"/home/arthur/sferes2-0.99/sferes/ea/ea.hpp"
 	],
 	"find":
 	{
@@ -625,6 +569,13 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"SET",
+			".SET",
+			"MessageType.PAUSE",
+			"MessageType.START",
+			"Sound",
+			"Popen",
+			"SimulationGoT",
 			"Request",
 			"Sound",
 			"str(destIP)",
@@ -745,14 +696,7 @@
 			"lastEval",
 			"evaluation",
 			"lastEval",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEvalRun"
+			"evaluation"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -773,196 +717,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "rpifiles/SimulationGoT/SimulationGoT.py",
-					"settings":
-					{
-						"buffer_size": 1742,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1207,
-								1207
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 233.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "rpifiles/MainController.py",
-					"settings":
-					{
-						"buffer_size": 7695,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1356,
-								1356
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 642.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "rpifiles/Simulation.py",
-					"settings":
-					{
-						"buffer_size": 1750,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1347,
-								1347
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 615.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "rpifiles/asebaCommands.aesl",
-					"settings":
-					{
-						"buffer_size": 691,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								245,
-								245
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "OctoPY.py",
-					"settings":
-					{
-						"buffer_size": 18729,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								8327,
-								8327
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 8418.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "rpifiles/SimulationGoT/script.sh",
-					"settings":
-					{
-						"buffer_size": 9824,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "rpifiles/ThymioController.py",
-					"settings":
-					{
-						"buffer_size": 6867,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2898,
-								2898
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1319.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1008,16 +764,36 @@
 		"selected_items":
 		[
 			[
+				"simu",
+				"rpifiles/SimulationDefault/SimulationDefault.py"
+			],
+			[
+				"si",
+				"rpifiles/SimulationMusic/SimulationMusic.py"
+			],
+			[
+				"u",
+				"rpifiles/utils.py"
+			],
+			[
+				"kil",
+				"rpifiles/killAseba.sh"
+			],
+			[
+				"oc",
+				"OctoPY.py"
+			],
+			[
+				"ma",
+				"rpifiles/MainController.py"
+			],
+			[
 				"thy",
 				"rpifiles/ThymioController.py"
 			],
 			[
 				"scr",
 				"rpifiles/SimulationGoT/script.sh"
-			],
-			[
-				"oc",
-				"OctoPY.py"
 			],
 			[
 				"seq",
@@ -1032,10 +808,6 @@
 				"rpifiles/utils.py"
 			],
 			[
-				"u",
-				"utils.py"
-			],
-			[
 				"sim",
 				"rpifiles/SimulationDefault/SimulationDefault.py"
 			],
@@ -1045,10 +817,6 @@
 			],
 			[
 				"simula",
-				"rpifiles/Simulation.py"
-			],
-			[
-				"si",
 				"rpifiles/Simulation.py"
 			],
 			[
@@ -1062,10 +830,6 @@
 			[
 				"me",
 				"medusa.py"
-			],
-			[
-				"ma",
-				"rpifiles/MainController.py"
 			],
 			[
 				"ae",
@@ -1086,10 +850,6 @@
 			[
 				"",
 				"hostnames_table.json"
-			],
-			[
-				"simu",
-				"rpifiles/Simulation.py"
 			],
 			[
 				"cfg",

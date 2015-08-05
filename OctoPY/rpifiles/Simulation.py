@@ -21,6 +21,8 @@ class Simulation(threading.Thread) :
 		self.controller = controller
 
 		self.__stop = threading.Event()
+		self.__pause = threading.Event()
+		self.__restart = threading.Event()
 
 		# Thymio controller
 		self.__tcPA = False
@@ -36,6 +38,12 @@ class Simulation(threading.Thread) :
 		while not self.__stop.isSet() :
 			self.step()
 
+			if self.__pause.isSet() :
+				self.pauseActions()
+
+				while not self.__restart.isSet() :
+					self.__restart.wait()
+
 		self.postActions()
 
 		self.tController.stop()
@@ -49,6 +57,20 @@ class Simulation(threading.Thread) :
 	@abstractmethod
 	def step(self) :
 		pass
+
+	def pause(self) :
+		self.__pause.set()
+		self.__restart.clear()
+
+	def pauseActions(self) :
+		self.tController.writeMotorsSpeedRequest([0, 0])
+
+	def restart(self) :
+		self.__restart.set()
+		self.__pause.clear()
+
+	def isPaused(self) :
+		return self.__pause.isSet()
 
 	def stop(self) :
 		self.__stop.set()

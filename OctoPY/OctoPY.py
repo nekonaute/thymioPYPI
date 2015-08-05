@@ -258,6 +258,20 @@ def sendMessage(message, IPs, data = None) :
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
+				# Pause simulation
+				elif message == MessageType.PAUSE :
+					optSend.msgType = MessageType.PAUSE
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
+				# Restart simulation
+				elif message == MessageType.RESTART :
+					optSend.msgType = MessageType.RESTART
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
 				# Set simulation
 				elif message == MessageType.SET :
 					optSend.msgType = MessageType.SET

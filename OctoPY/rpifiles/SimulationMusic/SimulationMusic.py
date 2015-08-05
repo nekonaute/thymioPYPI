@@ -28,7 +28,9 @@ class SimulationMusic(Simulation.Simulation) :
 
 	def postActions(self) :
 		self.waitForControllerResponse()
-		self.tController.writeColorRequest([32, 32, 32])
+		self.tController.writeColorRequest([0, 0, 0])
+		self.waitForControllerResponse()
+		self.tController.writeSoundRequest([0, -60])
 		self.waitForControllerResponse()
 
 	def step(self) :
@@ -36,7 +38,6 @@ class SimulationMusic(Simulation.Simulation) :
 			self.waitForControllerResponse()
 
 			if self.__curLine < len(self.__sounds) :
-				self.mainLogger.debug('Sound : ' + str(self.__sounds[self.__curLine][0]) + '/' + str(self.__sounds[self.__curLine][1]/float(1000)))
 				self.tController.writeSoundRequest([self.__sounds[self.__curLine][0], self.__sounds[self.__curLine][1]/float(1000)])
 			else :
 				self.stop()
