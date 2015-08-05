@@ -2,6 +2,8 @@ import threading
 
 from abc import ABCMeta, abstractmethod
 
+import numpy as np
+
 import ThymioController
 import Params
 
@@ -98,6 +100,63 @@ class Simulation(threading.Thread) :
 
 	def stopThymioController(self) :
 		self.tController.stop()
+
+
+	# --- Functions for easy thymio movement ---
+	def turn(angle) :
+		self.tController.readMotorsSpeedRequest()
+		self.waitForControllerResponse()
+
+		motorsSpeed = self.tController.getMotorSpeed()
+
+		angularSpeed = (angle * 32.0)/9.0
+
+		if angle < 1 and angle > -1 :
+			m = np.max(motorsSpeed)
+			self.tController.writeMotorsSpeedRequest(motorsSpeed)
+			self.waitForControllerResponse()
+
+		if angle > 0 :
+			self.tController.writeMotorsSpeedRequest([angularSpeed + motorsSpeed[0], motorsSpeed[1] - angularSpeed])
+		else :
+			angularSpeed = angularSpeed * -1.0
+			self.tController.writeMotorsSpeedRequest([motorsSpeed[0] - angularSpeed, motorsSpeed[1] + angularSpeed])
+
+		self.waitForControllerResponse()
+
+
+	def move(angle, speedLeft, speedRight) :
+		self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
+		self.waitForControllerResponse()
+
+		angularSpeed = (angle * 32.0)/9.0
+
+		if angle < 1 and angle > -1 :
+			self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
+			self.waitForControllerResponse()
+			return
+
+		if angle > 0 :
+			self.tController.writeMotorsSpeedRequest([speedLeft + angularSpeed, speedRight - angularSpeed])
+		else :
+			angularSpeed = angularSpeed * -1.0
+			self.tController.writeMotorsSpeedRequest([speedLeft - angularSpeed, speedRight + angularSpeed])
+
+		self.waitForControllerResponse()
+
+
+	def move2(angle, area, minSize, maxSize, speedLeft, speedRight) :
+		if area > maxSize :
+			self.tController.writeMotorsSpeedRequest([0, 0])
+			return
+
+		if area < minSize :
+			self.tController.writeMotorsSpeedRequest([0, 0])
+			return
+
+		move(angle, speedLeft, speedRight)
+
+
 
 	@staticmethod
 	def checkForCompParams() :

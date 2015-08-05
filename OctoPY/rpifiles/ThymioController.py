@@ -118,6 +118,16 @@ class ThymioController(threading.Thread):
 		self.__dbusGetVariable("prox.ground.reflected", self.__dbusGetGroundReflectedReply)
 		self.__dbusGetVariable("prox.ground.delta", self.__dbusGetGroundDeltaReply)
 
+	def __dbusGetMotorSpeedLeft(self, r) :
+		self.__motorspeed[0] = int(r)
+
+	def __dbusGetMotorSpeedRight(self, r) :
+		self.__motorspeed[1] = int(r)
+
+	def __dbusGetMotorSpeed(self):
+		self.__dbusGetVariable("motor.left.speed", self.__dbusGetMotorSpeedLeftReply)
+		self.__dbusGetVariable("motor.right.speed", self.__dbusGetMotorSpeedRightReply)
+
 	def __execute(self):
 		# Notifying that simulation has been set
 		self.__simulation.thymioControllerPerformedAction()
@@ -137,6 +147,9 @@ class ThymioController(threading.Thread):
 				elif self.__request == MessageRequest.MOTORS :
 					# Write motorspeed
 					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
+				elif self.__request = MessageRequest.MOTORSREAD :
+					# Read motorspeed
+					self.__dbusGetMotorSpeed()
 				elif self.__request == MessageRequest.COLOR :
 					self.__dbusSetColor()
 				elif self.__request == MessageRequest.SOUND :
@@ -166,6 +179,11 @@ class ThymioController(threading.Thread):
 	def readGroundSensorsRequest(self):
 		with self.__performActionReq:
 			self.__request = MessageRequest.GROUND
+			self.__performActionReq.notify()
+
+	def readMotorsSpeedRequest(self) :
+		with self.__performActionReq :
+			self.__request = MessageRequest.MOTORSREAD
 			self.__performActionReq.notify()
 
 	def writeMotorsSpeedRequest(self, motorspeed):
