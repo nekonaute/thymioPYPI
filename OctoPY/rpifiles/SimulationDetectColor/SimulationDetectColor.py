@@ -27,6 +27,8 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.mainLogger.debug("Hep")
 			self.__camera.capture(stream, 'jpeg', use_video_port = True)
 			self.mainLogger.debug("Hep2")
+			self.mainLogger.debug("Stream " + str(stream))
+			self.mainLogger.debug("Stream value " + str(stream.getValue()))
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			self.mainLogger.debug("Hep3")
 			img = cv2.imdecode(data, 1)
