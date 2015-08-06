@@ -37,11 +37,16 @@ class SimulationDetectColor(Simulation.Simulation) :
 			# Blurring and converting to HSV values
 			image = cv2.GaussianBlur(img, (5, 5), 0)
 			image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
+			cv2.SaveImage("./HSVImage1.jpg", image_HSV)
+			
 			# Locate the color
 			mask = cv2.inRange(image_HSV, np.array([100, 50, 50]), np.array([110, 255, 255]))
 			mask = cv2.GaussianBlur(mask, (5, 5), 0)
-
+			cv2.SaveImage("./HSVImage2.jpg", image_HSV)
+			cv2.SaveImage("./Mask.jpg", mask)
+			self.stop()
+			return
+			
 			# We get a list of the outlines of the white shapes in the mask
 			contours, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
