@@ -3,6 +3,8 @@ import glib, gobject
 import dbus, dbus.mainloop.glib
 import os
 import threading
+import traceback
+import sys
 
 import Simulation
 import Params
