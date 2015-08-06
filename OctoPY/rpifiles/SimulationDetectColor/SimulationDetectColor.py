@@ -2,6 +2,9 @@ import time
 import random
 import picamera
 import io
+import sys
+import traceback
+import logging
 
 import Params
 import Simulation
@@ -78,8 +81,6 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			time.sleep(0.1)
 		except :
-			self.mainLogger.debug('SimulationDetectColor - Unexpected error : ')
-			self.mainLogger.critical('SimulationDetectColor - Unexpected error : ')
 			self.mainLogger.critical('SimulationDetectColor - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
