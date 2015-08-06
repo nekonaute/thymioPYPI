@@ -5,6 +5,7 @@ import io
 import sys
 import traceback
 import logging
+import numpy as np
 
 import Params
 import Simulation
