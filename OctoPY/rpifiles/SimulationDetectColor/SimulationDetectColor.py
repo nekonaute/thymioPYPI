@@ -29,7 +29,6 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.mainLogger.debug("Hep2")
 			self.mainLogger.debug("Stream " + str(stream))
 			self.mainLogger.debug("Stream value " + str(stream.getValue()))
-			lol = prout
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			self.mainLogger.debug("Hep3")
 			img = cv2.imdecode(data, 1)
@@ -79,5 +78,8 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			time.sleep(0.1)
 		except :
+			self.mainLogger.debug('SimulationDetectColor - Unexpected error : ')
+			self.mainLogger.critical('SimulationDetectColor - Unexpected error : ')
 			self.mainLogger.critical('SimulationDetectColor - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+
 
