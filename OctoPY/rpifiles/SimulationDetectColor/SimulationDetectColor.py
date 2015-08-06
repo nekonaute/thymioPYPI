@@ -71,7 +71,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 				self.move2(angle, area, minSize, maxSize, 100, 100)
 			else :
 				self.mainLogger.debug("Nop")
-				self.tController.writeMotorsSpeedRequest(0, 0)
+				self.tController.writeMotorsSpeedRequest([0, 0])
 
 			self.waitForControllerResponse()
 			time.sleep(0.1)
