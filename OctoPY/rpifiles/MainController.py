@@ -119,6 +119,8 @@ class MainController() :
 		proc = subprocess.Popen(["kill", "$(pgrep asebamedulla)"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		(out, err) = proc.communicate()
 
+		mainLogger.debug(str(out) + "/" + str(err))
+
 
 	def getCommand(self, command, data = None) :
 		mainLogger.debug("MainController - Command " + str(command) + " received.")
