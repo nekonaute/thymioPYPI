@@ -38,7 +38,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, STOP, KILL, SET = range(0, 4)
+	START, PAUSE, RESTART,STOP, KILL, SET = range(0, 6)
 
 class MainController() :
 	def __init__(self) :
