@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"si",
+				"size_x"
+			],
+			[
+				"spe",
+				"speedRight"
+			],
+			[
+				"w",
+				"writeMotorsSpeedRequest"
+			],
+			[
+				"sp",
+				"speedLeft"
+			],
+			[
+				"an",
+				"angularSpeed"
+			],
+			[
+				"mo",
+				"motorsSpeed"
+			],
+			[
+				"wait",
+				"waitForControllerResponse"
+			],
+			[
+				"wai",
+				"waitForControllerResponse"
+			],
+			[
+				"MOTORS",
+				"MOTORSREAD"
+			],
+			[
+				"not",
+				"notify"
+			],
+			[
+				"Simulation",
+				"SimulationDetectColor"
+			],
+			[
 				"__sim",
 				"__simulation"
 			],
@@ -90,10 +134,6 @@
 			[
 				"is",
 				"isStopped"
-			],
-			[
-				"si",
-				"simulation"
 			],
 			[
 				"simul",
@@ -248,10 +288,6 @@
 				"lookRange"
 			],
 			[
-				"wai",
-				"waitingAnswer"
-			],
-			[
 				"lis",
 				"listeningHosts"
 			],
@@ -399,6 +435,62 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+			"settings":
+			{
+				"buffer_size": 2118,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/Simulation.py",
+			"settings":
+			{
+				"buffer_size": 3840,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/ThymioController.py",
+			"settings":
+			{
+				"buffer_size": 7340,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/SimulationDefault/SimulationDefault.py",
+			"settings":
+			{
+				"buffer_size": 1795,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Backup/Controlling Thymio/movements.py",
+			"settings":
+			{
+				"buffer_size": 2368,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Backup/Controlling Thymio/detectColor.py",
+			"settings":
+			{
+				"buffer_size": 3527,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Backup/Controlling Thymio/ThymioFunctions.py",
+			"settings":
+			{
+				"buffer_size": 6222,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -424,6 +516,18 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/tools.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/squareDetect.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/stopThymio.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/testbarcode.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/sift_orb.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/communicate.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/imutils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioFunctions.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/AvoidObstacles.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
 		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
@@ -539,19 +643,7 @@
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/includes.hpp",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/StagHunt.cpp",
 		"/home/arthur/sferes2-0.99/scriptsArthur/refactResults.py",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsGeneration.py",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllPayoffsEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/BestFitEval.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllFitEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.perl",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/PhenInvasion.hpp",
-		"/home/arthur/sferes2-0.99/sferes/parallel.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/FitnessProp.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/EvalInvasion.hpp",
-		"/home/arthur/sferes2-0.99/sferes/misc/rand.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionGen.hpp",
-		"/home/arthur/sferes2-0.99/sferes/ea/nsga2.hpp",
-		"/home/arthur/sferes2-0.99/sferes/ea/ea.hpp"
+		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsGeneration.py"
 	],
 	"find":
 	{
@@ -569,6 +661,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"iniSpeedL",
+			"SimulationBraitenberg",
 			"SET",
 			".SET",
 			"MessageType.PAUSE",
@@ -694,8 +788,6 @@
 			"tabEvaluation",
 			"evaluation",
 			"lastEval",
-			"evaluation",
-			"lastEval",
 			"evaluation"
 		],
 		"highlight": true,
@@ -717,8 +809,203 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+					"settings":
+					{
+						"buffer_size": 2118,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1744,
+								1744
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 857.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "rpifiles/Simulation.py",
+					"settings":
+					{
+						"buffer_size": 3840,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3324,
+								3324
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1928.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "rpifiles/ThymioController.py",
+					"settings":
+					{
+						"buffer_size": 7340,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5622,
+								5622
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2886.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "rpifiles/SimulationDefault/SimulationDefault.py",
+					"settings":
+					{
+						"buffer_size": 1795,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1630,
+								1630
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 506.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "Backup/Controlling Thymio/movements.py",
+					"settings":
+					{
+						"buffer_size": 2368,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1627,
+								1627
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 389.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Backup/Controlling Thymio/detectColor.py",
+					"settings":
+					{
+						"buffer_size": 3527,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2114,
+								2114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1397.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Backup/Controlling Thymio/ThymioFunctions.py",
+					"settings":
+					{
+						"buffer_size": 6222,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3538,
+								3538
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2036.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -739,11 +1026,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -764,12 +1058,28 @@
 		"selected_items":
 		[
 			[
-				"simu",
-				"rpifiles/SimulationDefault/SimulationDefault.py"
+				"si",
+				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
 			],
 			[
-				"si",
-				"rpifiles/SimulationMusic/SimulationMusic.py"
+				"thy",
+				"OctoPY/rpifiles/ThymioController.py"
+			],
+			[
+				"sim",
+				"OctoPY/rpifiles/Simulation.py"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"dete",
+				"OctoPY/rpifiles/detectColor.cfg"
+			],
+			[
+				"simua",
+				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
 			],
 			[
 				"u",
@@ -788,10 +1098,6 @@
 				"rpifiles/MainController.py"
 			],
 			[
-				"thy",
-				"rpifiles/ThymioController.py"
-			],
-			[
 				"scr",
 				"rpifiles/SimulationGoT/script.sh"
 			],
@@ -806,10 +1112,6 @@
 			[
 				"util",
 				"rpifiles/utils.py"
-			],
-			[
-				"sim",
-				"rpifiles/SimulationDefault/SimulationDefault.py"
 			],
 			[
 				"aes",
