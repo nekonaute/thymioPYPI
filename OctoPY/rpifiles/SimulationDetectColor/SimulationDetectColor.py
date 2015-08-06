@@ -65,7 +65,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 				targetX = int(coordinates['m10']/coordinates['m00'])
 				targetY = int(coordinates['m01']/coordinates['m00'])
 
-				angle = (float(targetX), Params.params.size_x) * 66 - 33
+				angle = (float(targetX) / Params.params.size_x) * 66 - 33
 				minSize = 900
 				maxSize = 30000
 				self.move2(angle, area, minSize, maxSize, 100, 100)
