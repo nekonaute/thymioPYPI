@@ -103,7 +103,7 @@ class Simulation(threading.Thread) :
 
 
 	# --- Functions for easy thymio movement ---
-	def turn(angle) :
+	def turn(self, angle) :
 		self.tController.readMotorsSpeedRequest()
 		self.waitForControllerResponse()
 
@@ -125,7 +125,7 @@ class Simulation(threading.Thread) :
 		self.waitForControllerResponse()
 
 
-	def move(angle, speedLeft, speedRight) :
+	def move(self, angle, speedLeft, speedRight) :
 		self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
 		self.waitForControllerResponse()
 
@@ -145,7 +145,7 @@ class Simulation(threading.Thread) :
 		self.waitForControllerResponse()
 
 
-	def move2(angle, area, minSize, maxSize, speedLeft, speedRight) :
+	def move2(self, angle, area, minSize, maxSize, speedLeft, speedRight) :
 		if area > maxSize :
 			self.tController.writeMotorsSpeedRequest([0, 0])
 			return
