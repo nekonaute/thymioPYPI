@@ -41,6 +41,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 
 			# If we have at least one contour, we look through each one and pick the biggest
 			if len(contours) > 0 :
+				self.mainLogger.debug("Nb contours : " + str(len(contours)));
 				largest = 0
 				area = 0
 
@@ -63,6 +64,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 				maxSize = 30000
 				self.move2(angle, area, minSize, maxSize, 100, 100)
 			else :
+				self.mainLogger.debug("Nop");
 				self.tController.setMotorSpeed(0, 0)
 
 			self.waitForControllerResponse()
