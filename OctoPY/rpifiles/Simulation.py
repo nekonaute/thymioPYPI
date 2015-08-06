@@ -107,6 +107,7 @@ class Simulation(threading.Thread) :
 	# --- Functions for easy thymio movement ---
 	def turn(self, angle) :
 		try :
+			self.mainLogger.debug("turn beginning !")
 			self.tController.readMotorsSpeedRequest()
 			self.waitForControllerResponse()
 
@@ -125,13 +126,16 @@ class Simulation(threading.Thread) :
 				angularSpeed = angularSpeed * -1.0
 				self.tController.writeMotorsSpeedRequest([motorsSpeed[0] - angularSpeed, motorsSpeed[1] + angularSpeed])
 
+			self.mainLogger.debug("turn wait !")
 			self.waitForControllerResponse()
+			self.mainLogger.debug("turn end !")
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
 	def move(self, angle, speedLeft, speedRight) :
 		try :
+			self.mainLogger.debug("move beginning !")
 			self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
 			self.waitForControllerResponse()
 
@@ -148,13 +152,16 @@ class Simulation(threading.Thread) :
 				angularSpeed = angularSpeed * -1.0
 				self.tController.writeMotorsSpeedRequest([speedLeft - angularSpeed, speedRight + angularSpeed])
 
+			self.mainLogger.debug("move wait !")
 			self.waitForControllerResponse()
+			self.mainLogger.debug("move end !")
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
 	def move2(self, angle, area, minSize, maxSize, speedLeft, speedRight) :
 		try :
+			self.mainLogger.debug("move2 beginning !")
 			if area > maxSize :
 				self.tController.writeMotorsSpeedRequest([0, 0])
 				return
@@ -164,6 +171,7 @@ class Simulation(threading.Thread) :
 				return
 
 			self.move(angle, speedLeft, speedRight)
+			self.mainLogger.debug("move2 end !")
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 

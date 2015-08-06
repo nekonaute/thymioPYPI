@@ -68,6 +68,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 				angle = (float(targetX) / Params.params.size_x) * 66 - 33
 				minSize = 900
 				maxSize = 30000
+				self.mainLogger.debug("Yay !")
 				self.move2(angle, area, minSize, maxSize, 100, 100)
 			else :
 				self.mainLogger.debug("Nop")
