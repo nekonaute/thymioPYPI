@@ -14,10 +14,10 @@ AESL_PATH = os.path.join(CURRENT_FILE_PATH, ('asebaCommands.aesl'))
 class MessageRequest() :
 	NONE = -1
 
-	# Write requests
-	SENSORS, GROUND, STOP = range(0, 3)
-
 	# Read requests
+	SENSORS, GROUND, STOP, MOTORSREAD = range(0, 4)
+
+	# Write requests
 	MOTORS, COLOR, SOUND = range(10, 13)
 
 	KILL = 99

@@ -7,7 +7,7 @@ class MessageType :
     NONE = -1
 
     # Query messages
-    INIT, START, PAUSE, RESTART, STOP, KILL, QUERY, SET = range(0, 6)
+    INIT, START, PAUSE, RESTART, STOP, KILL, QUERY, SET = range(0, 8)
 
     # Info message
     ACK, LISTENING, STARTED = range(10, 13)
