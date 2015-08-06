@@ -33,6 +33,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 			self.__camera.capture(stream, 'jpeg', use_video_port = True)
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
+			cv2.imwrite("./ImageRGB.jpg", im)
 
 			# Blurring and converting to HSV values
 			image = cv2.GaussianBlur(img, (5, 5), 0)
