@@ -11,7 +11,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
 		self.__camera = picamera.PiCamera()
-		camera.resolution = (Params.params.size_x, Params.params.size_y)
+		self.__camera.resolution = (Params.params.size_x, Params.params.size_y)
 
 	def preActions(self) :
 		pass
@@ -24,7 +24,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 			stream = io.BytesIO()
 
 			# Capture into stream
-			camera.capture(stream, 'jpeg', use_video_port = True)
+			self.__camera.capture(stream, 'jpeg', use_video_port = True)
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
 
