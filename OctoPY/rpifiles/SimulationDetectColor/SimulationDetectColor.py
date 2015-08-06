@@ -41,7 +41,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 			cv2.imwrite("./HSVImage1.jpg", image_HSV)
 			
 			# Locate the color
-			mask = cv2.inRange(image_HSV, np.array([100, 50, 50]), np.array([110, 255, 255]))
+			mask = cv2.inRange(image_HSV, np.array([40, 40, 40]), np.array([80, 255, 255]))
 			mask = cv2.GaussianBlur(mask, (5, 5), 0)
 			cv2.imwrite("./HSVImage2.jpg", image_HSV)
 			cv2.imwrite("./Mask.jpg", mask)
