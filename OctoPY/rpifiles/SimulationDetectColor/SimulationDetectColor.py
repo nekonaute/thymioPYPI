@@ -33,7 +33,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 			image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 			# Locate the color
-			mask = cv2.inRange(image_HSV, np.array([150, 50, 50]), np.array([180, 255, 255]))
+			mask = cv2.inRange(image_HSV, np.array([100, 50, 50]), np.array([110, 255, 255]))
 			mask = cv2.GaussianBlur(mask, (5, 5), 0)
 
 			# We get a list of the outlines of the white shapes in the mask
