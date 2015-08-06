@@ -74,7 +74,9 @@ class SimulationDetectColor(Simulation.Simulation) :
 				self.mainLogger.debug("Nop")
 				self.tController.writeMotorsSpeedRequest([0, 0])
 
+			self.mainLogger.debug("Oh wait !")
 			self.waitForControllerResponse()
+			self.mainLogger.debug("End wait !")
 			time.sleep(0.1)
 		except :
 			self.mainLogger.critical('SimulationDetectColor - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
