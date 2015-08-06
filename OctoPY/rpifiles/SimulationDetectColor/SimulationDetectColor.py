@@ -37,13 +37,13 @@ class SimulationDetectColor(Simulation.Simulation) :
 			# Blurring and converting to HSV values
 			image = cv2.GaussianBlur(img, (5, 5), 0)
 			image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-			cv2.SaveImage("./HSVImage1.jpg", image_HSV)
+			cv2.imwrite("./HSVImage1.jpg", image_HSV)
 			
 			# Locate the color
 			mask = cv2.inRange(image_HSV, np.array([100, 50, 50]), np.array([110, 255, 255]))
 			mask = cv2.GaussianBlur(mask, (5, 5), 0)
-			cv2.SaveImage("./HSVImage2.jpg", image_HSV)
-			cv2.SaveImage("./Mask.jpg", mask)
+			cv2.imwrite("./HSVImage2.jpg", image_HSV)
+			cv2.imwrite("./Mask.jpg", mask)
 			self.stop()
 			return
 			
