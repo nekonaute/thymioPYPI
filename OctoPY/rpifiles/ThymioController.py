@@ -147,7 +147,7 @@ class ThymioController(threading.Thread):
 				elif self.__request == MessageRequest.MOTORS :
 					# Write motorspeed
 					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
-				elif self.__request = MessageRequest.MOTORSREAD :
+				elif self.__request == MessageRequest.MOTORSREAD :
 					# Read motorspeed
 					self.__dbusGetMotorSpeed()
 				elif self.__request == MessageRequest.COLOR :
