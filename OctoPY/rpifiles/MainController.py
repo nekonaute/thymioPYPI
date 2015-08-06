@@ -116,7 +116,7 @@ class MainController() :
 			self.__simulation.stop()
 
 		mainLogger.debug("MainController - Killing asebamedulla.")
-		proc = subprocess.Popen(["kill", "$(pgrep asebamedulla)"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+		proc = subprocess.Popen(["sh", "./killAseba.sh"], stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True)
 		(out, err) = proc.communicate()
 
 		mainLogger.debug(str(out) + "/" + str(err))
