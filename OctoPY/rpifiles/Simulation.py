@@ -106,57 +106,66 @@ class Simulation(threading.Thread) :
 
 	# --- Functions for easy thymio movement ---
 	def turn(self, angle) :
-		self.tController.readMotorsSpeedRequest()
-		self.waitForControllerResponse()
-
-		motorsSpeed = self.tController.getMotorSpeed()
-
-		angularSpeed = (angle * 32.0)/9.0
-
-		if angle < 1 and angle > -1 :
-			m = np.max(motorsSpeed)
-			self.tController.writeMotorsSpeedRequest(motorsSpeed)
+		try :
+			self.tController.readMotorsSpeedRequest()
 			self.waitForControllerResponse()
 
-		if angle > 0 :
-			self.tController.writeMotorsSpeedRequest([angularSpeed + motorsSpeed[0], motorsSpeed[1] - angularSpeed])
-		else :
-			angularSpeed = angularSpeed * -1.0
-			self.tController.writeMotorsSpeedRequest([motorsSpeed[0] - angularSpeed, motorsSpeed[1] + angularSpeed])
+			motorsSpeed = self.tController.getMotorSpeed()
 
-		self.waitForControllerResponse()
+			angularSpeed = (angle * 32.0)/9.0
+
+			if angle < 1 and angle > -1 :
+				m = np.max(motorsSpeed)
+				self.tController.writeMotorsSpeedRequest(motorsSpeed)
+				self.waitForControllerResponse()
+
+			if angle > 0 :
+				self.tController.writeMotorsSpeedRequest([angularSpeed + motorsSpeed[0], motorsSpeed[1] - angularSpeed])
+			else :
+				angularSpeed = angularSpeed * -1.0
+				self.tController.writeMotorsSpeedRequest([motorsSpeed[0] - angularSpeed, motorsSpeed[1] + angularSpeed])
+
+			self.waitForControllerResponse()
+		except :
+			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
 	def move(self, angle, speedLeft, speedRight) :
-		self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
-		self.waitForControllerResponse()
-
-		angularSpeed = (angle * 32.0)/9.0
-
-		if angle < 1 and angle > -1 :
+		try :
 			self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
 			self.waitForControllerResponse()
-			return
 
-		if angle > 0 :
-			self.tController.writeMotorsSpeedRequest([speedLeft + angularSpeed, speedRight - angularSpeed])
-		else :
-			angularSpeed = angularSpeed * -1.0
-			self.tController.writeMotorsSpeedRequest([speedLeft - angularSpeed, speedRight + angularSpeed])
+			angularSpeed = (angle * 32.0)/9.0
 
-		self.waitForControllerResponse()
+			if angle < 1 and angle > -1 :
+				self.tController.writeMotorsSpeedRequest([speedLeft, speedRight])
+				self.waitForControllerResponse()
+				return
+
+			if angle > 0 :
+				self.tController.writeMotorsSpeedRequest([speedLeft + angularSpeed, speedRight - angularSpeed])
+			else :
+				angularSpeed = angularSpeed * -1.0
+				self.tController.writeMotorsSpeedRequest([speedLeft - angularSpeed, speedRight + angularSpeed])
+
+			self.waitForControllerResponse()
+		except :
+			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
 	def move2(self, angle, area, minSize, maxSize, speedLeft, speedRight) :
-		if area > maxSize :
-			self.tController.writeMotorsSpeedRequest([0, 0])
-			return
+		try :
+			if area > maxSize :
+				self.tController.writeMotorsSpeedRequest([0, 0])
+				return
 
-		if area < minSize :
-			self.tController.writeMotorsSpeedRequest([0, 0])
-			return
+			if area < minSize :
+				self.tController.writeMotorsSpeedRequest([0, 0])
+				return
 
-		self.move(angle, speedLeft, speedRight)
+			self.move(angle, speedLeft, speedRight)
+		except :
+			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
 
