@@ -154,7 +154,7 @@ class Simulation(threading.Thread) :
 			self.tController.writeMotorsSpeedRequest([0, 0])
 			return
 
-		move(angle, speedLeft, speedRight)
+		self.move(angle, speedLeft, speedRight)
 
 
 
