@@ -156,6 +156,8 @@ class MainController() :
 
 
 	def __register(self, data) :
+		mainLogger.debug("MainController - Registering...")
+
 		if "IP" not in data :
 			mainLogger.error("MainController - No IP for registering observer.")
 			return False
@@ -197,6 +199,8 @@ class MainController() :
 		while 1 :
 			try :
 				with self.__commandReceived :
+					mainLogger.debug("MainController - Command : " + str(self.__command))
+
 					# The controller waits for a command
 					while self.__command == MessageCommand.NONE :
 						self.__commandReceived.wait(1)
