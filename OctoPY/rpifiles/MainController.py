@@ -198,7 +198,7 @@ class MainController() :
 
 		while 1 :
 			try :
-				with self.__commandReceived :
+				# with self.__commandReceived :
 					# The controller waits for a command
 					while self.__command == MessageCommand.NONE :
 						self.__commandReceived.wait(1)
