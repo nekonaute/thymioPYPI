@@ -63,7 +63,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 								listItems = data.getElementsByTagName("item")
 
 								for item in listItems :
-									listGenes.append(item.childNodes[0].data)
+									listGenes.append(float(item.childNodes[0].data))
 			else :
 				regexp = re.compile(r"^(\d+(\.\d+)?)$")
 				with open(os.path.join(CURRENT_FILE_PATH, file), 'r') as fileWeights :
@@ -73,11 +73,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 						s = regexp.search(line)
 
 						if s :
-							gene = s.group(1)
+							gene = float(s.group(1))
 							listGenes.append(gene)
 
 
 			for gene in listGenes :
+				self.log("Gene : " + str(gene))
 				self.__weightsItoH = np.zeros((Params.params.nb_inputs + 1, Params.params.nb_hidden))
 				self.__weightsHtoO = np.zeros((Params.params.nb_hidden + 1, Params.params.nb_outputs))
 				cptColumns = 0
