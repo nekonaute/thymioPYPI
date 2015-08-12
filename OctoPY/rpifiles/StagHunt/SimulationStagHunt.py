@@ -11,6 +11,7 @@ import numpy as np
 import time
 import re
 import xml.dom.minidom
+import os
 
 import Simulation
 import Params
