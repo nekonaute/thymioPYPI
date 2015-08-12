@@ -199,11 +199,11 @@ class MainController() :
 		while 1 :
 			try :
 				with self.__commandReceived :
-					mainLogger.debug("MainController - Command : " + str(self.__command))
-
 					# The controller waits for a command
 					while self.__command == MessageCommand.NONE :
 						self.__commandReceived.wait(1)
+
+					mainLogger.debug("MainController - Command : " + str(self.__command))
 
 					# We treat the command corresponding to the message
 					if self.__command == MessageCommand.START :
