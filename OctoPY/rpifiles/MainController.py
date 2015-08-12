@@ -179,7 +179,7 @@ class MainController() :
 		self.__observers.append(Observer(observerIP, observerID))
 
 	def notify(self, **params) :
-		mainLogger.debug("MainController - Notifying with : " + self(params))
+		mainLogger.debug("MainController - Notifying with : " + str(params))
 		for observer in self.__observers :
 			observer.notify(**params)
 
