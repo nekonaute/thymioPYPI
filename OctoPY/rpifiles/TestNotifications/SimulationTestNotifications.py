@@ -5,11 +5,13 @@ import Params
 
 import time
 import random
+import logging
+import sys
+import traceback
 
 class SimulationTestNotifications(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
-		self.mainLogger.debug("INIT !")
 
 	def preActions(self) :
 		pass
@@ -18,10 +20,13 @@ class SimulationTestNotifications(Simulation.Simulation) :
 		pass
 
 	def step(self) :
-		value = random.randint(0, 9)
-		self.log("Random value : " + str(value))
-		self.notify(value = 9)
+		try :
+			value = random.randint(0, 9)
+			self.log("Random value : " + str(value))
+			self.notify(value = 9)
 
-		sleepTime = random.randint(0, 2)
-		self.log("Sleeping : " + str(sleepTime))
-		time.sleep(sleepTime)
+			sleepTime = random.randint(0, 2)
+			self.log("Sleeping : " + str(sleepTime), logging.ERROR)
+			time.sleep(sleepTime)
+		except :
+			self.log("SimulationTestNotifications - Unexpected error : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
