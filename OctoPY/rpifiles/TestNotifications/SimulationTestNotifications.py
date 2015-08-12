@@ -9,8 +9,10 @@ import random
 class SimulationTestNotifications(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
+		self.mainLogger.debug("INIT !")
 
 	def preActions(self) :
+		self.mainLogger.debug("pre action !")
 		pass
 
 	def postActions(self) :
