@@ -12,6 +12,7 @@ import time
 import re
 import xml.dom.minidom
 import os
+import random
 
 import Simulation
 import Params
