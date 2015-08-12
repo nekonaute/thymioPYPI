@@ -203,7 +203,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			self.log(self.__weightsHtoO)
 
 			# Second computation : hidden to outputs
-			# Bias neuron
+			# Bias neuron
 			hiddenNN = np.concatenate(hiddenNN, np.matrix([[1.0]]))
 			outputs = hidden * self.__weightsHtoO
 			# outputs = map(sigmoid, outputs)
