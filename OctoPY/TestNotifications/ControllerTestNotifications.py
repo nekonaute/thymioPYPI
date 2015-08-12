@@ -52,7 +52,7 @@ class ControllerTestNotifications(Controller.Controller) :
 		pass
 
 	def notify(self, **params) :
-		self.log("Received notification from " + params["hostIP"])
+		self.log("Received notification from " + str(params["hostIP"]))
 
 		if "value" in params :
 			self.log("Received value : " + str(params["value"]))
