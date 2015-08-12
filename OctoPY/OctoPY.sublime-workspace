@@ -4,6 +4,78 @@
 		"selected_items":
 		[
 			[
+				"hidde",
+				"hiddenNN"
+			],
+			[
+				"_",
+				"__weightsItoH"
+			],
+			[
+				"cpt",
+				"cptLines"
+			],
+			[
+				"we",
+				"weight"
+			],
+			[
+				"nb",
+				"nb_inputs"
+			],
+			[
+				"__we",
+				"__weightsHtoO"
+			],
+			[
+				"nb_",
+				"nb_hidden"
+			],
+			[
+				"w",
+				"weight"
+			],
+			[
+				"file",
+				"fileWeights"
+			],
+			[
+				"reci",
+				"recipient"
+			],
+			[
+				"Oc",
+				"octoPYInstance"
+			],
+			[
+				"recip",
+				"recipient"
+			],
+			[
+				"re",
+				"recipientsList"
+			],
+			[
+				"Mess",
+				"MessageListener"
+			],
+			[
+				"main",
+				"mainLogger"
+			],
+			[
+				"__com",
+				"__command"
+			],
+			[
+				"ob",
+				"observerIP"
+			],
+			[
+				"get",
+				"getHashThymiosHostnames"
+			],
+			[
 				"se",
 				"sendMessage"
 			],
@@ -44,10 +116,6 @@
 				"MessageType"
 			],
 			[
-				"ob",
-				"observerID"
-			],
-			[
 				"obs",
 				"observerID"
 			],
@@ -72,14 +140,6 @@
 				"launchController"
 			],
 			[
-				"file",
-				"fileOut"
-			],
-			[
-				"main",
-				"mainClass"
-			],
-			[
 				"fo",
 				"folder"
 			],
@@ -98,10 +158,6 @@
 			[
 				"spe",
 				"speedRight"
-			],
-			[
-				"w",
-				"writeMotorsSpeedRequest"
 			],
 			[
 				"sp",
@@ -144,10 +200,6 @@
 				"__cmdListener"
 			],
 			[
-				"__com",
-				"__commandData"
-			],
-			[
 				"to",
 				"totalRight"
 			],
@@ -169,10 +221,6 @@
 			],
 			[
 				"Mee",
-				"MessageType"
-			],
-			[
-				"Mess",
 				"MessageType"
 			],
 			[
@@ -198,10 +246,6 @@
 			[
 				"__si",
 				"__simulation"
-			],
-			[
-				"re",
-				"reLine"
 			],
 			[
 				"sim",
@@ -242,14 +286,6 @@
 			[
 				"compl",
 				"completions"
-			],
-			[
-				"get",
-				"getAllAttributes"
-			],
-			[
-				"_",
-				"_size"
 			],
 			[
 				"dra",
@@ -396,10 +432,6 @@
 				"destIP"
 			],
 			[
-				"reci",
-				"recipList"
-			],
-			[
 				"ip",
 				"ip_address"
 			],
@@ -482,56 +514,16 @@
 			[
 				"mutation",
 				"mutation_rate"
-			],
-			[
-				"_po",
-				"_pos_mutant"
-			],
-			[
-				"fitne",
-				"fitnessMean"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "rpifiles/TestNotifications/SimulationTestNotifications.py",
-			"settings":
-			{
-				"buffer_size": 451,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "TestNotifications/ControllerTestNotifications.py",
-			"settings":
-			{
-				"buffer_size": 1155,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "OctoPY.py",
 			"settings":
 			{
-				"buffer_size": 21048,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/Simulation.py",
-			"settings":
-			{
-				"buffer_size": 4850,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/MainController.py",
-			"settings":
-			{
-				"buffer_size": 10637,
+				"buffer_size": 25556,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,15 +531,55 @@
 			"file": "Controller.py",
 			"settings":
 			{
-				"buffer_size": 3332,
+				"buffer_size": 1484,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "rpifiles/SimulationDefault/SimulationDefault.py",
+			"file": "rpifiles/MainController.py",
 			"settings":
 			{
-				"buffer_size": 1795,
+				"buffer_size": 11147,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/Simulation.py",
+			"settings":
+			{
+				"buffer_size": 4588,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TestNotifications/ControllerTestNotifications.py",
+			"settings":
+			{
+				"buffer_size": 1505,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+			"settings":
+			{
+				"buffer_size": 5495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/arthur/OgarCancun/src/ai/BotNN.js",
+			"settings":
+			{
+				"buffer_size": 19461,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/config_StagHunt.cfg",
+			"settings":
+			{
+				"buffer_size": 475,
 				"line_ending": "Unix"
 			}
 		}
@@ -576,17 +608,22 @@
 	},
 	"file_history":
 	[
-		"/home/arthur/thymioPYPI/OctoPY/Params.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
-		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
+		"/home/arthur/thymioPYPI/OctoPY/config_TestNotifications.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
-		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
-		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/TestNotifications/SimulationTestNotifications.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
+		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
+		"/home/arthur/thymioPYPI/OctoPY/Params.py",
 		"/home/arthur/thymioPYPI/OctoPY/CreateController.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
 		"/home/arthur/pithymio.py",
 		"/home/arthur/pithymio_freq.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
@@ -598,7 +635,6 @@
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CreateExperiment.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
 		"/home/arthur/MiscTests/Python/TestInput.py",
 		"/home/arthur/testCamera2.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
@@ -614,7 +650,6 @@
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/movements.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
 		"/home/arthur/testCamera.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activeCamera.sh",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/tools.py",
@@ -700,10 +735,7 @@
 		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/copy_file.sh",
 		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/runExpe.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/stop_thymio.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/get_output_files.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/clear_log-output.sh",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/run_simulation.py"
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/stop_thymio.py"
 	],
 	"find":
 	{
@@ -721,6 +753,32 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"octoPYInstance",
+			"OctoPY",
+			"self.__logger",
+			"recvOne",
+			"self.octoPYInstance.logger",
+			"self.__logger(",
+			"self.__logger",
+			"self.__octoPYInstance",
+			"OctoPY.",
+			"loadHostnamesTable()",
+			"loadHostnamesTable",
+			"global",
+			"OctoPY",
+			"octoPYInteractive",
+			"OctoPY.logger",
+			"self.__hashThymiosHostnames",
+			"logging",
+			"__listThymiosStates",
+			"start",
+			"__listThymiosStates",
+			"listThymiosStates",
+			"logging",
+			"logger",
+			"hashThymiosHostnames",
+			"MedusaInteractive",
+			"self.stop",
 			"Simulation",
 			"simulation",
 			"args.experiment",
@@ -822,33 +880,7 @@
 			"rate0",
 			"RATE0",
 			"RATE",
-			"RATE0005",
-			"TRUSTED_CLIENTS",
-			"listThymiosState",
-			"sendMessage",
-			"communicate",
-			"ping",
-			"IPs",
-			"listThymiosState",
-			"resolveAddress",
-			"rangeArg",
-			"myIP",
-			"options.send",
-			"sendMessage",
-			"options",
-			"sockACK",
-			"waitingACK",
-			"sendMessage",
-			"sockACK",
-			"CommandsListener",
-			"json",
-			"fileHander",
-			"err",
-			"lev",
-			"])\n",
-			"2015_06_01",
-			"behaviourTraces",
-			"behavior"
+			"RATE0005"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -869,23 +901,131 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "rpifiles/TestNotifications/SimulationTestNotifications.py",
+					"file": "OctoPY.py",
 					"settings":
 					{
-						"buffer_size": 451,
+						"buffer_size": 25556,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								251,
-								251
+								22463,
+								22463
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11866.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Controller.py",
+					"settings":
+					{
+						"buffer_size": 1484,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1484,
+								1484
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 189.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "rpifiles/MainController.py",
+					"settings":
+					{
+						"buffer_size": 11147,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5964,
+								5964
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4400.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "rpifiles/Simulation.py",
+					"settings":
+					{
+						"buffer_size": 4588,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4588,
+								4588
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2491.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "TestNotifications/ControllerTestNotifications.py",
+					"settings":
+					{
+						"buffer_size": 1505,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								572,
+								572
 							]
 						],
 						"settings":
@@ -900,127 +1040,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "TestNotifications/ControllerTestNotifications.py",
-					"settings":
-					{
-						"buffer_size": 1155,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1155,
-								1155
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 230.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "OctoPY.py",
-					"settings":
-					{
-						"buffer_size": 21048,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5392,
-								5392
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 7718.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "rpifiles/Simulation.py",
-					"settings":
-					{
-						"buffer_size": 4850,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1767,
-								1767
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1280.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "rpifiles/MainController.py",
-					"settings":
-					{
-						"buffer_size": 10637,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1165,
-								1165
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 540.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 5,
-					"file": "Controller.py",
+					"file": "rpifiles/StagHunt/SimulationStagHunt.py",
 					"settings":
 					{
-						"buffer_size": 3332,
+						"buffer_size": 5495,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3332,
-								3332
+								987,
+								987
 							]
 						],
 						"settings":
@@ -1029,34 +1061,61 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1674.0,
+						"translation.y": 680.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "rpifiles/SimulationDefault/SimulationDefault.py",
+					"file": "/home/arthur/OgarCancun/src/ai/BotNN.js",
 					"settings":
 					{
-						"buffer_size": 1795,
+						"buffer_size": 19461,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1265,
-								1265
+								2051,
+								2051
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 560.0,
+						"translation.y": 501.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "rpifiles/config_StagHunt.cfg",
+					"settings":
+					{
+						"buffer_size": 475,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								475,
+								475
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1106,6 +1165,54 @@
 		"selected_items":
 		[
 			[
+				"simul",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
+			],
+			[
+				"mu",
+				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
+			],
+			[
+				"stagh",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"stag",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"con",
+				"OctoPY/TestNotifications/ControllerTestNotifications.py"
+			],
+			[
+				"si",
+				"OctoPY/rpifiles/Simulation.py"
+			],
+			[
+				"main",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"oc",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"u",
+				"OctoPY/rpifiles/utils.py"
+			],
+			[
+				"uti",
+				"OctoPY/utils.py"
+			],
+			[
+				"confi",
+				"OctoPY/config_TestNotifications.cfg"
+			],
+			[
 				"simulationd",
 				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
 			],
@@ -1114,24 +1221,8 @@
 				"OctoPY/Controller.py"
 			],
 			[
-				"main",
-				"OctoPY/rpifiles/MainController.py"
-			],
-			[
-				"si",
-				"OctoPY/rpifiles/Simulation.py"
-			],
-			[
 				"o",
 				"OctoPY/OctoPY.py"
-			],
-			[
-				"u",
-				"OctoPY/rpifiles/utils.py"
-			],
-			[
-				"con",
-				"OctoPY/Controller.py"
 			],
 			[
 				"sim",
@@ -1146,16 +1237,8 @@
 				"OctoPY/rpifiles/ThymioController.py"
 			],
 			[
-				"simu",
-				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
-			],
-			[
 				"simulations",
 				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
-			],
-			[
-				"oc",
-				"OctoPY/OctoPY.py"
 			],
 			[
 				"para",
@@ -1164,10 +1247,6 @@
 			[
 				"cre",
 				"OctoPY/rpifiles/CreateExperiment.py"
-			],
-			[
-				"stag",
-				"OctoPY/rpifiles/config_StagHunt.cfg"
 			],
 			[
 				"dete",
@@ -1180,10 +1259,6 @@
 			[
 				"staghunt",
 				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
-			],
-			[
-				"simul",
-				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
 			],
 			[
 				"sil",
@@ -1278,10 +1353,6 @@
 				"three_fold_adaptation/rpis/asebaCommands.aesl"
 			],
 			[
-				"uti",
-				"utils.py"
-			],
-			[
 				"exc",
 				"rpifiles/exchange_seq.py"
 			],
@@ -1336,10 +1407,6 @@
 			[
 				"inc",
 				"StagHunt-Invasion/includes.hpp"
-			],
-			[
-				"stagh",
-				"StagHunt-Invasion/StagHunt.cpp"
 			],
 			[
 				"bestf",

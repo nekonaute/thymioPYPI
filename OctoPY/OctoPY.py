@@ -131,7 +131,7 @@ class OctoPY() :
 
 	def lookUp(self, rangeArg) :
 		try :
-			self.__logger.info("lookUp - excuting nmap")
+			self.__logger.info("lookUp - executing nmap")
 
 			# Popen calls the nmap command in the range specified by rangeArg
 			proc = subprocess.Popen(["nmap", "-sn", rangeArg], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -514,7 +514,7 @@ class OctoPY() :
 			# We find the first (and, in theory, only) controller matching this recipient ID
 			controller = next((controller for controller in self.__controllers if controller.ID == recipient), None)
 			if controller != None :
-				self.__loger.debug("notify - Notifying controller.")
+				self.__logger.debug("notify - Notifying controller.")
 				controller.notify(**params)
 	
 
