@@ -17,7 +17,7 @@ class Simulation(threading.Thread) :
 	# Compulsory parameters
 	compParams = ['simulation_name', 'simulation_path']
 
-	def __init__(self, controller, mainLogger) :
+	def __init__(self, controller, mainLogger, debug = False) :
 		threading.Thread.__init__(self)
 
 		self.daemon = True
@@ -30,10 +30,11 @@ class Simulation(threading.Thread) :
 		self.__restart = threading.Event()
 
 		# Thymio controller
-		self.__tcPA = False
-		self.__tcPerformedAction = threading.Condition()
-		self.tController = ThymioController.ThymioController(self, mainLogger) 
-		self.tController.start()
+		if not debug :
+			self.__tcPA = False
+			self.__tcPerformedAction = threading.Condition()
+			self.tController = ThymioController.ThymioController(self, mainLogger) 
+			self.tController.start()
 
 		self.mainLogger = mainLogger
 

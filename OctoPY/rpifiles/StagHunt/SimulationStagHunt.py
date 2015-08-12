@@ -1,6 +1,6 @@
 #!/usr/bin/env/python
 
-import picamera
+# import picamera
 import io
 import sys
 import traceback
@@ -20,8 +20,8 @@ import Params
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 class SimulationStagHunt(Simulation.Simulation) :
-	def __init__(self, controller, mainLogger) :
-		Simulation.Simulation.__init__(self, controller, mainLogger)
+	def __init__(self, controller, mainLogger, debug = False) :
+		Simulation.Simulation.__init__(self, controller, mainLogger, debug)
 
 		self.__camera = picamera.PiCamera()
 		self.__camera.resolution = (Params.params.size_x, Params.params.size_y)
@@ -225,8 +225,31 @@ class SimulationStagHunt(Simulation.Simulation) :
 			if outputs :
 				self.log('Vroum : ' + str(outputs[0] * Params.params.max_speed) + "/" + str(outputs[1] * Params.params.max_speed))
 				# self.tController.writeMotorsSpeedRequest([outputs[0] * Params.params.max_speed, outputs[1] * Params.params.max_speed])
-				self.waitForControllerResponse()
+				# self.waitForControllerResponse()
 
 			time.sleep(Params.params.time_step)
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
+
+
+if __name__ == "__main__" :
+	# Creation of the logging handlers
+	level = logging.DEBUG
+
+	mainLogger = logging.getLogger()
+	mainLogger.setLevel(level)
+
+	# File Handler
+	fileHandler = logging.FileHandler(os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log'))
+	formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+	fileHandler.setFormatter(formatter)
+	fileHandler.setLevel(level)
+	mainLogger.addHandler(fileHandler)
+
+	# Console Handler
+	consoleHandler = logging.StreamHandler()
+	consoleHandler.setLevel(level)
+	mainLogger.addHandler(consoleHandler)
+
+	simu = SimulationStagHunt(None, mainLogger, True)
+	simu.start()
