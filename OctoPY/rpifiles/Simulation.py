@@ -38,12 +38,9 @@ class Simulation(threading.Thread) :
 		self.mainLogger = mainLogger
 
 	def run(self) :
-		self.mainLogger.debug("Simulation - Start")
 		self.preActions()
 
-		self.mainLogger.debug("Simulation - GO GO GO")
 		while not self.__stop.isSet() :
-			self.mainLogger.debug("Simulation - Step")
 			self.step()
 
 			if self.__pause.isSet() :
