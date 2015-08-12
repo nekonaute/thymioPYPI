@@ -31,9 +31,9 @@ class ControllerTestNotifications(Controller.Controller) :
 			self.log("Load simulation...")
 			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_TestNotifications.cfg")
 
-			# # Start simulation
-			# self.log("Start simulation...")
-			# self.octoPYInstance.sendMessage(MessageType.START, [])
+			# Start simulation
+			self.log("Start simulation...")
+			self.octoPYInstance.sendMessage(MessageType.START, [])
 
 	def postActions(self) :
 		# Stop simulation
