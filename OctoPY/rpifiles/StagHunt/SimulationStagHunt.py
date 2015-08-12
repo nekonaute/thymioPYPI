@@ -117,7 +117,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 		cpt = 0
 		while cpt < Params.params.nb_inputs :
-			inputs[1, cpt] = random.random(0, 1)
+			inputs[1, cpt] = random.random()
 			cpt += 1
 
 		# inputs = self.getProximityInputs(inputs)
