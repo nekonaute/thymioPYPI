@@ -18,7 +18,9 @@ class SimulationTestNotifications(Simulation.Simulation) :
 
 	def step(self) :
 		value = random.randint(0, 9)
+		log("Random value : " + value)
 		self.notify(value = 9)
 
 		sleepTime = random.randint(0, 2)
+		log("Sleeping : " + sleepTime)
 		time.sleep(sleepTime)

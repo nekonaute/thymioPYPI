@@ -44,7 +44,6 @@ class Controller(threading.Thread) :
 
 		
 	def run(self) :
-		self.octoPYInstance.logger.debug('TEST !!')
 		self.preActions()
 
 		while not self.__stop.isSet() :

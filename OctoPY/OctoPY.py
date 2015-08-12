@@ -481,7 +481,6 @@ class OctoPY() :
 					# Threaded execution
 					newController.start()
 				else :
-					self.__logger.debug('YOP')
 					newController.run()
 
 			else :
