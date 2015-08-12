@@ -8,7 +8,7 @@ import Params
 
 from utils import MessageType
 
-MAX = 100
+MAX = 50
 
 class ControllerTestNotifications(Controller.Controller) :
 	def __init__(self, octoPYInstance, controller) :
