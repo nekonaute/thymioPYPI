@@ -1,9 +1,15 @@
 import OctoPY
 import Params
+from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 
+import logging
 import threading
+import socket
 
 from abc import ABCMeta, abstractmethod
+
+COMMANDS_LISTENER_HOST = ''
+COMMANDS_LISTENER_PORT = 55555
 
 class Controller(threading.Thread) :
 	__metaclass__ = ABCMeta
@@ -12,20 +18,22 @@ class Controller(threading.Thread) :
 	# Compulsory parameters
 	compParams = ['controller_name', 'controller_path']
 
-	def __init__(self, detached) :
+	def __init__(self, octoPYInstance, detached) :
 		threading.Thread.__init__(self)
+
+		self.octoPYInstance = octoPYInstance
 
 		if detached :
 			self.daemon = True
 
-		self.__stop == threading.Event()
-		self.__ID = Controller.getID()
+		self.__stop = threading.Event()
+		self.__ID = Controller.getNewID()
 
 		self.__msgListener = None
 
 
 	@staticmethod
-	def getID() :
+	def getNewID() :
 		Controller.staticID += 1
 		return Controller.staticID - 1
 
@@ -36,6 +44,7 @@ class Controller(threading.Thread) :
 
 		
 	def run(self) :
+		self.octoPYInstance.logger.debug('TEST !!')
 		self.preActions()
 
 		while not self.__stop.isSet() :
@@ -63,16 +72,16 @@ class Controller(threading.Thread) :
 		self.__stop.set()
 
 	def log(self, message, level = logging.DEBUG) :
-		OctoPY.logger.log(level, message)
+		self.octoPYInstance.logger.log(level, message)
 
 
 	def register(self, IPs = []) :
 		# We create the message listener for the notifications if needs be
 		if self.__msgListener == None :
-			self.__msgListener = MessageListener(self)
+			self.__msgListener = MessageListener(self, self.octoPYInstance.logger)
 			self.__msgListener.start()
 
-		OctoPY.registerController(self, IPs)
+		self.octoPYInstance.registerController(self, IPs)
 
 
 	def notify(self, **params) :
@@ -83,7 +92,7 @@ class Controller(threading.Thread) :
 	def checkForCompParams() :
 		for param in Controller.compParams :
 			if not Params.params.checkParam(param) :
-				OctoPY.logger.error("Controller - Parameter " + param + " not found.", )
+				print("Controller - Parameter " + param + " not found.", )
 				return False
 
 		return True
@@ -95,11 +104,12 @@ class MessageListener(threading.Thread) :
 		threading.Thread.__init__(self)
 
 		self.__controller = controller
+		self.__logger = logger
 
 		# We set daemon to True so that MessageListener exits when the main thread is killed
 		self.daemon = True
 
-		self._stop = threading.Event()
+		self.__stop = threading.Event()
 
 		# Create socket for listening to simulation commands
 		self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -111,18 +121,18 @@ class MessageListener(threading.Thread) :
 		while not self.__stop.isSet() :
 			try:
 				# Waiting for client...
-				OctoPY.logger.debug("MessageListener - Waiting on accept...")
+				self.__logger.debug("MessageListener - Waiting on accept...")
 				conn, (addr, port) = self.__sock.accept()
 
-				# OctoPY.logger.debug('MessageListener - Received command from (' + addr + ', ' + str(port) + ')')
+				# self.__logger.debug('MessageListener - Received command from (' + addr + ', ' + str(port) + ')')
 				# if addr not in TRUSTED_CLIENTS:
-				# 	OctoPY.logger.error('MessageListener - Received connection request from untrusted client (' + addr + ', ' + str(port) + ')')
+				# 	self.__logger.error('MessageListener - Received connection request from untrusted client (' + addr + ', ' + str(port) + ')')
 				# 	continue
 				
 				# Receive one message
-				OctoPY.logger.debug('MessageListener - Receiving message...')
+				self.__logger.debug('MessageListener - Receiving message...')
 				message = recvOneMessage(conn)
-				OctoPY.logger.debug('MessageListener - Received ' + str(message))
+				self.__logger.debug('MessageListener - Received ' + str(message))
 
 				# The listener transmits the desired message
 				if message.msgType == MessageType.NOTIFY :
@@ -130,9 +140,9 @@ class MessageListener(threading.Thread) :
 					self.__controller.notify(**message.data)
 					messageCommand = MessageCommand.START
 			except:
-				OctoPY.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+				self.__logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
-		OctoPY.logger.debug('MessageListener - Exiting...')
+		self.__logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
 		self.__stop.set()
