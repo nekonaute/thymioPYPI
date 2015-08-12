@@ -32,7 +32,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 
 	def preActions(self) :
-		loadWeights(Params.params.weights_path)
+		loadWeights(Params.params.weights_path, Params.params.file_xml)
 
 
 	def loadWeights(self, file, xml) :
@@ -40,7 +40,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			self.log("Loading weights file " + file, logging.DEBUG)
 
 			listGenes = []
-			if xml :
+			if xml == 1:
 				DOMTree = xml.dom.minidom.parse(file)
 				genome = DOMTree.documentElement
 
@@ -94,7 +94,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 						cptColumns += 1
 				else :
 					# We fill the second matrix
-					self.__weightsHtoO[cptLines, cptColumns - (Params.Params.nb_inputs + 1)] = weight
+					self.__weightsHtoO[cptLines, cptColumns - (Params.params.nb_inputs + 1)] = weight
 
 					cptLines += 1
 					if cptLines >= Params.params.nb_hidden + 1 :
