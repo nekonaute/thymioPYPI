@@ -1,6 +1,6 @@
 #!/usr/bin/env/python
 
-# import picamera
+import picamera
 import io
 import sys
 import traceback
