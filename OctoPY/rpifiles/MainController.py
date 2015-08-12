@@ -279,8 +279,8 @@ class CommandsListener(threading.Thread) :
 					messageCommand = MessageCommand.REGISTER
 
 					# We add the IP of the observer
-					data["IP"] = addr
 					data = message.data
+					data["IP"] = addr
 
 				mainLogger.debug('CommandsListener - Transmitting command ' + str(messageCommand)+ ' to controller.')
 				self.__controller.getCommand(messageCommand, data)
