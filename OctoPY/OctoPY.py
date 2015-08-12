@@ -21,6 +21,7 @@ import utils
 import Params
 import Controller
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
+import utils
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
