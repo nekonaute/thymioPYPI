@@ -13,16 +13,16 @@ class Getch:
     	pass
 
     def __call__(self):
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
+      fd = sys.stdin.fileno()
+      old_settings = termios.tcgetattr(fd)
 
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+      try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+      finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-        return ch
+      return ch
 
 class SimulationSpyBot(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
