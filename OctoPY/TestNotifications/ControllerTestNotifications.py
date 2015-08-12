@@ -57,7 +57,7 @@ class ControllerTestNotifications(Controller.Controller) :
 		if "value" in params :
 			self.log("Received value : " + str(params["value"]))
 			self.__total += int(params["value"])
-			self.log("Total is : " + self.__total)
+			self.log("Total is : " + str(self.__total))
 		
 			if self.__total >= MAX :
 				self.stop()
