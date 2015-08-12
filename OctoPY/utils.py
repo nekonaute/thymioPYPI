@@ -36,6 +36,7 @@ def recvOneMessage(socket):
     lengthbuf = recvall(socket, 4)
     if not lengthbuf: return None
     length, = struct.unpack('!I', lengthbuf)
+    recvD = recvall(socket, length)
     data = pickle.loads(recvD)
     return data
 
