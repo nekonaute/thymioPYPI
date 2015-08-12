@@ -214,7 +214,7 @@ class MainController() :
 					elif self.__command == MessageCommand.KILL :
 						self.__killController()
 						break
-					elif self.__comand == MessageCommand.REGISTER :
+					elif self.__command == MessageCommand.REGISTER :
 						self.__register(self.__commandData)
 
 					self.__command = MessageCommand.NONE
