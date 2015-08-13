@@ -21,11 +21,11 @@ COLORS_DETECT = {
 									# 					"input3" : 0
 									# 				},
 									"red" : { 
-														"min" : np.array([160, 100, 100]),
+														"min" : np.array([160, 50, 50]),
 														"max" : np.array([180, 255, 255])
 													},
 									"red2" : { 
-														"min" : np.array([0, 100, 100]),
+														"min" : np.array([0, 50, 50]),
 														"max" : np.array([20, 255, 255])
 													},
 									# "green" : { 
@@ -73,8 +73,8 @@ class SimulationFollowColor(Simulation.Simulation) :
 			totalLeft += Params.params.default_speed
 			totalRight += Params.params.default_speed
 
-			self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
-			self.waitForControllerResponse()
+			# self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
+			# self.waitForControllerResponse()
 
 			time.sleep(Params.params.time_step/1000.0)
 		except :

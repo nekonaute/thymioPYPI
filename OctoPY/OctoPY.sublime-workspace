@@ -4,6 +4,134 @@
 		"selected_items":
 		[
 			[
+				"look",
+				"lookRange"
+			],
+			[
+				"b",
+				"base_energy"
+			],
+			[
+				"pr",
+				"proxSensors"
+			],
+			[
+				"tot",
+				"totalRight"
+			],
+			[
+				"to",
+				"totalLeft"
+			],
+			[
+				"tota",
+				"totalRight"
+			],
+			[
+				"ba",
+				"base_speed"
+			],
+			[
+				"ener",
+				"base_energy"
+			],
+			[
+				"__",
+				"__energy"
+			],
+			[
+				"C",
+				"CHARGING"
+			],
+			[
+				"nb",
+				"nb_rays"
+			],
+			[
+				"li",
+				"listDetect"
+			],
+			[
+				"ou",
+				"outputsNN"
+			],
+			[
+				"SimulationEvolved",
+				"SimulationEvolvedAvoider"
+			],
+			[
+				"nb_",
+				"nb_outputs"
+			],
+			[
+				"cpt",
+				"cptColumns"
+			],
+			[
+				"we",
+				"weight"
+			],
+			[
+				"__wei",
+				"__weightsItoO"
+			],
+			[
+				"__main",
+				"__mainLogger"
+			],
+			[
+				"imgH",
+				"imgHSV"
+			],
+			[
+				"ray_",
+				"ray_height_radius"
+			],
+			[
+				"__ma",
+				"__mainLogger"
+			],
+			[
+				"img",
+				"imgBase"
+			],
+			[
+				"colo",
+				"colorDetect"
+			],
+			[
+				"Color",
+				"colorDetect"
+			],
+			[
+				"comm",
+				"commandData"
+			],
+			[
+				"Mess",
+				"MessageCommand"
+			],
+			[
+				"Mes",
+				"MessageCommand"
+			],
+			[
+				"mess",
+				"messageCommand"
+			],
+			[
+				"op",
+				"optSend"
+			],
+			[
+				"Sim",
+				"SimulationCollectiveGathering"
+			],
+			[
+				"detec",
+				"detectColors"
+			],
+			[
 				"list",
 				"listNodes"
 			],
@@ -32,14 +160,6 @@
 				"readBuffer"
 			],
 			[
-				"nb_",
-				"nb_inputs"
-			],
-			[
-				"colo",
-				"colorDetected"
-			],
-			[
 				"coun",
 				"countDetect"
 			],
@@ -54,10 +174,6 @@
 			[
 				"RAY",
 				"RAY_HEIGHT_RADIUS"
-			],
-			[
-				"C",
-				"COLORS_DETECT"
 			],
 			[
 				"imgR",
@@ -78,10 +194,6 @@
 			[
 				"fir",
 				"firstColumn"
-			],
-			[
-				"img",
-				"imgReduced"
 			],
 			[
 				"ray",
@@ -124,10 +236,6 @@
 				"outputsNN"
 			],
 			[
-				"ou",
-				"outputs"
-			],
-			[
 				"out",
 				"outputsNN"
 			],
@@ -144,28 +252,12 @@
 				"__weightsHtoO"
 			],
 			[
-				"__wei",
-				"__weightsHtoO"
-			],
-			[
 				"hidde",
 				"hiddenNN"
 			],
 			[
 				"_",
 				"__weightsItoH"
-			],
-			[
-				"cpt",
-				"cptLines"
-			],
-			[
-				"we",
-				"weight"
-			],
-			[
-				"nb",
-				"nb_inputs"
 			],
 			[
 				"w",
@@ -190,10 +282,6 @@
 			[
 				"re",
 				"recipientsList"
-			],
-			[
-				"Mess",
-				"MessageListener"
 			],
 			[
 				"main",
@@ -230,14 +318,6 @@
 			[
 				"obser",
 				"observerIP"
-			],
-			[
-				"Mes",
-				"MessageCommand"
-			],
-			[
-				"mess",
-				"messageCommand"
 			],
 			[
 				"dat",
@@ -328,16 +408,8 @@
 				"__simulation"
 			],
 			[
-				"to",
-				"totalRight"
-			],
-			[
 				"total",
 				"totalLeft"
-			],
-			[
-				"tot",
-				"totalRight"
 			],
 			[
 				"send",
@@ -442,83 +514,35 @@
 			[
 				"connect",
 				"connectedSquares"
-			],
-			[
-				"conn",
-				"connectedSquares"
-			],
-			[
-				"ran",
-				"randint"
-			],
-			[
-				"_ge",
-				"_genome"
-			],
-			[
-				"s",
-				"_size"
-			],
-			[
-				"_get_",
-				"_get_population"
-			],
-			[
-				"lam",
-				"LAMBDA"
-			],
-			[
-				"has",
-				"hashThymiosHostnames"
-			],
-			[
-				"N",
-				"NONE"
-			],
-			[
-				"reso",
-				"resolveAddresses"
-			],
-			[
-				"host",
-				"hostname"
-			],
-			[
-				"state",
-				"hashThymiosStates"
-			],
-			[
-				"res",
-				"resolveAddress"
-			],
-			[
-				"range",
-				"rangeArg"
-			],
-			[
-				"look",
-				"lookRange"
-			],
-			[
-				"lis",
-				"listeningHosts"
-			],
-			[
-				"TIM",
-				"TIMEOUT_QUERY"
-			],
-			[
-				"return",
-				"returncode"
-			],
-			[
-				"e",
-				"exceptional"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "rpifiles/FollowColor/SimulationFollowColor.py",
+			"settings":
+			{
+				"buffer_size": 2288,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+			"settings":
+			{
+				"buffer_size": 8003,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py",
+			"settings":
+			{
+				"buffer_size": 4889,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -544,41 +568,58 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGatheringEnergy/SimulationCollectiveGatheringEnergy.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGathering.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Camera.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGatheringPlus/SimulationCollectiveGatheringPlus.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringPlus.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_FollowColor.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/FollowColor/SimulationFollowColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_EvolvedAvoider.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/braitenbergFollower.cfg",
+		"/home/arthur/MiscTests/Python/colormap.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
+		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
+		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/algorithm.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/classes.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/parameters.py",
+		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
 		"/home/arthur/Documents/PartnerSelection.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/compareGenomes.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/Drawing.py",
 		"/home/arthur/sferes2-0.99/getBestfit.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.py",
-		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
-		"/home/arthur/thymioPYPI/OctoPY/utils.py",
 		"/home/arthur/sferes2-0.99/copyGenome.py",
 		"/home/arthur/TheoriticalExperiments/Population.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/main.c",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/serial_read.c",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/serial_read.h",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/SimulationScanner.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_Scanner.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/braitenberg.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
 		"/home/arthur/sferes2-0.99/TemplateExp.exp",
 		"/home/arthur/sferes2-0.99/TemplateExp.exp.bck",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
 		"/home/arthur/testCamera3.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
 		"/home/arthur/testCamera2.py",
 		"/home/arthur/testCamera.py",
 		"/home/arthur/pithymio.py",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
-		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationStagHunt.py",
 		"/home/arthur/MiscTests/Python/XMLParser.py",
 		"/home/arthur/OgarCancun/src/ai/BotNN.js",
@@ -592,7 +633,6 @@
 		"/home/arthur/pithymio_freq_test.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/script.sh",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CreateExperiment.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
 		"/home/arthur/MiscTests/Python/TestInput.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activateCamera.sh",
@@ -655,23 +695,7 @@
 		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/asebaCommands.aesl",
 		"/home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg",
 		"/home/arthur/TheoriticalExperiments/TheoriticalExperiment.py",
-		"/home/arthur/TheoriticalExperiments/Params.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/thymioControl.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/parameters.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/classes.py",
-		"/media/arthur/USB Kool/Resultats 2015-03-24/TemplatePres.tex",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/_init_thymio.sh",
-		"/home/arthur/ThymioErrors.txt",
-		"/home/arthur/thymioPYPI/medusa/config.json",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/algorithm.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/reboot_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/start_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/run_cmd.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/_init.sh",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.aesl",
-		"/home/arthur/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
-		"/home/arthur/Misc/FillSquare/FillSquare.py",
-		"/home/arthur/thymioPYPI/medusa/medusa.py.bck"
+		"/home/arthur/TheoriticalExperiments/Params.py"
 	],
 	"find":
 	{
@@ -689,6 +713,29 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"proxSensors[i]",
+			"<=",
+			"FORAGING",
+			"black_level",
+			"MessageCommand",
+			"SimulationStagHunt",
+			"cpt",
+			"colorDetect",
+			"self.__mainLogger(",
+			"self.__mainLogger.debug",
+			"COLORS_DETECT",
+			"detectColors",
+			"self.mainLogger",
+			"200",
+			"DATA",
+			"OFF",
+			"self.data",
+			"QUERY",
+			"300",
+			"self.__request",
+			"command",
+			"waitForContro",
+			"self.log",
 			"hashSimilarities",
 			"similarity",
 			"CHOICE_TYPE",
@@ -793,30 +840,7 @@
 			"SimulationDefault",
 			"55556",
 			"LISTENER_PORT",
-			"55555",
-			"__waitForControllerResponse",
-			"__isStopped",
-			"__",
-			"__waitForControllerResponse",
-			"__thymioController",
-			"__mainLogger",
-			"__tController",
-			"__mainLogger",
-			"startSimul",
-			"rand",
-			"__waitForControllerResponse",
-			"thymioControllerPer",
-			"stopThymio",
-			"color",
-			"__simLogger",
-			"CommandsListener",
-			"_params",
-			"message",
-			"CommandsListener",
-			"ThymioController",
-			"CommandListener",
-			"__",
-			"__simulationStarted"
+			"55555"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -837,8 +861,90 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "rpifiles/FollowColor/SimulationFollowColor.py",
+					"settings":
+					{
+						"buffer_size": 2288,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								205,
+								205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 801.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+					"settings":
+					{
+						"buffer_size": 8003,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2925,
+								2925
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1431.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py",
+					"settings":
+					{
+						"buffer_size": 4889,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1353,
+								1353
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2567.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -884,20 +990,172 @@
 		"selected_items":
 		[
 			[
+				"simulationev",
+				"OctoPY/rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py"
+			],
+			[
+				"simulationst",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"simulationf",
+				"OctoPY/rpifiles/FollowColor/SimulationFollowColor.py"
+			],
+			[
+				"oc",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"mai",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"simulationbr",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"config_c",
+				"OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg"
+			],
+			[
+				"config_co",
+				"OctoPY/rpifiles/config_CollectiveGathering.cfg"
+			],
+			[
+				"simulationco",
+				"OctoPY/rpifiles/CollectiveGatheringEnergy/SimulationCollectiveGatheringEnergy.py"
+			],
+			[
+				"simulationc",
+				"OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py"
+			],
+			[
+				"simulationb",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"simulations",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"config_",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"simulationcol",
+				"OctoPY/rpifiles/CollectiveGatheringPlus/SimulationCollectiveGatheringPlus.py"
+			],
+			[
+				"coll",
+				"OctoPY/rpifiles/config_CollectiveGatheringPlus.cfg"
+			],
+			[
+				"braite",
+				"OctoPY/rpifiles/braitenbergFollower.cfg"
+			],
+			[
 				"o",
 				"OctoPY/OctoPY.py"
 			],
 			[
-				"u",
-				"OctoPY/rpifiles/utils.py"
-			],
-			[
-				"ut",
-				"OctoPY/utils.py"
+				"configc",
+				"OctoPY/rpifiles/config_CollectiveGathering.cfg"
 			],
 			[
 				"main",
 				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"defaul",
+				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
+			],
+			[
+				"ut",
+				"OctoPY/rpifiles/utils.py"
+			],
+			[
+				"sim",
+				"OctoPY/rpifiles/Simulation.py"
+			],
+			[
+				"configf",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"camera",
+				"OctoPY/rpifiles/Camera.py"
+			],
+			[
+				"brai",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"config_e",
+				"OctoPY/rpifiles/config_EvolvedAvoider.cfg"
+			],
+			[
+				"config_s",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"config_f",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"came",
+				"OctoPY/rpifiles/Camera.py"
+			],
+			[
+				"u",
+				"OctoPY/utils.py"
+			],
+			[
+				"testn",
+				"OctoPY/TestNotifications/ControllerTestNotifications.py"
+			],
+			[
+				"conr",
+				"OctoPY/Controller.py"
+			],
+			[
+				"si",
+				"OctoPY/rpifiles/Simulation.py"
+			],
+			[
+				"cong_f",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"det",
+				"OctoPY/rpifiles/detectColor.cfg"
+			],
+			[
+				"simulationde",
+				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"thy",
+				"OctoPY/rpifiles/ThymioController.py"
+			],
+			[
+				"contr",
+				"OctoPY/Controller.py"
+			],
+			[
+				"collec",
+				"OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py"
+			],
+			[
+				"par",
+				"OctoPY/rpifiles/Params.py"
+			],
+			[
+				"stag",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
 				"simulation",
@@ -916,24 +1174,12 @@
 				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
 			],
 			[
-				"simu",
-				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
-			],
-			[
 				"conf",
 				"OctoPY/rpifiles/config_Scanner.cfg"
 			],
 			[
 				"simulat",
 				"OctoPY/rpifiles/Scanner/SimulationScanner.py"
-			],
-			[
-				"simulationbr",
-				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
-			],
-			[
-				"config_",
-				"OctoPY/rpifiles/config_StagHunt.cfg"
 			],
 			[
 				"testcolor",
@@ -944,16 +1190,8 @@
 				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
-				"thy",
-				"OctoPY/rpifiles/ThymioController.py"
-			],
-			[
 				"con",
 				"OctoPY/TestNotifications/ControllerTestNotifications.py"
-			],
-			[
-				"sim",
-				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
 				"aes",
@@ -968,18 +1206,6 @@
 				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
 			],
 			[
-				"stag",
-				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
-			],
-			[
-				"si",
-				"OctoPY/rpifiles/Simulation.py"
-			],
-			[
-				"oc",
-				"OctoPY/OctoPY.py"
-			],
-			[
 				"uti",
 				"OctoPY/utils.py"
 			],
@@ -990,18 +1216,6 @@
 			[
 				"simulationd",
 				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
-			],
-			[
-				"contr",
-				"OctoPY/Controller.py"
-			],
-			[
-				"mai",
-				"OctoPY/rpifiles/MainController.py"
-			],
-			[
-				"simulations",
-				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
 			],
 			[
 				"para",

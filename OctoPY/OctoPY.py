@@ -129,7 +129,7 @@ class OctoPY() :
 			self.__logger.critical("Unexpected error in loadHostnamesTable : " + str(sys.exc_info()[0]) + ' - ' +traceback.format_exc())
 
 
-	def lookUp(self, rangeArg) :
+	def lookUp(self, rangeArg, getHostname) :
 		try :
 			self.__logger.info("lookUp - executing nmap")
 
@@ -169,43 +169,44 @@ class OctoPY() :
 			for IP in tabIP :
 				self.__logger.debug("\t " + str(IP))
 
-			self.__logger.info("lookUp - Gathering thymios' hostnames")
+			if getHostname :
+				self.__logger.info("lookUp - Gathering thymios' hostnames")
 
-			self.__hashThymiosHostnames = {}
+				self.__hashThymiosHostnames = {}
 
-			# We query each thymio for its hostname
-			for IP in tabIP :
-				self.__logger.info("lookUp - ssh on " + str(IP))
+				# We query each thymio for its hostname
+				for IP in tabIP :
+					self.__logger.info("lookUp - ssh on " + str(IP))
 
-				ssh = paramiko.SSHClient()
-				ssh.load_system_host_keys()
-				ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+					ssh = paramiko.SSHClient()
+					ssh.load_system_host_keys()
+					ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-				# We don't want to be bothered with paramiko logging unless it's critical
-				paramikoLogger = logging.getLogger('paramiko')
-				paramikoLogger.setLevel('CRITICAL')
+					# We don't want to be bothered with paramiko logging unless it's critical
+					paramikoLogger = logging.getLogger('paramiko')
+					paramikoLogger.setLevel('CRITICAL')
 
-				# Connection on the raspberry
-				ssh.connect(str(IP), username = PIUSERNAME, password = PIPASSWORD)
+					# Connection on the raspberry
+					ssh.connect(str(IP), username = PIUSERNAME, password = PIPASSWORD)
 
-				# Executing command hostname
-				stdin, stdout, stderr = ssh.exec_command('hostname')
+					# Executing command hostname
+					stdin, stdout, stderr = ssh.exec_command('hostname')
 
-				hostname = str(stdout.read()).rstrip('\n')
-				ssh.close()
+					hostname = str(stdout.read()).rstrip('\n')
+					ssh.close()
 
-				self.__logger.info("lookUp - active thymio: " + hostname + " - " + str(IP))
+					self.__logger.info("lookUp - active thymio: " + hostname + " - " + str(IP))
 
-				if hostname in self.__hashThymiosHostnames.keys() :
-					self.__logger.warning("lookUp - warning: multiple thymios with hostname " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]) + " and " + str(IP))
+					if hostname in self.__hashThymiosHostnames.keys() :
+						self.__logger.warning("lookUp - warning: multiple thymios with hostname " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]) + " and " + str(IP))
 
-				self.__hashThymiosHostnames[hostname] = IP
+					self.__hashThymiosHostnames[hostname] = IP
 
-			self.__logger.debug("lookUp - hostname/IP table :")
-			for hostname in self.__hashThymiosHostnames :
-				self.__logger.debug("\t " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]))
+				self.__logger.debug("lookUp - hostname/IP table :")
+				for hostname in self.__hashThymiosHostnames :
+					self.__logger.debug("\t " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]))
 
-			self.saveHostnamesTable()
+				self.saveHostnamesTable()
 
 		except :	
 			self.__logger.critical("Unexpected error in lookUp : " + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc()) 
@@ -545,13 +546,21 @@ class OctoPYInteractive(cmd.Cmd) :
 	# --- Thymios look-up ---
 	def do_look(self, args) :
 		lookRange = "192.168.0.111-150"
+		getHostname = False
 		if args :
-			lookRange = args
+			args = args.split(' ')
 
-		octoPYInstance.lookUp(lookRange)
+			if len(args) > 0 :
+				for i in range(0, len(args)) :
+					if args[i][0].isdigit() :
+						lookRange = args[i]
+					elif args[i] == '-s' :
+						getHostname = True
+
+		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default).', ])
+		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---

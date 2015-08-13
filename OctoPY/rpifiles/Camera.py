@@ -35,7 +35,7 @@ class Camera() :
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
 
-			# cv2.imwrite("./imgBase.jpg", img)
+			cv2.imwrite("./imgBase.jpg", img)
 
 			# Blurring and converting to HSV values
 			# imgHSV2 = cv2.GaussianBlur(img, (5, 5), 0)
@@ -53,7 +53,7 @@ class Camera() :
 			imgReduced = cv2.GaussianBlur(imgReduced, (5, 5), 0)
 			imgHSV = cv2.cvtColor(imgReduced, cv2.COLOR_BGR2HSV)
 
-			# cv2.imwrite("./imgHSVReduced.jpg", imgHSV)
+			cv2.imwrite("./imgHSVReduced.jpg", imgHSV)
 
 			# We separate the images in rays
 			imgRays =  []
