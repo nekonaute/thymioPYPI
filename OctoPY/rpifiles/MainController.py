@@ -127,6 +127,13 @@ class MainController() :
 		else :
 			mainLogger.error('MainController - No configuration file named ' + configFile)
 
+	def __sendData(self, data) :
+		mainLogger.debug('MainController - Sending data...')
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for sending data while no simulation started.')
+		else :
+			self.__simulation.addData(data)
+
 	def __stopSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
 			mainLogger.error('MainController - Request for simulation stop while no simulation started.')
@@ -223,6 +230,8 @@ class MainController() :
 							self.__restartSimulation()
 						elif command == MessageCommand.SET :
 							self.__setSimulation(commandData)
+						elif command == MessageCommand.DATA :
+							self.__sendData(commandData)
 						elif command == MessageCommand.STOP :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
@@ -284,6 +293,9 @@ class CommandsListener(threading.Thread) :
 					messageCommand = MessageCommand.RESTART
 				elif message.msgType == MessageType.SET :
 					messageCommand = MessageCommand.SET
+					data = message.data
+				elif message.msgType == MessageType.DATA :
+					messageCommand = MessageCommand.DATA
 					data = message.data
 				elif message.msgType == MessageType.STOP :
 					messageCommand = MessageCommand.STOP

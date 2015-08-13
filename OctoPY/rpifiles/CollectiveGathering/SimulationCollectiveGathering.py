@@ -89,11 +89,10 @@ class SimulationCollectiveGathering(Simulation.Simulation) :
 			else :
 				(totalLeft, totalRight) = self.Braitenberg(PSValues)
 
-			#self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
+			self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
 
 			self.__energy -= Params.params.energy_decrement
 			(R, G, B, t) = cm.jet(int((self.__energy/float(Params.params.base_energy))*255))
-			self.log(str((R, G, B, t)))
 			self.tController.writeColorRequest([R*32, G*32, B*32])
 			self.waitForControllerResponse()
 		except :
