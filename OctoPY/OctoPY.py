@@ -352,6 +352,18 @@ class OctoPY() :
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
 
+					# Switch off thymio
+					if message == MessageType.OFF :
+						sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
+						
+						if myIP == None :
+							proc = subprocess.Popen(["hostname", "-I"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+							(out, err) = proc.communicate()
+
+							myIP = ipaddress.ip_address(u'' + out.split(' ')[0])
+
+						proc = subprocess.Popen(sshcommand + ["shutdown", "-h", "now"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+
 					# Register as observer
 					elif message == MessageType.REGISTER :
 						optSend.msgType = MessageType.REGISTER

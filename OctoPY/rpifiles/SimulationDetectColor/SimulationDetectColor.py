@@ -16,7 +16,7 @@ class SimulationDetectColor(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
-		self.__camera = picamera.PiCamera()
+		self.__camera = Camera()
 		self.__camera.resolution = (Params.params.size_x, Params.params.size_y)
 
 	def preActions(self) :
