@@ -12,11 +12,13 @@ import socket, select
 import struct
 import pickle
 
+import importlib
 import ipaddress
 import paramiko
 import cmd
 
 import utils
+import Params
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
@@ -39,6 +41,7 @@ TIMEOUT_QUERY = 5
 logger = None
 hashThymiosHostnames = None
 listThymiosStates = None
+controllers = []
 
 
 
@@ -294,6 +297,14 @@ def sendMessage(message, IPs, data = None) :
 					sock.connect((str(destIP), 55555))
 					sendOneMessage(sock, optSend)
 
+				# Register as observer
+				elif message = MessageType.REGISTER :
+					optSend.msgType = MessageType.REGISTER
+					optSend.data = data
+					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+					sock.connect((str(destIP), 55555))
+					sendOneMessage(sock, optSend)
+
 				else :
 					logging.critical("sendMessage - not a known message id : " + str(message))
 					return
@@ -407,6 +418,35 @@ def queryThymios(IPs) :
 			hostTuple = (hostname, IP, 'Started')
 			listThymiosStates.append(hostTuple)
 			logging.info('queryThymios - ' + str(addr) + ' is started')
+
+
+def launchController(controller, detached) :
+	try :
+		logger.debug('OctoPY - Loading controller...')
+		Params.params = Params.Params(controller, logger)
+
+		# We check for the basic parameters
+		if Controller.Controller.checkForCompParams() :
+			controllerModule = importlib.import_module(Params.params.controller_path)
+			controllerClass = getattr(controllerModule, Params.Params.controller_name)
+			newController = controllerClass(detached)
+			controllers.append(newController)
+
+			if detached :
+				# Threaded execution
+				newController.start()
+			else :
+				newController.run()
+
+		else :
+			mainLogger.error('launchController - Couldn\'t load controller, compulsory parameter missing.')
+	except :
+		logging.error("launchController - Unexpected error : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+
+def registerController(controller, IPs) :
+	dataObserver = { "ID" : controller.ID }
+	sendMessage(MessageType.REGISTER, IPs, dataObserver)
+	
 
 
 
@@ -546,6 +586,27 @@ class MedusaInteractive(cmd.Cmd) :
 
 	def help_set(self) :
 		print '\n'.join(['set simulation [hosts lists]', 'Set the defined simulation for specified hosts or all hosts saved in the hostnames table.'])
+
+
+	# --- Launch controller ---
+	def do_launch(self, line) :
+		if args :
+			args = args.split(' ')
+			controller = args[0]
+
+			detached = False
+			if len(args) > 1 :
+				if args[1] == '-d' :
+					detached = True
+				else :
+					logging.error('launchController - Not a known option : ' + args[1] + '.')
+
+			launchController(controller, detached)
+		else :
+			logging.critical('launchController - No controller specified !')
+
+	def help_launch(self) :
+		print '\n'.join([ 'launch controller_path [-d detached]', 'Launches a simulation controller.'])
 
 
 	# --- Exit ---

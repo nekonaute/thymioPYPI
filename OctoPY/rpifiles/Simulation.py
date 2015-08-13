@@ -1,5 +1,6 @@
 import threading
 import traceback
+import logging
 import sys
 
 from abc import ABCMeta, abstractmethod
@@ -62,6 +63,9 @@ class Simulation(threading.Thread) :
 	def step(self) :
 		pass
 
+	def log(self, message, level = logging.DEBUG) :
+		self.mainLogger.log(level, message)
+
 	def pause(self) :
 		self.__pause.set()
 		self.__restart.clear()
@@ -102,6 +106,9 @@ class Simulation(threading.Thread) :
 
 	def stopThymioController(self) :
 		self.tController.stop()
+
+	def notify(self, **params) :
+		self.controller.notify(**params)
 
 
 	# --- Functions for easy thymio movement ---
@@ -174,7 +181,6 @@ class Simulation(threading.Thread) :
 			self.mainLogger.debug("move2 end !")
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-
 
 
 	@staticmethod

@@ -41,6 +41,35 @@ class MessageCommand() :
 	NONE = -1
 	START, PAUSE, RESTART,STOP, KILL, SET = range(0, 6)
 
+
+# Simulation observer
+class Observer() :
+	def __init__(self, IP, ID) :
+		self.__IP = IP
+		self.__ID = ID	
+
+	def notify(self, **params) :
+		message = utils.Message()
+		message.msgType = MessageType.NOTIFY
+
+		params.['receiver'] = self.__ID
+
+		# We send the notification message
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect(self.__IP, 55555))
+		sendOneMessage(sock, message)
+
+
+	def getID(self) :
+		return self.__ID
+
+	IP = property(getID)
+
+	def getIP(self) :
+		return self.__IP
+
+	IP = property(getIP)
+
 class MainController() :
 	def __init__(self) :
 		self.__simulation = None
@@ -51,6 +80,8 @@ class MainController() :
 		self.__commandReceived = threading.Condition()
 		self.__command = MessageCommand.NONE
 		self.__commandData = None
+
+		self.__observers = []
 
 
 	def __startSimulation(self) :
@@ -123,6 +154,30 @@ class MainController() :
 		mainLogger.debug(str(out) + "/" + str(err))
 
 
+	def register(self, data) :
+		if "IP" not in data :
+			mainLogger.error("MainController - No IP for registering observer.")
+			return False
+
+		if "ID" not in data :
+			mainLogger.error("MainController - No ID for registering observer.")
+			return False
+
+		observerIP = data["IP"]
+		observerID = data["ID"]
+
+		for observer in self.__observers :
+			if observer.ID == observerID :
+				mainLogger.error("MainController - Trying to add observer already registered : " + str(observerID))
+				return False
+
+		self.__observers.append(Observer(observerIP, observerID))
+
+	def notify(self, **params) :
+		for observer in self.__observers :
+			observer.notify(**params)
+
+
 	def getCommand(self, command, data = None) :
 		mainLogger.debug("MainController - Command " + str(command) + " received.")
 		with self.__commandReceived :
@@ -158,6 +213,8 @@ class MainController() :
 					elif self.__command == MessageCommand.KILL :
 						self.__killController()
 						break
+					elif self.__comand == MessageCommand.REGISTER :
+						self.__register(self.__commandData)
 
 					self.__command = MessageCommand.NONE
 			except KeyboardInterrupt :
@@ -218,6 +275,12 @@ class CommandsListener(threading.Thread) :
 					messageCommand = MessageCommand.STOP
 				elif message.msgType == MessageType.KILL :
 					messageCommand = MessageCommand.KILL
+				elif message.msgType == MessageType.REGISTER :
+					messageCommand = MessageCommand.REGISTER
+
+					# We add the IP of the observer
+					data["IP"] = addr
+					data = message.data
 
 				mainLogger.debug('CommandsListener - Transmitting command ' + str(messageCommand)+ ' to controller.')
 				self.__controller.getCommand(messageCommand, data)

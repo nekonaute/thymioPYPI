@@ -6,20 +6,20 @@ import os
 
 
 def main(args) :
-	folder = args.experiment
-	configFile = "config_" + args.experiment + ".cfg"
-	classFile = "Simulation" + args.experiment
+	folder = args.controller
+	configFile = "config_" + args.controller + ".cfg"
+	classFile = "Controller" + args.controller
 	mainClass = classFile
 
 	if not os.path.isdir(folder) :
 		# Creation of the configuration file
 		print("Creating configuration file " + configFile + "...")
 		with open(configFile, "w") as fileOut :
-			codeFile = """# Class name of the simulation
-simulation_name = """ + mainClass + """
+			codeFile = """# Class name of the controller
+controller_name = """ + mainClass + """
 
-# Path of simulation
-simulation_path = """ + folder + """.""" + classFile
+# Path of controller
+controller_path = """ + folder + """.""" + classFile
 
 			fileOut.write(codeFile)
 
@@ -32,16 +32,17 @@ simulation_path = """ + folder + """.""" + classFile
 		os.mknod(os.path.join(folder, "__init__.py"))
 
 		# Creation of the Simulation file
-		print("Creating simulation file " + classFile + "...")
+		print("Creating controller file " + classFile + "...")
 		with open(os.path.join(folder, classFile + ".py"), "w") as fileOut :
 			codeFile = """#!/usr/bin/env/python
 
-import Simulation
+import Controller
+import OctoPY
 import Params
 
-class """ + mainClass + """(Simulation.Simulation) :
+class """ + mainClass + """(Controller.Controller) :
 	def __init__(self, controller, mainLogger) :
-		Simulation.Simulation.__init__(self, controller, mainLogger)
+		Controller.Controller.__init__(self, controller, mainLogger)
 
 	def preActions(self) :
 		pass
@@ -50,6 +51,9 @@ class """ + mainClass + """(Simulation.Simulation) :
 		pass
 
 	def step(self) :
+		pass
+
+	def notify(self, **params) :
 		pass"""
 
 			fileOut.write(codeFile)
@@ -59,7 +63,7 @@ class """ + mainClass + """(Simulation.Simulation) :
 
 if __name__ == "__main__" :
 	parser = argparse.ArgumentParser()
-	parser.add_argument('experiment', help = "Name of the experiment.")
+	parser.add_argument('controller', help = "Name of the controller.")
 	args = parser.parse_args()
 
 	main(args)

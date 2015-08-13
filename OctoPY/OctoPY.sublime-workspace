@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"__cur",
+				"__curFreq"
+			],
+			[
+				"de",
+				"detached"
+			],
+			[
+				"launch",
+				"launchController"
+			],
+			[
+				"launc",
+				"launchController"
+			],
+			[
+				"file",
+				"fileOut"
+			],
+			[
+				"main",
+				"mainClass"
+			],
+			[
+				"fo",
+				"folder"
+			],
+			[
+				"co",
+				"codeFile"
+			],
+			[
+				"class",
+				"classFile"
+			],
+			[
 				"si",
 				"size_x"
 			],
@@ -140,10 +176,6 @@
 				"simulationConfig"
 			],
 			[
-				"main",
-				"mainLogger"
-			],
-			[
 				"ssh",
 				"sshcommand"
 			],
@@ -174,10 +206,6 @@
 			[
 				"get",
 				"getAllAttributes"
-			],
-			[
-				"co",
-				"correctSquares"
 			],
 			[
 				"_",
@@ -344,10 +372,6 @@
 				"loadHostnamesTable"
 			],
 			[
-				"file",
-				"fileInput"
-			],
-			[
 				"format",
 				"format_exc"
 			],
@@ -436,10 +460,18 @@
 	"buffers":
 	[
 		{
-			"file": "rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+			"file": "Params.py",
 			"settings":
 			{
-				"buffer_size": 2118,
+				"buffer_size": 1873,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/MainController.py",
+			"settings":
+			{
+				"buffer_size": 9146,
 				"line_ending": "Unix"
 			}
 		},
@@ -447,47 +479,7 @@
 			"file": "rpifiles/Simulation.py",
 			"settings":
 			{
-				"buffer_size": 3840,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/ThymioController.py",
-			"settings":
-			{
-				"buffer_size": 7340,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "rpifiles/SimulationDefault/SimulationDefault.py",
-			"settings":
-			{
-				"buffer_size": 1795,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Backup/Controlling Thymio/movements.py",
-			"settings":
-			{
-				"buffer_size": 2368,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Backup/Controlling Thymio/detectColor.py",
-			"settings":
-			{
-				"buffer_size": 3527,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Backup/Controlling Thymio/ThymioFunctions.py",
-			"settings":
-			{
-				"buffer_size": 6222,
+				"buffer_size": 4785,
 				"line_ending": "Unix"
 			}
 		}
@@ -516,8 +508,45 @@
 	},
 	"file_history":
 	[
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
+		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
+		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
+		"/home/arthur/pithymio.py",
+		"/home/arthur/pithymio_freq.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
+		"/home/arthur/pithymio_freq_test.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/script.sh",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CreateExperiment.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/MiscTests/Python/TestInput.py",
+		"/home/arthur/testCamera2.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activateCamera.sh",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_SpyBot.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/default_simulation.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/CreateExperiment.py",
+		"/home/arthur/thymioPYPI/OctoPY/config_SpyBot.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/SpyBot/SimulationSpyBot",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/detectColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/ThymioFunctions.py",
+		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/movements.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
+		"/home/arthur/testCamera.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activeCamera.sh",
+		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/tools.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/squareDetect.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/stopThymio.py",
@@ -526,20 +555,8 @@
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/communicate.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/imutils.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioFunctions.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/AvoidObstacles.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
-		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
-		"/home/arthur/thymioPYPI/OctoPY/utils.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/script.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/SimulationGoT.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/LocalOctoPY.py",
 		"/home/arthur/thymioPYPI/OctoPY/thymio_exchange_seq/src/exchange_seq.py",
@@ -548,7 +565,6 @@
 		"/home/arthur/thymioPYPI/OctoPY/medusa.py",
 		"/home/arthur/thymioPYPI/OctoPY/medusa.sublime-workspace",
 		"/home/arthur/thymioPYPI/OctoPY/medusa.sublime-project",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
 		"/home/arthur/thymioPYPI/medusa/medusa.py",
 		"/home/arthur/Downloads/pithymio.py",
@@ -619,31 +635,7 @@
 		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/clear_log-output.sh",
 		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/run_simulation.py",
 		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/scripts/start_all.sh",
-		"/home/arthur/thymioPYPI/medusa/misc.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/classes.py",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/scripts/reboot_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/scripts/stop_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/scripts/_init_thymio.sh",
-		"/home/arthur/thymioPYPI/scripts/medusa.py",
-		"/home/arthur/thymioPYPI/amsterdam/readme.txt",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/config.json",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.py",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/scripts/shutdown_all.sh",
-		"/home/arthur/TemplateExp.exp",
-		"/home/arthur/thymioPYPI/paris/Bazar/match.py",
-		"/home/arthur/thymioPYPI/paris/Bazar/script.py",
-		"/home/arthur/Documents/Article PROCB/ArticlePROCB.tex",
-		"/home/arthur/Documents/Article PROCB/JBA_ArticlePROCB.tex",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionEaFinite.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/wscript",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllPayoffEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/defparams.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionEa.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/BestPayoffEval.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/includes.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/StagHunt.cpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/refactResults.py",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsGeneration.py"
+		"/home/arthur/thymioPYPI/medusa/misc.py"
 	],
 	"find":
 	{
@@ -661,6 +653,17 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"importlib",
+			"cacabeep",
+			"Math",
+			"self.__curFreq",
+			"camera",
+			"SaveImage",
+			"except",
+			"Params",
+			"camera",
+			"MOTORSREAD",
+			"PAUSE",
 			"iniSpeedL",
 			"SimulationBraitenberg",
 			"SET",
@@ -777,18 +780,7 @@
 			"Invasion",
 			"setting15",
 			"SETTING15",
-			"FitEval",
-			"ALL_PAYOFFS",
-			"ea.pop()[i]",
-			"BEST_FIT",
-			"evaluation",
-			"lastEval",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEval",
-			"evaluation"
+			"FitEval"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -809,23 +801,23 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+					"file": "Params.py",
 					"settings":
 					{
-						"buffer_size": 2118,
+						"buffer_size": 1873,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1744,
-								1744
+								465,
+								465
 							]
 						],
 						"settings":
@@ -834,25 +826,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 857.0,
+						"translation.y": 111.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "rpifiles/Simulation.py",
+					"file": "rpifiles/MainController.py",
 					"settings":
 					{
-						"buffer_size": 3840,
+						"buffer_size": 9146,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3324,
-								3324
+								3632,
+								3632
 							]
 						],
 						"settings":
@@ -861,25 +853,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1928.0,
+						"translation.y": 1560.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "rpifiles/ThymioController.py",
+					"file": "rpifiles/Simulation.py",
 					"settings":
 					{
-						"buffer_size": 7340,
+						"buffer_size": 4785,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5622,
-								5622
+								4224,
+								4224
 							]
 						],
 						"settings":
@@ -888,120 +880,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2886.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "rpifiles/SimulationDefault/SimulationDefault.py",
-					"settings":
-					{
-						"buffer_size": 1795,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1630,
-								1630
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 506.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
-				{
-					"buffer": 4,
-					"file": "Backup/Controlling Thymio/movements.py",
-					"settings":
-					{
-						"buffer_size": 2368,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1627,
-								1627
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 389.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Backup/Controlling Thymio/detectColor.py",
-					"settings":
-					{
-						"buffer_size": 3527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2114,
-								2114
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1397.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Backup/Controlling Thymio/ThymioFunctions.py",
-					"settings":
-					{
-						"buffer_size": 6222,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3538,
-								3538
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2036.0,
+						"translation.y": 2692.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1026,18 +905,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -1058,24 +930,92 @@
 		"selected_items":
 		[
 			[
-				"si",
-				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
+				"sim",
+				"OctoPY/rpifiles/Simulation.py"
+			],
+			[
+				"main",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"mai",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"o",
+				"OctoPY/OctoPY.py"
 			],
 			[
 				"thy",
 				"OctoPY/rpifiles/ThymioController.py"
 			],
 			[
-				"sim",
-				"OctoPY/rpifiles/Simulation.py"
+				"simu",
+				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
 			],
 			[
-				"simu",
-				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+				"simulations",
+				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
+			],
+			[
+				"oc",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"para",
+				"OctoPY/rpifiles/Params.py"
+			],
+			[
+				"cre",
+				"OctoPY/rpifiles/CreateExperiment.py"
+			],
+			[
+				"stag",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
 			],
 			[
 				"dete",
 				"OctoPY/rpifiles/detectColor.cfg"
+			],
+			[
+				"de",
+				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
+			],
+			[
+				"staghunt",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"simul",
+				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
+			],
+			[
+				"sil",
+				"OctoPY/rpifiles/simulationMusic.cfg"
+			],
+			[
+				"spy",
+				"OctoPY/rpifiles/SpyBot/SimulationSpyBot"
+			],
+			[
+				"si",
+				"OctoPY/SpyBot/SimulationSpyBot"
+			],
+			[
+				"sp",
+				"OctoPY/config_SpyBot.cfg"
+			],
+			[
+				"ki",
+				"OctoPY/rpifiles/killAseba.sh"
+			],
+			[
+				"ut",
+				"OctoPY/rpifiles/utils.py"
+			],
+			[
+				"util",
+				"OctoPY/utils.py"
 			],
 			[
 				"simua",
@@ -1090,10 +1030,6 @@
 				"rpifiles/killAseba.sh"
 			],
 			[
-				"oc",
-				"OctoPY.py"
-			],
-			[
 				"ma",
 				"rpifiles/MainController.py"
 			],
@@ -1104,14 +1040,6 @@
 			[
 				"seq",
 				"thymio_exchange_seq/src/exchange_seq.py"
-			],
-			[
-				"mai",
-				"rpifiles/MainController.py"
-			],
-			[
-				"util",
-				"rpifiles/utils.py"
 			],
 			[
 				"aes",
@@ -1164,10 +1092,6 @@
 			[
 				"uti",
 				"utils.py"
-			],
-			[
-				"ut",
-				"rpifiles/utils.py"
 			],
 			[
 				"exc",
@@ -1240,10 +1164,6 @@
 			[
 				"invas",
 				"StagHunt-Invasion/InvasionEa.hpp"
-			],
-			[
-				"para",
-				"sferes/parallel.hpp"
 			],
 			[
 				"phen",

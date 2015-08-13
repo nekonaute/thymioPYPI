@@ -7,10 +7,10 @@ class MessageType :
     NONE = -1
 
     # Query messages
-    INIT, START, PAUSE, RESTART, STOP, KILL, QUERY, SET = range(0, 8)
+    INIT, START, PAUSE, RESTART, STOP, KILL, QUERY, SET, REGISTER = range(0, 9)
 
     # Info message
-    ACK, LISTENING, STARTED = range(10, 13)
+    ACK, LISTENING, STARTED, NOTIFY = range(10, 14)
 
     @staticmethod
     def getAllAttributes() :
