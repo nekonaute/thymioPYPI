@@ -15,10 +15,9 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		self.waitForControllerResponse()
 		self.tController.writeColorRequest([32, 32, 32])
 		self.waitForControllerResponse()
+		self.tController.writeMotorsSpeedRequest([0, 0])
 
 	def Braitenberg(self, proxSensors, avoidance = False) :
-		self.mainLogger.debug("Avoidance : " + str(avoidance))
-		
 		if not avoidance :
 			leftWheel = [-0.1, -0.05, -0.001, 0.06, 0.15]
 			rightWheel = [0.12, 0.07, -0.002, -0.055, -0.11]

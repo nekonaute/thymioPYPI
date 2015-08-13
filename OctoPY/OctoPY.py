@@ -336,7 +336,15 @@ class OctoPY() :
 						optSend.data = data
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
-						sendOneMessage(sock, optSend)				
+						sendOneMessage(sock, optSend)
+
+					# Send data
+					elif message == MessageType.DATA :
+						optSend.msgType = MessageType.DATA
+						optSend.data = data
+						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+						sock.connect((str(destIP), 55555))
+						sendOneMessage(sock, optSend)
 
 					# Stop simulation
 					elif message == MessageType.STOP :
@@ -351,6 +359,14 @@ class OctoPY() :
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
+
+					# Switch off thymio
+					elif message == MessageType.OFF :
+						sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
+						proc = subprocess.Popen(sshcommand + ["sudo", "shutdown", "-h", "now"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+						# (out, err) = proc.communicate()
+						# self.__logger.debug("Out : " + str(out))
+						# self.__logger.debug("Err : " + str(err))
 
 					# Register as observer
 					elif message == MessageType.REGISTER :
@@ -545,10 +561,16 @@ class OctoPYInteractive(cmd.Cmd) :
 			message = args[0]
 
 			IPs = []
+			data = None
 			if len(args) > 1 :
-				IPs = args[1:]
+				if message == MessageType.DATA :
+					# Last argument is the data
+					IPs = args[1:-2]
+					data = args[-1]
+				else :
+					IPs = args[1:]
 
-			octoPYInstance.sendMessage(message, IPs)
+			octoPYInstance.sendMessage(message, IPs, data)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 
@@ -577,7 +599,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 
 	def help_send(self) :
-		print '\n'.join([ 'send message [hosts list]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
+		print '\n'.join([ 'send message [hosts list] [data]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
 
 
 	# --- Ping thymios ---
