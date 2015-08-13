@@ -103,6 +103,7 @@ class Simulation(threading.Thread) :
 		with self.__tcPerformedAction :
 			while not self.__tcPA and not self.__stop.isSet() :
 				self.__tcPerformedAction.wait()
+			# self.mainLogger.debug("WAIT ENDED")
 			self.__tcPA = False
 
 	def startThymioController(self) :

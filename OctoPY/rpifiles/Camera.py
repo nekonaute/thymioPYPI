@@ -6,16 +6,20 @@ import logging
 import cv2
 from PIL import Image
 import numpy as np
+import time
+import io
+import math
 
 import Params
 
 
 class Camera() :
-	def __init__(self, mainLogger, detectColors) :
+	def __init__(self, mainLogger, colorDetect) :
 		self.__camera = picamera.PiCamera()
 		self.__camera.resolution = (Params.params.size_x, Params.params.size_y)
 
-		self.__detectColors = detectColors
+		self.__colorDetect = colorDetect
+		self.__mainLogger = mainLogger
 
 		# We need to let time for the camera to load
 		time.sleep(3)
@@ -31,14 +35,25 @@ class Camera() :
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
 
+			# cv2.imwrite("./imgBase.jpg", img)
+
+			# Blurring and converting to HSV values
+			# imgHSV2 = cv2.GaussianBlur(img, (5, 5), 0)
+			# imgHSV2 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+			# cv2.imwrite("./imgHSV.jpg", imgHSV2)
+
 			# We take just a group of lines from the image
 			firstLine = (int)((1.0 - Params.params.view_height)*Params.params.size_y) - Params.params.ray_height_radius
-			lastLine = firstLine + Params.params.ray_height_radius + 1
+			lastLine = firstLine + 2*Params.params.ray_height_radius
 			imgReduced = img[firstLine:(lastLine + 1)]
+
+			# cv2.imwrite("./imgReduced.jpg", imgReduced)
 
 			# Blurring and converting to HSV values
 			imgReduced = cv2.GaussianBlur(imgReduced, (5, 5), 0)
 			imgHSV = cv2.cvtColor(imgReduced, cv2.COLOR_BGR2HSV)
+
+			# cv2.imwrite("./imgHSVReduced.jpg", imgHSV)
 
 			# We separate the images in rays
 			imgRays =  []
@@ -67,7 +82,6 @@ class Camera() :
 			# We get masks according to each color we want to find
 			listMasks = []
 			countDetect = []
-			self.mainLogger("Camera :")
 			cpt = 1
 			for ray in imgRays :
 				hashMasks = {}
@@ -75,8 +89,11 @@ class Camera() :
 				maxDetect = 0
 				listDetect.append('none')
 
-				for color in COLORS_DETECT :
-					mask = cv2.inRange(ray, COLORS_DETECT[color]['min'], COLORS_DETECT[color]['max'])
+				# self.__mainLogger.debug("Ray " + str(cpt) + " : " + str(ray))
+
+				for color in self.__colorDetect :
+					mask = cv2.inRange(ray, self.__colorDetect[color]['min'], self.__colorDetect[color]['max'])
+					# self.__mainLogger.debug("Mask : " + str(mask))
 					# mask = cv2.GaussianBlur(mask, (5, 5), 0)
 					hashMasks[color] = mask
 
@@ -93,7 +110,25 @@ class Camera() :
 
 				countDetect.append(hashDetect)
 				listMasks.append(hashMasks)
+
+				cpt += 1
 		except :
-			self.log('Camera - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
+			self.__mainLogger.critical('Camera - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 		finally :
 			return listDetect
+
+
+if __name__ == "__main__" :
+	# Creation of the logging handlers
+	level = logging.DEBUG
+
+	mainLogger = logging.getLogger()
+	mainLogger.setLevel(level)
+
+	# Console Handler
+	consoleHandler = logging.StreamHandler()
+	consoleHandler.setLevel(level)
+	mainLogger.addHandler(consoleHandler)
+
+	camera = Camera(mainLogger, None)
+	camera.detectColors()

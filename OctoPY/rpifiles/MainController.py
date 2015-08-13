@@ -24,14 +24,15 @@ CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'config_CollectiveGathering.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationMusic.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'detectColor.cfg')
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
-TRUSTED_CLIENTS = ['192.168.0.210']
+TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110']
 
 
 global mainLogger
@@ -132,6 +133,7 @@ class MainController() :
 		else :
 			mainLogger.info('MainController - Stopping simulation')
 			self.__simulation.stop()
+			self.__simulation = None
 
 	def __loadSimulation(self) :
 		mainLogger.debug('MainController - Loading simulation...')

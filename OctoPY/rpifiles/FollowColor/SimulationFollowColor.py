@@ -4,6 +4,8 @@ import logging
 import time
 import sys
 import traceback
+import numpy as np
+import time
 
 import Simulation
 import Params
@@ -19,8 +21,12 @@ COLORS_DETECT = {
 									# 					"input3" : 0
 									# 				},
 									"red" : { 
-														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255])
+														"min" : np.array([160, 100, 100]),
+														"max" : np.array([180, 255, 255])
+													},
+									"red2" : { 
+														"min" : np.array([0, 100, 100]),
+														"max" : np.array([20, 255, 255])
 													},
 									# "green" : { 
 									# 					"min" : np.array([40, 40, 40]),
@@ -54,13 +60,15 @@ class SimulationFollowColor(Simulation.Simulation) :
 			rightWheel = [0.25, 0.2, 0.15, 0.1, 0.05, 0.01, -0.01, -0.05, -0.1, -0.15, -0.2, -0.25]
 
 			listDetect = self.__camera.detectColors()
-			for i in range(0, Params.params.nb_rays) :
-				colorDetected = listDetect[-1]
 
-				self.log("Ray " + str(cpt) + " : " + colorDetected)
+			assert(len(listDetect) >= Params.params.nb_rays)
+			for i in range(0, Params.params.nb_rays) :
+				colorDetected = listDetect[i]
+
+				self.log("Ray " + str(i) + " : " + colorDetected)
 				if colorDetected != 'none' :
-					totalLeft += leftWheel * Params.params.base_speed
-					totalRight += rightWheel * Params.params.base_speed
+					totalLeft += leftWheel[i] * Params.params.base_speed
+					totalRight += rightWheel[i] * Params.params.base_speed
 
 			totalLeft += Params.params.default_speed
 			totalRight += Params.params.default_speed
