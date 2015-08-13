@@ -13,6 +13,7 @@ import re
 import xml.dom.minidom
 import os
 import random
+import math
 
 import Simulation
 import Params
@@ -177,7 +178,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			PSValues = self.tController.getPSValues()
 
 			for i in range(0, len(PSValues)) :
-				inputs[0, index + i] = (float)PSValues[i]/(float)PROX_SENSORS_MAX_VALUE
+				inputs[0, index + i] = (float)(PSValues[i])/(float)(PROX_SENSORS_MAX_VALUE)
 				if inputs[0, index + i] > 1.0 :
 					inputs[0, index + i] = 1.0
 
@@ -266,6 +267,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			colorDetected = listDetect[-1]
 
 			self.log("Ray " + str(cpt) + " : " + colorDetected)
+			cpt += 1
 			input1 = 0
 			input2 = 0
 			input3 = 0
