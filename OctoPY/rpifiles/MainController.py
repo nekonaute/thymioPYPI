@@ -41,7 +41,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER = range(0, 7)
+	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA = range(0, 8)
 
 
 # Simulation observer
