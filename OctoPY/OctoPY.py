@@ -298,7 +298,7 @@ def sendMessage(message, IPs, data = None) :
 					sendOneMessage(sock, optSend)
 
 				# Register as observer
-				elif message = MessageType.REGISTER :
+				elif message == MessageType.REGISTER :
 					optSend.msgType = MessageType.REGISTER
 					optSend.data = data
 					sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

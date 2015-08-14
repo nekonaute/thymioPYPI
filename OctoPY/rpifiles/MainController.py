@@ -52,7 +52,7 @@ class Observer() :
 		message = utils.Message()
 		message.msgType = MessageType.NOTIFY
 
-		params.['receiver'] = self.__ID
+		params['receiver'] = self.__ID
 
 		# We send the notification message
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
