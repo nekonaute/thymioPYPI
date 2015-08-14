@@ -23,9 +23,9 @@ class SimulationTestNotifications(Simulation.Simulation) :
 		try :
 			value = random.randint(0, 9)
 			self.log("Random value : " + str(value))
-			self.notify(value = 9)
+			self.notify(value = value)
 
-			sleepTime = random.randint(0, 2)
+			sleepTime = 2
 			self.log("Sleeping : " + str(sleepTime), logging.ERROR)
 			time.sleep(sleepTime)
 		except :
