@@ -4,16 +4,296 @@
 		"selected_items":
 		[
 			[
+				"file",
+				"file_trace"
+			],
+			[
+				"_colo",
+				"_color_from_id"
+			],
+			[
+				"_ma",
+				"_map_bmp"
+			],
+			[
+				"ro",
+				"robot"
+			],
+			[
+				"_dis",
+				"_display_sensors"
+			],
+			[
+				"display",
+				"display_sensors"
+			],
+			[
+				"dis",
+				"display_color"
+			],
+			[
+				"di",
+				"display_color"
+			],
+			[
+				"get_",
+				"get_radius"
+			],
+			[
+				"res_",
+				"res_robot"
+			],
+			[
+				"res",
+				"res_sw"
+			],
+			[
+				"robo",
+				"robot_found"
+			],
+			[
+				"ill_w",
+				"ill_sw_found"
+			],
+			[
+				"fir",
+				"first_found"
+			],
+			[
+				"clo",
+				"closest"
+			],
+			[
+				"check",
+				"check_inter_is"
+			],
+			[
+				"tabH",
+				"tabHistTimeMinutes"
+			],
+			[
+				"tabHi",
+				"tabHistTimeMinutes"
+			],
+			[
+				"tabHI",
+				"tabHistTimeMinutes"
+			],
+			[
+				"listT",
+				"listTimesMinutes"
+			],
+			[
 				"list",
-				"listNodes"
+				"listTimes"
+			],
+			[
+				"hist",
+				"histTime"
+			],
+			[
+				"hi",
+				"histTime"
+			],
+			[
+				"date",
+				"datetime"
+			],
+			[
+				"m",
+				"mainLogger"
+			],
+			[
+				"main",
+				"mainLogger"
+			],
+			[
+				"_s",
+				"__scanLogger"
+			],
+			[
+				"cptC",
+				"cptColumns"
+			],
+			[
+				"cptR",
+				"cptRows"
+			],
+			[
+				"cpt",
+				"cptColumns"
+			],
+			[
+				"nb",
+				"nb_hidden"
+			],
+			[
+				"_we",
+				"__weightsHtoO2"
+			],
+			[
+				"in",
+				"increment"
+			],
+			[
+				"ra",
+				"ray_width_radius"
+			],
+			[
+				"ray_",
+				"ray_width_radius"
+			],
+			[
+				"ray",
+				"rayX"
+			],
+			[
+				"write",
+				"writeMotorsSpeedRequest"
+			],
+			[
+				"no",
+				"noObstacle"
+			],
+			[
+				"Xpr",
+				"Xproportions"
+			],
+			[
+				"Y",
+				"Yproportion"
+			],
+			[
+				"Ypr",
+				"Yproportion"
+			],
+			[
+				"out",
+				"outputs"
+			],
+			[
+				"ou",
+				"outputs"
+			],
+			[
+				"get",
+				"getHostname"
+			],
+			[
+				"look",
+				"lookRange"
+			],
+			[
+				"b",
+				"base_energy"
+			],
+			[
+				"pr",
+				"proxSensors"
+			],
+			[
+				"tot",
+				"totalRight"
+			],
+			[
+				"to",
+				"totalLeft"
+			],
+			[
+				"tota",
+				"totalRight"
+			],
+			[
+				"ba",
+				"base_speed"
+			],
+			[
+				"ener",
+				"base_energy"
+			],
+			[
+				"__",
+				"__energy"
+			],
+			[
+				"C",
+				"CHARGING"
+			],
+			[
+				"li",
+				"listDetect"
+			],
+			[
+				"SimulationEvolved",
+				"SimulationEvolvedAvoider"
+			],
+			[
+				"nb_",
+				"nb_outputs"
+			],
+			[
+				"we",
+				"weight"
+			],
+			[
+				"__wei",
+				"__weightsItoO"
+			],
+			[
+				"__main",
+				"__mainLogger"
+			],
+			[
+				"imgH",
+				"imgHSV"
+			],
+			[
+				"__ma",
+				"__mainLogger"
+			],
+			[
+				"img",
+				"imgBase"
+			],
+			[
+				"colo",
+				"colorDetect"
+			],
+			[
+				"Color",
+				"colorDetect"
+			],
+			[
+				"comm",
+				"commandData"
+			],
+			[
+				"Mess",
+				"MessageCommand"
+			],
+			[
+				"Mes",
+				"MessageCommand"
+			],
+			[
+				"mess",
+				"messageCommand"
+			],
+			[
+				"op",
+				"optSend"
+			],
+			[
+				"Sim",
+				"SimulationCollectiveGathering"
+			],
+			[
+				"detec",
+				"detectColors"
 			],
 			[
 				"rand",
 				"randIndiv"
-			],
-			[
-				"in",
-				"individual"
 			],
 			[
 				"gen",
@@ -32,14 +312,6 @@
 				"readBuffer"
 			],
 			[
-				"nb_",
-				"nb_inputs"
-			],
-			[
-				"colo",
-				"colorDetected"
-			],
-			[
 				"coun",
 				"countDetect"
 			],
@@ -56,10 +328,6 @@
 				"RAY_HEIGHT_RADIUS"
 			],
 			[
-				"C",
-				"COLORS_DETECT"
-			],
-			[
 				"imgR",
 				"imgRays"
 			],
@@ -74,18 +342,6 @@
 			[
 				"las",
 				"lastFirstColumn"
-			],
-			[
-				"fir",
-				"firstColumn"
-			],
-			[
-				"img",
-				"imgReduced"
-			],
-			[
-				"ray",
-				"rayX"
 			],
 			[
 				"RAY_",
@@ -124,14 +380,6 @@
 				"outputsNN"
 			],
 			[
-				"ou",
-				"outputs"
-			],
-			[
-				"out",
-				"outputsNN"
-			],
-			[
 				"cp",
 				"cptColumns"
 			],
@@ -144,10 +392,6 @@
 				"__weightsHtoO"
 			],
 			[
-				"__wei",
-				"__weightsHtoO"
-			],
-			[
 				"hidde",
 				"hiddenNN"
 			],
@@ -156,24 +400,8 @@
 				"__weightsItoH"
 			],
 			[
-				"cpt",
-				"cptLines"
-			],
-			[
-				"we",
-				"weight"
-			],
-			[
-				"nb",
-				"nb_inputs"
-			],
-			[
 				"w",
 				"weight"
-			],
-			[
-				"file",
-				"fileWeights"
 			],
 			[
 				"reci",
@@ -192,20 +420,8 @@
 				"recipientsList"
 			],
 			[
-				"Mess",
-				"MessageListener"
-			],
-			[
-				"main",
-				"mainLogger"
-			],
-			[
 				"ob",
 				"observerIP"
-			],
-			[
-				"get",
-				"getHashThymiosHostnames"
 			],
 			[
 				"se",
@@ -230,14 +446,6 @@
 			[
 				"obser",
 				"observerIP"
-			],
-			[
-				"Mes",
-				"MessageCommand"
-			],
-			[
-				"mess",
-				"messageCommand"
 			],
 			[
 				"dat",
@@ -306,214 +514,6 @@
 			[
 				"wait",
 				"waitForControllerResponse"
-			],
-			[
-				"wai",
-				"waitForControllerResponse"
-			],
-			[
-				"MOTORS",
-				"MOTORSREAD"
-			],
-			[
-				"not",
-				"notify"
-			],
-			[
-				"Simulation",
-				"SimulationDetectColor"
-			],
-			[
-				"__sim",
-				"__simulation"
-			],
-			[
-				"to",
-				"totalRight"
-			],
-			[
-				"total",
-				"totalLeft"
-			],
-			[
-				"tot",
-				"totalRight"
-			],
-			[
-				"send",
-				"sendOneMessage"
-			],
-			[
-				"Mee",
-				"MessageType"
-			],
-			[
-				"con",
-				"configFile"
-			],
-			[
-				"Thymio",
-				"ThymioController"
-			],
-			[
-				"sle",
-				"sleepTime"
-			],
-			[
-				"__tcP",
-				"__tcPerformedAction"
-			],
-			[
-				"Thym",
-				"ThymioController"
-			],
-			[
-				"__si",
-				"__simulation"
-			],
-			[
-				"sim",
-				"simulation"
-			],
-			[
-				"is",
-				"isStopped"
-			],
-			[
-				"simul",
-				"simulationConfig"
-			],
-			[
-				"ssh",
-				"sshcommand"
-			],
-			[
-				"SSH",
-				"SSH_CLIENT"
-			],
-			[
-				"PI",
-				"PIUSERNAME"
-			],
-			[
-				"PIP",
-				"PIPASSWORD"
-			],
-			[
-				"recvO",
-				"recvOptions"
-			],
-			[
-				"pa",
-				"packed_data"
-			],
-			[
-				"compl",
-				"completions"
-			],
-			[
-				"dra",
-				"drawGene"
-			],
-			[
-				"SI",
-				"SQUARE_SIZE"
-			],
-			[
-				"pop",
-				"population"
-			],
-			[
-				"ge",
-				"genome"
-			],
-			[
-				"sel",
-				"selection_pop"
-			],
-			[
-				"best",
-				"bestFitness"
-			],
-			[
-				"po",
-				"possibleSquares"
-			],
-			[
-				"connect",
-				"connectedSquares"
-			],
-			[
-				"conn",
-				"connectedSquares"
-			],
-			[
-				"ran",
-				"randint"
-			],
-			[
-				"_ge",
-				"_genome"
-			],
-			[
-				"s",
-				"_size"
-			],
-			[
-				"_get_",
-				"_get_population"
-			],
-			[
-				"lam",
-				"LAMBDA"
-			],
-			[
-				"has",
-				"hashThymiosHostnames"
-			],
-			[
-				"N",
-				"NONE"
-			],
-			[
-				"reso",
-				"resolveAddresses"
-			],
-			[
-				"host",
-				"hostname"
-			],
-			[
-				"state",
-				"hashThymiosStates"
-			],
-			[
-				"res",
-				"resolveAddress"
-			],
-			[
-				"range",
-				"rangeArg"
-			],
-			[
-				"look",
-				"lookRange"
-			],
-			[
-				"lis",
-				"listeningHosts"
-			],
-			[
-				"TIM",
-				"TIMEOUT_QUERY"
-			],
-			[
-				"return",
-				"returncode"
-			],
-			[
-				"e",
-				"exceptional"
 			]
 		]
 	},
@@ -544,134 +544,134 @@
 	},
 	"file_history":
 	[
-		"/home/arthur/Documents/PartnerSelection.py",
-		"/home/arthur/sferes2-0.99/scriptsArthur/compareGenomes.py",
-		"/home/arthur/sferes2-0.99/scriptsArthur/Drawing.py",
-		"/home/arthur/sferes2-0.99/getBestfit.py",
+		"/home/arthur/DREAM/sferes2/sferes/fit/fitness.hpp",
+		"/home/arthur/DREAM/sferes2/sferes/ea/nsga2.hpp",
+		"/home/arthur/DREAM/sferes2/sferes/ea/ea.hpp",
+		"/home/arthur/DREAM/sferes2/exp/example/example.cpp",
+		"/home/arthur/DREAM/sferes2/sferes/phen/indiv.hpp",
+		"/home/arthur/DREAM/sferes2/sferes/run.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/display.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/display.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/simu_fastsim.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/test_fastsim.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/fastsim_keyboard.cpp",
+		"/home/arthur/DREAM/sferes2/README.md",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/StagHunt.cpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi2/display.hpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi2/display.cpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi2/simu_fastsim_multi.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/laser.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/robot.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/linear_camera.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/map.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/robot.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/map.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/linear_camera.hpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi2/laser.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/illuminated_switch.hpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi/simu_fastsim_multi.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/posture.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/misc.hpp",
+		"/home/arthur/DREAM/sferes2/sferes/misc.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/goal.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/radar.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/laser.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/light_sensor.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/wscript",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/fastsim.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/main.cpp",
+		"/home/arthur/DREAM/sferes2/modules.conf",
+		"/home/arthur/DREAM/sferes2/sferes/misc/rand.hpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/radar.cpp",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/light_sensor.cpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi/robot.hpp",
+		"/home/arthur/sferes2-0.99/modules/fastsim_multi/map.cpp",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/scanSingleRobot.log",
 		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/logAnalysis.py",
 		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHuntLeader.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHuntFollower.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
+		"/home/arthur/sferes2-0.99/scriptsArthur/compareGenomes.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/scanTwoRobots.log",
+		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.perl",
+		"/home/arthur/sferes2-0.99/expToContinu.txt",
+		"/home/arthur/sferes2-0.99/TemplateExp.exp",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/scanTwoRobotsOld.log",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/scanSingleRobotOld.log",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/SimulationScanner.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_Scanner.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
+		"/home/arthur/Documents/RapportsRes/Resultats 2015-10-26/TemplatePres.tex",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Camera.py",
+		"/home/arthur/Documents/RapportsRes/Resultats 2015-03-24/TemplatePres.tex",
+		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
+		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/weights.dat",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/genLeader.dat",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/genFollower.dat",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Robots/wscript",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Robots/Hunter.hpp",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGatheringEnergy/SimulationCollectiveGatheringEnergy.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/utils.py",
 		"/home/arthur/thymioPYPI/OctoPY/utils.py",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Elitist.hpp",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Robots/Elitist.hpp",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Robots/Elitist-CoEvo.hpp",
+		"/home/arthur/sferes2-0.99/gen.out",
+		"/home/arthur/sferes2-0.99/genLeader.out",
+		"/home/arthur/sferes2-0.99/genFollower.out",
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/FollowColor/SimulationFollowColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_FollowColor.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
+		"/home/arthur/sferes2-0.99/scriptsArthur/computeExpectation.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGathering.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGatheringPlus/SimulationCollectiveGatheringPlus.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringPlus.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_EvolvedAvoider.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/braitenbergFollower.cfg",
+		"/home/arthur/MiscTests/Python/colormap.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/algorithm.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/classes.py",
+		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/parameters.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
+		"/home/arthur/Documents/PartnerSelection.py",
+		"/home/arthur/sferes2-0.99/scriptsArthur/Drawing.py",
+		"/home/arthur/sferes2-0.99/getBestfit.py",
 		"/home/arthur/sferes2-0.99/copyGenome.py",
 		"/home/arthur/TheoriticalExperiments/Population.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/main.c",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/serial_read.c",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/RFID/serial_read.h",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Scanner/SimulationScanner.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_Scanner.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/braitenberg.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
-		"/home/arthur/sferes2-0.99/TemplateExp.exp",
 		"/home/arthur/sferes2-0.99/TemplateExp.exp.bck",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
 		"/home/arthur/testCamera3.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
 		"/home/arthur/testCamera2.py",
 		"/home/arthur/testCamera.py",
 		"/home/arthur/pithymio.py",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
-		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationStagHunt.py",
 		"/home/arthur/MiscTests/Python/XMLParser.py",
 		"/home/arthur/OgarCancun/src/ai/BotNN.js",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
 		"/home/arthur/thymioPYPI/OctoPY/config_TestNotifications.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/TestNotifications/SimulationTestNotifications.py",
 		"/home/arthur/thymioPYPI/OctoPY/Params.py",
 		"/home/arthur/thymioPYPI/OctoPY/CreateController.py",
-		"/home/arthur/pithymio_freq.py",
-		"/home/arthur/pithymio_freq_test.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/script.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CreateExperiment.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
-		"/home/arthur/MiscTests/Python/TestInput.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activateCamera.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_SpyBot.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/default_simulation.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/CreateExperiment.py",
-		"/home/arthur/thymioPYPI/OctoPY/config_SpyBot.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/SpyBot/SimulationSpyBot",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/detectColor.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/ThymioFunctions.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/movements.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activeCamera.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/tools.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/squareDetect.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/stopThymio.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/testbarcode.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/sift_orb.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/communicate.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/imutils.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioFunctions.py",
-		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/AvoidObstacles.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/script.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationGoT/SimulationGoT.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/LocalOctoPY.py",
-		"/home/arthur/thymioPYPI/OctoPY/thymio_exchange_seq/src/exchange_seq.py",
-		"/home/arthur/Misc/EvolutionaryDrawing/Params.py",
-		"/home/arthur/Misc/EvolutionaryDrawing/EvolDrawing.py",
-		"/home/arthur/thymioPYPI/OctoPY/medusa.py",
-		"/home/arthur/thymioPYPI/OctoPY/medusa.sublime-workspace",
-		"/home/arthur/thymioPYPI/OctoPY/medusa.sublime-project",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
-		"/home/arthur/thymioPYPI/medusa/medusa.py",
-		"/home/arthur/Downloads/pithymio.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
-		"/home/arthur/Downloads/script.sh",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/Params.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/MainController.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/ThymioController.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/SimulationGoT/SimulationGoT.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/simulationGoT.cfg",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/braitenberg.cfg",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/algorithm.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/utils.py",
-		"/home/arthur/thymioPYPI/medusa/utils.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/asebaCommands.aesl",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/default_simulation (copy).cfg",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/run_cmd.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/scripts/accept_output_file.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/scripts/start_all.sh",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/README.txt",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/_init.sh",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/scripts/bots.txt",
-		"/home/arthur/thymioPYPI/medusa/hostnames_table.json",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/exchange_seq.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/asebaCommands.aesl",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg",
-		"/home/arthur/TheoriticalExperiments/TheoriticalExperiment.py",
-		"/home/arthur/TheoriticalExperiments/Params.py",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/thymioControl.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/parameters.py",
-		"/home/arthur/thymioPYPI/medusa/three_fold_adaptation/rpis/classes.py",
-		"/media/arthur/USB Kool/Resultats 2015-03-24/TemplatePres.tex",
-		"/home/arthur/thymioPYPI/medusa/rpifiles/_init_thymio.sh",
-		"/home/arthur/ThymioErrors.txt",
-		"/home/arthur/thymioPYPI/medusa/config.json",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/algorithm.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/reboot_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/start_all.sh",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/run_cmd.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/_init.sh",
-		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.aesl",
-		"/home/arthur/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
-		"/home/arthur/Misc/FillSquare/FillSquare.py",
-		"/home/arthur/thymioPYPI/medusa/medusa.py.bck"
+		"/home/arthur/pithymio_freq.py"
 	],
 	"find":
 	{
@@ -689,134 +689,134 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"_map_bmp",
+			"behaviour_log",
+			"_behaviour_log",
+			"_trajectory",
+			"_trajectory_log",
+			"_start_positions",
+			"px",
+			"rect",
+			"rectangle",
+			"rect",
+			"disp_lasers",
+			"_angular_range",
+			"disp_camera",
+			"disp_las",
+			"NO_VIDEO",
+			"_display_sensors",
+			"_no_video",
+			"_map_bmp",
+			"_map_bmp2",
+			"cpt",
+			"_num_frame",
+			"_behaviour_log",
+			"BEHAVIOUR_LOG",
+			"_record_video",
+			"SaveB",
+			"init_view",
+			"Display",
+			"init_view",
+			"_view_activate",
+			"NO_VIDEO",
+			"Robot&",
+			", 0)",
+			"_display_sensors",
+			"disp_lasers",
+			"check_inter_re",
+			"r1",
+			"color_type",
+			"),",
+			"camera",
+			"disp_las",
+			"camera",
+			"fastsim",
+			"float x, float y, float radius, float bbx, float bby, float bbw, float bbh",
+			"Map",
+			"ret",
+			"fastsim",
+			"get_pos",
+			"robot->get_",
+			"s.robot()",
+			"robot",
+			"get_x",
+			"clean",
+			"y_sw",
+			"x_sw",
+			"res_sw",
+			"isv",
+			"res_sw",
+			"first_found",
+			"_check_inter_ray_circle",
+			"yDist",
+			"xDist",
+			"y2",
+			"x2",
+			"y1",
+			"x1",
+			"check_inter",
+			"fastsim::",
+			"Map",
+			"fastsim::Map",
+			"fastsim::",
+			"[time for time in range(0, listTimes[-1], 600)]",
+			"tabHistTime",
+			"ax1",
+			"beginningDate",
+			"listHeightWall",
+			"listSizesWall",
+			"listHeight",
+			"listHeightWall",
+			"listSizes",
+			"configuration file",
+			"configusion file",
+			"15",
+			"25",
+			"ax0",
+			"listTypes",
+			"axe1",
+			"listSizes",
+			" - 1",
+			"ax0",
+			"ax1",
+			"./lastGenPop",
+			"StagHunt_setting14_sstag250_followerinv_solo",
+			"launchController",
+			"outputs",
+			"betwee",
+			"random",
+			"ax2",
+			"ax",
+			"cpt",
+			"proxSensors[i]",
+			"<=",
+			"FORAGING",
+			"black_level",
+			"MessageCommand",
+			"SimulationStagHunt",
+			"cpt",
+			"colorDetect",
+			"self.__mainLogger(",
+			"self.__mainLogger.debug",
+			"COLORS_DETECT",
+			"detectColors",
+			"self.mainLogger",
+			"200",
+			"DATA",
+			"OFF",
+			"self.data",
+			"QUERY",
+			"300",
+			"self.__request",
+			"command",
+			"waitForContro",
+			"self.log",
 			"hashSimilarities",
 			"similarity",
 			"CHOICE_TYPE",
 			"sendMessage",
 			"instructionsfile",
-			"255",
-			"40",
-			"input1",
-			"NB_RAYS",
-			"SIZE_X",
-			"RAY_WIDTH_RADIUS",
-			"RAY_HEIGHT_RADIUS",
-			"SIZE_Y",
-			"VIEW_HEIGHT",
-			"image_HSV",
-			"RED",
-			"maskRed",
-			"imageHSV",
-			"imgReduced",
-			"lastFirstColumn",
-			"RAY_WIDTH",
-			"WIDTH",
-			"RAY_HEIGHT",
-			"self.__camera",
-			"proxSensorsVal",
-			"__killController",
-			"commandData",
-			"self.__command",
-			"StagHunt_control1",
-			"np.mat",
-			"Params.Params",
-			"print",
-			"Params",
-			"octoPYInstance",
-			"OctoPY",
-			"self.__logger",
-			"recvOne",
-			"self.octoPYInstance.logger",
-			"self.__logger(",
-			"self.__logger",
-			"self.__octoPYInstance",
-			"OctoPY.",
-			"loadHostnamesTable()",
-			"loadHostnamesTable",
-			"global",
-			"OctoPY",
-			"octoPYInteractive",
-			"OctoPY.logger",
-			"self.__hashThymiosHostnames",
-			"logging",
-			"__listThymiosStates",
-			"start",
-			"__listThymiosStates",
-			"listThymiosStates",
-			"logging",
-			"logger",
-			"hashThymiosHostnames",
-			"MedusaInteractive",
-			"self.stop",
-			"Simulation",
-			"simulation",
-			"args.experiment",
-			"this",
-			"mainLogger",
-			"CommandsListener",
-			"getIP",
-			"get",
-			"importlib",
-			"cacabeep",
-			"Math",
-			"self.__curFreq",
-			"camera",
-			"SaveImage",
-			"except",
-			"Params",
-			"camera",
-			"MOTORSREAD",
-			"PAUSE",
-			"iniSpeedL",
-			"SimulationBraitenberg",
-			"SET",
-			".SET",
-			"MessageType.PAUSE",
-			"MessageType.START",
-			"Sound",
-			"Popen",
-			"SimulationGoT",
-			"Request",
-			"Sound",
-			"str(destIP)",
-			"getCommand",
-			"optSend",
-			"stopEv",
-			"medusa",
-			"__sound",
-			"self.stop",
-			".stop",
-			"SimulationDefault",
-			"__stop",
-			"__dbusGetProxSensorsReply",
-			"proxSensorsVal",
-			"SimulationDefault",
-			"55556",
-			"LISTENER_PORT",
-			"55555",
-			"__waitForControllerResponse",
-			"__isStopped",
-			"__",
-			"__waitForControllerResponse",
-			"__thymioController",
-			"__mainLogger",
-			"__tController",
-			"__mainLogger",
-			"startSimul",
-			"rand",
-			"__waitForControllerResponse",
-			"thymioControllerPer",
-			"stopThymio",
-			"color",
-			"__simLogger",
-			"CommandsListener",
-			"_params",
-			"message",
-			"CommandsListener",
-			"ThymioController",
-			"CommandListener",
-			"__",
-			"__simulationStarted"
+			"255"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -884,24 +884,356 @@
 		"selected_items":
 		[
 			[
+				"ns",
+				"sferes/ea/nsga2.hpp"
+			],
+			[
+				"fit",
+				"sferes/fit/fitness.hpp"
+			],
+			[
+				"in",
+				"sferes2/sferes/phen/indiv.hpp"
+			],
+			[
+				"ea",
+				"sferes2/sferes/ea/ea.hpp"
+			],
+			[
+				"exam",
+				"sferes2/exp/example/example.cpp"
+			],
+			[
+				"run",
+				"sferes/run.hpp"
+			],
+			[
+				"sim",
+				"fastsim_multi/simu_fastsim.hpp"
+			],
+			[
+				"fas",
+				"fastsim_multi/fastsim_keyboard.cpp"
+			],
+			[
+				"si",
+				"fastsim_multi/simu_fastsim.hpp"
+			],
+			[
+				"dis",
+				"fastsim_multi/display.cpp"
+			],
+			[
+				"map",
+				"fastsim_multi/map.hpp"
+			],
+			[
+				"ma",
+				"fastsim_multi/map.hpp"
+			],
+			[
+				"lin",
+				"fastsim_multi/linear_camera.hpp"
+			],
+			[
+				"robo",
+				"fastsim_multi/robot.cpp"
+			],
+			[
+				"ro",
+				"fastsim_multi/robot.hpp"
+			],
+			[
+				"fast",
+				"fastsim_multi/fastsim_keyboard.cpp"
+			],
+			[
+				"las",
+				"fastsim_multi/laser.hpp"
+			],
+			[
+				"rob",
+				"fastsim_multi/robot.hpp"
+			],
+			[
+				"di",
+				"fastsim_multi/display.cpp"
+			],
+			[
+				"displ",
+				"fastsim_multi/display.hpp"
+			],
+			[
+				"pos",
+				"fastsim_multi/posture.hpp"
+			],
+			[
+				"ill",
+				"fastsim_multi/illuminated_switch.hpp"
+			],
+			[
+				"mi",
+				"fastsim_multi/misc.hpp"
+			],
+			[
+				"goa",
+				"fastsim_multi/goal.hpp"
+			],
+			[
+				"test_fa",
+				"fastsim_multi/test_fastsim.cpp"
+			],
+			[
+				"li",
+				"fastsim_multi/light_sensor.hpp"
+			],
+			[
+				"mis",
+				"fastsim_multi/misc.hpp"
+			],
+			[
+				"po",
+				"fastsim_multi/posture.hpp"
+			],
+			[
+				"ws",
+				"fastsim_multi/wscript"
+			],
+			[
+				"rada",
+				"fastsim_multi/radar.hpp"
+			],
+			[
+				"main",
+				"fastsim_multi/main.cpp"
+			],
+			[
+				"map.cpp",
+				"fastsim_multi/map.cpp"
+			],
+			[
+				"ra",
+				"sferes/misc/rand.hpp"
+			],
+			[
+				"lig",
+				"fastsim_multi/light_sensor.cpp"
+			],
+			[
+				"goal",
+				"fastsim_multi/goal.hpp"
+			],
+			[
+				"radar",
+				"fastsim_multi/radar.cpp"
+			],
+			[
+				"dipl",
+				"fastsim_multi/display.hpp"
+			],
+			[
+				"",
+				"fastsim_multi/laser.hpp"
+			],
+			[
+				"simu_f",
+				"fastsim_multi/simu_fastsim.hpp"
+			],
+			[
+				"oc",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"thy",
+				"OctoPY/rpifiles/ThymioController.py"
+			],
+			[
+				"para",
+				"OctoPY/rpifiles/Params.py"
+			],
+			[
+				"config_s",
+				"OctoPY/rpifiles/config_StagHuntLeader.cfg"
+			],
+			[
+				"config_st",
+				"OctoPY/rpifiles/config_StagHuntFollower.cfg"
+			],
+			[
+				"simulations",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"simulationbr",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"mainc",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"staghu",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"contro",
+				"OctoPY/Controller.py"
+			],
+			[
+				"contr",
+				"OctoPY/TestNotifications/ControllerTestNotifications.py"
+			],
+			[
 				"o",
 				"OctoPY/OctoPY.py"
+			],
+			[
+				"aesl",
+				"OctoPY/rpifiles/asebaCommands.aesl"
+			],
+			[
+				"came",
+				"OctoPY/rpifiles/Camera.py"
+			],
+			[
+				"simulationco",
+				"OctoPY/rpifiles/CollectiveGatheringEnergy/SimulationCollectiveGatheringEnergy.py"
 			],
 			[
 				"u",
 				"OctoPY/rpifiles/utils.py"
 			],
 			[
-				"ut",
+				"uti",
 				"OctoPY/utils.py"
 			],
 			[
-				"main",
-				"OctoPY/rpifiles/MainController.py"
+				"stag",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"config_f",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"simulationf",
+				"OctoPY/rpifiles/FollowColor/SimulationFollowColor.py"
+			],
+			[
+				"scan",
+				"OctoPY/rpifiles/config_Scanner.cfg"
 			],
 			[
 				"simulation",
+				"OctoPY/rpifiles/Scanner/SimulationScanner.py"
+			],
+			[
+				"collective",
+				"OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py"
+			],
+			[
+				"simulationev",
+				"OctoPY/rpifiles/EvolvedAvoider/SimulationEvolvedAvoider.py"
+			],
+			[
+				"simulationst",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"mai",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"config_c",
+				"OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg"
+			],
+			[
+				"config_co",
+				"OctoPY/rpifiles/config_CollectiveGathering.cfg"
+			],
+			[
+				"simulationc",
+				"OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py"
+			],
+			[
+				"simulationb",
 				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"config_",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"simulationcol",
+				"OctoPY/rpifiles/CollectiveGatheringPlus/SimulationCollectiveGatheringPlus.py"
+			],
+			[
+				"coll",
+				"OctoPY/rpifiles/config_CollectiveGatheringPlus.cfg"
+			],
+			[
+				"braite",
+				"OctoPY/rpifiles/braitenbergFollower.cfg"
+			],
+			[
+				"configc",
+				"OctoPY/rpifiles/config_CollectiveGathering.cfg"
+			],
+			[
+				"defaul",
+				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
+			],
+			[
+				"ut",
+				"OctoPY/rpifiles/utils.py"
+			],
+			[
+				"configf",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"camera",
+				"OctoPY/rpifiles/Camera.py"
+			],
+			[
+				"brai",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"config_e",
+				"OctoPY/rpifiles/config_EvolvedAvoider.cfg"
+			],
+			[
+				"testn",
+				"OctoPY/TestNotifications/ControllerTestNotifications.py"
+			],
+			[
+				"conr",
+				"OctoPY/Controller.py"
+			],
+			[
+				"cong_f",
+				"OctoPY/rpifiles/config_FollowColor.cfg"
+			],
+			[
+				"det",
+				"OctoPY/rpifiles/detectColor.cfg"
+			],
+			[
+				"simulationde",
+				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"collec",
+				"OctoPY/rpifiles/CollectiveGathering/SimulationCollectiveGathering.py"
+			],
+			[
+				"par",
+				"OctoPY/rpifiles/Params.py"
 			],
 			[
 				"s",
@@ -916,24 +1248,12 @@
 				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
 			],
 			[
-				"simu",
-				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
-			],
-			[
 				"conf",
 				"OctoPY/rpifiles/config_Scanner.cfg"
 			],
 			[
 				"simulat",
 				"OctoPY/rpifiles/Scanner/SimulationScanner.py"
-			],
-			[
-				"simulationbr",
-				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
-			],
-			[
-				"config_",
-				"OctoPY/rpifiles/config_StagHunt.cfg"
 			],
 			[
 				"testcolor",
@@ -944,16 +1264,8 @@
 				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
-				"thy",
-				"OctoPY/rpifiles/ThymioController.py"
-			],
-			[
 				"con",
 				"OctoPY/TestNotifications/ControllerTestNotifications.py"
-			],
-			[
-				"sim",
-				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
 				"aes",
@@ -968,44 +1280,12 @@
 				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
 			],
 			[
-				"stag",
-				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
-			],
-			[
-				"si",
-				"OctoPY/rpifiles/Simulation.py"
-			],
-			[
-				"oc",
-				"OctoPY/OctoPY.py"
-			],
-			[
-				"uti",
-				"OctoPY/utils.py"
-			],
-			[
 				"confi",
 				"OctoPY/config_TestNotifications.cfg"
 			],
 			[
 				"simulationd",
 				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
-			],
-			[
-				"contr",
-				"OctoPY/Controller.py"
-			],
-			[
-				"mai",
-				"OctoPY/rpifiles/MainController.py"
-			],
-			[
-				"simulations",
-				"OctoPY/rpifiles/SpyBot/SimulationSpyBot.py"
-			],
-			[
-				"para",
-				"OctoPY/rpifiles/Params.py"
 			],
 			[
 				"cre",
@@ -1052,10 +1332,6 @@
 				"rpifiles/killAseba.sh"
 			],
 			[
-				"ma",
-				"rpifiles/MainController.py"
-			],
-			[
 				"scr",
 				"rpifiles/SimulationGoT/script.sh"
 			],
@@ -1096,10 +1372,6 @@
 				"rpifiles/ThymioController.py"
 			],
 			[
-				"",
-				"hostnames_table.json"
-			],
-			[
 				"cfg",
 				"rpifiles/default_simulation.cfg"
 			],
@@ -1122,126 +1394,6 @@
 			[
 				"ex",
 				"rpifiles/exchange_seq.py"
-			],
-			[
-				"m",
-				"medusa.py"
-			],
-			[
-				"_i",
-				"rpifiles/_init_thymio.sh"
-			],
-			[
-				"med",
-				"medusa.py"
-			],
-			[
-				"invasion",
-				"StagHunt-Invasion/InvasionEa.hpp"
-			],
-			[
-				"in",
-				"StagHunt-Invasion/InvasionEaFinite.hpp"
-			],
-			[
-				"ws",
-				"StagHunt-Invasion/wscript"
-			],
-			[
-				"def",
-				"StagHunt-Invasion/defparams.hpp"
-			],
-			[
-				"allpa",
-				"StagHunt-Invasion/AllPayoffEvalStat.hpp"
-			],
-			[
-				"best",
-				"StagHunt-Invasion/BestPayoffEval.hpp"
-			],
-			[
-				"inc",
-				"StagHunt-Invasion/includes.hpp"
-			],
-			[
-				"bestf",
-				"StagHunt-Invasion/BestFitEval.hpp"
-			],
-			[
-				"allf",
-				"StagHunt-Invasion/AllFitEvalStat.hpp"
-			],
-			[
-				"invas",
-				"StagHunt-Invasion/InvasionEa.hpp"
-			],
-			[
-				"phen",
-				"StagHunt-Invasion/PhenInvasion.hpp"
-			],
-			[
-				"eval",
-				"StagHunt-Invasion/EvalInvasion.hpp"
-			],
-			[
-				"n",
-				"sferes/ea/nsga2.hpp"
-			],
-			[
-				"ea",
-				"sferes/ea/ea.hpp"
-			],
-			[
-				"eliti",
-				"StagHunt-Invasion/Elitist-CoEvo.hpp"
-			],
-			[
-				"indiv",
-				"sferes/phen/indiv.hpp"
-			],
-			[
-				"fit",
-				"StagHunt-Invasion/FitnessProp.hpp"
-			],
-			[
-				"pheni",
-				"StagHunt-Invasion/PhenInvasion.hpp"
-			],
-			[
-				"indi",
-				"sferes/phen/indiv.hpp"
-			],
-			[
-				"phe",
-				"StagHunt-Invasion/PhenInvasion.hpp"
-			],
-			[
-				"rand",
-				"sferes/misc/rand.hpp"
-			],
-			[
-				"mis",
-				"sferes/misc.hpp"
-			],
-			[
-				"inv",
-				"StagHunt-Invasion/InvasionGen.hpp"
-			],
-			[
-				"invasio",
-				"StagHunt-Invasion/InvasionEa.hpp"
-			],
-			[
-				"evof",
-				"sferes/gen/evo_float.hpp"
-			],
-			[
-				"sta",
-				"StagHunt-Invasion/StagHunt.cpp"
-			],
-			[
-				"eva",
-				"StagHunt-Invasion/EvalInvasion.hpp"
 			]
 		],
 		"width": 0.0
@@ -1253,7 +1405,7 @@
 		[
 			[
 				"",
-				"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion.sublime-project"
+				"/home/arthur/sferes2-0.99/exp/StagHunt-Robots.sublime-project"
 			]
 		],
 		"width": 380.0

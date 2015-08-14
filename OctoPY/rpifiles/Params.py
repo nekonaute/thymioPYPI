@@ -39,6 +39,7 @@ class Params :
 					self.__mainLogger.critical('Params - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 
+
 	def checkParam(self, param) :
 		if param in self.__params.keys() :
 			return True
