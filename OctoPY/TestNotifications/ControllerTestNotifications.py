@@ -11,32 +11,38 @@ from utils import MessageType
 MAX = 100
 
 class ControllerTestNotifications(Controller.Controller) :
-	def __init__(self, controller, mainLogger) :
-		Controller.Controller.__init__(self, controller, mainLogger)
+	def __init__(self, octoPYInstance, controller) :
+		Controller.Controller.__init__(self, octoPYInstance, controller)
 
 		self.__total = 0
 
 	def preActions(self) :
-		if OctoPY.hashThymiosHostnames :
+		if self.octoPYInstance.hashThymiosHostnames :
 			# Init all robots
-			OctoPY.sendMessage(MessageType.INIT, [])
+			self.log("Send init...")
+			self.octoPYInstance.sendMessage(MessageType.INIT, [])
 			time.sleep(5)
 
 			# Register on all robots
-			OctoPY.register([])
+			self.log("Register...")
+			self.register([])
 
-			# Load simulation
-			OctoPY.sendMessage(MessageType.SET, [], "config_TestNotifications.cfg")
+			# Load simulation
+			self.log("Load simulation...")
+			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_TestNotifications.cfg")
 
-			# Start simulation
-			OctoPY.sendMessage(MessageType.START, [])
+			# # Start simulation
+			# self.log("Start simulation...")
+			# self.octoPYInstance.sendMessage(MessageType.START, [])
 
 	def postActions(self) :
 		# Stop simulation
-		OctoPY.sendMessage(MessageType.STOP, [])
+		self.log("Stop simulation...")
+		self.octoPYInstance.sendMessage(MessageType.STOP, [])
 
 		# Kill controllers
-		OctoPY.sendMessage(MessageType.KILL, [])
+		self.log("Kill controller...")
+		self.octoPYInstance.sendMessage(MessageType.KILL, [])
 
 	def step(self) :
 		pass
