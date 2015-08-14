@@ -519,6 +519,46 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+			"settings":
+			{
+				"buffer_size": 2623,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/braitenberg.cfg",
+			"settings":
+			{
+				"buffer_size": 271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/braitenbergFollower.cfg",
+			"settings":
+			{
+				"buffer_size": 272,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "OctoPY.py",
+			"settings":
+			{
+				"buffer_size": 26756,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/MainController.py",
+			"settings":
+			{
+				"buffer_size": 11804,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -544,6 +584,10 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGathering.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/braitenbergNoTurn.cfg",
+		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/main.cpp",
 		"/home/arthur/DREAM/sferes2/sferes/fit/fitness.hpp",
 		"/home/arthur/DREAM/sferes2/sferes/ea/nsga2.hpp",
 		"/home/arthur/DREAM/sferes2/sferes/ea/ea.hpp",
@@ -579,7 +623,6 @@
 		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/light_sensor.hpp",
 		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/wscript",
 		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/fastsim.hpp",
-		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/main.cpp",
 		"/home/arthur/DREAM/sferes2/modules.conf",
 		"/home/arthur/DREAM/sferes2/sferes/misc/rand.hpp",
 		"/home/arthur/DREAM/sferes2/modules/fastsim_multi/radar.cpp",
@@ -636,8 +679,6 @@
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
 		"/home/arthur/sferes2-0.99/scriptsArthur/computeExpectation.py",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGathering.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CollectiveGatheringPlus/SimulationCollectiveGatheringPlus.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_CollectiveGatheringPlus.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_EvolvedAvoider.cfg",
@@ -670,8 +711,7 @@
 		"/home/arthur/thymioPYPI/OctoPY/config_TestNotifications.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/TestNotifications/SimulationTestNotifications.py",
 		"/home/arthur/thymioPYPI/OctoPY/Params.py",
-		"/home/arthur/thymioPYPI/OctoPY/CreateController.py",
-		"/home/arthur/pithymio_freq.py"
+		"/home/arthur/thymioPYPI/OctoPY/CreateController.py"
 	],
 	"find":
 	{
@@ -837,8 +877,142 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+					"settings":
+					{
+						"buffer_size": 2623,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2097,
+								2097
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1029.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "rpifiles/braitenberg.cfg",
+					"settings":
+					{
+						"buffer_size": 271,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								270,
+								270
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "rpifiles/braitenbergFollower.cfg",
+					"settings":
+					{
+						"buffer_size": 272,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								271,
+								271
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "OctoPY.py",
+					"settings":
+					{
+						"buffer_size": 26756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								605,
+								605
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 314.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "rpifiles/MainController.py",
+					"settings":
+					{
+						"buffer_size": 11804,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								340,
+								340
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -883,6 +1057,34 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"bra",
+				"OctoPY/rpifiles/braitenbergNoTurn.cfg"
+			],
+			[
+				"mainc",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
+				"main",
+				"fastsim_multi/main.cpp"
+			],
+			[
+				"oc",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
+			[
+				"config_coll",
+				"OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg"
+			],
+			[
+				"config_c",
+				"OctoPY/rpifiles/config_CollectiveGathering.cfg"
+			],
 			[
 				"ns",
 				"sferes/ea/nsga2.hpp"
@@ -1004,10 +1206,6 @@
 				"fastsim_multi/radar.hpp"
 			],
 			[
-				"main",
-				"fastsim_multi/main.cpp"
-			],
-			[
 				"map.cpp",
 				"fastsim_multi/map.cpp"
 			],
@@ -1040,10 +1238,6 @@
 				"fastsim_multi/simu_fastsim.hpp"
 			],
 			[
-				"oc",
-				"OctoPY/OctoPY.py"
-			],
-			[
 				"thy",
 				"OctoPY/rpifiles/ThymioController.py"
 			],
@@ -1066,10 +1260,6 @@
 			[
 				"simulationbr",
 				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
-			],
-			[
-				"mainc",
-				"OctoPY/rpifiles/MainController.py"
 			],
 			[
 				"staghu",
@@ -1142,10 +1332,6 @@
 			[
 				"mai",
 				"OctoPY/rpifiles/MainController.py"
-			],
-			[
-				"config_c",
-				"OctoPY/rpifiles/config_CollectiveGatheringEnergy.cfg"
 			],
 			[
 				"config_co",
@@ -1222,10 +1408,6 @@
 			[
 				"simulationde",
 				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
-			],
-			[
-				"simu",
-				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
 			],
 			[
 				"collec",
@@ -1348,10 +1530,6 @@
 				"rpifiles/Params.py"
 			],
 			[
-				"bra",
-				"rpifiles/braitenberg.cfg"
-			],
-			[
 				"me",
 				"medusa.py"
 			],
@@ -1390,10 +1568,6 @@
 			[
 				"_in",
 				"rpifiles/_init_thymio.sh"
-			],
-			[
-				"ex",
-				"rpifiles/exchange_seq.py"
 			]
 		],
 		"width": 0.0
@@ -1405,7 +1579,7 @@
 		[
 			[
 				"",
-				"/home/arthur/sferes2-0.99/exp/StagHunt-Robots.sublime-project"
+				"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion.sublime-project"
 			]
 		],
 		"width": 380.0
