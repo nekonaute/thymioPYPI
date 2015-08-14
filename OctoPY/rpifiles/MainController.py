@@ -98,7 +98,7 @@ class MainController() :
 				self.__simulation.reset()
 
 			mainLogger.info('MainController - Starting simulation')
-			self.__simulation.start()
+			# self.__simulation.start()
 
 	def __pauseSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
