@@ -167,7 +167,7 @@ class MainController() :
 		observerIP = data["IP"]
 		observerID = data["ID"]
 
-		mainLogger.debug("MainController - Registering observer with ID = " + observerID + " and IP = " + observerIP)
+		mainLogger.debug("MainController - Registering observer with ID = " + str(observerID) + " and IP = " + str(observerIP))
 		for observer in self.__observers :
 			if observer.ID == observerID :
 				mainLogger.error("MainController - Trying to add observer already registered : " + str(observerID))
