@@ -8,11 +8,18 @@ import sys
 import traceback
 import threading
 import time
+import random
+import logging
+import os
+
+CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 class SerialReader(threading.Thread) :
-	def __init__(self, mainLogger) :
+	def __init__(self, mainLogger, simulation) :
 		threading.Thread.__init__(self)
 		self.__mainLogger = mainLogger
+		self.__simulation = simulation
+
 		self.daemon = True
 		self.__stop = threading.Event()
 
@@ -24,15 +31,7 @@ class SerialReader(threading.Thread) :
 															bytesize = serial.EIGHTBITS,
 															timeout = 1)
 
-		self.__buff = []
 		self.__nbRead = 0
-
-
-	def readBuffer(self) :
-		if len(self.__buff) > 0:
-			return self.__buff.pop(0)
-		else :
-			return None
 
 
 	def run(self) :
@@ -42,7 +41,7 @@ class SerialReader(threading.Thread) :
 				value = self.__ser.readline()
 				if len(value) > 0 :
 					self.__mainLogger.debug('SerialReader - Adding ' + value + ' to buffer.')
-					self.__buff.append(value.rstrip('\n'))
+					self.__simulation.addToBuffer(value.rstrip('\n'))
 					self.__nbRead += 1
 
 				time.sleep(1/10)
@@ -52,7 +51,6 @@ class SerialReader(threading.Thread) :
 	def getNbRead(self) :
 		return self.__nbRead
 
-
 	def stop(self) :
 		self.__stop.set()
 
@@ -61,13 +59,25 @@ class SimulationScanner(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 
-		self.__reader = SerialReader(mainLogger)
+		self.__reader = SerialReader(mainLogger, self)
+
+		self.__buff = []
 
 		if Params.params.avoidance == "False" :
 			self.__avoidance = False
 		else :
 			self.__avoidance = True
 
+		# Creation of the logging handlers
+		self.__scanLogger = logging.getLogger('scanner')
+		self.__scanLogger.setLevel(logging.DEBUG)
+
+		log_path = os.path.join(CURRENT_FILE_PATH, 'scan.log')
+		fileHandler = logging.FileHandler(log_path)
+		formatter = logging.Formatter('%(asctime)s - %(levelname)s: %(message)s')
+		fileHandler.setFormatter(formatter)
+		fileHandler.setLevel(logging.DEBUG)
+		self.__scanLogger.addHandler(fileHandler)
 
 	def preActions(self) :
 		self.__reader.start()
@@ -75,6 +85,16 @@ class SimulationScanner(Simulation.Simulation) :
 	def postActions(self) :
 		self.__reader.stop()
 		self.tController.writeMotorsSpeedRequest([0, 0])
+
+	def addToBuffer(self, value) :
+		self.__buff.append(value)
+
+	def readBuffer(self) :
+		if len(self.__buff) > 0:
+			return self.__buff.pop(0)
+		else :
+			return None
+
 
 	def Braitenberg(self, proxSensors, avoidance) :
 		if not avoidance :
@@ -101,8 +121,6 @@ class SimulationScanner(Simulation.Simulation) :
 
 	def step(self) :
 		try :
-			self.waitForControllerResponse()
-
 			self.tController.readSensorsRequest()
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
@@ -114,7 +132,7 @@ class SimulationScanner(Simulation.Simulation) :
 					break
 
 			if noObstacle :
-				# Probability to do a left a right turn
+				# Probability to do a left or right turn
 				rand = random.random()
 
 				if rand < 0.001 :
@@ -125,15 +143,16 @@ class SimulationScanner(Simulation.Simulation) :
 					else :
 						self.tController.writeMotorsSpeedRequest([0, 200])
 					self.waitForControllerResponse()
-					time.sleep(1.0)
+					time.sleep(0.5)
 
 				self.tController.writeMotorsSpeedRequest([200, 200])
 			else :
 				self.Braitenberg(PSValues, self.__avoidance)
 
-			value = self.__reader.readBuffer()
+			value = self.readBuffer()
 			if value != None :
-				self.mainLogger.debug('Value : ' + value)
-				self.mainLogger.debug('Nb Read : ' + str(self.__reader.getNbRead()))
+				self.__scanLogger.debug('Value : ' + value)
+
+			time.sleep(0.01)
 		except :
 			self.mainLogger.critical('SimulationScanner - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())

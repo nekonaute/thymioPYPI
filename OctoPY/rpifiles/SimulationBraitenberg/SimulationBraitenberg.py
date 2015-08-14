@@ -66,8 +66,6 @@ class SimulationBraitenberg(Simulation.Simulation) :
 
 	def step(self) :
 		try :
-			self.waitForControllerResponse()
-
 			self.tController.readSensorsRequest()
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
@@ -90,7 +88,11 @@ class SimulationBraitenberg(Simulation.Simulation) :
 					else :
 						self.tController.writeMotorsSpeedRequest([0, 200])
 					self.waitForControllerResponse()
+<<<<<<< HEAD
 					time.sleep(1.0)
+=======
+					time.sleep(0.5)
+>>>>>>> 27598b3bd7e3698acba9a926f4ed29a71478181f
 
 				self.tController.writeMotorsSpeedRequest([200, 200])
 			else :
