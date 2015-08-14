@@ -32,7 +32,7 @@ DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'config_CollectiveGathe
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
-TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110']
+TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110', '192.168.0.137']
 
 
 global mainLogger
@@ -41,7 +41,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER = range(0, 7)
+	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA = range(0, 8)
 
 
 # Simulation observer

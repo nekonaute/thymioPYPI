@@ -35,7 +35,7 @@ class Camera() :
 			data = np.fromstring(stream.getvalue(), dtype = np.uint8)
 			img = cv2.imdecode(data, 1)
 
-			# cv2.imwrite("./imgBase.jpg", img)
+			cv2.imwrite("./imgBase.jpg", img)
 
 			# Blurring and converting to HSV values
 			# imgHSV2 = cv2.GaussianBlur(img, (5, 5), 0)
@@ -53,19 +53,25 @@ class Camera() :
 			imgReduced = cv2.GaussianBlur(imgReduced, (5, 5), 0)
 			imgHSV = cv2.cvtColor(imgReduced, cv2.COLOR_BGR2HSV)
 
-			# cv2.imwrite("./imgHSVReduced.jpg", imgHSV)
+			cv2.imwrite("./imgHSVReduced.jpg", imgHSV)
 
 			# We separate the images in rays
 			imgRays =  []
-			increment = math.floor(Params.params.size_x/Params.params.nb_rays)
-			rayX = Params.params.ray_width_radius
+			increment = math.floor(Params.params.size_x/(Params.params.nb_rays - 1))
+			compensation = Params.params.size_x - ((Params.params.nb_rays - 1) * increment)
+			rayX = math.floor(compensation/2)
 			for i in range(0, Params.params.nb_rays) :
 				if rayX < Params.params.size_x :
 					firstColumn = rayX - Params.params.ray_width_radius
 					lastColumn = rayX + Params.params.ray_width_radius
 
+					if firstColumn < 0 :
+						firstColumn = 0
+						lastColumn = 2 * Params.params.ray_width_radius
+
 					if lastColumn >= Params.params.size_x :
-						lastColumn = Params.params.size_x
+						firstColumn = Params.params.size_x - 2 * Params.params.ray_width_radius
+						lastColumn = Params.params.size_x - 1
 
 					tmpArray = []
 					cpt = 0
@@ -84,6 +90,7 @@ class Camera() :
 			countDetect = []
 			cpt = 1
 			for ray in imgRays :
+				# self.__mainLogger.debug('Ray : ' + str(cpt))
 				hashMasks = {}
 				hashDetect = {}
 				maxDetect = 0
@@ -102,10 +109,13 @@ class Camera() :
 					hashDetect[color] = nbDetect
 
 					# If more than 50% of the mask are ones
+					# self.__mainLogger.debug('Color : ' + str(color) + ", nbDetect : " + str(nbDetect))
 					if nbDetect > ((Params.params.ray_width_radius + 1) * (Params.params.ray_height_radius + 1))/2 :
 						if nbDetect > maxDetect :
 							maxDetect = nbDetect
 							listDetect[-1] = color
+
+				# self.__mainLogger.debug('Color detected : ' + str(listDetect[-1]))
 
 
 				countDetect.append(hashDetect)
