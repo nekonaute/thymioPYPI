@@ -43,6 +43,7 @@ class Simulation(threading.Thread) :
 
 		self.mainLogger.debug("Simulation - GO GO GO")
 		while not self.__stop.isSet() :
+			self.mainLogger.debug("Simulation - Step")
 			self.step()
 
 			if self.__pause.isSet() :
