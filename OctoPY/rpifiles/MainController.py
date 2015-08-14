@@ -13,6 +13,7 @@ import time
 import importlib
 import subprocess
 
+import utils
 from utils import recvall, recvOneMessage, sendOneMessage, MessageType
 import Params
 import Simulation
