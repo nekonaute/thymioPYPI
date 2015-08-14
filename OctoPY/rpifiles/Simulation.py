@@ -108,6 +108,7 @@ class Simulation(threading.Thread) :
 		self.tController.stop()
 
 	def notify(self, **params) :
+		self.mainLogger.debug("Simulation - Notifying with : " + params)
 		self.controller.notify(**params)
 
 

@@ -49,6 +49,7 @@ class Observer() :
 		self.__ID = ID	
 
 	def notify(self, **params) :
+		mainLogger.debug("Observer - Notified with : " + params)
 		message = utils.Message()
 		message.msgType = MessageType.NOTIFY
 
@@ -178,6 +179,7 @@ class MainController() :
 		self.__observers.append(Observer(observerIP, observerID))
 
 	def notify(self, **params) :
+		mainLogger.debug("MainController - Notifying with : " + params)
 		for observer in self.__observers :
 			observer.notify(**params)
 
