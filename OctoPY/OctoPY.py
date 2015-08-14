@@ -612,7 +612,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			if len(args) > 1 :
 				IPs = args[1:]
 
-			sendMessage(MessageType.SET, IPs, simulation)
+			octoPYInstance.sendMessage(MessageType.SET, IPs, simulation)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 

@@ -117,6 +117,7 @@ class MainController() :
 			self.__simulation.restart()
 
 	def __setSimulation(self, configFile) :
+		mainLogger.debug('MainController - Setting simulation...')
 		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, configFile)) :
 			self.__simulationConfig = os.path.join(CURRENT_FILE_PATH, configFile)
 		else :
