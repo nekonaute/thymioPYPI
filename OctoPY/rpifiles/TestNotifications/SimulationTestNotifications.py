@@ -18,6 +18,7 @@ class SimulationTestNotifications(Simulation.Simulation) :
 
 	def step(self) :
 		value = random.randint(0, 9)
+		self.mainLogger.debug("Random value : " + value)
 		self.log("Random value : " + value)
 		self.notify(value = 9)
 
