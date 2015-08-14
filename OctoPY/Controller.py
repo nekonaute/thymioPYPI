@@ -140,7 +140,6 @@ class MessageListener(threading.Thread) :
 				if message.msgType == MessageType.NOTIFY :
 					message.data["hostIP"] = addr
 					self.__controller.notify(**message.data)
-					messageCommand = MessageCommand.START
 			except:
 				self.__logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
