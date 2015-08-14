@@ -514,7 +514,7 @@ class OctoPY() :
 			# We find the first (and, in theory, only) controller matching this recipient ID
 			controller = next((controller for controller in self.__controllers if controller.ID == recipient), None)
 			if controller != None :
-				self.__loger.debug("notify - Notifying controller.")
+				self.__logger.debug("notify - Notifying controller.")
 				controller.notify(**params)
 	
 
