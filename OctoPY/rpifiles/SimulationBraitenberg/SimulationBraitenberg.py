@@ -15,6 +15,8 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		else :
 			self.__avoidance = True
 
+		self.__probaTurn = float(Params.params.probaTurn)
+
 	def preActions(self) :
 		pass
 
@@ -80,7 +82,7 @@ class SimulationBraitenberg(Simulation.Simulation) :
 				# Probability to do a left a right turn
 				rand = random.random()
 
-				if rand < 0.001 :
+				if rand < self.__probaTurn :
 					rand = random.random()
 
 					if rand < 0.5 :
