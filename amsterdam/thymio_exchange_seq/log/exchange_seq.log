@@ -1,0 +1,177 @@
+2015-04-15 01:11:12,726 - DEBUG: OK LOGGING
+2015-04-15 01:11:12,727 - DEBUG: OK SOCKET
+2015-04-15 01:11:26,081 - DEBUG: Received command from (192.168.0.110, 50995)
+2015-04-15 01:11:26,083 - DEBUG: Receiving...
+2015-04-15 01:11:26,095 - CRITICAL: Error in main: <type 'exceptions.AttributeError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 617, in <module>
+    recvOptions = pickle.loads(recvall(conn, length))
+  File "/usr/lib/python2.7/pickle.py", line 1382, in loads
+    return Unpickler(file).load()
+  File "/usr/lib/python2.7/pickle.py", line 858, in load
+    dispatch[key](self)
+  File "/usr/lib/python2.7/pickle.py", line 1069, in load_inst
+    klass = self.find_class(module, name)
+  File "/usr/lib/python2.7/pickle.py", line 1126, in find_class
+    klass = getattr(mod, name)
+AttributeError: 'module' object has no attribute 'DirtyMessage'
+
+2015-04-15 01:14:00,893 - DEBUG: OK LOGGING
+2015-04-15 01:14:00,894 - DEBUG: OK SOCKET
+2015-04-15 01:14:56,925 - DEBUG: Received command from (192.168.0.110, 51000)
+2015-04-15 01:14:56,926 - DEBUG: Receiving...
+2015-04-15 01:14:56,934 - DEBUG: Received <__main__.DirtyMessage instance at 0x712fd0>
+2015-04-15 01:15:27,629 - DEBUG: OK LOGGING
+2015-04-15 01:15:27,630 - DEBUG: OK SOCKET
+2015-04-15 01:15:34,405 - DEBUG: Received command from (192.168.0.110, 51002)
+2015-04-15 01:15:34,406 - DEBUG: Receiving...
+2015-04-15 01:15:34,407 - DEBUG: Received <__main__.DirtyMessage instance at 0x23dafd0>
+2015-04-15 01:15:34,482 - CRITICAL: Error in main: <class 'dbus.exceptions.DBusException'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 631, in <module>
+    simulation = Simulation()
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 515, in __init__
+    self.__thymioC = ThymioController(inbox, self.__msgSenders)
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 362, in __init__
+    bus = dbus.SessionBus()
+  File "/usr/lib/python2.7/dist-packages/dbus/_dbus.py", line 211, in __new__
+    mainloop=mainloop)
+  File "/usr/lib/python2.7/dist-packages/dbus/_dbus.py", line 100, in __new__
+    bus = BusConnection.__new__(subclass, bus_type, mainloop=mainloop)
+  File "/usr/lib/python2.7/dist-packages/dbus/bus.py", line 122, in __new__
+    bus = cls._new_for_bus(address_or_type, mainloop=mainloop)
+DBusException: org.freedesktop.DBus.Error.NotSupported: Unable to autolaunch a dbus-daemon without a $DISPLAY for X11
+
+2015-04-15 03:29:43,248 - DEBUG: OK LOGGING
+2015-04-15 03:29:43,250 - DEBUG: OK SOCKET
+2015-04-15 03:29:45,650 - CRITICAL: Error in main: <type 'exceptions.KeyboardInterrupt'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 622, in <module>
+    conn, (addr, port) = sock.accept()
+  File "/usr/lib/python2.7/socket.py", line 202, in accept
+    sock, addr = self._sock.accept()
+KeyboardInterrupt
+
+2015-04-15 03:30:48,336 - DEBUG: OK LOGGING
+2015-04-15 03:30:48,338 - DEBUG: OK SOCKET
+2015-04-15 03:30:50,152 - CRITICAL: Error in main: <type 'exceptions.KeyboardInterrupt'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 622, in <module>
+    conn, (addr, port) = sock.accept()
+  File "/usr/lib/python2.7/socket.py", line 202, in accept
+    sock, addr = self._sock.accept()
+KeyboardInterrupt
+
+2015-04-15 03:32:59,047 - DEBUG: OK LOGGING
+2015-04-15 03:32:59,049 - DEBUG: OK SOCKET
+2015-04-15 03:33:02,152 - CRITICAL: Error in main: <type 'exceptions.KeyboardInterrupt'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 622, in <module>
+    conn, (addr, port) = sock.accept()
+  File "/usr/lib/python2.7/socket.py", line 202, in accept
+    sock, addr = self._sock.accept()
+KeyboardInterrupt
+
+2015-04-15 03:34:07,761 - DEBUG: OK LOGGING
+2015-04-15 03:35:41,769 - DEBUG: OK LOGGING
+2015-04-15 03:35:41,770 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:36:55,813 - DEBUG: OK LOGGING
+2015-04-15 03:36:55,814 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:36:55,817 - CRITICAL: Error : <type 'exceptions.TypeError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 605, in <module>
+    sock.connect(options.hostIP, SERVER_PORT)
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+TypeError: connect() takes exactly one argument (2 given)
+
+2015-04-15 03:36:55,818 - DEBUG: Done !
+2015-04-15 03:36:55,819 - DEBUG: OK SOCKET
+2015-04-15 03:38:12,769 - DEBUG: OK LOGGING
+2015-04-15 03:38:12,769 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:38:13,147 - CRITICAL: Error : <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 608, in <module>
+    sendOneMessage(sock, optSend)
+NameError: name 'sendOneMessage' is not defined
+
+2015-04-15 03:38:13,148 - DEBUG: Done !
+2015-04-15 03:38:13,150 - DEBUG: OK SOCKET
+2015-04-15 03:42:52,435 - DEBUG: OK LOGGING
+2015-04-15 03:42:52,436 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:42:52,803 - CRITICAL: Error : <type 'exceptions.NameError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 614, in <module>
+    sendOneMessage(sock, optSend)
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 39, in sendOneMessage
+    conn.sendall(struct_pack('!I', length))
+NameError: global name 'struct_pack' is not defined
+
+2015-04-15 03:42:52,804 - DEBUG: Done !
+2015-04-15 03:42:52,805 - DEBUG: OK SOCKET
+2015-04-15 03:45:35,948 - DEBUG: OK LOGGING
+2015-04-15 03:45:35,949 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:45:36,642 - DEBUG: Done !
+2015-04-15 03:45:36,644 - DEBUG: OK SOCKET
+2015-04-15 03:46:31,943 - DEBUG: OK LOGGING
+2015-04-15 03:46:31,944 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:46:31,952 - DEBUG: Done !
+2015-04-15 03:46:31,953 - DEBUG: OK SOCKET
+2015-04-15 03:47:38,526 - DEBUG: OK LOGGING
+2015-04-15 03:47:38,527 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 03:47:39,010 - DEBUG: Done !
+2015-04-15 03:47:39,012 - DEBUG: OK SOCKET
+2015-04-15 03:48:52,941 - DEBUG: Received command from (192.168.0.110, 51914)
+2015-04-15 03:48:52,942 - DEBUG: Receiving...
+2015-04-15 03:48:52,955 - CRITICAL: Error in main: <type 'exceptions.ImportError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 643, in <module>
+    recvOptions = pickle.loads(recvall(conn, length))
+  File "/usr/lib/python2.7/pickle.py", line 1382, in loads
+    return Unpickler(file).load()
+  File "/usr/lib/python2.7/pickle.py", line 858, in load
+    dispatch[key](self)
+  File "/usr/lib/python2.7/pickle.py", line 1069, in load_inst
+    klass = self.find_class(module, name)
+  File "/usr/lib/python2.7/pickle.py", line 1124, in find_class
+    __import__(module)
+ImportError: No module named utils
+
+2015-04-15 05:04:50,073 - DEBUG: OK LOGGING
+2015-04-15 05:04:50,074 - DEBUG: Sending ACK to 192.168.0.110
+2015-04-15 05:04:50,093 - CRITICAL: Error : <class 'socket.error'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 611, in <module>
+    sock.connect((options.hostIP, SERVER_PORT))
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 111] Connection refused
+
+2015-04-15 05:04:50,094 - DEBUG: Done !
+2015-04-15 05:04:50,095 - DEBUG: OK SOCKET
+2015-04-15 05:11:07,636 - DEBUG: Received command from (192.168.0.110, 50749)
+2015-04-15 05:11:07,638 - DEBUG: Receiving...
+2015-04-15 05:11:07,662 - CRITICAL: Error in main: <type 'exceptions.ImportError'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 643, in <module>
+    recvOptions = pickle.loads(recvall(conn, length))
+  File "/usr/lib/python2.7/pickle.py", line 1382, in loads
+    return Unpickler(file).load()
+  File "/usr/lib/python2.7/pickle.py", line 858, in load
+    dispatch[key](self)
+  File "/usr/lib/python2.7/pickle.py", line 1069, in load_inst
+    klass = self.find_class(module, name)
+  File "/usr/lib/python2.7/pickle.py", line 1124, in find_class
+    __import__(module)
+ImportError: No module named utils
+
+2015-04-15 08:48:13,573 - DEBUG: OK LOGGING
+2015-04-15 08:48:13,574 - DEBUG: Sending ACK to 192.168.0.210
+2015-04-15 08:48:13,582 - CRITICAL: Error : <class 'socket.error'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 611, in <module>
+    sock.connect((options.hostIP, SERVER_PORT))
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 111] Connection refused
+
+2015-04-15 08:48:13,583 - DEBUG: Done !
+2015-04-15 08:48:13,584 - DEBUG: OK SOCKET
+2015-04-15 08:50:50,739 - DEBUG: OK LOGGING
+2015-04-15 08:50:50,740 - DEBUG: Sending ACK to 192.168.0.210
+2015-04-15 08:50:50,745 - CRITICAL: Error : <class 'socket.error'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.py", line 611, in <module>
+    sock.connect((options.hostIP, SERVER_PORT))
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 111] Connection refused
+
+2015-04-15 08:50:50,746 - DEBUG: Done !
