@@ -25,6 +25,7 @@ class SerialReader(threading.Thread) :
 															timeout = 1)
 
 		self.__buff = []
+		self.__nbRead = 0
 
 
 	def readBuffer(self) :
@@ -42,10 +43,14 @@ class SerialReader(threading.Thread) :
 				if len(value) > 0 :
 					self.__mainLogger.debug('SerialReader - Adding ' + value + ' to buffer.')
 					self.__buff.append(value.rstrip('\n'))
+					self.__nbRead += 1
 
 				time.sleep(1/10)
 			except :
 				self.__mainLogger.critical('SerialReader - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+
+	def getNbRead(self) :
+		return self.__nbRead
 
 
 	def stop(self) :
@@ -58,6 +63,11 @@ class SimulationScanner(Simulation.Simulation) :
 
 		self.__reader = SerialReader(mainLogger)
 
+		if Params.params.avoidance == "False" :
+			self.__avoidance = False
+		else :
+			self.__avoidance = True
+
 
 	def preActions(self) :
 		self.__reader.start()
@@ -66,7 +76,7 @@ class SimulationScanner(Simulation.Simulation) :
 		self.__reader.stop()
 		self.tController.writeMotorsSpeedRequest([0, 0])
 
-	def Braitenberg(self, proxSensors, avoidance = False) :
+	def Braitenberg(self, proxSensors, avoidance) :
 		if not avoidance :
 			leftWheel = [-0.1, -0.05, -0.001, 0.06, 0.15]
 			rightWheel = [0.12, 0.07, -0.002, -0.055, -0.11]
@@ -97,10 +107,33 @@ class SimulationScanner(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
 
-			self.Braitenberg(PSValues, bool(Params.params.avoidance))			
+			noObstacle = True
+			for i in range(5) :
+				if PSValues[i] > 0 :
+					noObstacle = False
+					break
+
+			if noObstacle :
+				# Probability to do a left a right turn
+				rand = random.random()
+
+				if rand < 0.001 :
+					rand = random.random()
+
+					if rand < 0.5 :
+						self.tController.writeMotorsSpeedRequest([200, 0])
+					else :
+						self.tController.writeMotorsSpeedRequest([0, 200])
+					self.waitForControllerResponse()
+					time.sleep(1.0)
+
+				self.tController.writeMotorsSpeedRequest([200, 200])
+			else :
+				self.Braitenberg(PSValues, self.__avoidance)
 
 			value = self.__reader.readBuffer()
 			if value != None :
 				self.mainLogger.debug('Value : ' + value)
+				self.mainLogger.debug('Nb Read : ' + str(self.__reader.getNbRead()))
 		except :
 			self.mainLogger.critical('SimulationScanner - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())

@@ -1,6 +1,5 @@
 #!/usr/bin/env/python
 
-import picamera
 import io
 import sys
 import traceback
@@ -17,6 +16,7 @@ import math
 
 import Simulation
 import Params
+import Camera
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,34 +24,50 @@ PROX_SENSORS_MAX_VALUE = 4500
 
 # Colors detection information
 COLORS_DETECT = {
-									"purple" : { 
-														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255]),
-														"input1" : 1,
-														"input2" : 0,
-														"input3" : 0
-													},
+									# "purple" : { 
+									# 					"min" : np.array([40, 40, 40]),
+									# 					"max" : np.array([80, 255, 255]),
+									# 					"input1" : 1,
+									# 					"input2" : 0,
+									# 					"input3" : 0
+									# 				},
 									"red" : { 
 														"min" : np.array([160, 50, 50]),
-														"max" : np.array([180, 255, 255])
+														"max" : np.array([180, 255, 255]),
 														"input1" : 1,
 														"input2" : 1,
 														"input3" : 0
+														# "input1" : 1,
+														# "input2" : 1,
+														# "input3" : 0
 													},
 									"red2" : { 
 														"min" : np.array([0, 50, 50]),
-														"max" : np.array([20, 255, 255])
+														"max" : np.array([20, 255, 255]),
 														"input1" : 1,
 														"input2" : 1,
 														"input3" : 0
+														# "input1" : 1,
+														# "input2" : 1,
+														# "input3" : 0
 													},
 									"green" : { 
-														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255]),
-														"input1" : 0,
-														"input2" : 1,
+														"min" : np.array([32, 180, 50]),
+														"max" : np.array([60, 255, 255]),
+														"input1" : 1,
+														"input2" : 0,
 														"input3" : 0
+														# "input1" : 0,
+														# "input2" : 1,
+														# "input3" : 0
 													},
+									# "blue" : { 
+									# 					"min" : np.array([84, 50, 50]),
+									# 					"max" : np.array([110, 255, 255]),
+									# 					"input1" : 1,
+									# 					"input2" : 0,
+									# 					"input3" : 0
+									# 				},
 								}
 
 
@@ -70,6 +86,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 	def preActions(self) :
 		self.loadWeights(Params.params.weights_path, Params.params.file_xml)
+		self.tController.writeColorRequest([32, 32, 32])
+		self.waitForControllerResponse()
 
 
 	def loadWeights(self, file, xmlFile) :
@@ -103,13 +121,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 				regexp = re.compile(r"^(\d+(\.\d+)?)$")
 				with open(os.path.join(CURRENT_FILE_PATH, file), 'r') as fileWeights :
 					fileWeights = fileWeights.readlines()
-					weights = fileWeights.rstrip('\n').split(',')
+					weights = fileWeights[0].rstrip('\n').split(',')
 
 					for weight in weights :
 						if len(weight) > 0 :
 							gene = float(weight)
 							listGenes.append(gene)
-
 
 			cptColumns = 0
 			cptLines = 0
@@ -136,6 +153,30 @@ class SimulationStagHunt(Simulation.Simulation) :
 					if cptLines >= Params.params.nb_hidden + 1 :
 						cptLines = 0
 						cptColumns += 1
+
+			# TODO: Remove that at some point
+			self.__weightsHtoO2 = np.zeros((Params.params.nb_hidden + 1, Params.params.nb_outputs))
+			cptRows = 0
+			cptColumns = 0
+			cptRows2 = 0
+			cptColumns2 = 0
+			cpt = 0
+			while cpt < ((Params.params.nb_hidden + 1) * Params.params.nb_outputs) :
+				self.__weightsHtoO2[cptRows2, cptColumns2] = self.__weightsHtoO[cptRows, cptColumns]
+
+				cptRows += 1
+				cptRows2 += 1
+				if cptRows >= Params.params.nb_hidden + 1 :
+					if cptRows2 >= Params.params.nb_hidden + 1 :
+						cptRows -= 1
+						cptRows2 = 0
+						cptColumns2 = 1
+					else :
+						cptRows = 0
+						cptColumns = 1
+
+				cpt += 1
+
 		else :
 			self.log("Weights file " + file + " does not exist.")
 
@@ -143,6 +184,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 	def postActions(self) :
 		self.tController.writeMotorsSpeedRequest([0, 0])
+		self.tController.writeColorRequest([32, 32, 32])
 		self.waitForControllerResponse()
 
 
@@ -154,14 +196,26 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 		index = self.getCameraInputs(inputs, index)
 
-		self.log("Inputs : ")
-		self.log(inputs)
+		self.log("Camera : ")
+		string = ""
+		cpt = 6
+		while cpt + 3 <= index :
+			if inputs[0][cpt] == 1 and inputs[0][cpt + 1] == 1 and inputs[0][cpt + 2] == 0 :
+				string += "Red"
+			elif inputs[0][cpt] == 1 and inputs[0][cpt + 1] == 0 and inputs[0][cpt + 2] == 0 :
+				string += "Green"
+			else :
+				string += "None"
+			string += "/"
+			cpt += 3
 
-		# TODO: random debug, delete !
-		cpt = 0
-		while cpt < Params.params.nb_inputs :
-			inputs[0, cpt] = random.random()
-			cpt += 1
+		self.log(string)
+
+		# # TODO: random debug, delete !
+		# cpt = 0
+		# while cpt < Params.params.nb_inputs :
+		# 	inputs[0, cpt] = random.random()
+		# 	cpt += 1
 
 		# Bias neuron
 		inputs[0, index] = 1.0
@@ -179,15 +233,24 @@ class SimulationStagHunt(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
 
+			PSToInputs = [4, 5, 0, 1, 2, 3]
+
 			for i in range(0, len(PSValues)) :
-				inputs[0, index + i] = (float)(PSValues[i])/(float)(PROX_SENSORS_MAX_VALUE)
-				if inputs[0, index + i] > 1.0 :
-					inputs[0, index + i] = 1.0
+				value = float(PSValues[i])/float(PROX_SENSORS_MAX_VALUE)
+
+				if value > 1.0 :
+					value = 1.0
+
+				if i == 5 :
+					value += float(PSValues[i + 1])/float(PROX_SENSORS_MAX_VALUE)
+					value /= 2
+					inputs[0, PSToInputs[i]] = value
+					index += 1
+					break	
+				
+				inputs[0, PSToInputs[i]] = value
 
 				index += 1
-
-			self.log("Proximity sensors :")
-			self.log(PSValues)
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
 		finally :
@@ -200,8 +263,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 		for i in range(0, Params.params.nb_rays) :
 			colorDetected = listDetect[i]
 
-			self.log("Ray " + str(cpt) + " : " + colorDetected)
-			cpt += 1
+			# self.log("Ray " + str(i) + " : " + colorDetected)
 			input1 = 0
 			input2 = 0
 			input3 = 0
@@ -232,7 +294,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 			hiddenNN.resize((1, Params.params.nb_hidden + 1))
 			hiddenNN[0, -1] = 1.0
 
-			outputsNN = np.dot(hiddenNN, self.__weightsHtoO)
+			# outputsNN = np.dot(hiddenNN, self.__weightsHtoO)
+			outputsNN = np.dot(hiddenNN, self.__weightsHtoO2)
 
 			for i in range(0, Params.params.nb_outputs) :
 				outputs[i] = sigmoid(outputsNN[0, i])
@@ -249,13 +312,19 @@ class SimulationStagHunt(Simulation.Simulation) :
 			if inputs != None :
 				outputs = self.computeNN(inputs)
 
-				# TODO: debug
-				self.stop()
-				time.sleep(Params.params.time_step/1000.0)
-				return
+				# # TODO: debug
+				# self.stop()
+				# time.sleep(Params.params.time_step/1000.0)
+				# return
 
+				# self.log("Outputs :")
+				# self.log(str(outputs[0]) + "/" + str(outputs[1]))
 				if (outputs[0] >= 0) and (outputs[1] >= 0) :
-					self.tController.writeMotorsSpeedRequest([outputs[0] * Params.params.max_speed, outputs[1] * Params.params.max_speed])
+					vLeft = (outputs[0] * 2.0) - 1.0
+					vRight = (outputs[1] * 2.0) - 1.0
+					# self.log("Speed :")
+					# self.log(str(vLeft) + "/" + str(vRight))
+					self.tController.writeMotorsSpeedRequest([vLeft * Params.params.max_speed, vRight * Params.params.max_speed])
 					self.waitForControllerResponse()
 				else :
 					self.tController.writeMotorsSpeedRequest([0.0, 0.0])
