@@ -98,7 +98,7 @@ class MainController() :
 				self.__simulation.reset()
 
 			mainLogger.info('MainController - Starting simulation')
-			# self.__simulation.start()
+			self.__simulation.start()
 
 	def __pauseSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
@@ -185,7 +185,6 @@ class MainController() :
 	def getCommand(self, command, data = None) :
 		mainLogger.debug("MainController - Command " + str(command) + " received.")
 		with self.__commandReceived :
-			mainLogger.debug("MainController - Set command " + str(command) + " received.")
 			self.__command = command
 			self.__commandData = data
 			self.__commandReceived.notify()
@@ -204,7 +203,7 @@ class MainController() :
 					while self.__command == MessageCommand.NONE :
 						self.__commandReceived.wait(1)
 
-					mainLogger.debug("MainController - Command : " + str(self.__command))
+					mainLogger.debug("MainController - Treating command : " + str(self.__command))
 
 					# We treat the command corresponding to the message
 					if self.__command == MessageCommand.START :
