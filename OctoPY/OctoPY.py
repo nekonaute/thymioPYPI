@@ -11,6 +11,7 @@ import json
 import socket, select
 import struct
 import pickle
+import threading
 
 import importlib
 import ipaddress
@@ -38,7 +39,7 @@ LISTENER_HOST = ''
 LISTENER_PORT = 55555
 
 COMMANDS_LISTENER_HOST = ''
-COMMANDS_LISTENER_PORT = 66666
+COMMANDS_LISTENER_PORT = 44444
 
 TIMEOUT_ACK = 10
 TIMEOUT_QUERY = 5
@@ -80,7 +81,7 @@ class OctoPY() :
 
 
 		# We start the message listener
-		self.__msgListener = MessageListener()
+		self.__msgListener = MessageListener(self)
 		self.__msgListener.start()
 
 
@@ -510,7 +511,7 @@ class OctoPY() :
 			recipient = int(params["recipient"])
 
 			# We find the first (and, in theory, only) controller matching this recipient ID
-			controller = next(controller for controller in self.__controllers if controller.ID == recipient, None)
+			controller = next((controller for controller in self.__controllers if controller.ID == recipient), None)
 			if controller != None :
 				controller.notify(**params)
 	
@@ -693,7 +694,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 
 class MessageListener(threading.Thread) :
-	def __init__(self) :
+	def __init__(self, octoPYInstance) :
 		threading.Thread.__init__(self)
 
 		# We set daemon to True so that MessageListener exits when the main thread is killed
@@ -707,31 +708,33 @@ class MessageListener(threading.Thread) :
 		self.__sock.bind((COMMANDS_LISTENER_HOST, COMMANDS_LISTENER_PORT))
 		self.__sock.listen(5)
 
+		self.__octoPYInstance = octoPYInstance
+
 	def run(self):
 		while not self.__stop.isSet() :
 			try:
 				# Waiting for client...
-				octoPYInstance.logger.debug("MessageListener - Waiting on accept...")
+				self.__octoPYInstance.logger.debug("MessageListener - Waiting on accept...")
 				conn, (addr, port) = self.__sock.accept()
 
-				# octoPYInstance.logger.debug('MessageListener - Received command from (' + addr + ', ' + str(port) + ')')
+				# self.__octoPYInstance.logger.debug('MessageListener - Received command from (' + addr + ', ' + str(port) + ')')
 				# if addr not in TRUSTED_CLIENTS:
-				# 	octoPYInstance.logger.error('MessageListener - Received connection request from untrusted client (' + addr + ', ' + str(port) + ')')
+				# 	self.__octoPYInstance.logger.error('MessageListener - Received connection request from untrusted client (' + addr + ', ' + str(port) + ')')
 				# 	continue
 				
 				# Receive one message
-				octoPYInstance.logger.debug('MessageListener - Receiving message...')
+				self.__octoPYInstance.logger.debug('MessageListener - Receiving message...')
 				message = recvOneMessage(conn)
-				octoPYInstance.logger.debug('MessageListener - Received ' + str(message))
+				self.__octoPYInstance.logger.debug('MessageListener - Received ' + str(message))
 
 				# The listener transmits the desired message
 				if message.msgType == MessageType.NOTIFY :
 					message.data["hostIP"] = addr
-					octoPYInstance.notify(**message.data)
+					self.__octoPYInstance.notify(**message.data)
 			except:
-				octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+				self.__octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
-		octoPYInstance.logger.debug('MessageListener - Exiting...')
+		self.__octoPYInstance.logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
 		self.__stop.set()
