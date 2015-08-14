@@ -37,6 +37,9 @@ PIPASSWORD = 'pi'
 LISTENER_HOST = ''
 LISTENER_PORT = 55555
 
+COMMANDS_LISTENER_HOST = ''
+COMMANDS_LISTENER_PORT = 66666
+
 TIMEOUT_ACK = 10
 TIMEOUT_QUERY = 5
 
@@ -74,6 +77,11 @@ class OctoPY() :
 			self.loadHostnamesTable()
 		else :
 			self.__logger.debug("No existing hostnames table found")
+
+
+		# We start the message listener
+		self.__msgListener = MessageListener()
+		self.__msgListener.start()
 
 
 	def getLogger(self) :
@@ -467,7 +475,7 @@ class OctoPY() :
 
 	def launchController(self, controller, detached) :
 		try :
-			self.__logger.debug('OctoPY - Loading controller...')
+			self.__logger.debug('launchController - Loading controller...')
 			Params.params = Params.Params(controller, self.__logger)
 
 			# We check for the basic parameters
@@ -477,7 +485,7 @@ class OctoPY() :
 				newController = controllerClass(self, detached)
 				self.__controllers.append(newController)
 
-				self.__logger.debug('OctoPY - Launching controller...')
+				self.__logger.debug('launchController - Launching controller...')
 				if detached :
 					# Threaded execution
 					newController.start()
@@ -492,6 +500,19 @@ class OctoPY() :
 	def registerController(self, controller, IPs) :
 		dataObserver = { "ID" : controller.ID }
 		self.sendMessage(MessageType.REGISTER, IPs, dataObserver)
+
+	def notify(self, **params) :
+		# We find the recipient of this notification
+		if not "recipient" in params :
+			self.__logger.error("notify - No recipient of notification found.")
+			return False
+		else :
+			recipient = int(params["recipient"])
+
+			# We find the first (and, in theory, only) controller matching this recipient ID
+			controller = next(controller for controller in self.__controllers if controller.ID == recipient, None)
+			if controller != None :
+				controller.notify(**params)
 	
 
 
@@ -668,6 +689,52 @@ class OctoPYInteractive(cmd.Cmd) :
 	# --- EOF exit ---
 	def do_EOF(self, line) :
 		return True
+
+
+
+class MessageListener(threading.Thread) :
+	def __init__(self) :
+		threading.Thread.__init__(self)
+
+		# We set daemon to True so that MessageListener exits when the main thread is killed
+		self.daemon = True
+
+		self.__stop = threading.Event()
+
+		# Create socket for listening to simulation commands
+		self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.__sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		self.__sock.bind((COMMANDS_LISTENER_HOST, COMMANDS_LISTENER_PORT))
+		self.__sock.listen(5)
+
+	def run(self):
+		while not self.__stop.isSet() :
+			try:
+				# Waiting for client...
+				octoPYInstance.logger.debug("MessageListener - Waiting on accept...")
+				conn, (addr, port) = self.__sock.accept()
+
+				# octoPYInstance.logger.debug('MessageListener - Received command from (' + addr + ', ' + str(port) + ')')
+				# if addr not in TRUSTED_CLIENTS:
+				# 	octoPYInstance.logger.error('MessageListener - Received connection request from untrusted client (' + addr + ', ' + str(port) + ')')
+				# 	continue
+				
+				# Receive one message
+				octoPYInstance.logger.debug('MessageListener - Receiving message...')
+				message = recvOneMessage(conn)
+				octoPYInstance.logger.debug('MessageListener - Received ' + str(message))
+
+				# The listener transmits the desired message
+				if message.msgType == MessageType.NOTIFY :
+					message.data["hostIP"] = addr
+					octoPYInstance.notify(**message.data)
+			except:
+				octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+
+		octoPYInstance.logger.debug('MessageListener - Exiting...')
+
+	def stop(self) :
+		self.__stop.set()
 
 
 if __name__ == '__main__' :

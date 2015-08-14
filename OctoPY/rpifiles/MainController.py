@@ -54,7 +54,7 @@ class Observer() :
 		message = utils.Message()
 		message.msgType = MessageType.NOTIFY
 
-		params['receiver'] = self.__ID
+		params['recipient'] = self.__ID
 		message.data = params
 
 		# We send the notification message
