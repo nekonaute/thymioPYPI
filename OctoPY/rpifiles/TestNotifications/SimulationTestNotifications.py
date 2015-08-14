@@ -12,18 +12,18 @@ class SimulationTestNotifications(Simulation.Simulation) :
 		self.mainLogger.debug("INIT !")
 
 	def preActions(self) :
-		self.mainLogger.debug("pre action !")
 		pass
 
 	def postActions(self) :
 		pass
 
 	def step(self) :
+		self.mainLogger.debug("stepou")
 		value = random.randint(0, 9)
-		self.mainLogger.debug("Random value : " + value)
-		self.log("Random value : " + value)
+		self.mainLogger.debug("Random value : " + str(value))
+		self.log("Random value : " + str(value))
 		self.notify(value = 9)
 
 		sleepTime = random.randint(0, 2)
-		self.log("Sleeping : " + sleepTime)
+		self.log("Sleeping : " + str(sleepTime))
 		time.sleep(sleepTime)
