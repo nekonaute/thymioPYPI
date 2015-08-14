@@ -39,7 +39,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, PAUSE, RESTART,STOP, KILL, SET, REGISTER = range(0, 7)
+	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER = range(0, 7)
 
 
 # Simulation observer
@@ -155,7 +155,7 @@ class MainController() :
 		mainLogger.debug(str(out) + "/" + str(err))
 
 
-	def register(self, data) :
+	def __register(self, data) :
 		if "IP" not in data :
 			mainLogger.error("MainController - No IP for registering observer.")
 			return False
