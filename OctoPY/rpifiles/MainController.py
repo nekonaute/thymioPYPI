@@ -56,7 +56,7 @@ class Observer() :
 
 		# We send the notification message
 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		sock.connect(self.__IP, 55555))
+		sock.connect((self.__IP, 55555))
 		sendOneMessage(sock, message)
 
 
