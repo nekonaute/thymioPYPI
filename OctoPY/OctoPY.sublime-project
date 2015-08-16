@@ -6,6 +6,15 @@
 		},
 		{
 			"path": "Backup"
+		},
+		{
+			"path": "/home/arthur/DREAM/sferes2/sferes"
+		},
+		{
+			"path": "/home/arthur/DREAM/sferes2/modules/fastsim_multi"
+		},
+		{
+			"path": "/home/arthur/DREAM/sferes2"
 		}
 	]
 }

@@ -19,6 +19,11 @@ SEQ_OPTIONS_LENGTH = len(SEQ_OPTIONS)
 
 MAX_EVAL = 10
 
+class DirtyMessage:
+	running = True
+	kill = False
+	message = -1
+
 def recvall(conn, count):
 	buf = b''
 	while count:
@@ -27,6 +32,12 @@ def recvall(conn, count):
 		buf += newbuf
 		count -= len(newbuf)
 	return buf
+
+def sendOneMessage(conn, data):
+	packed_data = pickle.dumps(data)
+	length = len(packed_data)
+	conn.sendall(struct.pack('!I', length))
+	conn.sendall(packed_data)
 
 # Reads the values contained in the passed configuration file and stores them in this object
 class ConfigParser(object):
@@ -575,19 +586,36 @@ class Simulation(threading.Thread):
 
 SERVER_HOST = ''
 SERVER_PORT = 55555
-TRUSTED_CLIENTS = ['127.0.0.1', '192.168.1.100']
+TRUSTED_CLIENTS = ['127.0.0.1', '192.168.1.100', '192.168.0.110']
 
 if __name__ == '__main__':
 	# Checking for debug:
 	parser = argparse.ArgumentParser(description='Runs the exchange sequence program.')
 	parser.add_argument('-d', '--debug', dest='debug', action='store_true', default=False, 
 		help='run the simulation printing debug information')
+	parser.add_argument('-i', '--hostIP', type = str, default = None, help = 'IP of the host which initialized this thymio')
 	options = parser.parse_args()
 	
 	# lev = logging.INFO
 	# if options.debug:
 	# 	lev = logging.DEBUG
 	logging.basicConfig(filename=LOG_PATH, format='%(asctime)s - %(levelname)s: %(message)s', level=logging.DEBUG)
+
+	logging.debug("OK LOGGING")
+
+	# Create socket to send ACK to the host if need be
+	if options.hostIP != None:
+		try:
+			logging.debug('Sending ACK to ' + options.hostIP)
+			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			sock.connect((options.hostIP, SERVER_PORT))
+			optSend = DirtyMessage()
+			optSend.message = 99
+			sendOneMessage(sock, optSend) 
+		except:
+			logging.critical('Error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+		logging.debug('Done !')
+
 
 	# Create socket for listening to simulation commands
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -596,6 +624,9 @@ if __name__ == '__main__':
 	sock.listen(5)
 	simulation = None
 
+	logging.debug("OK SOCKET")
+
+	cpt = 0
 	while 1:
 		try:
 			# waiting for client...
@@ -612,6 +643,11 @@ if __name__ == '__main__':
 			recvOptions = pickle.loads(recvall(conn, length))
 			logging.debug('Received ' + str(recvOptions))
 
+			if recvOptions.kill:
+				if simulation:
+					simulation.stop()
+				break
+
 			if recvOptions.running and not simulation: # TODO: or simulation.isFinished()
 				# start the simulation
 				simulation = Simulation()
@@ -622,3 +658,4 @@ if __name__ == '__main__':
 				simulation = None
 		except:
 			logging.critical('Error in main: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+			exit(1)

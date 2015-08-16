@@ -32,7 +32,8 @@ class ThymioController(threading.Thread):
 		self.__mainLogger = mainLogger
 
 		self.__performActionReq = threading.Condition()
-		self.__request = MessageRequest.NONE
+		# self.__request = MessageRequest.NONE
+		self.__request = []
 
 		self.__stop = threading.Event()
 
@@ -120,10 +121,10 @@ class ThymioController(threading.Thread):
 		self.__dbusGetVariable("prox.ground.reflected", self.__dbusGetGroundReflectedReply)
 		self.__dbusGetVariable("prox.ground.delta", self.__dbusGetGroundDeltaReply)
 
-	def __dbusGetMotorSpeedLeft(self, r) :
+	def __dbusGetMotorSpeedLeftReply(self, r) :
 		self.__motorspeed[0] = int(r)
 
-	def __dbusGetMotorSpeedRight(self, r) :
+	def __dbusGetMotorSpeedRightReply(self, r) :
 		self.__motorspeed[1] = int(r)
 
 	def __dbusGetMotorSpeed(self):
@@ -137,33 +138,65 @@ class ThymioController(threading.Thread):
 		try :
 			with self.__performActionReq:
 				# Wait for requests:
-				while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
+				while len(self.__request) == 0 and not self.__stop.isSet() :
 					self.__performActionReq.wait()
 
-				if self.__request == MessageRequest.SENSORS :
-					# Read sensor values
-					self.__dbusGetProxSensors()
-				elif self.__request == MessageRequest.GROUND :
-					# Read ground sensor values
-					self.__dbusGetGroundSensors()
-				elif self.__request == MessageRequest.MOTORS :
-					# Write motorspeed
-					self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
-				elif self.__request == MessageRequest.MOTORSREAD :
-					# Read motorspeed
-					self.__dbusGetMotorSpeed()
-				elif self.__request == MessageRequest.COLOR :
-					self.__dbusSetColor()
-				elif self.__request == MessageRequest.SOUND :
-					self.__dbusSetSound()
-				elif self.__request == MessageRequest.STOP :
-					# Stop Thymio
-					self.__stopThymio()
+				while len(self.__request) :
+					request = self.__request.pop(0)
+					# self.__mainLogger.debug("Request : " + str(request))
 
-				self.__request = MessageRequest.NONE
+					if request == MessageRequest.SENSORS :
+						# Read sensor values
+						self.__dbusGetProxSensors()
+					elif request == MessageRequest.GROUND :
+						# Read ground sensor values
+						self.__dbusGetGroundSensors()
+					elif request == MessageRequest.MOTORS :
+						# Write motorspeed
+						self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
+					elif request == MessageRequest.MOTORSREAD :
+						# Read motorspeed
+						self.__dbusGetMotorSpeed()
+					elif request == MessageRequest.COLOR :
+						self.__dbusSetColor()
+					elif request == MessageRequest.SOUND :
+						self.__dbusSetSound()
+					elif request == MessageRequest.STOP :
+						# Stop Thymio
+						self.__stopThymio()
 
-				# Notifying that simulation has been set
-				self.__simulation.thymioControllerPerformedAction()
+					# Notifying that simulation has been set
+					self.__simulation.thymioControllerPerformedAction()
+
+				# while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
+				# 	self.__performActionReq.wait()
+
+				# self.__mainLogger.debug("Request : " + str(self.__request))
+
+				# if self.__request == MessageRequest.SENSORS :
+				# 	# Read sensor values
+				# 	self.__dbusGetProxSensors()
+				# elif self.__request == MessageRequest.GROUND :
+				# 	# Read ground sensor values
+				# 	self.__dbusGetGroundSensors()
+				# elif self.__request == MessageRequest.MOTORS :
+				# 	# Write motorspeed
+				# 	self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
+				# elif self.__request == MessageRequest.MOTORSREAD :
+				# 	# Read motorspeed
+				# 	self.__dbusGetMotorSpeed()
+				# elif self.__request == MessageRequest.COLOR :
+				# 	self.__dbusSetColor()
+				# elif self.__request == MessageRequest.SOUND :
+				# 	self.__dbusSetSound()
+				# elif self.__request == MessageRequest.STOP :
+				# 	# Stop Thymio
+				# 	self.__stopThymio()
+
+				# self.__request = MessageRequest.NONE
+
+				# # Notifying that simulation has been set
+				# self.__simulation.thymioControllerPerformedAction()
 		except :
 			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
@@ -175,45 +208,55 @@ class ThymioController(threading.Thread):
 
 	def readSensorsRequest(self):
 		with self.__performActionReq:
-			self.__request = MessageRequest.SENSORS
+			# self.__request = MessageRequest.SENSORS
+			self.__request.append(MessageRequest.SENSORS)
 			self.__performActionReq.notify()
+			# self.__mainLogger.debug('SENSORS REQUEST : ' + str(self.__request))
 
 	def readGroundSensorsRequest(self):
 		with self.__performActionReq:
-			self.__request = MessageRequest.GROUND
+			# self.__request = MessageRequest.GROUND
+			self.__request.append(MessageRequest.GROUND)
 			self.__performActionReq.notify()
+			# self.__mainLogger.debug('GROUND REQUEST : ' + str(self.__request))
 
 	def readMotorsSpeedRequest(self) :
 		with self.__performActionReq :
-			self.__request = MessageRequest.MOTORSREAD
+			# self.__request = MessageRequest.MOTORSREAD
+			self.__request.append(MessageRequest.MOTORSREAD)
 			self.__performActionReq.notify()
 
 	def writeMotorsSpeedRequest(self, motorspeed):
 		with self.__performActionReq:
 			self.__motorspeed = motorspeed
-			self.__request = MessageRequest.MOTORS
+			# self.__request = MessageRequest.MOTORS
+			self.__request.append(MessageRequest.MOTORS)
 			self.__performActionReq.notify()
 
 	def writeColorRequest(self, color):
 		with self.__performActionReq:
 			self.__color = color
-			self.__request = MessageRequest.COLOR
+			# self.__request = MessageRequest.COLOR
+			self.__request.append(MessageRequest.COLOR)
 			self.__performActionReq.notify()
 
 	def writeSoundRequest(self, sound):
 		with self.__performActionReq:
 			self.__sound = sound
-			self.__request = MessageRequest.SOUND
+			# self.__request = MessageRequest.SOUND
+			self.__request.append(MessageRequest.SOUND)
 			self.__performActionReq.notify()
 
 	def killRequest(self) :
 		with self.__performActionReq :
-			self.__request = MessageRequest.Kill
+			self.__request.append(MessageRequest.KILL)
+			# self.__request = MessageRequest.KILL
 			self.__performActionReq.notify()
 
 	def stopThymioRequest(self):
 		with self.__performActionReq:
-			self.__request = MessageRequest.STOP
+			self.__request.append(MessageRequest.STOP)
+			# self.__request = MessageRequest.STOP
 			self.__performActionReq.notify()
 
 

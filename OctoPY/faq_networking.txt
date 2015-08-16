@@ -23,9 +23,13 @@ network={
 Then: sudo wpa_supplicant -iwlan0 -c/etc/wpa_supplicant.conf -Dwext -B
 Finally: sudo dhclient wlan0
 
+Please be aware that you wireless interface may differ from "wlan0" (for example "eth1"). You may run the following command to find your wireless interface:
+sudo lshw -C network
+
 Sources: 
 http://askubuntu.com/questions/16584/how-to-connect-and-disconnect-to-a-network-manually-in-terminal
 http://wifi.ist.utl.pt/configuracoes/linux/wpa_supplicant/
+http://askubuntu.com/questions/333424/how-can-i-check-the-information-of-currently-installed-wifi-drivers
 
 
 Q: How can I share my wireless internet access through a wire connection ?
@@ -91,9 +95,9 @@ Finally you need to restart the networking. Some of these commands may not work 
 sudo ifdown eth0
 sudo ifdown wlan0
 sudo /etc/init.d/networking restart
-sudo /etc/init.d/isc-dhcp-server start
 sudo ifup wlan0
 sudo ifup eth0
+sudo /etc/init.d/isc-dhcp-server start
 
 
 Now on to the client host, with a wireless connection to the private network (don't worry we're almost done)! Here is the /etc/network/interfaces file used:
@@ -162,3 +166,10 @@ https://help.ubuntu.com/community/Internet/ConnectionSharing
 
 RPI WiFi
 http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
+
+
+Q: Why is ssh login so long ?
+
+A: Probably because of the reverse DNS lookup. Easiest way to correct this is to edit /etc/ssh/sshd_config on the server and (or modify) this line:
+
+UseDNS no

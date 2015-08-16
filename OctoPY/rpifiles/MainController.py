@@ -25,13 +25,14 @@ CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
-# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
+# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'config_CollectiveGathering.cfg')
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationMusic.cfg')
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'detectColor.cfg')
+# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'detectColor.cfg')
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
-TRUSTED_CLIENTS = ['192.168.0.210']
+TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110']
 
 
 global mainLogger
@@ -40,7 +41,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER = range(0, 7)
+	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA, COM = range(0, 9)
 
 
 # Simulation observer
@@ -126,12 +127,27 @@ class MainController() :
 		else :
 			mainLogger.error('MainController - No configuration file named ' + configFile)
 
+	def __sendData(self, data) :
+		mainLogger.debug('MainController - Sending data...')
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for sending data while no simulation started.')
+		else :
+			self.__simulation.addData(data)
+
+	def __comMessage(self, data) :
+		mainLogger.debug('MainController - Sending com message...')
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for sending com message while no simulation started.')
+		else :
+			self.__simulation.receiveComMessage(data)
+
 	def __stopSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
 			mainLogger.error('MainController - Request for simulation stop while no simulation started.')
 		else :
 			mainLogger.info('MainController - Stopping simulation')
 			self.__simulation.stop()
+			self.__simulation = None
 
 	def __loadSimulation(self) :
 		mainLogger.debug('MainController - Loading simulation...')
@@ -184,6 +200,19 @@ class MainController() :
 			observer.notify(**params)
 
 
+	def sendMessage(self, **params) :
+		mainLogger.debug("MainController - Sending message with : " + str(params))
+
+		message = utils.Message()
+		message.msgType = MessageType.COM
+		message.data = params
+
+		# We send the communication message
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect(('192.168.0.210', 44444))
+		sendOneMessage(sock, message)
+
+
 	def getCommand(self, command, data = None) :
 		mainLogger.debug("MainController - Command " + str(command) + " received.")
 		with self.__commandReceived :
@@ -221,6 +250,10 @@ class MainController() :
 							self.__restartSimulation()
 						elif command == MessageCommand.SET :
 							self.__setSimulation(commandData)
+						elif command == MessageCommand.DATA :
+							self.__sendData(commandData)
+						elif command == MessageCommand.COM :
+							self.__comMessage(commandData)
 						elif command == MessageCommand.STOP :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
@@ -282,6 +315,12 @@ class CommandsListener(threading.Thread) :
 					messageCommand = MessageCommand.RESTART
 				elif message.msgType == MessageType.SET :
 					messageCommand = MessageCommand.SET
+					data = message.data
+				elif message.msgType == MessageType.DATA :
+					messageCommand = MessageCommand.DATA
+					data = message.data
+				elif message.msgType == MessageType.COM :
+					messageCommand = MessageCommand.COM
 					data = message.data
 				elif message.msgType == MessageType.STOP :
 					messageCommand = MessageCommand.STOP

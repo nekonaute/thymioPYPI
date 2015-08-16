@@ -129,7 +129,7 @@ class OctoPY() :
 			self.__logger.critical("Unexpected error in loadHostnamesTable : " + str(sys.exc_info()[0]) + ' - ' +traceback.format_exc())
 
 
-	def lookUp(self, rangeArg) :
+	def lookUp(self, rangeArg, getHostname) :
 		try :
 			self.__logger.info("lookUp - executing nmap")
 
@@ -169,43 +169,44 @@ class OctoPY() :
 			for IP in tabIP :
 				self.__logger.debug("\t " + str(IP))
 
-			self.__logger.info("lookUp - Gathering thymios' hostnames")
+			if getHostname :
+				self.__logger.info("lookUp - Gathering thymios' hostnames")
 
-			self.__hashThymiosHostnames = {}
+				self.__hashThymiosHostnames = {}
 
-			# We query each thymio for its hostname
-			for IP in tabIP :
-				self.__logger.info("lookUp - ssh on " + str(IP))
+				# We query each thymio for its hostname
+				for IP in tabIP :
+					self.__logger.info("lookUp - ssh on " + str(IP))
 
-				ssh = paramiko.SSHClient()
-				ssh.load_system_host_keys()
-				ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+					ssh = paramiko.SSHClient()
+					ssh.load_system_host_keys()
+					ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-				# We don't want to be bothered with paramiko logging unless it's critical
-				paramikoLogger = logging.getLogger('paramiko')
-				paramikoLogger.setLevel('CRITICAL')
+					# We don't want to be bothered with paramiko logging unless it's critical
+					paramikoLogger = logging.getLogger('paramiko')
+					paramikoLogger.setLevel('CRITICAL')
 
-				# Connection on the raspberry
-				ssh.connect(str(IP), username = PIUSERNAME, password = PIPASSWORD)
+					# Connection on the raspberry
+					ssh.connect(str(IP), username = PIUSERNAME, password = PIPASSWORD)
 
-				# Executing command hostname
-				stdin, stdout, stderr = ssh.exec_command('hostname')
+					# Executing command hostname
+					stdin, stdout, stderr = ssh.exec_command('hostname')
 
-				hostname = str(stdout.read()).rstrip('\n')
-				ssh.close()
+					hostname = str(stdout.read()).rstrip('\n')
+					ssh.close()
 
-				self.__logger.info("lookUp - active thymio: " + hostname + " - " + str(IP))
+					self.__logger.info("lookUp - active thymio: " + hostname + " - " + str(IP))
 
-				if hostname in self.__hashThymiosHostnames.keys() :
-					self.__logger.warning("lookUp - warning: multiple thymios with hostname " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]) + " and " + str(IP))
+					if hostname in self.__hashThymiosHostnames.keys() :
+						self.__logger.warning("lookUp - warning: multiple thymios with hostname " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]) + " and " + str(IP))
 
-				self.__hashThymiosHostnames[hostname] = IP
+					self.__hashThymiosHostnames[hostname] = IP
 
-			self.__logger.debug("lookUp - hostname/IP table :")
-			for hostname in self.__hashThymiosHostnames :
-				self.__logger.debug("\t " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]))
+				self.__logger.debug("lookUp - hostname/IP table :")
+				for hostname in self.__hashThymiosHostnames :
+					self.__logger.debug("\t " + hostname + " : " + str(self.__hashThymiosHostnames[hostname]))
 
-			self.saveHostnamesTable()
+				self.saveHostnamesTable()
 
 		except :	
 			self.__logger.critical("Unexpected error in lookUp : " + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc()) 
@@ -336,7 +337,23 @@ class OctoPY() :
 						optSend.data = data
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
-						sendOneMessage(sock, optSend)				
+						sendOneMessage(sock, optSend)
+
+					# Send data
+					elif message == MessageType.DATA :
+						optSend.msgType = MessageType.DATA
+						optSend.data = data
+						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+						sock.connect((str(destIP), 55555))
+						sendOneMessage(sock, optSend)
+
+					# Com message
+					elif message == MessageType.COM :
+						optSend.msgType = MessageType.COM
+						optSend.data = data
+						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+						sock.connect((str(destIP), 55555))
+						sendOneMessage(sock, optSend)
 
 					# Stop simulation
 					elif message == MessageType.STOP :
@@ -351,6 +368,14 @@ class OctoPY() :
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
+
+					# Switch off thymio
+					elif message == MessageType.OFF :
+						sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
+						proc = subprocess.Popen(sshcommand + ["sudo", "shutdown", "-h", "now"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+						# (out, err) = proc.communicate()
+						# self.__logger.debug("Out : " + str(out))
+						# self.__logger.debug("Err : " + str(err))
 
 					# Register as observer
 					elif message == MessageType.REGISTER :
@@ -516,6 +541,21 @@ class OctoPY() :
 			if controller != None :
 				self.__logger.debug("notify - Notifying controller.")
 				controller.notify(**params)
+
+
+	def comMessage(self, **params) :
+		# We get the list of IPs to send the message to
+		recipientsList = []
+		if "recipients" in params :
+			recipientsList = params["recipients"].split(',')
+			params = {key:params[key] for key in params.keys() if key != "recipients"}
+
+		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
+
+
+	def exit(self) :
+		self.__msgListener.stop()
+
 	
 
 
@@ -529,13 +569,21 @@ class OctoPYInteractive(cmd.Cmd) :
 	# --- Thymios look-up ---
 	def do_look(self, args) :
 		lookRange = "192.168.0.111-150"
+		getHostname = False
 		if args :
-			lookRange = args
+			args = args.split(' ')
 
-		octoPYInstance.lookUp(lookRange)
+			if len(args) > 0 :
+				for i in range(0, len(args)) :
+					if args[i][0].isdigit() :
+						lookRange = args[i]
+					elif args[i] == '-s' :
+						getHostname = True
+
+		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default).', ])
+		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---
@@ -545,10 +593,16 @@ class OctoPYInteractive(cmd.Cmd) :
 			message = args[0]
 
 			IPs = []
+			data = None
 			if len(args) > 1 :
-				IPs = args[1:]
+				if message == MessageType.DATA :
+					# Last argument is the data
+					IPs = args[1:-2]
+					data = args[-1]
+				else :
+					IPs = args[1:]
 
-			octoPYInstance.sendMessage(message, IPs)
+			octoPYInstance.sendMessage(message, IPs, data)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 
@@ -577,7 +631,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 
 	def help_send(self) :
-		print '\n'.join([ 'send message [hosts list]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
+		print '\n'.join([ 'send message [hosts list] [data]', 'Send a message to a list of hosts or all hosts saved in the hostnames table.'])
 
 
 	# --- Ping thymios ---
@@ -683,6 +737,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 	# --- Exit ---
 	def do_exit(self, line) :
+		octoPYInstance.exit()
 		return True
 
 	def help_exit(self) :
@@ -733,12 +788,17 @@ class MessageListener(threading.Thread) :
 				if message.msgType == MessageType.NOTIFY :
 					message.data["hostIP"] = addr
 					self.__octoPYInstance.notify(**message.data)
+				elif message.msgType == MessageType.COM :
+					senderHostname = self.__octoPYInstance.getHostnameFromIP(addr)
+					message.data["senderHostname"] = senderHostname 
+					self.__octoPYInstance.comMessage(**message.data)
 			except:
 				self.__octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		self.__octoPYInstance.logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
+		self.__sock.close()
 		self.__stop.set()
 
 

@@ -7,10 +7,10 @@ class MessageType :
     NONE = -1
 
     # Query messages
-    INIT, START, PAUSE, RESTART, STOP, KILL, QUERY, SET, REGISTER = range(0, 9)
+    INIT, START, PAUSE, RESTART, STOP, KILL, OFF, QUERY, SET, REGISTER, DATA = range(0, 11)
 
     # Info message
-    ACK, LISTENING, STARTED, NOTIFY = range(10, 14)
+    ACK, LISTENING, STARTED, NOTIFY, COM = range(10, 15)
 
     @staticmethod
     def getAllAttributes() :
@@ -41,7 +41,10 @@ def recvOneMessage(socket):
     return data
 
 def sendOneMessage(conn, data):
-    packed_data = pickle.dumps(data)
-    length = len(packed_data)
-    conn.sendall(struct.pack('!I', length))
-    conn.sendall(packed_data)
+    try :
+        packed_data = pickle.dumps(data)
+        length = len(packed_data)
+        conn.sendall(struct.pack('!I', length))
+        conn.sendall(packed_data)
+    except :
+        self.__logger.error("sendOneMessage - Unexpected error while sending message to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
