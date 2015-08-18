@@ -116,9 +116,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 		inputs = np.zeros((1, Params.params.nb_inputs + 1))
 
 		cpt = 0
-		self.log(inputs)
 		while cpt < Params.params.nb_inputs :
-			inputs[1, cpt] = random.random()
+			inputs[0, cpt] = random.random()
 			cpt += 1
 
 		# inputs = self.getProximityInputs(inputs)
@@ -126,7 +125,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 		# inputs = self.getCameraInputs(inputs)
 
 		# Bias neuron
-		inputs[1, -1] = 1.0
+		inputs[0, -1] = 1.0
 
 		return inputs
 
@@ -137,7 +136,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			PSValues = self.tController.getPSValues()
 
 			for i in range(0, len(PSValues)) :
-				inputs[i, 1] = PSValues[i]
+				inputs[0, i] = PSValues[i]
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
 		finally :
