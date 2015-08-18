@@ -133,7 +133,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
 
-			for i in range(0, len(PSValues))
+			for i in range(0, len(PSValues)) :
 				inputs[i, 1] = PSValues[i]
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
