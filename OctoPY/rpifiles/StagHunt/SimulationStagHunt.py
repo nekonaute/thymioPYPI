@@ -33,7 +33,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 
 	def preActions(self) :
-		loadWeights(Params.params.weights_path, Params.params.file_xml)
+		self.loadWeights(Params.params.weights_path, Params.params.file_xml)
 
 
 	def loadWeights(self, file, xml) :

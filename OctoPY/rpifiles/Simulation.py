@@ -38,20 +38,23 @@ class Simulation(threading.Thread) :
 		self.mainLogger = mainLogger
 
 	def run(self) :
-		self.preActions()
+		try :
+			self.preActions()
 
-		while not self.__stop.isSet() :
-			self.step()
+			while not self.__stop.isSet() :
+				self.step()
 
-			if self.__pause.isSet() :
-				self.pauseActions()
+				if self.__pause.isSet() :
+					self.pauseActions()
 
-				while not self.__restart.isSet() :
-					self.__restart.wait()
+					while not self.__restart.isSet() :
+						self.__restart.wait()
 
-		self.postActions()
+			self.postActions()
 
-		self.tController.stop()
+			self.tController.stop()
+		except :
+			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 	def preActions(self) :
 		pass
