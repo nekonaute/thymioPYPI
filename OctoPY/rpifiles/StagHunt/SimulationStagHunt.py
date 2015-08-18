@@ -37,12 +37,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 		self.loadWeights(Params.params.weights_path, Params.params.file_xml)
 
 
-	def loadWeights(self, file, xml) :
+	def loadWeights(self, file, xmlFile) :
 		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, file)) :
 			self.log("Loading weights file " + os.path.join(CURRENT_FILE_PATH, file), logging.DEBUG)
 
 			listGenes = []
-			if xml == 1:
+			if xmlFile == 1:
 				DOMTree = xml.dom.minidom.parse(os.path.join(CURRENT_FILE_PATH, file))
 				genome = DOMTree.documentElement
 
