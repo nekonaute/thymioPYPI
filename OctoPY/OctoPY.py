@@ -131,7 +131,7 @@ class OctoPY() :
 
 	def lookUp(self, rangeArg) :
 		try :
-			self.__logger.info("lookUp - excuting nmap")
+			self.__logger.info("lookUp - executing nmap")
 
 			# Popen calls the nmap command in the range specified by rangeArg
 			proc = subprocess.Popen(["nmap", "-sn", rangeArg], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
