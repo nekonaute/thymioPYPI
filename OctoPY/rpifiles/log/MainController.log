@@ -1,286 +1,46 @@
-2015-07-15 13:21:49,755 - DEBUG: MainController - Running.
-2015-07-15 13:21:49,755 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:21:51,277 - DEBUG: MainController - Killing controller.
-2015-07-15 13:21:51,277 - DEBUG: MainController - Exiting
-2015-07-15 13:32:31,309 - DEBUG: MainController - Running.
-2015-07-15 13:32:31,310 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:32:31,310 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:32:31,310 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:32:31,310 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:32:31,311 - CRITICAL: Error in main: <type 'exceptions.ImportError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 79, in __loadSimulation
-    simModule = __import__(Params.params.simulation_path)
-ImportError: Import by filename is not supported.
-
-2015-07-15 13:34:14,922 - DEBUG: MainController - Running.
-2015-07-15 13:34:14,922 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:34:14,922 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:34:14,922 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:34:14,922 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:34:14,923 - CRITICAL: Error in main: <type 'exceptions.ImportError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 79, in __loadSimulation
-    simModule = __import__(Params.params.simulation_path)
-ImportError: No module named SimulationDefault
-
-2015-07-15 13:34:34,343 - DEBUG: MainController - Running.
-2015-07-15 13:34:34,344 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:34:34,344 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:34:34,344 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:34:34,345 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:34:34,346 - CRITICAL: Error in main: <type 'exceptions.ImportError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 79, in __loadSimulation
-    simModule = __import__(Params.params.simulation_path)
-ImportError: No module named SimulationDefault.SimulationDefault
-
-2015-07-15 13:36:09,455 - DEBUG: MainController - Running.
-2015-07-15 13:36:09,456 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:36:09,456 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:36:09,456 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:36:09,456 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:36:09,457 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 79, in __loadSimulation
-    simModule = __import__(Params.params.simulation_path)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 6, in <module>
-    class SimulationDefault(Simulation) :
-TypeError: Error when calling the metaclass bases
-    module.__init__() takes at most 2 arguments (3 given)
-
-2015-07-15 13:37:30,999 - DEBUG: MainController - Running.
-2015-07-15 13:37:30,999 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:37:31,000 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:37:31,000 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:37:31,000 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:37:31,001 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 79, in __loadSimulation
-    simModule = __import__(Params.params.simulation_path)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 6, in <module>
-    class SimulationDefault(Simulation) :
-TypeError: Error when calling the metaclass bases
-    module.__init__() takes at most 2 arguments (3 given)
-
-2015-07-15 13:38:09,693 - DEBUG: MainController - Running.
-2015-07-15 13:38:09,693 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:38:09,693 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:38:09,693 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:38:09,694 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:38:09,695 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 218, in <module>
-    controller.run()
-  File "./MainController.py", line 106, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 81, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-TypeError: 'module' object is not callable
-
-2015-07-15 13:38:55,570 - DEBUG: MainController - Running.
-2015-07-15 13:38:55,571 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:38:55,571 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:38:55,571 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:38:55,571 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:38:55,572 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 219, in <module>
-    controller.run()
-  File "./MainController.py", line 107, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 82, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-TypeError: 'module' object is not callable
-
-2015-07-15 13:40:57,979 - DEBUG: MainController - Running.
-2015-07-15 13:40:57,979 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:40:57,980 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:40:57,980 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:40:57,980 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:40:57,980 - CRITICAL: Error in main: <type 'exceptions.AttributeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 219, in <module>
-    controller.run()
-  File "./MainController.py", line 107, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 80, in __loadSimulation
-    simClass = getattr(simModule, Params.params.simulation_name)
-AttributeError: 'module' object has no attribute 'SimulationDefault.SimulationDefault'
-
-2015-07-15 13:41:10,951 - DEBUG: MainController - Running.
-2015-07-15 13:41:10,951 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:41:10,951 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:41:10,951 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:41:10,952 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:41:10,952 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 219, in <module>
-    controller.run()
-  File "./MainController.py", line 107, in run
-    self.__startSimulation()
-  File "./MainController.py", line 59, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 82, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-TypeError: 'module' object is not callable
-
-2015-07-15 13:55:51,924 - DEBUG: MainController - Running.
-2015-07-15 13:55:51,924 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 13:55:51,924 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 13:55:51,924 - DEBUG: MainController - Loading simulation...
-2015-07-15 13:55:51,925 - DEBUG: Params - Parsing configuration file.
-2015-07-15 13:55:51,925 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-TypeError: Can't instantiate abstract class SimulationDefault with abstract methods _Simulation__step
-
-2015-07-15 14:05:46,755 - DEBUG: MainController - Running.
-2015-07-15 14:05:46,755 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 14:05:46,755 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 14:05:46,755 - DEBUG: MainController - Loading simulation...
-2015-07-15 14:05:46,756 - DEBUG: Params - Parsing configuration file.
-2015-07-15 14:05:46,757 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 8, in __init__
-    Simulation.Simulation.__init__(self, controller, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py", line 26, in __init__
-    self.__tController = ThymioController(self)
-TypeError: 'module' object is not callable
-
-2015-07-15 14:06:09,228 - DEBUG: MainController - Running.
-2015-07-15 14:06:09,228 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 14:06:09,228 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 14:06:09,228 - DEBUG: MainController - Loading simulation...
-2015-07-15 14:06:09,228 - DEBUG: Params - Parsing configuration file.
-2015-07-15 14:06:09,229 - CRITICAL: Error in main: <type 'exceptions.TypeError'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 8, in __init__
-    Simulation.Simulation.__init__(self, controller, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py", line 26, in __init__
-    self.__tController = ThymioController.ThymioController(self)
-TypeError: __init__() takes exactly 3 arguments (2 given)
-
-2015-07-15 14:06:24,704 - DEBUG: MainController - Running.
-2015-07-15 14:06:24,704 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 14:06:24,704 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 14:06:24,704 - DEBUG: MainController - Loading simulation...
-2015-07-15 14:06:24,704 - DEBUG: Params - Parsing configuration file.
-2015-07-15 14:06:24,705 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 8, in __init__
-    Simulation.Simulation.__init__(self, controller, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py", line 26, in __init__
-    self.__tController = ThymioController.ThymioController(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/ThymioController.py", line 28, in __init__
-    self.__performActionReq = threading.Condition()
-NameError: global name 'threading' is not defined
-
-2015-07-15 14:06:36,394 - DEBUG: MainController - Running.
-2015-07-15 14:06:36,394 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 14:06:36,394 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 14:06:36,394 - DEBUG: MainController - Loading simulation...
-2015-07-15 14:06:36,394 - DEBUG: Params - Parsing configuration file.
-2015-07-15 14:06:36,395 - CRITICAL: Error in main: <type 'exceptions.NameError'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 8, in __init__
-    Simulation.Simulation.__init__(self, controller, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py", line 26, in __init__
-    self.__tController = ThymioController.ThymioController(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/ThymioController.py", line 30, in __init__
-    self.__request = MessageRequest.NONE
-NameError: global name 'MessageRequest' is not defined
-
-2015-07-15 14:07:00,960 - DEBUG: MainController - Running.
-2015-07-15 14:07:00,960 - DEBUG: CommandsListener - Waiting on accept...
-2015-07-15 14:07:00,960 - INFO: MainController - No simulation configuration file loaded. Loading default simulation /home/arthur/thymioPYPI/medusa/rpifiles/default_simulation.cfg
-2015-07-15 14:07:00,960 - DEBUG: MainController - Loading simulation...
-2015-07-15 14:07:00,960 - DEBUG: Params - Parsing configuration file.
-2015-07-15 14:07:01,008 - CRITICAL: Error in main: <class 'dbus.exceptions.DBusException'> - Traceback (most recent call last):
-  File "./MainController.py", line 220, in <module>
-    controller.run()
-  File "./MainController.py", line 108, in run
-    self.__startSimulation()
-  File "./MainController.py", line 60, in __startSimulation
-    self.__loadSimulation()
-  File "./MainController.py", line 83, in __loadSimulation
-    self.__simulation = simClass(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/SimulationDefault/SimulationDefault.py", line 8, in __init__
-    Simulation.Simulation.__init__(self, controller, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/Simulation.py", line 26, in __init__
-    self.__tController = ThymioController.ThymioController(self, mainLogger)
-  File "/home/arthur/thymioPYPI/medusa/rpifiles/ThymioController.py", line 49, in __init__
-    asebaNetworkObject = bus.get_object('ch.epfl.mobots.Aseba', '/')
-  File "/usr/lib/python2.7/dist-packages/dbus/bus.py", line 241, in get_object
-    follow_name_owner_changes=follow_name_owner_changes)
-  File "/usr/lib/python2.7/dist-packages/dbus/proxies.py", line 248, in __init__
-    self._named_service = conn.activate_name_owner(bus_name)
-  File "/usr/lib/python2.7/dist-packages/dbus/bus.py", line 180, in activate_name_owner
-    self.start_service_by_name(bus_name)
-  File "/usr/lib/python2.7/dist-packages/dbus/bus.py", line 278, in start_service_by_name
-    'su', (bus_name, flags)))
-  File "/usr/lib/python2.7/dist-packages/dbus/connection.py", line 651, in call_blocking
-    message, timeout)
-DBusException: org.freedesktop.DBus.Error.ServiceUnknown: The name ch.epfl.mobots.Aseba was not provided by any .service files
-
+2015-08-18 14:19:48,944 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:20:00,131 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:20:27,983 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:21:08,311 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:21:37,275 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:22:00,480 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:22:28,317 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:22:28,317 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:23:27,463 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:23:27,464 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:23:52,015 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:23:52,016 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:24:17,138 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:24:17,139 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:24:31,733 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:24:47,848 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:24:47,849 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:25:14,309 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:25:14,310 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:25:52,372 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:25:52,373 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:26:00,088 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:26:08,690 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:26:08,690 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:26:13,827 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:26:13,828 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:27:09,495 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:09,496 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:27:20,550 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:22,447 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:33,724 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:41,448 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:41,449 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:27:43,078 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:44,359 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:44,360 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:27:47,472 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:27:47,473 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:28:00,297 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:28:01,122 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:28:01,753 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:28:01,754 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:28:02,462 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:28:02,463 - DEBUG: Loading weights file weights.dat
+2015-08-18 14:28:03,236 - DEBUG: Params - Parsing configuration file.
+2015-08-18 14:28:03,236 - DEBUG: Loading weights file weights.dat
