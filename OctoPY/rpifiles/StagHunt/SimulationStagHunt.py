@@ -93,7 +93,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 						cptLines = 0
 						cptColumns += 1
 				else :
-					# We fill the second matrix
+					# We fill the second matrix
 					self.__weightsHtoO[cptLines, cptColumns - (Params.params.nb_inputs + 1)] = weight
 
 					cptLines += 1
