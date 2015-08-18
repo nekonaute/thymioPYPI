@@ -116,9 +116,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 		inputs = np.zeros((1, Params.params.nb_inputs + 1))
 
 		cpt = 0
-		self.log(Params.params.nb_inputs)
+		self.log(inputs)
 		while cpt < Params.params.nb_inputs :
-			self.log("Cpt : " + str(cpt))
 			inputs[1, cpt] = random.random()
 			cpt += 1
 
