@@ -77,27 +77,26 @@ class SimulationStagHunt(Simulation.Simulation) :
 							listGenes.append(gene)
 
 
-			for gene in listGenes :
-				self.log("Gene : " + str(gene))
-				self.__weightsItoH = np.zeros((Params.params.nb_inputs + 1, Params.params.nb_hidden))
-				self.__weightsHtoO = np.zeros((Params.params.nb_hidden + 1, Params.params.nb_outputs))
-				cptColumns = 0
-				cptLines = 0
+			cptColumns = 0
+			cptLines = 0
+			self.__weightsItoH = np.zeros((Params.params.nb_inputs + 1, Params.params.nb_hidden))
+			self.__weightsHtoO = np.zeros((Params.params.nb_hidden + 1, Params.params.nb_outputs))
 
+			for gene in listGenes :
 				# Genotype to weights : [0, 1] -> [min_weight, max_weight]
 				weight = gene * (float)(Params.params.max_weight - Params.params.min_weight) + Params.params.min_weight
 
-				if cptColumns < Params.Params.nb_hidden :
+				if cptColumns < Params.params.nb_hidden :
 					# We fill the first matrix
 					self.__weightsItoH[cptLines, cptColumns] = weight
 
 					cptLines += 1
-					if cptLines >= Params.Params.nb_inputs + 1 :
+					if cptLines >= Params.params.nb_inputs + 1 :
 						cptLines = 0
 						cptColumns += 1
 				else :
 					# We fill the second matrix
-					self.__weightsHtoO[cptLines, cptColumns - (Params.params.nb_inputs + 1)] = weight
+					self.__weightsHtoO[cptLines, cptColumns - (Params.params.nb_hidden)] = weight
 
 					cptLines += 1
 					if cptLines >= Params.params.nb_hidden + 1 :
@@ -184,35 +183,25 @@ class SimulationStagHunt(Simulation.Simulation) :
 		return inputs
 
 	def computeNN(self, inputs) :
-		outputs = None
+		outputs = [-1.0, -1.0]
 
 		try :
-			def sigmoid(x) : return 1.0 / 1.0 + np.exp(- Params.params.lambda_sigmoid * x)
-
-			self.log('Inputs : ')
-			self.log(inputs)
-
-			self.log('\nWeights : ')
-			self.log(self.__weightsItoH)
+			def sigmoid(x) : return 1.0 / (1.0 + np.exp(-Params.params.lambda_sigmoid * x))
 
 			# First computation : inputs to hidden
-			hiddenNN = inputs * self.__weightsItoH
-			# hiddenNN = map(sigmoid, hiddenNN)
-
-			self.log('\nHidden : ')
-			self.log(hiddenNN)
-
-			self.log('\nWeights 2 : ')
-			self.log(self.__weightsHtoO)
+			hiddenNN = np.dot(inputs, self.__weightsItoH)
+			hiddenNN = np.matrix(map(sigmoid, hiddenNN)).copy()
 
 			# Second computation : hidden to outputs
 			# Bias neuron
-			hiddenNN = np.concatenate(hiddenNN, np.matrix([[1.0]]))
-			outputs = hidden * self.__weightsHtoO
-			# outputs = map(sigmoid, outputs)
+			hiddenNN.resize((1, Params.params.nb_hidden + 1))
+			hiddenNN[0, -1] = 1.0
 
-			self.log('\nOutputs : ')
-			self.log(outputs)
+			outputsNN = np.dot(hiddenNN, self.__weightsHtoO)
+
+			for i in range(0, Params.params.nb_outputs) :
+				outputs[i] = sigmoid(outputsNN[0, i])
+
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
 		finally :
@@ -223,12 +212,14 @@ class SimulationStagHunt(Simulation.Simulation) :
 			inputs = self.getInputs()
 			outputs = self.computeNN(inputs)
 
-			if outputs :
-				self.log('Vroum : ' + str(outputs[0] * Params.params.max_speed) + "/" + str(outputs[1] * Params.params.max_speed))
-				# self.tController.writeMotorsSpeedRequest([outputs[0] * Params.params.max_speed, outputs[1] * Params.params.max_speed])
-				# self.waitForControllerResponse()
+			if (outputs[0] >= 0) and (outputs[1] >= 0) :
+				self.tController.writeMotorsSpeedRequest([outputs[0] * Params.params.max_speed, outputs[1] * Params.params.max_speed])
+				self.waitForControllerResponse()
+			else :
+				self.tController.writeMotorsSpeedRequest([0.0, 0.0])
+				self.waitForControllerResponse
 
-			time.sleep(Params.params.time_step)
+			time.sleep(Params.params.time_step/1000.0)
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
 
