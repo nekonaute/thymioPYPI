@@ -38,12 +38,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 
 	def loadWeights(self, file, xml) :
-		if os.path.isfile(file) :
-			self.log("Loading weights file " + file, logging.DEBUG)
+		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, file)) :
+			self.log("Loading weights file " + os.path.join(CURRENT_FILE_PATH, file), logging.DEBUG)
 
 			listGenes = []
 			if xml == 1:
-				DOMTree = xml.dom.minidom.parse(file)
+				DOMTree = xml.dom.minidom.parse(os.path.join(CURRENT_FILE_PATH, file))
 				genome = DOMTree.documentElement
 
 				x = genome.getElementsByTagName("x")[0]
@@ -66,7 +66,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 									listGenes.append(item.childNodes[0].data)
 			else :
 				regexp = re.compile(r"^(\d+(\.\d+)?)$")
-				with open(file, 'r') as fileWeights :
+				with open(os.path.join(CURRENT_FILE_PATH, file), 'r') as fileWeights :
 					fileWeights = fileWeights.readlines()
 
 					for line in fileWeights :
