@@ -21,28 +21,29 @@ class ControllerTestNotifications(Controller.Controller) :
 			# Init all robots
 			self.log("Send init...")
 			self.octoPYInstance.sendMessage(MessageType.INIT, [])
-			time.sleep(2)
+			time.sleep(4)
 
 			# Register on all robots
 			self.log("Register...")
 			self.register([])
-			time.sleep(2)
+			# time.sleep(2)
 
 			# Load simulation
 			self.log("Load simulation...")
 			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_TestNotifications.cfg")
-			time.sleep(2)
+			# time.sleep(2)
+			self.stop()
 
 			# Start simulation
-			self.log("Start simulation...")
-			self.octoPYInstance.sendMessage(MessageType.START, [])
-			time.sleep(2)
+			# self.log("Start simulation...")
+			# self.octoPYInstance.sendMessage(MessageType.START, [])
+			# time.sleep(2)
 
 	def postActions(self) :
 		# Stop simulation
-		self.log("Stop simulation...")
-		self.octoPYInstance.sendMessage(MessageType.STOP, [])
-		time.sleep(2)
+		# self.log("Stop simulation...")
+		# self.octoPYInstance.sendMessage(MessageType.STOP, [])
+		# time.sleep(2)
 
 		# Kill controllers
 		self.log("Kill controller...")
