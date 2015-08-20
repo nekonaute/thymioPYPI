@@ -209,7 +209,7 @@ class MainController() :
 
 					while len(self.__command) :
 						command = self.__command.pop(0)
-						data = self.__commandData.pop(0)
+						commandData = self.__commandData.pop(0)
 
 						mainLogger.debug("MainController - Treating command : " + str(command))
 
