@@ -155,8 +155,6 @@ class MainController() :
 		proc = subprocess.Popen(["sh", os.path.join(CURRENT_FILE_PATH, "killAseba.sh")], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		(out, err) = proc.communicate()
 
-		mainLogger.debug(str(out) + "/" + str(err))
-
 
 	def __register(self, data) :
 		mainLogger.debug("MainController - Registering...")
@@ -226,6 +224,7 @@ class MainController() :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
 							self.__killController()
+							mainLogger.debug('Cay bon oui ??')
 							break
 						elif command == MessageCommand.REGISTER :
 							self.__register(commandData)
