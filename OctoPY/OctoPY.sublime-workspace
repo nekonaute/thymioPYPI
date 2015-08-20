@@ -4,12 +4,104 @@
 		"selected_items":
 		[
 			[
-				"outpu",
-				"outputsNN"
+				"nb_",
+				"nb_inputs"
 			],
 			[
-				"nb_",
-				"nb_outputs"
+				"in",
+				"input1"
+			],
+			[
+				"colo",
+				"colorDetected"
+			],
+			[
+				"list",
+				"listDetect"
+			],
+			[
+				"coun",
+				"countDetect"
+			],
+			[
+				"hash",
+				"hashDetect"
+			],
+			[
+				"max",
+				"maxDetect"
+			],
+			[
+				"RAY",
+				"RAY_HEIGHT_RADIUS"
+			],
+			[
+				"C",
+				"COLORS_DETECT"
+			],
+			[
+				"imgR",
+				"imgRays"
+			],
+			[
+				"MIN_",
+				"MIN_RED"
+			],
+			[
+				"imG",
+				"imgReduced"
+			],
+			[
+				"las",
+				"lastFirstColumn"
+			],
+			[
+				"fir",
+				"firstColumn"
+			],
+			[
+				"img",
+				"imgReduced"
+			],
+			[
+				"ray",
+				"rayX"
+			],
+			[
+				"RAY_",
+				"RAY_WIDTH"
+			],
+			[
+				"SIE",
+				"SIZE_X"
+			],
+			[
+				"RA",
+				"RAY_HEIGHT"
+			],
+			[
+				"NB",
+				"NB_LINES"
+			],
+			[
+				"image",
+				"image_HSV"
+			],
+			[
+				"pro",
+				"proxSensorsVal"
+			],
+			[
+				"__com",
+				"__commandData"
+			],
+			[
+				"__c",
+				"__command"
+			],
+			[
+				"outpu",
+				"outputsNN"
 			],
 			[
 				"ou",
@@ -34,10 +126,6 @@
 			[
 				"__wei",
 				"__weightsHtoO"
-			],
-			[
-				"list",
-				"listGenes"
 			],
 			[
 				"hidde",
@@ -90,10 +178,6 @@
 			[
 				"main",
 				"mainLogger"
-			],
-			[
-				"__com",
-				"__command"
 			],
 			[
 				"ob",
@@ -224,16 +308,8 @@
 				"__simulation"
 			],
 			[
-				"__c",
-				"__cmdListener"
-			],
-			[
 				"to",
 				"totalRight"
-			],
-			[
-				"pro",
-				"proxSensors"
 			],
 			[
 				"total",
@@ -438,92 +514,72 @@
 			[
 				"I",
 				"INIT"
-			],
-			[
-				"Messa",
-				"MessageType"
-			],
-			[
-				"AC",
-				"ACKLISTENER_HOST"
-			],
-			[
-				"op",
-				"optSend"
-			],
-			[
-				"dest",
-				"destIP"
-			],
-			[
-				"ip",
-				"ip_address"
-			],
-			[
-				"load",
-				"loadHostnamesTable"
-			],
-			[
-				"format",
-				"format_exc"
-			],
-			[
-				"exc",
-				"except"
-			],
-			[
-				"query",
-				"queryThymios"
-			],
-			[
-				"quer",
-				"queryThymios"
-			],
-			[
-				"last",
-				"lastEval"
-			],
-			[
-				"max",
-				"max_size"
-			],
-			[
-				"_vec",
-				"_vec_nb_hares"
-			],
-			[
-				"_vec_na",
-				"_vec_nb_hares_solo"
-			],
-			[
-				"fit",
-				"fit_sum"
-			],
-			[
-				"_ve",
-				"_vec_nb_hares"
-			],
-			[
-				"_pa",
-				"_vec_payoffs"
-			],
-			[
-				"gene",
-				"generate_new_offspring"
-			],
-			[
-				"old",
-				"old_nb_genotypes"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/home/arthur/sferes2-0.99/TemplateExp.exp",
+			"file": "rpifiles/MainController.py",
 			"settings":
 			{
-				"buffer_size": 4416,
+				"buffer_size": 11180,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/utils.py",
+			"settings":
+			{
+				"buffer_size": 1188,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "TestNotifications/ControllerTestNotifications.py",
+			"settings":
+			{
+				"buffer_size": 1536,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "OctoPY.py",
+			"settings":
+			{
+				"buffer_size": 25557,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/ThymioController.py",
+			"settings":
+			{
+				"buffer_size": 7381,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/arthur/testCamera3.py",
+			"settings":
+			{
+				"buffer_size": 3492,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+			"settings":
+			{
+				"buffer_size": 9541,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "rpifiles/config_StagHunt.cfg",
+			"settings":
+			{
+				"buffer_size": 750,
 				"line_ending": "Unix"
 			}
 		}
@@ -552,6 +608,12 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
+		"/home/arthur/testCamera2.py",
+		"/home/arthur/testCamera.py",
+		"/home/arthur/pithymio.py",
+		"/home/arthur/sferes2-0.99/TemplateExp.exp",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
 		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
@@ -575,16 +637,12 @@
 		"/home/arthur/thymioPYPI/OctoPY/CreateController.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
-		"/home/arthur/pithymio.py",
 		"/home/arthur/pithymio_freq.py",
 		"/home/arthur/pithymio_freq_test.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/script.sh",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CreateExperiment.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Params.py",
 		"/home/arthur/MiscTests/Python/TestInput.py",
-		"/home/arthur/testCamera2.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/simulationMusic.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activateCamera.sh",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SpyBot/SimulationSpyBot",
@@ -597,7 +655,6 @@
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/ThymioFunctions.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/movements.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/killAseba.sh",
-		"/home/arthur/testCamera.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/activeCamera.sh",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/CameraFunctions.py",
 		"/home/arthur/thymioPYPI/OctoPY/Backup/Controlling Thymio/tools.py",
@@ -664,7 +721,6 @@
 		"/home/arthur/thymioPYPI/amsterdam/thymio_exchange_seq/src/exchange_seq.aesl",
 		"/home/arthur/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
 		"/home/arthur/Misc/FillSquare/FillSquare.py",
-		"/home/arthur/sferes2-0.99/TemplateExp.exp",
 		"/home/arthur/thymioPYPI/medusa/medusa.py.bck",
 		"/home/arthur/thymioPYPI/medusa/rpifiles/interfaces",
 		"/home/arthur/thymioPYPI/medusa/rpifiles/dhclient.conf",
@@ -697,6 +753,29 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"255",
+			"40",
+			"input1",
+			"NB_RAYS",
+			"SIZE_X",
+			"RAY_WIDTH_RADIUS",
+			"RAY_HEIGHT_RADIUS",
+			"SIZE_Y",
+			"VIEW_HEIGHT",
+			"image_HSV",
+			"RED",
+			"maskRed",
+			"imageHSV",
+			"imgReduced",
+			"lastFirstColumn",
+			"RAY_WIDTH",
+			"WIDTH",
+			"RAY_HEIGHT",
+			"self.__camera",
+			"proxSensorsVal",
+			"__killController",
+			"commandData",
+			"self.__command",
 			"StagHunt_control1",
 			"np.mat",
 			"Params.Params",
@@ -801,30 +880,7 @@
 			"utils",
 			"self.__mainLogger",
 			"logger",
-			"self.__mainLogger",
-			"SERVER",
-			"getPSValues",
-			"__waitForControllerResponse",
-			"thymioControllerPerformedAction",
-			"gobject",
-			"hostIP",
-			"ConnectionsListener",
-			"Received",
-			"stop(",
-			"Killing Sender",
-			"Message(",
-			"Dirt",
-			"Dirty",
-			"loadHostnamesTable",
-			"sort",
-			"exit",
-			"randin",
-			"random.rand()",
-			"epoch",
-			"Graph(",
-			"{",
-			"001",
-			"ping -"
+			"self.__mainLogger"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -845,23 +901,213 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/arthur/sferes2-0.99/TemplateExp.exp",
+					"file": "rpifiles/MainController.py",
 					"settings":
 					{
-						"buffer_size": 4416,
+						"buffer_size": 11180,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1065,
-								1065
+								6860,
+								6860
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3620.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "rpifiles/utils.py",
+					"settings":
+					{
+						"buffer_size": 1188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1188,
+								1188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 128.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "TestNotifications/ControllerTestNotifications.py",
+					"settings":
+					{
+						"buffer_size": 1536,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								514,
+								514
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 272.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "OctoPY.py",
+					"settings":
+					{
+						"buffer_size": 25557,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								749,
+								749
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 663.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "rpifiles/ThymioController.py",
+					"settings":
+					{
+						"buffer_size": 7381,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3015,
+								3015
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1420.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/arthur/testCamera3.py",
+					"settings":
+					{
+						"buffer_size": 3492,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								240,
+								240
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+					"settings":
+					{
+						"buffer_size": 9541,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5906,
+								5906
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3332.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "rpifiles/config_StagHunt.cfg",
+					"settings":
+					{
+						"buffer_size": 750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								479,
+								479
 							]
 						],
 						"settings":
@@ -919,6 +1165,42 @@
 		"selected_items":
 		[
 			[
+				"config_",
+				"OctoPY/rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"testcolor",
+				"OctoPY/rpifiles/detectColor.cfg"
+			],
+			[
+				"simu",
+				"OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py"
+			],
+			[
+				"stagh",
+				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"thy",
+				"OctoPY/rpifiles/ThymioController.py"
+			],
+			[
+				"o",
+				"OctoPY/OctoPY.py"
+			],
+			[
+				"con",
+				"OctoPY/TestNotifications/ControllerTestNotifications.py"
+			],
+			[
+				"u",
+				"OctoPY/rpifiles/utils.py"
+			],
+			[
+				"main",
+				"OctoPY/rpifiles/MainController.py"
+			],
+			[
 				"sim",
 				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
@@ -931,40 +1213,20 @@
 				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
 			],
 			[
-				"simu",
-				"OctoPY/rpifiles/SimulationDefault/SimulationDefault.py"
-			],
-			[
 				"mu",
 				"OctoPY/rpifiles/SimulationMusic/SimulationMusic.py"
-			],
-			[
-				"stagh",
-				"OctoPY/rpifiles/config_StagHunt.cfg"
 			],
 			[
 				"stag",
 				"OctoPY/rpifiles/StagHunt/SimulationStagHunt.py"
 			],
 			[
-				"con",
-				"OctoPY/TestNotifications/ControllerTestNotifications.py"
-			],
-			[
 				"si",
 				"OctoPY/rpifiles/Simulation.py"
 			],
 			[
-				"main",
-				"OctoPY/rpifiles/MainController.py"
-			],
-			[
 				"oc",
 				"OctoPY/OctoPY.py"
-			],
-			[
-				"u",
-				"OctoPY/rpifiles/utils.py"
 			],
 			[
 				"uti",
@@ -983,16 +1245,8 @@
 				"OctoPY/Controller.py"
 			],
 			[
-				"o",
-				"OctoPY/OctoPY.py"
-			],
-			[
 				"mai",
 				"OctoPY/rpifiles/MainController.py"
-			],
-			[
-				"thy",
-				"OctoPY/rpifiles/ThymioController.py"
 			],
 			[
 				"simulations",
