@@ -81,8 +81,8 @@ class MainController() :
 		self.__cmdListener = CommandsListener(self)
 
 		self.__commandReceived = threading.Condition()
-		self.__command = MessageCommand.NONE
-		self.__commandData = None
+		self.__command = []
+		self.__commandData = []
 
 		self.__observers = []
 
@@ -189,8 +189,8 @@ class MainController() :
 	def getCommand(self, command, data = None) :
 		mainLogger.debug("MainController - Command " + str(command) + " received.")
 		with self.__commandReceived :
-			self.__command = command
-			self.__commandData = data
+			self.__command.append(command)
+			self.__commandData.append(data)
 			self.__commandReceived.notify()
 
 
@@ -204,29 +204,31 @@ class MainController() :
 			try :
 				with self.__commandReceived :
 					# The controller waits for a command
-					while self.__command == MessageCommand.NONE :
+					while len(self.__command) == 0 :
 						self.__commandReceived.wait(1)
 
-					mainLogger.debug("MainController - Treating command : " + str(self.__command))
+					while len(self.__command) :
+						command = self.__command.pop(0)
+						data = self.__commandData.pop(0)
 
-					# We treat the command corresponding to the message
-					if self.__command == MessageCommand.START :
-						self.__startSimulation()
-					elif self.__command == MessageCommand.PAUSE :
-						self.__pauseSimulation()
-					elif self.__command == MessageCommand.RESTART :
-						self.__restartSimulation()
-					elif self.__command == MessageCommand.SET :
-						self.__setSimulation(self.__commandData)
-					elif self.__command == MessageCommand.STOP :
-						self.__stopSimulation()
-					elif self.__command == MessageCommand.KILL :
-						self.__killController()
-						break
-					elif self.__command == MessageCommand.REGISTER :
-						self.__register(self.__commandData)
+						mainLogger.debug("MainController - Treating command : " + str(command))
 
-					self.__command = MessageCommand.NONE
+						# We treat the command corresponding to the message
+						if command == MessageCommand.START :
+							self.__startSimulation()
+						elif command == MessageCommand.PAUSE :
+							self.__pauseSimulation()
+						elif command == MessageCommand.RESTART :
+							self.__restartSimulation()
+						elif command == MessageCommand.SET :
+							self.__setSimulation(commandData)
+						elif command == MessageCommand.STOP :
+							self.__stopSimulation()
+						elif command == MessageCommand.KILL :
+							self.__killController()
+							break
+						elif command == MessageCommand.REGISTER :
+							self.__register(commandData)
 			except KeyboardInterrupt :
 				self.__killController()
 				break
