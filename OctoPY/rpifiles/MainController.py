@@ -198,7 +198,8 @@ class MainController() :
 		# Start listening to commands
 		self.__cmdListener.start()
 
-		while 1 :
+		killed = False
+		while not killed :
 			try :
 				with self.__commandReceived :
 					# The controller waits for a command
@@ -224,7 +225,7 @@ class MainController() :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
 							self.__killController()
-							mainLogger.debug('Cay bon oui ??')
+							killed = True
 							break
 						elif command == MessageCommand.REGISTER :
 							self.__register(commandData)
