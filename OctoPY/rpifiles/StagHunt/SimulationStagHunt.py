@@ -32,14 +32,14 @@ COLORS_DETECT = {
 													},
 									"red" : { 
 														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255])
+														"max" : np.array([80, 255, 255]),
 														"input1" : 1,
 														"input2" : 1,
 														"input3" : 0
 													},
 									"green" : { 
 														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255])
+														"max" : np.array([80, 255, 255]),
 														"input1" : 0,
 														"input2" : 1,
 														"input3" : 0
