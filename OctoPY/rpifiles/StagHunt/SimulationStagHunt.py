@@ -54,6 +54,9 @@ class SimulationStagHunt(Simulation.Simulation) :
 		self.__camera = picamera.PiCamera()
 		self.__camera.resolution = (Params.params.size_x, Params.params.size_y)
 
+		# We need to let time for the camera to load
+		time.sleep(3)
+
 		# Matrix for the weights from input neurons to hidden neurons
 		self.__weightsItoH = None
 
@@ -143,16 +146,19 @@ class SimulationStagHunt(Simulation.Simulation) :
 	def getInputs(self) :
 		inputs = np.zeros((1, Params.params.nb_inputs + 1))
 
+		index = 0
+		index = self.getProximityInputs(inputs, index)
+
+		index = self.getCameraInputs(inputs, index)
+
+		self.log("Inputs : ")
+		self.log(inputs)
+
 		# TODO: random debug, delete !
 		cpt = 0
 		while cpt < Params.params.nb_inputs :
 			inputs[0, cpt] = random.random()
 			cpt += 1
-
-		index = 0
-		# index = self.getProximityInputs(inputs, index)
-
-		# index = self.getCameraInputs(inputs, index)
 
 		# Bias neuron
 		inputs[0, index] = 1.0
@@ -176,6 +182,9 @@ class SimulationStagHunt(Simulation.Simulation) :
 					inputs[0, index + i] = 1.0
 
 				index += 1
+
+			self.log("Proximity sensors :")
+			self.log(PSValues)
 		except :
 			self.log('SimulationStagHunt - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc(), logging.CRITICAL)
 		finally :
@@ -226,6 +235,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 		listMasks = []
 		countDetect = []
 		listDetect = []
+		self.log("Camera :")
+		cpt = 1
 		for ray in imgRays :
 			hashMasks = {}
 			hashDetect = {}
@@ -254,6 +265,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 			# We set the inputs for this ray
 			colorDetected = listDetect[-1]
 
+			self.log("Ray " + str(cpt) + " : " + colorDetected)
 			input1 = 0
 			input2 = 0
 			input3 = 0
@@ -300,6 +312,11 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 			if inputs != None :
 				outputs = self.computeNN(inputs)
+
+				# TODO: debug
+				self.stop()
+				time.sleep(Params.params.time_step/1000.0)
+				return
 
 				if (outputs[0] >= 0) and (outputs[1] >= 0) :
 					self.tController.writeMotorsSpeedRequest([outputs[0] * Params.params.max_speed, outputs[1] * Params.params.max_speed])
