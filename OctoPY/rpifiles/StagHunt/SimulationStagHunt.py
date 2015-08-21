@@ -154,7 +154,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 		self.log("Inputs : ")
 		self.log(inputs)
 
-		# TODO: random debug, delete !
+		# TODO: random debug, delete !
 		cpt = 0
 		while cpt < Params.params.nb_inputs :
 			inputs[0, cpt] = random.random()
