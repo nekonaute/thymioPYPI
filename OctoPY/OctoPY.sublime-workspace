@@ -536,14 +536,6 @@
 			}
 		},
 		{
-			"file": "TestNotifications/ControllerTestNotifications.py",
-			"settings":
-			{
-				"buffer_size": 1536,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "OctoPY.py",
 			"settings":
 			{
@@ -560,18 +552,10 @@
 			}
 		},
 		{
-			"file": "/home/arthur/testCamera3.py",
-			"settings":
-			{
-				"buffer_size": 3492,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "rpifiles/StagHunt/SimulationStagHunt.py",
 			"settings":
 			{
-				"buffer_size": 9541,
+				"buffer_size": 9914,
 				"line_ending": "Unix"
 			}
 		},
@@ -608,6 +592,9 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
+		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
+		"/home/arthur/testCamera3.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDetectColor/SimulationDetectColor.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/detectColor.cfg",
 		"/home/arthur/testCamera2.py",
@@ -616,7 +603,6 @@
 		"/home/arthur/sferes2-0.99/TemplateExp.exp",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
-		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
 		"/home/arthur/thymioPYPI/OctoPY/Controller.py",
@@ -626,7 +612,6 @@
 		"/home/arthur/MiscTests/Python/XMLParser.py",
 		"/home/arthur/OgarCancun/src/ai/BotNN.js",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/asebaCommands.aesl",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationDefault/SimulationDefault.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationMusic/SimulationMusic.py",
 		"/home/arthur/thymioPYPI/OctoPY/config_TestNotifications.cfg",
@@ -734,8 +719,7 @@
 		"/home/arthur/thymioPYPI/medusa/wpa_supplicant.conf",
 		"/home/arthur/thymioPYPI/wpa_supplicant.conf",
 		"/home/arthur/thymioPYPI/wpa_supplicant.conf :",
-		"/home/arthur/thymioPYPI/medusa/exchange_seq.py",
-		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/accept_output_file.py"
+		"/home/arthur/thymioPYPI/medusa/exchange_seq.py"
 	],
 	"find":
 	{
@@ -961,33 +945,6 @@
 				},
 				{
 					"buffer": 2,
-					"file": "TestNotifications/ControllerTestNotifications.py",
-					"settings":
-					{
-						"buffer_size": 1536,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								514,
-								514
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 272.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "OctoPY.py",
 					"settings":
 					{
@@ -1014,7 +971,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "rpifiles/ThymioController.py",
 					"settings":
 					{
@@ -1025,8 +982,8 @@
 						"selection":
 						[
 							[
-								3015,
-								3015
+								942,
+								942
 							]
 						],
 						"settings":
@@ -1035,67 +992,40 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1420.0,
+						"translation.y": 488.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "rpifiles/StagHunt/SimulationStagHunt.py",
+					"settings":
+					{
+						"buffer_size": 9914,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7444,
+								7444
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4564.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "/home/arthur/testCamera3.py",
-					"settings":
-					{
-						"buffer_size": 3492,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								240,
-								240
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "rpifiles/StagHunt/SimulationStagHunt.py",
-					"settings":
-					{
-						"buffer_size": 9541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5906,
-								5906
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3332.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
 					"file": "rpifiles/config_StagHunt.cfg",
 					"settings":
 					{
@@ -1106,8 +1036,8 @@
 						"selection":
 						[
 							[
-								479,
-								479
+								307,
+								307
 							]
 						],
 						"settings":
@@ -1164,6 +1094,10 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"simulationbr",
+				"OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py"
+			],
 			[
 				"config_",
 				"OctoPY/rpifiles/config_StagHunt.cfg"
