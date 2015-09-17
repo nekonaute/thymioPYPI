@@ -558,14 +558,6 @@
 				"buffer_size": 9914,
 				"line_ending": "Unix"
 			}
-		},
-		{
-			"file": "rpifiles/config_StagHunt.cfg",
-			"settings":
-			{
-				"buffer_size": 750,
-				"line_ending": "Unix"
-			}
 		}
 	],
 	"build_system": "",
@@ -592,6 +584,9 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/sferes2-0.99/TemplateExp.exp",
+		"/home/arthur/sferes2-0.99/TemplateExp.exp.bck",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
 		"/home/arthur/thymioPYPI/OctoPY/TestNotifications/ControllerTestNotifications.py",
 		"/home/arthur/testCamera3.py",
@@ -600,8 +595,6 @@
 		"/home/arthur/testCamera2.py",
 		"/home/arthur/testCamera.py",
 		"/home/arthur/pithymio.py",
-		"/home/arthur/sferes2-0.99/TemplateExp.exp",
-		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
 		"/home/arthur/sferes2-0.99/exp/StagHunt-Leadership/Hunter.hpp",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
 		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
@@ -718,8 +711,7 @@
 		"/etc/network/interfaces",
 		"/home/arthur/thymioPYPI/medusa/wpa_supplicant.conf",
 		"/home/arthur/thymioPYPI/wpa_supplicant.conf",
-		"/home/arthur/thymioPYPI/wpa_supplicant.conf :",
-		"/home/arthur/thymioPYPI/medusa/exchange_seq.py"
+		"/home/arthur/thymioPYPI/wpa_supplicant.conf :"
 	],
 	"find":
 	{
@@ -885,7 +877,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1020,32 +1012,6 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 4564.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "rpifiles/config_StagHunt.cfg",
-					"settings":
-					{
-						"buffer_size": 750,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								307,
-								307
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
