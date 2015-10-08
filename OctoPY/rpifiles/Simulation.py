@@ -29,6 +29,8 @@ class Simulation(threading.Thread) :
 		self.__pause = threading.Event()
 		self.__restart = threading.Event()
 
+		self.__data = []
+
 		# Thymio controller
 		if not debug :
 			self.__tcPA = False
@@ -67,6 +69,18 @@ class Simulation(threading.Thread) :
 	def step(self) :
 		pass
 
+	def addData(self, data) :
+		self.__data.append(data)
+
+	def getData(self) :
+		if len(self.__data) > 0 :
+			return self.__data.pop(0)
+		else :
+			return None
+
+	def dataSize(self) :
+		return len(self.__data)
+
 	def log(self, message, level = logging.DEBUG) :
 		self.mainLogger.log(level, message)
 
@@ -103,6 +117,7 @@ class Simulation(threading.Thread) :
 		with self.__tcPerformedAction :
 			while not self.__tcPA and not self.__stop.isSet() :
 				self.__tcPerformedAction.wait()
+			# self.mainLogger.debug("WAIT ENDED")
 			self.__tcPA = False
 
 	def startThymioController(self) :

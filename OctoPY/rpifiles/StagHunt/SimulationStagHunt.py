@@ -189,8 +189,10 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 	def getCameraInputs(self, inputs, index) :
 		listDetect = self.__camera.detectColors()
+
+		assert(len(listDetect) >= Params.params.nb_rays)
 		for i in range(0, Params.params.nb_rays) :
-			colorDetected = listDetect[-1]
+			colorDetected = listDetect[i]
 
 			self.log("Ray " + str(cpt) + " : " + colorDetected)
 			cpt += 1

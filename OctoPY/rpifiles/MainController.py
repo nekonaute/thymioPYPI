@@ -24,14 +24,15 @@ CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'config_CollectiveGathering.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationMusic.cfg')
 # DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'detectColor.cfg')
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
-TRUSTED_CLIENTS = ['192.168.0.210']
+TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110']
 
 
 global mainLogger
@@ -126,12 +127,20 @@ class MainController() :
 		else :
 			mainLogger.error('MainController - No configuration file named ' + configFile)
 
+	def __sendData(self, data) :
+		mainLogger.debug('MainController - Sending data...')
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for sending data while no simulation started.')
+		else :
+			self.__simulation.addData(data)
+
 	def __stopSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
 			mainLogger.error('MainController - Request for simulation stop while no simulation started.')
 		else :
 			mainLogger.info('MainController - Stopping simulation')
 			self.__simulation.stop()
+			self.__simulation = None
 
 	def __loadSimulation(self) :
 		mainLogger.debug('MainController - Loading simulation...')
@@ -221,6 +230,8 @@ class MainController() :
 							self.__restartSimulation()
 						elif command == MessageCommand.SET :
 							self.__setSimulation(commandData)
+						elif command == MessageCommand.DATA :
+							self.__sendData(commandData)
 						elif command == MessageCommand.STOP :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
@@ -282,6 +293,9 @@ class CommandsListener(threading.Thread) :
 					messageCommand = MessageCommand.RESTART
 				elif message.msgType == MessageType.SET :
 					messageCommand = MessageCommand.SET
+					data = message.data
+				elif message.msgType == MessageType.DATA :
+					messageCommand = MessageCommand.DATA
 					data = message.data
 				elif message.msgType == MessageType.STOP :
 					messageCommand = MessageCommand.STOP
