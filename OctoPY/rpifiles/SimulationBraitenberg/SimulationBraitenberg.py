@@ -4,6 +4,8 @@ import random
 import Params
 import Simulation
 
+PROX_SENSORS_MAX_VALUE = 4500
+
 class SimulationBraitenberg(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
@@ -34,16 +36,25 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		totalLeft = 0
 		totalRight = 0
 		for i in range(5) :
-			totalLeft = totalLeft + (proxSensors[i] * leftWheel[i])
-			totalRight = totalRight + (proxSensors[i] * rightWheel[i])
+			if not avoidance :
+				value = PROX_SENSORS_MAX_VALUE - proxSensors[i]
+
+				if value < 0.0 :
+					value = 0.0
+
+				totalLeft = totalLeft + (value * leftWheel[i])
+				totalRight = totalRight + (value * rightWheel[i])
+			else
+				totalLeft = totalLeft + (proxSensors[i] * leftWheel[i])
+				totalRight = totalRight + (proxSensors[i] * rightWheel[i])
 
 		# Add a constant speed
-		if not avoidance :
-			totalRight = totalRight + 150
-			totalLeft = totalLeft + 150
-		else :
-			totalRight = totalRight + 200
-			totalLeft = totalLeft + 200
+		# if not avoidance :
+		# 	totalRight = totalRight + 150
+		# 	totalLeft = totalLeft + 150
+		# else :
+		totalRight = totalRight + 200
+		totalLeft = totalLeft + 200
 
 		self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
 
