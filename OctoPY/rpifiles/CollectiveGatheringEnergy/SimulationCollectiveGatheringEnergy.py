@@ -4,9 +4,12 @@ import sys
 import traceback
 import logging
 from matplotlib import cm
+import time
 
 import Simulation
 import Params
+
+CPT_MAX = 1000
 
 class State :
 	EXPLORING, FORAGING, DIRECTED, CHARGING = range(0, 4)
@@ -18,6 +21,7 @@ class SimulationCollectiveGatheringEnergy(Simulation.Simulation) :
 
 		self.__state = State.EXPLORING
 		self.__energy = Params.params.base_energy
+		self.__cpt = 0
 
 	def preActions(self) :
 		(R, G, B, t) = cm.jet(255)
@@ -92,10 +96,14 @@ class SimulationCollectiveGatheringEnergy(Simulation.Simulation) :
 
 			self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
 
-			if self.__state == State.EXPLORING or self.__state == State.FORAGING :
-				self.__energy -= Params.params.energy_decrement
-			elif self.__state == State.CHARGING :
-				self.__energy += Params.params.energy_increment
+			self.__cpt += 1
+			if self.__cpt >= CPT_MAX :
+				if self.__state == State.EXPLORING or self.__state == State.FORAGING :
+					self.__energy -= Params.params.energy_decrement
+				elif self.__state == State.CHARGING :
+					self.__energy += Params.params.energy_increment
+
+				self.__cpt = 0
 
 			if self.__energy <= Params.params.energy_threshold and self.__state == State.EXPLORING :
 				self.__state = State.FORAGING

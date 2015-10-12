@@ -37,14 +37,18 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		totalRight = 0
 		for i in range(5) :
 			if not avoidance :
-				value = PROX_SENSORS_MAX_VALUE - proxSensors[i]
+				value = 0.0
 
-				if value < 0.0 :
-					value = 0.0
+				if proxSensors[i] > 0.0 :
+					value = PROX_SENSORS_MAX_VALUE - proxSensors[i]
 
+					if value < 0.0 :
+						value = 0.0
+
+				# self.log(str(i) + "/" + str(proxSensors[i]) + "/" + str(value))
 				totalLeft = totalLeft + (value * leftWheel[i])
 				totalRight = totalRight + (value * rightWheel[i])
-			else
+			else :
 				totalLeft = totalLeft + (proxSensors[i] * leftWheel[i])
 				totalRight = totalRight + (proxSensors[i] * rightWheel[i])
 

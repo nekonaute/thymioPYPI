@@ -545,13 +545,21 @@ class OctoPYInteractive(cmd.Cmd) :
 	# --- Thymios look-up ---
 	def do_look(self, args) :
 		lookRange = "192.168.0.111-150"
+		getHostname = False
 		if args :
-			lookRange = args
+			args = args.split(' ')
 
-		octoPYInstance.lookUp(lookRange)
+			if len(args) > 0 :
+				for i in range(0, len(args)) :
+					if args[i][0].isdigit() :
+						lookRange = args[i]
+					elif args[i] == '-s' :
+						getHostname = True
+
+		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default).', ])
+		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---
