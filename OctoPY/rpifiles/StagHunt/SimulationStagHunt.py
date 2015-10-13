@@ -32,8 +32,15 @@ COLORS_DETECT = {
 														"input3" : 0
 													},
 									"red" : { 
-														"min" : np.array([40, 40, 40]),
-														"max" : np.array([80, 255, 255]),
+														"min" : np.array([160, 50, 50]),
+														"max" : np.array([180, 255, 255])
+														"input1" : 1,
+														"input2" : 1,
+														"input3" : 0
+													},
+									"red2" : { 
+														"min" : np.array([0, 50, 50]),
+														"max" : np.array([20, 255, 255])
 														"input1" : 1,
 														"input2" : 1,
 														"input3" : 0
@@ -96,12 +103,11 @@ class SimulationStagHunt(Simulation.Simulation) :
 				regexp = re.compile(r"^(\d+(\.\d+)?)$")
 				with open(os.path.join(CURRENT_FILE_PATH, file), 'r') as fileWeights :
 					fileWeights = fileWeights.readlines()
+					weights = fileWeights.rstrip('\n').split(',')
 
-					for line in fileWeights :
-						s = regexp.search(line)
-
-						if s :
-							gene = float(s.group(1))
+					for weight in weights :
+						if len(weight) > 0 :
+							gene = float(weight)
 							listGenes.append(gene)
 
 
