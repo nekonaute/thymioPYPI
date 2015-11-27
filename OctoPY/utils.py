@@ -41,7 +41,10 @@ def recvOneMessage(socket):
     return data
 
 def sendOneMessage(conn, data):
-    packed_data = pickle.dumps(data)
-    length = len(packed_data)
-    conn.sendall(struct.pack('!I', length))
-    conn.sendall(packed_data)
+    try :
+        packed_data = pickle.dumps(data)
+        length = len(packed_data)
+        conn.sendall(struct.pack('!I', length))
+        conn.sendall(packed_data)
+    except :
+        self.__logger.error("sendOneMessage - Unexpected error while sending message to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 

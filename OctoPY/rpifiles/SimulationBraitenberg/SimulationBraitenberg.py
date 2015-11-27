@@ -66,13 +66,33 @@ class SimulationBraitenberg(Simulation.Simulation) :
 
 	def step(self) :
 		try :
-			self.waitForControllerResponse()
-
 			self.tController.readSensorsRequest()
 			self.waitForControllerResponse()
 			PSValues = self.tController.getPSValues()
 
-			self.Braitenberg(PSValues, self.__avoidance)			
+			noObstacle = True
+			for i in range(5) :
+				if PSValues[i] > 0 :
+					noObstacle = False
+					break
+
+			if noObstacle :
+				# Probability to do a left a right turn
+				rand = random.random()
+
+				if rand < 0.001 :
+					rand = random.random()
+
+					if rand < 0.5 :
+						self.tController.writeMotorsSpeedRequest([200, 0])
+					else :
+						self.tController.writeMotorsSpeedRequest([0, 200])
+					self.waitForControllerResponse()
+					time.sleep(0.5)
+
+				self.tController.writeMotorsSpeedRequest([200, 200])
+			else :
+				self.Braitenberg(PSValues, self.__avoidance)
 		except :
 			self.mainLogger.critical('SimulationDefault - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
