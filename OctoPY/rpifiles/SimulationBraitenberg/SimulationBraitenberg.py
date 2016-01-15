@@ -15,6 +15,8 @@ class SimulationBraitenberg(Simulation.Simulation) :
 		else :
 			self.__avoidance = True
 
+		self.__probaTurn = float(Params.params.probaTurn)
+
 	def preActions(self) :
 		pass
 
@@ -80,7 +82,7 @@ class SimulationBraitenberg(Simulation.Simulation) :
 				# Probability to do a left a right turn
 				rand = random.random()
 
-				if rand < 0.001 :
+				if rand < self.__probaTurn :
 					rand = random.random()
 
 					if rand < 0.5 :
@@ -88,11 +90,7 @@ class SimulationBraitenberg(Simulation.Simulation) :
 					else :
 						self.tController.writeMotorsSpeedRequest([0, 200])
 					self.waitForControllerResponse()
-<<<<<<< HEAD
-					time.sleep(1.0)
-=======
 					time.sleep(0.5)
->>>>>>> 27598b3bd7e3698acba9a926f4ed29a71478181f
 
 				self.tController.writeMotorsSpeedRequest([200, 200])
 			else :
