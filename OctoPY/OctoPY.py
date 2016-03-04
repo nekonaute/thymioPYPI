@@ -347,6 +347,14 @@ class OctoPY() :
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
 
+					# Com message
+					elif message = MessageType.COM :
+						optSend.msgType = MessageType.COM
+						optSend.data = data
+						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+						sock.connect((str(destIP), 55555))
+						sendOneMessage(sock, optSend)
+
 					# Stop simulation
 					elif message == MessageType.STOP :
 						optSend.msgType = MessageType.STOP
@@ -533,6 +541,18 @@ class OctoPY() :
 			if controller != None :
 				self.__logger.debug("notify - Notifying controller.")
 				controller.notify(**params)
+
+
+	def comMessage(self, **params) :
+		# We get the list of IPs to send the message to
+		if not "recipients" in params :
+			self.__logger.error("comMessage - No recipient for communication found.")
+			return False
+		else :
+			recipientsList = list(params["recipients"])
+			params = {params[key] for key in params.keys() if key != "recipients"}
+			octoPYInstance.sendMessage(MessageType.COM, recipientsList, **params)
+
 	
 
 
@@ -764,6 +784,10 @@ class MessageListener(threading.Thread) :
 				if message.msgType == MessageType.NOTIFY :
 					message.data["hostIP"] = addr
 					self.__octoPYInstance.notify(**message.data)
+				elif message.msgType == MessageType.COM :
+					senderHostname = getHostnameFromIP(addr)
+					message.data["senderHostname"] = senderHostname 
+					self.__octoPYInstance.comMessage(**message.data)
 			except:
 				self.__octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 

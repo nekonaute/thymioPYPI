@@ -81,6 +81,9 @@ class Simulation(threading.Thread) :
 	def dataSize(self) :
 		return len(self.__data)
 
+	def receiveComMessage(self, data) :
+		pass
+
 	def log(self, message, level = logging.DEBUG) :
 		self.mainLogger.log(level, message)
 
@@ -129,6 +132,10 @@ class Simulation(threading.Thread) :
 	def notify(self, **params) :
 		self.mainLogger.debug("Simulation - Notifying with : " + str(params))
 		self.controller.notify(**params)
+
+	def sendMessage(self, **params) :
+		self.mainLogger.debug("Simulation - Sending message with : " + str(params))
+		self.controller.sendMessage(**params)
 
 
 	# --- Functions for easy thymio movement ---
