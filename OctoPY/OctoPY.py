@@ -348,7 +348,7 @@ class OctoPY() :
 						sendOneMessage(sock, optSend)
 
 					# Com message
-					elif message = MessageType.COM :
+					elif message == MessageType.COM :
 						optSend.msgType = MessageType.COM
 						optSend.data = data
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -545,13 +545,16 @@ class OctoPY() :
 
 	def comMessage(self, **params) :
 		# We get the list of IPs to send the message to
-		if not "recipients" in params :
-			self.__logger.error("comMessage - No recipient for communication found.")
-			return False
-		else :
-			recipientsList = list(params["recipients"])
-			params = {params[key] for key in params.keys() if key != "recipients"}
-			octoPYInstance.sendMessage(MessageType.COM, recipientsList, **params)
+		recipientsList = []
+		if "recipients" in params :
+			recipientsList = params["recipients"].split(',')
+			params = {key:params[key] for key in params.keys() if key != "recipients"}
+
+		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
+
+
+	def exit(self) :
+		self.__msgListener.stop()
 
 	
 
@@ -734,6 +737,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 	# --- Exit ---
 	def do_exit(self, line) :
+		octoPYInstance.exit()
 		return True
 
 	def help_exit(self) :
@@ -785,7 +789,7 @@ class MessageListener(threading.Thread) :
 					message.data["hostIP"] = addr
 					self.__octoPYInstance.notify(**message.data)
 				elif message.msgType == MessageType.COM :
-					senderHostname = getHostnameFromIP(addr)
+					senderHostname = self.__octoPYInstance.getHostnameFromIP(addr)
 					message.data["senderHostname"] = senderHostname 
 					self.__octoPYInstance.comMessage(**message.data)
 			except:
@@ -794,6 +798,7 @@ class MessageListener(threading.Thread) :
 		self.__octoPYInstance.logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
+		self.__sock.close()
 		self.__stop.set()
 
 

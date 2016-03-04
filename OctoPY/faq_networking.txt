@@ -166,3 +166,10 @@ https://help.ubuntu.com/community/Internet/ConnectionSharing
 
 RPI WiFi
 http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/
+
+
+Q: Why is ssh login so long ?
+
+A: Probably because of the reverse DNS lookup. Easiest way to correct this is to edit /etc/ssh/sshd_config on the server and (or modify) this line:
+
+UseDNS no
