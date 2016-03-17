@@ -5,6 +5,8 @@ from interface import Interface
 from acquisition import Controller
 from detection import Detector
 import time
+import cv2
+import numpy as np
 
 # Do not modify
 VIDEO = 'VIDEO'
@@ -13,7 +15,7 @@ CAMERA = 'CAMERA'
 # Edit here
 ID_CAMERA = (1,)
 ID_VIDEO1 = ('../data/video/sony/vid_00.mp4', '../data/video/sony/vid_01.mp4', '../data/video/asus/vid_00.mp4', '../data/video/asus/vid_01.mp4', '../data/video/asus/vid_02.mp4')
-ID_VIDEO2 = ('../data/video/kinect/2016-03-07-154756.webm',)
+ID_VIDEO2 = ('../data/video/kinect/2016-03-07-155725.webm',)
 REFS_CAMERA = get_refs("../data/ref_markers_512bits.json")
 REFS_VIDEO = get_refs("../data/ref_markers_16bits.json")
 PROJECT_TITLE = "PIMA (2016) - Multiple Camera Robot Detection"
@@ -39,6 +41,8 @@ class Master(object):
         seconds = 1e-6
         # Check if any camera is broadcasting and no exit call asked
         while self.controller.active and not self.interface.exit:
+            #cv2.imshow("wait", np.array([[0],[0]]))
+            #cv2.waitKey(1)
             # Update controller for new images
             self.controller.update()
             # Collect broadcasting cameras
@@ -52,6 +56,9 @@ class Master(object):
             self.interface.update(live_cams, self.detectors, seconds)
             #self.printFps()
             seconds = self.updateTime()
+
+        for cam_id, detector in self.detectors.items():
+            print cam_id[-10:-1]+ " ::: {} ({}) ::: {} ({})".format(int(detector.method1), round(100*(detector.method1-detector.method1_error)/detector.method1, 2), int(detector.method2), round(100*(detector.method2-detector.method2_error)/detector.method2, 2))
 
     def updateTime(self):
         # End time
