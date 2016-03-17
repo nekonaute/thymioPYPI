@@ -5,17 +5,14 @@ import interface as ui
 import cv2
 import numpy as np
 
-# BORDERS = [
-# [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 0], [1, 5], [2, 0], [2, 5], [3, 0],
-# [3, 5], [4, 0], [4, 5], [5, 0], [5, 5], [5, 0], [5, 1], [5, 2], [5, 3], [5, 4]
-# ]
-# MARKER_SIZE = 6
-
 BORDERS = [
 [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 4], [2, 0], [2, 4], [3, 0],
 [3, 4], [4, 0], [4, 4], [4, 0], [4, 1], [4, 2], [4, 3]
 ]
 MARKER_SIZE = 5
+
+#ID_TEST = [20, 30, 31]
+ID_TEST = [25, 26, 29, 30, 10, 27, 31]
 
 class Detector(object):
     def __init__(self, refs):
@@ -26,20 +23,26 @@ class Detector(object):
         self.canny_mat = None
         self.edge_mat = None
         self.markers_ima = None
+        self.fgmask = None
         self.markers_dict = {}
         self.positions = {}
         self.trajectory = {}
         self.detect_time = {}
         self.homothetie_markers = {}
-        self.method1 = 0
-        self.method2 = 0
+        self.method1 = 0.0000001
+        self.method2 = 0.0000001
+        self.method1_error = 0.0000001
+        self.method2_error = 0.0000001
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+        self.fgbg = cv2.createBackgroundSubtractorMOG2()
 
     def get(self, info):
         return {'edges' : self.edge_mat,
         'canny' : self.canny_mat,
         'markers': self.markers_ima,
         'path': self.path_ima,
-        'original' : self.frame}[info]
+        'original' : self.frame,
+        'fgmask' : self.fgmask}[info]
 
 
     def _detect(self, marker):
@@ -64,11 +67,14 @@ class Detector(object):
             sorted_curve = pos[i]
             corners = curve_to_quadrangle(pos[i])
             image = homothetie_marker(mat_g, corners, MARKER_SIZE)
+
             # Methode 1
             marker = get_bit_matrix(image, MARKER_SIZE)
             success, id_ = self._detect(marker)
             if success:
                 self.method1 += 1
+                if id_ not in ID_TEST:
+                    self.method1_error += 1
                 detected[id_] = approx[i]
                 self.homothetie_markers[id_] = image
                 continue
@@ -78,11 +84,16 @@ class Detector(object):
             success, id_ = self._detect(marker)
             if success:
                 self.method2 += 1
+                if id_ not in ID_TEST:
+                    self.method2_error += 1
                 detected[id_] = approx[i]
                 self.homothetie_markers[id_] = image
                 continue
 
-        #print self.method1, self.method2, self.method1/float((self.method1+self.method2)), self.method2/float((self.method1+self.method2))
+            # Methode 3
+            # Méthode par Apprentissage
+
+        #print int(self.method1), round((self.method1-self.method1_error)/self.method1, 2), int(self.method2), round((self.method2-self.method2_error)/self.method2, 2)
         self.curr_mk = len(detected)
         self.curr_qr = len(pos)
         self.detected = detected.keys()
@@ -131,8 +142,16 @@ class Detector(object):
                 detect_time[id_] += seconds
         return detect_time
 
+    def backgroundSubtractor(self, frame):
+        fgmask = self.fgbg.apply(frame)
+        fgmask = cv2.morphologyEx(fgmask, cv2.MORPH_OPEN, self.kernel)
+        fgmask = cv2.medianBlur(cv2.medianBlur(fgmask, 3),7)
+        fgmask[fgmask > 230] = 255
+        fgmask[fgmask <= 230] = 0
+        return fgmask
 
     def update(self, frame, seconds):
+        self.fgmask = self.backgroundSubtractor(frame)
         self.frame = np.copy(frame)
         h, w, _ = frame.shape
         mat_g = rgb2gray(frame)

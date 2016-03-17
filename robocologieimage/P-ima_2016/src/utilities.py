@@ -21,14 +21,21 @@ def canny_algorithm(mat):
     mat : mat matrix
     """
 
-    kernel = np.ones((2, 2), np.uint8)
-    #mat = cv2.dilate(mat, kernel, (-1, -1), iterations=1)
-    mat = cv2.medianBlur(mat, 3)
-    high_thresh_val = cv2.mean(mat)[0] * 1.33
-    lower_thresh_val = cv2.mean(mat)[0] * 0.66
+    # Blur
+    #mat = cv2.medianBlur(cv2.medianBlur(mat, 3), 3)
+    mat = cv2.GaussianBlur(mat, (5,5), 0)
+
+	# Canny edge detection using the computed median
+    v = np.median(mat); sigma = 0.20
+    lower_thresh_val = int(max(0, (1.0 - sigma) * v))
+    high_thresh_val = int(min(255, (1.0 + sigma) * v))
     mat = cv2.Canny(mat, lower_thresh_val, high_thresh_val)
+
+    # Dilation/Erosion to close edges
+    kernel = np.ones((2, 2), np.uint8)
     mat = cv2.dilate(mat, kernel, (-1, -1), iterations=1)
     mat = cv2.erode(mat, kernel,(-1, -1), iterations=1)
+
     return mat
 
 def find_contours(mat_b):
@@ -37,13 +44,9 @@ def find_contours(mat_b):
     """
     width, height = mat_b.shape
     (mat_b, edges, hierarchy) = cv2.findContours(mat_b,
-        mode=cv2.RETR_TREE,  method=cv2.CHAIN_APPROX_SIMPLE,offset=(0,0))
-    # We only keep the long enough contours
-    #min_contour_length = min(width, height) / 100000
-    #edges = [contour for contour in edges if len(contour) > min_contour_length]
+        mode=cv2.RETR_TREE,  method=cv2.CHAIN_APPROX_SIMPLE, offset=(0,0))
 
-    marker_edges1 = []
-    marker_edges2 = []
+    marker_edges1, marker_edges2 = [], []
     for i in range(len(edges)):
         epsilon = 0.035*cv2.arcLength(edges[i], True)
         approx_curve = cv2.approxPolyDP(edges[i], epsilon, True)
@@ -156,7 +159,7 @@ def estimate(frame, markers):
         pts = np.array(corners, np.int32)
         pts = pts.reshape((-1,1,2))
         cv2.polylines(frame,[np.array([pts[0], pts[1], pts[2], pts[3]])],True,(0,255,255),2)
-        cv2.putText(frame, str(id_), (pts[0, 0, 0], pts[0, 0, 1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,0), thickness=1)
+        cv2.putText(frame, str(id_), (pts[0, 0, 0], pts[0, 0, 1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,0), thickness=3)
     return frame
 
 def refine_markers(frame, markers):

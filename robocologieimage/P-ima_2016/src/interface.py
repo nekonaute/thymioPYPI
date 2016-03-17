@@ -44,7 +44,7 @@ class MainWindow(Window):
         self.camera_group = tk.LabelFrame(self.main_group)
         self.camera_group.pack(side=tk.LEFT,anchor=tk.NW)
         buttons_frame = tk.LabelFrame(self.camera_group)
-        infos = [("original", 1), ("canny", 1), ("edges", 1), ("markers", 1), ("path", 1)]
+        infos = [("original", 1), ("canny", 1), ("fgmask", 1), ("edges", 1), ("markers", 1), ("path", 1)]
         for mode, height in infos:
             tk.Button(buttons_frame, text=mode.capitalize(), command=lambda mode=mode: self.switch_mode(mode), height=height).pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         buttons_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
@@ -76,14 +76,15 @@ class MainWindow(Window):
         self.tag_channels[marker_id] = {}
         self.tag_channels[marker_id]['group'] = tk.LabelFrame(self.tag_channel_group)
         self.tag_channels[marker_id]['group'].grid(row=r, column=c, sticky='wens')
-        self.tag_channels[marker_id]['image'] = tk.Label(self.tag_channels[marker_id]['group'])
-        self.tag_channels[marker_id]['image'].pack(side=tk.LEFT)
-        self.tag_channels[marker_id]['ref_img'] = tk.Label(self.tag_channels[marker_id]['group'])
-        self.tag_channels[marker_id]['ref_img'].pack(side=tk.LEFT)
+        self.tag_channels[marker_id]['imgroup'] = tk.LabelFrame(self.tag_channels[marker_id]['group'])
+        self.tag_channels[marker_id]['imgroup'].pack(side=tk.LEFT)
+        self.tag_channels[marker_id]['image'] = tk.Label(self.tag_channels[marker_id]['imgroup'])
+        self.tag_channels[marker_id]['image'].pack(side=tk.TOP)
+        self.tag_channels[marker_id]['ref_img'] = tk.Label(self.tag_channels[marker_id]['imgroup'])
+        self.tag_channels[marker_id]['ref_img'].pack()
         self.tag_channels[marker_id]['descr'] = tk.Label(self.tag_channels[marker_id]['group'], text = '')
-        self.tag_channels[marker_id]['descr'].pack(fill=tk.X, expand=1, side=tk.LEFT)
+        self.tag_channels[marker_id]['descr'].pack(fill=tk.X, expand=1, side=tk.RIGHT)
         self.tag_channel_group.columnconfigure(c, weight=1)
-        self.tag_channel_group.rowconfigure(r, weight=1)
 
     def update_fps(self, seconds):
         # Calculate frames per second
@@ -92,6 +93,7 @@ class MainWindow(Window):
         self.master.title(self.title + ' - FPS: {} (avg. {})'.format(round(self.fps, 1), round(self.fps_mean, 1)))
 
     def update_markers(self, detectors, seconds):
+        w, h = 40, 40
         for cam_id, detector in detectors.items():
             for marker_id, marker in detector.markers_dict.items():
                 if not marker_id in self.tag_channels.keys() and detector.detect_time[marker_id] > 0.5:
@@ -100,10 +102,10 @@ class MainWindow(Window):
                     self.tag_channels[marker_id]['descr']['text'] = "Tag {}\n{},{}\n{}sec".format(str(marker_id), detector.positions[marker_id][0][0], detector.positions[marker_id][0][1], round(detector.detect_time[marker_id], 1))
                     # Update images
                     frame = detector.homothetie_markers[marker_id]
-                    self.update_image(frame, self.tag_channels[marker_id]['image'], 20, 20)
+                    self.update_image(frame, self.tag_channels[marker_id]['image'], w, h)
                     # Update ref_images
                     frame = detector.refs[0][marker_id]*255
-                    self.update_image(frame, self.tag_channels[marker_id]['ref_img'], 20, 20)
+                    self.update_image(frame, self.tag_channels[marker_id]['ref_img'], w, h)
 
     def update_cameras(self, cameras, detectors, seconds):
         for cam_id, cam in cameras.items():
@@ -115,14 +117,16 @@ class MainWindow(Window):
             # Update images
             frame = detectors[cam_id].get(self.mode).copy()
             w, h = frame.shape[:2]
-            w, h = max(w-w*70/100, 200), max(h-h*70/100, 300)
+            w, h = max(w-w*30/100, 200), max(h-h*30/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
     def update(self, cameras, detectors, seconds):
         self.update_fps(seconds)
         self.update_markers(detectors, seconds)
         self.update_cameras(cameras, detectors, seconds)
-        self.info_txt['text'] = "{} active, {} (mode {})".format(len(cameras), len(set([marker_id for detector in detectors.values() for marker_id in detector.markers_dict.keys()])), self.mode)
+        self.info_txt['text'] = "{} active, {} (mode {}) \n".format(len(cameras), len(set([marker_id for detector in detectors.values() for marker_id in detector.markers_dict.keys()])), self.mode)
+        for cam_id, detector in detectors.items():
+            self.info_txt['text'] += cam_id[-10:-1]+ " ::: {} ({}) ::: {} ({})".format(int(detector.method1), round(100*(detector.method1-detector.method1_error)/detector.method1, 2), int(detector.method2), round(100*(detector.method2-detector.method2_error)/detector.method2, 2))
 
     def adv_window(self):
         self.advWindow = tk.Toplevel(self.master)
@@ -151,11 +155,10 @@ class Interface(object):
         self.app.update(cameras, detectors, seconds)
         self.root.update()
         self.root.update_idletasks()
-        cv2.waitKey(1)
 
     @property
     def exit(self):
-        return cv2.waitKey(1) >= 0
+        return False
 
     def kill(self):
         cv2.destroyAllWindows()

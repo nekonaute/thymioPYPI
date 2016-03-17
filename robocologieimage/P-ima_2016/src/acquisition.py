@@ -18,7 +18,9 @@ class Material(object):
                 print "Camera ended (id={})".format(self.id)
             done = True
             return done, np.zeros((360,640, 3), np.uint8)
-        #frame = cv2.resize(frame, (640*2,360*2), interpolation=cv2.INTER_AREA)
+        w, h = frame.shape[:2]
+        #w, h = max(w-w*30/100, 200), max(h-h*30/100, 300)
+        #frame = cv2.resize(frame, (h, w), interpolation=cv2.INTER_AREA)
         done = False
         return done, frame
 
