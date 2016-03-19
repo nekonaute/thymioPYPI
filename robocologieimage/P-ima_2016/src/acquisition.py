@@ -20,7 +20,7 @@ class Material(object):
             return done, np.zeros((360,640, 3), np.uint8)
         w, h = frame.shape[:2]
         #w, h = max(w-w*30/100, 200), max(h-h*30/100, 300)
-        #frame = cv2.resize(frame, (h, w), interpolation=cv2.INTER_AREA)
+        frame = cv2.resize(frame, (h, w), interpolation=cv2.INTER_AREA)
         done = False
         return done, frame
 
@@ -60,7 +60,7 @@ class Camera(Material):
         super(Camera, self).update()
 
 class Controller(object):
-    def __init__(self, ids, mode):
+    def __init__(self, mode, ids):
         assert isinstance(ids, tuple)
         if mode == 'CAMERA':
             self.cameras = {camid : Camera(camid) for camid in ids}

@@ -5,18 +5,19 @@ import interface as ui
 import cv2
 import numpy as np
 
+# Import datasets, classifiers and performance metrics
+from sklearn import datasets, svm, metrics
+
 BORDERS = [
 [0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 4], [2, 0], [2, 4], [3, 0],
 [3, 4], [4, 0], [4, 4], [4, 0], [4, 1], [4, 2], [4, 3]
 ]
 MARKER_SIZE = 5
 
-#ID_TEST = [20, 30, 31]
-ID_TEST = [25, 26, 29, 30, 10, 27, 31]
-
 class Detector(object):
-    def __init__(self, refs):
+    def __init__(self, refs, classifier=None, valid_ids=[]):
         self.refs = refs
+        self.valid_ids = valid_ids
         self.curr_mk = 0 # marker nb
         self.curr_qr = 0 # quadrangle nb
         self.frame = None
@@ -29,12 +30,11 @@ class Detector(object):
         self.trajectory = {}
         self.detect_time = {}
         self.homothetie_markers = {}
-        self.method1 = 0.0000001
-        self.method2 = 0.0000001
-        self.method1_error = 0.0000001
-        self.method2_error = 0.0000001
+        self.method = [{"detected":.0, "success":.0, "error":.0, "unsure":.0} for _ in range(2)]
         self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
         self.fgbg = cv2.createBackgroundSubtractorMOG2()
+        self.images_stock = {}
+        self.clf = classifier
 
     def get(self, info):
         return {'edges' : self.edge_mat,
@@ -48,52 +48,90 @@ class Detector(object):
     def _detect(self, marker):
         id_ = None
         if any(marker[crd[0], crd[1]] != 0.0 for crd in BORDERS):
-            return False, None
+            return False, None, None
         elif np.all(marker == 0.0):
-            return False, None
+            return False, None, None
         for j in range(4):
             try:
                 id_ = self.refs[j].tolist().index(marker.tolist())
             except ValueError:
                 pass
             else:
-                return True, id_
-        return False, None
+                return True, j, id_
+        return False, None, None
 
 
     def detect(self, mat_g, pos, approx):
         detected = {}
+        id_M1, id_SVM = None, None
+        success1, success2 = False, False
         for i in range(len(pos)):
             sorted_curve = pos[i]
             corners = curve_to_quadrangle(pos[i])
             image = homothetie_marker(mat_g, corners, MARKER_SIZE)
 
+            # Normalisation
+            image = (image-np.mean(image))/np.std(image)
+
             # Methode 1
             marker = get_bit_matrix(image, MARKER_SIZE)
-            success, id_ = self._detect(marker)
-            if success:
-                self.method1 += 1
-                if id_ not in ID_TEST:
-                    self.method1_error += 1
-                detected[id_] = approx[i]
-                self.homothetie_markers[id_] = image
-                continue
+            success1, j, id_M1 = self._detect(marker)
+            if success1:
+                self.method[0]['detected'] += 1
+                if id_M1 not in self.valid_ids:
+                    self.method[0]['error'] += 1
+                else:
+                    self.method[0]['success'] += 1
+                detected[id_M1] = approx[i]
+                image_ = image.copy()
+                if j == 1:
+                    j = 3
+                elif j == 3:
+                    j = 1
+                for k in range(j):
+                    image_ = np.rot90(image_.copy())
+                self.homothetie_markers[id_M1] = image_*255
 
-            # Methode 2
-            marker = np.float32(get_bit_matrix2(image, MARKER_SIZE))
-            success, id_ = self._detect(marker)
-            if success:
-                self.method2 += 1
-                if id_ not in ID_TEST:
-                    self.method2_error += 1
-                detected[id_] = approx[i]
-                self.homothetie_markers[id_] = image
-                continue
 
-            # Methode 3
-            # Méthode par Apprentissage
+            # Méthode 3 par Apprentissage
+            if self.clf and not success1:
+                image_ = image.copy()
+                for j_ in range(4):
+                    data = image_.reshape((1, -1))
+                    probas = self.clf.predict_proba(data)
+                    if np.max(probas) > 0.85:
+                        self.method[1]['detected'] += 1
+                        id_SVM = self.clf.predict(data)[0]
+                        if id_SVM not in self.valid_ids or (success1 and id_M1 != id_SVM and id_M1 in self.valid_ids):
+                            self.method[1]['error'] += 1
+                        elif success1 and id_M1 == id_SVM and id_M1 in self.valid_ids:
+                            self.method[1]['success'] += 1
+                        else:
+                            self.method[1]['unsure'] += 1
+                        success2 = True
+                        detected[id_SVM] = approx[i]
+                        self.homothetie_markers[id_SVM] = image_*255
+                        break
+                    else:
+                        image_ = np.rot90(image_)
 
-        #print int(self.method1), round((self.method1-self.method1_error)/self.method1, 2), int(self.method2), round((self.method2-self.method2_error)/self.method2, 2)
+            # Get data to fit my learning algorithm
+            if success1 and id_M1 in self.valid_ids:
+                if self.images_stock.get(id_M1, False) is False:
+                    self.images_stock[id_M1] = []
+                image_ = image.copy()
+                if j == 1:
+                    j = 3
+                elif j == 3:
+                    j = 1
+                for k in range(j):
+                    image_ = np.rot90(image_.copy())
+                self.images_stock[id_M1].append(image_)
+            # elif success2 and id_SVM in self.valid_ids:
+            #     if self.images_stock.get(id_SVM, False) is False:
+            #         self.images_stock[id_SVM] = []
+            #     self.images_stock[id_SVM].append(image_)
+
         self.curr_mk = len(detected)
         self.curr_qr = len(pos)
         self.detected = detected.keys()
@@ -151,7 +189,7 @@ class Detector(object):
         return fgmask
 
     def update(self, frame, seconds):
-        self.fgmask = self.backgroundSubtractor(frame)
+        #self.fgmask = self.backgroundSubtractor(frame)
         self.frame = np.copy(frame)
         h, w, _ = frame.shape
         mat_g = rgb2gray(frame)
