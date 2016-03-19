@@ -117,7 +117,7 @@ class MainWindow(Window):
             # Update images
             frame = detectors[cam_id].get(self.mode).copy()
             w, h = frame.shape[:2]
-            w, h = max(w-w*30/100, 200), max(h-h*30/100, 300)
+            w, h = max(w-w*70/100, 200), max(h-h*70/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
     def update(self, cameras, detectors, seconds):
@@ -125,8 +125,8 @@ class MainWindow(Window):
         self.update_markers(detectors, seconds)
         self.update_cameras(cameras, detectors, seconds)
         self.info_txt['text'] = "{} active, {} (mode {}) \n".format(len(cameras), len(set([marker_id for detector in detectors.values() for marker_id in detector.markers_dict.keys()])), self.mode)
-        for cam_id, detector in detectors.items():
-            self.info_txt['text'] += cam_id[-10:-1]+ " ::: {} ({}) ::: {} ({})".format(int(detector.method1), round(100*(detector.method1-detector.method1_error)/detector.method1, 2), int(detector.method2), round(100*(detector.method2-detector.method2_error)/detector.method2, 2))
+        #for cam_id, detector in detectors.items():
+        #    self.info_txt['text'] += cam_id[-10:-1]+ " ::: {} ({}) ::: {} ({})".format(int(detector.method1), round(100*(detector.method1-detector.method1_error)/detector.method1, 2), int(detector.method2), round(100*(detector.method2-detector.method2_error)/detector.method2, 2))
 
     def adv_window(self):
         self.advWindow = tk.Toplevel(self.master)
