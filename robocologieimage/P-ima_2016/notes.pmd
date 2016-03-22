@@ -144,3 +144,12 @@ KINECT_ISIR
 ::2:: 1204 (Total) 0 (Correct 0.0%) 0 (Error 0.0%) 1204 (Maybe 100.0%)
 ::T:: 9585 (Total) 8129 (Correct 84.81%) 252 (Error 2.63%) 1204 (Maybe 12.56%)
 ::S:: 545s
+
+Version 2
+
+KINECT_V2_ISIR
+::1:: 15607 (Total) 15310 (Correct 98.1%) 297 (Error 1.9%) 0 (Maybe 0.0%)
+::2:: 7881 (Total) 0 (Correct 0.0%) 7881 (Error 100.0%) 0 (Maybe 0.0%)
+::T:: 23488 (Total) 15310 (Correct 65.18%) 8178 (Error 34.82%) 0 (Maybe 0.0%)
+::Running Time:: 253s
+>>>

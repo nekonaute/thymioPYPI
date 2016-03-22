@@ -79,13 +79,17 @@ def homothetie_marker(img_orig, sorted_curve, marker_size):
     marker2D_img = cv2.warpPerspective(img_orig, M, (warped_size,warped_size))
     return marker2D_img
 
+def load_refs(filepath):
+    fic = open(filepath, "r")
+    _str = fic.read()
+    markers_array = json.loads(_str)
+    return np.array(markers_array)
+
 def get_refs(filepath):
     """
     Collect reference markers matrices -> binary matrices array
     """
-    fic = open(filepath, "r")
-    _str = fic.read()
-    markers_array = json.loads(_str)
+    markers_array = load_refs(filepath)
     all_markers_array = [[] for j in range(4)]
     for array in markers_array:
         for j in range(4):
