@@ -12,6 +12,7 @@ class Master(object):
     def __init__(self, title, reference):
         # Get program start time for framerate visualization
         self.start_time = time.time()
+        self.running_time = 0
 
         # Main objects
         self.interface = None
@@ -66,6 +67,7 @@ class Master(object):
         seconds = end - self.start_time
         # Start time
         self.start_time = time.time()
+        self.running_time +=  seconds
         return seconds
 
     def collect_data(self, npzfilename):
@@ -89,7 +91,6 @@ class Master(object):
         np.savez("../data/npz/{}".format(npzfilename), labels, data)
 
     def evaluation(self):
-        valid_detect_time = .0
         detected = [1e-6 for _ in self.detectors.values()[0].method]
         error = [1e-6 for _ in self.detectors.values()[0].method]
         correct = [1e-6 for _ in self.detectors.values()[0].method]
@@ -100,8 +101,6 @@ class Master(object):
                 error[i] += int(method['error'])
                 correct[i] += int(method['success'])
                 unsure[i] += int(method['unsure'])
-            for id_ in detector.valid_ids:
-                valid_detect_time += detector.detect_time.get(id_, 0)
 
         error_perc = [.0 for _ in self.detectors.values()[0].method]
         correct_perc = [.0 for _ in self.detectors.values()[0].method]
@@ -122,7 +121,7 @@ class Master(object):
         print self.ref_title
         for i, method in enumerate(detector.method):
             print "::{}:: {:.0f} (Total) {:.0f} (Correct {}%) {:.0f} (Error {}%) {:.0f} (Maybe {}%)".format(i+1, detected[i], correct[i], correct_perc[i], error[i], error_perc[i], unsure[i], unsure_perc[i])
-        print "::T:: {:.0f} (Total) {:.0f} (Correct {}%) {:.0f} (Error {}%) {:.0f} (Maybe {}%)\n::S:: {:.0f}s".format(total_detected, total_correct, total_correct_perc, total_error, total_error_perc, total_unsure, total_unsure_perc, valid_detect_time)
+        print "::T:: {:.0f} (Total) {:.0f} (Correct {}%) {:.0f} (Error {}%) {:.0f} (Maybe {}%)\n::Running Time:: {:.0f}s".format(total_detected, total_correct, total_correct_perc, total_error, total_error_perc, total_unsure, total_unsure_perc, self.running_time)
 
     def kill(self):
         self.interface.kill()
