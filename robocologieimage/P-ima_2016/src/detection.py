@@ -18,8 +18,8 @@ class Detector(object):
     def __init__(self, refs, classifier=None, valid_ids=[]):
         self.refs = refs
         self.valid_ids = valid_ids
-        self.curr_mk = 0 # marker nb
-        self.curr_qr = 0 # quadrangle nb
+        self.nb_tags = 0 # marker nb
+        self.nb_quads = 0 # quadrangle nb
         self.frame = None
         self.canny_mat = None
         self.edge_mat = None
@@ -30,11 +30,11 @@ class Detector(object):
         self.trajectory = {}
         self.detect_time = {}
         self.homothetie_markers = {}
-        self.method = [{"detected":.0, "success":.0, "error":.0, "unsure":.0} for _ in range(2)]
+        self.method = [{"quads":.0, "detected":.0, "success":.0, "error":.0, "non-tag":.0} for _ in range(2)]
         self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
         self.fgbg = cv2.createBackgroundSubtractorMOG2()
         self.images_stock = {}
-        self.clf = classifier
+        self.classifier = classifier
 
     def get(self, info):
         return {'edges' : self.edge_mat,
@@ -45,95 +45,88 @@ class Detector(object):
         'fgmask' : self.fgmask}[info]
 
 
-    def _detect(self, marker):
-        id_ = None
+    def intensity_detection(self, marker, image):
+        tag_id = -1
         if any(marker[crd[0], crd[1]] != 0.0 for crd in BORDERS):
-            return False, None, None
+            return -1, image
         elif np.all(marker == 0.0):
-            return False, None, None
+            return -1, image
+        rot_image = image.copy()
         for j in range(4):
             try:
-                id_ = self.refs[j].tolist().index(marker.tolist())
+                tag_id = self.refs[j].tolist().index(marker.tolist())
             except ValueError:
-                pass
+                rot_image = np.rot90(rot_image)
             else:
-                return True, j, id_
-        return False, None, None
+                return tag_id, rot_image
+        return -1, image
 
+    def classifier_detection(self, image):
+        rot_image = image.copy()
+        for rot90 in range(4):
+            data = rot_image.reshape((1, -1))
+            probas = self.classifier.predict_proba(data)
+            if np.max(probas) < 0.70:
+                rot_image = np.rot90(rot_image)
+                continue
+            tag_id = self.classifier.predict(data)[0]
+            return tag_id, rot_image
+        return -1, image
 
     def detect(self, mat_g, pos, approx):
         detected = {}
-        id_M1, id_SVM = None, None
-        success1, success2 = False, False
         for i in range(len(pos)):
-            sorted_curve = pos[i]
+            results = []
             corners = curve_to_quadrangle(pos[i])
             image = homothetie_marker(mat_g, corners, MARKER_SIZE)
 
             # Normalisation
             image = (image-np.mean(image))/np.std(image)
 
-            # Methode 1
+            # # Methode 1
             marker = get_bit_matrix(image, MARKER_SIZE)
-            success1, j, id_M1 = self._detect(marker)
-            if success1:
-                self.method[0]['detected'] += 1
-                if id_M1 not in self.valid_ids:
-                    self.method[0]['error'] += 1
-                else:
-                    self.method[0]['success'] += 1
-                detected[id_M1] = approx[i]
-                image_ = image.copy()
-                if j == 1:
-                    j = 3
-                elif j == 3:
-                    j = 1
-                for k in range(j):
-                    image_ = np.rot90(image_.copy())
-                self.homothetie_markers[id_M1] = image_*255
+            tag_id1, rot_image1 = self.intensity_detection(marker, image)
+            results.append((tag_id1, rot_image1))
 
+            # # Méthode 2
+            # if self.classifier:
+            #     tag_id2, rot_image2 = self.classifier_detection(image)
+            #     results.append((tag_id2, rot_image2))
 
-            # Méthode 3 par Apprentissage
-            if self.clf and not success1:
-                image_ = image.copy()
-                for j_ in range(4):
-                    data = image_.reshape((1, -1))
-                    probas = self.clf.predict_proba(data)
-                    if np.max(probas) > 0.85:
-                        self.method[1]['detected'] += 1
-                        id_SVM = self.clf.predict(data)[0]
-                        if id_SVM not in self.valid_ids or (success1 and id_M1 != id_SVM and id_M1 in self.valid_ids):
-                            self.method[1]['error'] += 1
-                        elif success1 and id_M1 == id_SVM and id_M1 in self.valid_ids:
-                            self.method[1]['success'] += 1
-                        else:
-                            self.method[1]['unsure'] += 1
-                        success2 = True
-                        detected[id_SVM] = approx[i]
-                        self.homothetie_markers[id_SVM] = image_*255
-                        break
+            # Set quality
+            is_same = all(results[i][0] == results[i+1][0] for i in range(len(results)-1))
+            is_valid = all(res[0] in self.valid_ids for res in results)
+
+            # Register only tags where all methods succeeds
+            if results and is_same and is_valid:
+                detected[results[0][0]] = approx[i]
+                self.homothetie_markers[results[0][0]] = results[0][1]*255
+
+            # Evaluation
+            for i, (tag, image) in enumerate(results):
+                self.method[i]["quads"] += 1
+                if tag != -1:
+                    self.method[i]["detected"] += 1
+                    if tag in self.valid_ids:
+                        self.method[i]["success"] += 1
                     else:
-                        image_ = np.rot90(image_)
+                        self.method[i]["error"] += 1
+                else:
+                    self.method[i]["non-tag"] += 1
 
-            # Get data to fit my learning algorithm
-            if success1 and id_M1 in self.valid_ids:
-                if self.images_stock.get(id_M1, False) is False:
-                    self.images_stock[id_M1] = []
-                image_ = image.copy()
-                if j == 1:
-                    j = 3
-                elif j == 3:
-                    j = 1
-                for k in range(j):
-                    image_ = np.rot90(image_.copy())
-                self.images_stock[id_M1].append(image_)
-            # elif success2 and id_SVM in self.valid_ids:
-            #     if self.images_stock.get(id_SVM, False) is False:
-            #         self.images_stock[id_SVM] = []
-            #     self.images_stock[id_SVM].append(image_)
+            # Collect data to feed my learning algorithm
+            if results and is_same and is_valid:
+                if self.images_stock.get(results[0][0], False) is False:
+                    self.images_stock[results[0][0]] = []
+                self.images_stock[results[0][0]].append(results[0][1])
+            elif results and all(res[0] == -1 for res in results):
+                if self.images_stock.get(-1, False) is False:
+                    self.images_stock[-1] = []
+                self.images_stock[-1].append(results[0][1])
 
-        self.curr_mk = len(detected)
-        self.curr_qr = len(pos)
+
+        self.nb_tags = len(detected)
+        self.nb_quads = len(pos)
         self.detected = detected.keys()
         return detected
 

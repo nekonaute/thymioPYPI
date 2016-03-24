@@ -152,4 +152,56 @@ KINECT_V2_ISIR
 ::2:: 7881 (Total) 0 (Correct 0.0%) 7881 (Error 100.0%) 0 (Maybe 0.0%)
 ::T:: 23488 (Total) 15310 (Correct 65.18%) 8178 (Error 34.82%) 0 (Maybe 0.0%)
 ::Running Time:: 253s
->>>
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+
+KINECT_V1_ISIR
+::1:: 9214 (Quads) 7251 (Tags 78.7%: [7087 (Correct 97.74%) 164 (Error 2.26%)] 1963 (Non-Tags 21.3%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 9214 (Quads) 7251 (Tags 78.7%: [7087 (Correct 97.74%) 164 (Error 2.26%)] 1963 (Non-Tags 21.3%)
+::Running Time:: 38s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 13334 (Quads) 8381 (Tags 62.85%: [8129 (Correct 96.99%) 252 (Error 3.01%)] 4953 (Non-Tags 37.15%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 13334 (Quads) 8381 (Tags 62.85%: [8129 (Correct 96.99%) 252 (Error 3.01%)] 4953 (Non-Tags 37.15%)
+::Running Time:: 39s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14483 (Quads) 8397 (Tags 57.98%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6086 (Non-Tags 42.02%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14483 (Quads) 8397 (Tags 57.98%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6086 (Non-Tags 42.02%)
+::Running Time:: 40s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 16700 (Quads) 8401 (Tags 50.31%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8299 (Non-Tags 49.69%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 16700 (Quads) 8401 (Tags 50.31%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8299 (Non-Tags 49.69%)
+::Running Time:: 40s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 16690 (Quads) 8401 (Tags 50.34%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8289 (Non-Tags 49.66%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 16690 (Quads) 8401 (Tags 50.34%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8289 (Non-Tags 49.66%)
+::Running Time:: 42s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14330 (Quads) 8396 (Tags 58.59%: [8134 (Correct 96.88%) 262 (Error 3.12%)] 5934 (Non-Tags 41.41%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14330 (Quads) 8396 (Tags 58.59%: [8134 (Correct 96.88%) 262 (Error 3.12%)] 5934 (Non-Tags 41.41%)
+::Running Time:: 41s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14415 (Quads) 8397 (Tags 58.25%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6018 (Non-Tags 41.75%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14415 (Quads) 8397 (Tags 58.25%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6018 (Non-Tags 41.75%)
+::Running Time:: 41s
+MIN_DISTANCE = math.ceil(len(mat_b)*0.005)
+  MAX_DISTANCE = math.ceil(len(mat_b)*0.09)
+  epsilon = 0.055*cv2.arcLength(edges[i], True)

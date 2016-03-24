@@ -113,7 +113,7 @@ class MainWindow(Window):
             if not cam_id in self.channels.keys():
                 self.create_channel(cam_id)
             # Update texts
-            self.channels[cam_id]['descr']['text'] = 'cam {} {} {} tags {}'.format(str(cam_id)[-8:-1], " "*10, detector.curr_mk, detector.detected)
+            self.channels[cam_id]['descr']['text'] = 'cam {} {} {} tags {}'.format(str(cam_id)[-8:-1], " "*10, detector.nb_tags, detector.detected)
             # Update images
             frame = detectors[cam_id].get(self.mode).copy()
             w, h = frame.shape[:2]

@@ -42,6 +42,7 @@ class Master(object):
         seconds = 1e-6
         # Check if any camera is broadcasting and no exit call asked
         while self.controller.active:
+            # If exit call break the loop
             if self.interface and self.interface.exit:
                 break
             # Update controller for new images
@@ -81,47 +82,55 @@ class Master(object):
         data = []
         for cam_id, detector in self.detectors.items():
             for tag, images in detector.images_stock.items():
-                if detector.detect_time.get(tag, 0) < MIN_DETECT_TIME:
+                if detector.detect_time.get(tag, 0) < MIN_DETECT_TIME and not tag == -1:
                     continue
+                if tag == -1:
+                    print "2", tag, len(data)
                 for image in images:
-                    data.append(images)
+                    data.append(image)
                     labels.append(tag)
         labels = np.array(labels)
         data = np.array(data)
         np.savez("../data/npz/{}".format(npzfilename), labels, data)
 
     def evaluation(self):
+        quads = [1e-6 for _ in self.detectors.values()[0].method]
         detected = [1e-6 for _ in self.detectors.values()[0].method]
         error = [1e-6 for _ in self.detectors.values()[0].method]
         correct = [1e-6 for _ in self.detectors.values()[0].method]
-        unsure = [1e-6 for _ in self.detectors.values()[0].method]
+        nontag = [1e-6 for _ in self.detectors.values()[0].method]
         for _, detector in self.detectors.items():
             for i, method in enumerate(detector.method):
+                quads[i] += int(method['quads'])
                 detected[i] += int(method['detected'])
                 error[i] += int(method['error'])
                 correct[i] += int(method['success'])
-                unsure[i] += int(method['unsure'])
+                nontag[i] += int(method['non-tag'])
 
         error_perc = [.0 for _ in self.detectors.values()[0].method]
         correct_perc = [.0 for _ in self.detectors.values()[0].method]
-        unsure_perc  = [.0 for _ in self.detectors.values()[0].method]
-        total_detected, total_correct, total_error, total_unsure = 1e-6, .0, .0, .0
-        total_correct_perc, total_error_perc, total_unsure_perc  = (.0,)*3
+        nontag_perc  = [.0 for _ in self.detectors.values()[0].method]
+        detected_perc = [.0 for _ in self.detectors.values()[0].method]
+        total_quads, total_detected, total_correct, total_error, total_nontag = 1e-6, 1e-6, .0, .0, .0
+        total_correct_perc, total_error_perc, total_nontag_perc  = (.0,)*3
         for i, method in enumerate(detector.method):
             correct_perc[i] = round(100.0*correct[i]/detected[i], 2)
             error_perc[i] = round(100.0*error[i]/detected[i], 2)
-            unsure_perc[i] = round(100.0*unsure[i]/detected[i], 2)
+            detected_perc[i] = round(100.0*detected[i]/quads[i], 2)
+            nontag_perc[i] = round(100.0*nontag[i]/quads[i], 2)
+            total_quads = max(total_quads, quads[i])
             total_detected += detected[i]
             total_correct += correct[i]
             total_error += error[i]
-            total_unsure += unsure[i]
+            total_nontag += nontag[i]
         total_correct_perc = round(100.0*total_correct/total_detected, 2)
         total_error_perc = round(100.0*total_error/total_detected, 2)
-        total_unsure_perc = round(100.0*total_unsure/total_detected, 2)
+        total_detected_perc = round(100.0*(total_correct + total_error)/total_quads, 2)
+        total_nontag_perc = round(100.0*total_nontag/total_quads, 2)
         print self.ref_title
         for i, method in enumerate(detector.method):
-            print "::{}:: {:.0f} (Total) {:.0f} (Correct {}%) {:.0f} (Error {}%) {:.0f} (Maybe {}%)".format(i+1, detected[i], correct[i], correct_perc[i], error[i], error_perc[i], unsure[i], unsure_perc[i])
-        print "::T:: {:.0f} (Total) {:.0f} (Correct {}%) {:.0f} (Error {}%) {:.0f} (Maybe {}%)\n::Running Time:: {:.0f}s".format(total_detected, total_correct, total_correct_perc, total_error, total_error_perc, total_unsure, total_unsure_perc, self.running_time)
+            print "::{}:: {:.0f} (Quads) {:.0f} (Tags {}%: [{:.0f} (Correct {}%) {:.0f} (Error {}%)] {:.0f} (Non-Tags {}%)".format(i+1, quads[i], detected[i], detected_perc[i], correct[i], correct_perc[i], error[i], error_perc[i], nontag[i], nontag_perc[i])
+        print "::T:: {:.0f} (Quads) {:.0f} (Tags {}%: [{:.0f} (Correct {}%) {:.0f} (Error {}%)] {:.0f} (Non-Tags {}%)\n::Running Time:: {:.0f}s".format(total_quads, total_detected, total_detected_perc, total_correct, total_correct_perc, total_error, total_error_perc, total_nontag, total_nontag_perc, self.running_time)
 
     def kill(self):
         self.interface.kill()
