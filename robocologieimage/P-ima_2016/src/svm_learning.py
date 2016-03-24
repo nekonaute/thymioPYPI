@@ -18,7 +18,7 @@ class Dataset(object):
 npzfile = np.load("../data/npz/{}.npz".format(NPZ_DATA))
 digits = Dataset()
 digits.target = npzfile['arr_0']
-digits.images = np.array([_[0] for _ in npzfile['arr_1']])
+digits.images = npzfile['arr_1']
 
 print digits.target.shape
 
@@ -63,7 +63,7 @@ classifier.fit(data_train, y_train)
 expected = y_test
 #print data[n_samples / 2:].shape
 predicted = classifier.predict(X_test.reshape((len(X_test), -1)))
-joblib.dump(classifier, '../data/classifier/svm_{}'.format(CLF_NAMEFILE))
+joblib.dump(classifier, '../data/classifier/svm/{}'.format(CLF_NAMEFILE))
 print("Classification report for classifier %s:\n%s\n"      % (classifier, metrics.classification_report(expected, predicted)))
 print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
 

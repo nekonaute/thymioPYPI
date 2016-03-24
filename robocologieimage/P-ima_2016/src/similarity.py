@@ -13,6 +13,13 @@ def distanceBetweenMatrix(tag1, tag2):
             else:
                 list_consecutive.append(consecutive_color)
                 consecutive_color = 1
+    for y in range(1,len(tag1)-1):
+        for x in range(1,len(tag1)-1):
+            if tag1[x, y] == tag2[x, y]:
+                consecutive_color += 1
+            else:
+                list_consecutive.append(consecutive_color)
+                consecutive_color = 1
     if list_consecutive:
         list_consecutive[-1] += consecutive_color
     else:
@@ -45,6 +52,7 @@ def similarity_combinaison(tags, combi_length):
             vu = []
         elif i > len(remaining_tags)**2:
             curr_threshold += 1
+        else:
             vu.append(random_tag)
         i += 1
     print "Random-based similarity search ({} elements, {} score) : {}".format(combi_length, similarity(best_combi), get_identifiant(best_combi, tags))

@@ -5,7 +5,8 @@ from utilities import load_refs, get_refs, get_classifier
 
 # Do not modify
 REFS = get_refs("../data/ref_markers_512bits.json")
-NPZ_DATA, CLF_NAMEFILE = 'tags190316_isir_1', 'classifier190316_isir_1.pkl'
+NPZ_DATA, CLF_TYPE, CLF_NAMEFILE = 'foo3_210316', 'deep', 'RBMclassifier1.pkl'
+NPZ_DATA, CLF_TYPE, CLF_NAMEFILE = 'foo3_210316', 'svm', 'SVMclassifier1.pkl'
 CAM = 'CAMERA'
 VID = 'VIDEO'
 
@@ -57,7 +58,7 @@ if __name__ == "__main__":
 
     # Setup controller and detectors according to mode and ids
     master.setup_controller(CURRENT_MODE, CURRENT_ID)
-    master.setup_detectors(CURRENT_REFS, get_classifier(CLF_NAMEFILE), VALID_IDS)
+    master.setup_detectors(CURRENT_REFS, get_classifier(CLF_TYPE, CLF_NAMEFILE), VALID_IDS)
     master.setup_interface(with_GUI)
 
     # Run the program

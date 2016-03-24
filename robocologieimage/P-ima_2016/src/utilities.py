@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import json
+import math
 from scipy.signal import wiener
 from skimage import restoration
 from sklearn.externals import joblib
@@ -33,11 +34,12 @@ def canny_algorithm(mat):
     #mat = cv2.morphologyEx(mat, cv2.MORPH_CLOSE, kernel)
 
 	# Canny edge detection using the computed median
-    sigma = .15
+    sigma = .10
     v = np.median(mat)
     lower_thresh_val = int(max(0, (1.0 - sigma) * v))
     high_thresh_val = int(min(255, (1.0 + sigma) * v))
     mat = cv2.Canny(mat, lower_thresh_val, high_thresh_val)
+    cv2.imshow("test", mat)
 
     return mat
 
@@ -50,17 +52,45 @@ def find_contours(mat_b):
         mode=cv2.RETR_TREE,  method=cv2.CHAIN_APPROX_SIMPLE, offset=(0,0))
 
     marker_edges1, marker_edges2 = [], []
+    size_x = len(mat_b[0])
+    size_y = len(mat_b)
+    MIN_DISTANCE = math.ceil(len(mat_b)*0.005)
+    MAX_DISTANCE = math.ceil(len(mat_b)*0.09)
     for i in range(len(edges)):
-        epsilon = 0.035*cv2.arcLength(edges[i], True)
-        approx_curve = cv2.approxPolyDP(edges[i], epsilon, True)
+        closed = True # Contour is closed
+        epsilon = 0.020*cv2.arcLength(edges[i], True) # aproximation accuracy
+        approx_curve = cv2.approxPolyDP(edges[i], epsilon, closed)
+
+        # Candidates must have 4 corners
+        if len(approx_curve) != 4:
+            continue
+
+        # Must be convex
         if not cv2.isContourConvex(approx_curve):
             continue
+
         if cv2.contourArea(approx_curve) > 1000:
             continue
         if cv2.contourArea(approx_curve) < 100:
             continue
-        if len(approx_curve) != 4:
+
+        #Not good if any of the corners lies on the edge
+        for corner in approx_curve:
+            if corner[0][0] > 0.8*size_x or corner[0][1] > 0.8*size_y:
+                continue
+
+        # Enough distance between each corner
+        side = []
+        for i in range(0,4):
+            if i == 3:
+                side.append(np.linalg.norm(approx_curve[i]-approx_curve[0]))
+                continue
+            side.append(np.linalg.norm(approx_curve[i]-approx_curve[i+1]))
+        minSide = min(side)
+
+        if minSide < MIN_DISTANCE or minSide > MAX_DISTANCE:
             continue
+
 
         sorted_curve = np.array(cv2.convexHull(approx_curve, clockwise=False),
                                  dtype='float32')
@@ -97,11 +127,11 @@ def get_refs(filepath):
             array = np.rot90(np.array(array))
     return np.array(all_markers_array, dtype="float32")
 
-def get_classifier(classifier_name):
+def get_classifier(classifier_type, classifier_name):
     try:
-        return joblib.load('../data/classifier/{}'.format(classifier_name))
+        return joblib.load('../data/classifier/{}/{}'.format(classifier_type, classifier_name))
     except:
-        print "(get_classifier) No such file : {}".format(classifier_name)
+        print "(get_classifier) No such file : {}/{}".format(classifier_type, classifier_name)
         return None
 
 def sort_corners(corners):
