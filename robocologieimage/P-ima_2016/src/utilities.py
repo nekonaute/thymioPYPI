@@ -39,7 +39,6 @@ def canny_algorithm(mat):
     lower_thresh_val = int(max(0, (1.0 - sigma) * v))
     high_thresh_val = int(min(255, (1.0 + sigma) * v))
     mat = cv2.Canny(mat, lower_thresh_val, high_thresh_val)
-    cv2.imshow("test", mat)
 
     return mat
 
@@ -58,7 +57,7 @@ def find_contours(mat_b):
     MAX_DISTANCE = math.ceil(len(mat_b)*0.09)
     for i in range(len(edges)):
         closed = True # Contour is closed
-        epsilon = 0.020*cv2.arcLength(edges[i], True) # aproximation accuracy
+        epsilon = 0.035*cv2.arcLength(edges[i], True) # aproximation accuracy
         approx_curve = cv2.approxPolyDP(edges[i], epsilon, closed)
 
         # Candidates must have 4 corners

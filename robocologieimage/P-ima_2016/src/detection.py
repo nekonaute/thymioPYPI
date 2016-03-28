@@ -25,8 +25,10 @@ class Detector(object):
         self.edge_mat = None
         self.markers_ima = None
         self.fgmask = None
+        self.online = True
         self.markers_dict = {}
         self.positions = {}
+        self.current_tags = []
         self.trajectory = {}
         self.detect_time = {}
         self.homothetie_markers = {}
@@ -35,6 +37,7 @@ class Detector(object):
         self.fgbg = cv2.createBackgroundSubtractorMOG2()
         self.images_stock = {}
         self.classifier = classifier
+
 
     def get(self, info):
         return {'edges' : self.edge_mat,
@@ -74,7 +77,12 @@ class Detector(object):
         return -1, image
 
     def detect(self, mat_g, pos, approx):
-        detected = {}
+        selected = {}
+        nb_detected = 1e-6
+        nb_success = 1e-6
+        nb_error = 1e-6
+        nb_nontag = 1e-6
+        nb_doublon = 1e-6
         for i in range(len(pos)):
             results = []
             corners = curve_to_quadrangle(pos[i])
@@ -85,50 +93,44 @@ class Detector(object):
 
             # # Methode 1
             marker = get_bit_matrix(image, MARKER_SIZE)
-            tag_id1, rot_image1 = self.intensity_detection(marker, image)
-            results.append((tag_id1, rot_image1))
+            tag_id, rot_image = self.intensity_detection(marker, image)
 
             # # Méthode 2
             # if self.classifier:
             #     tag_id2, rot_image2 = self.classifier_detection(image)
-            #     results.append((tag_id2, rot_image2))
-
-            # Set quality
-            is_same = all(results[i][0] == results[i+1][0] for i in range(len(results)-1))
-            is_valid = all(res[0] in self.valid_ids for res in results)
 
             # Register only tags where all methods succeeds
-            if results and is_same and is_valid:
-                detected[results[0][0]] = approx[i]
-                self.homothetie_markers[results[0][0]] = results[0][1]*255
-
-            # Evaluation
-            for i, (tag, image) in enumerate(results):
-                self.method[i]["quads"] += 1
-                if tag != -1:
-                    self.method[i]["detected"] += 1
-                    if tag in self.valid_ids:
-                        self.method[i]["success"] += 1
-                    else:
-                        self.method[i]["error"] += 1
+            # Evaluation & Collect data to feed my learning algorithm
+            if tag_id != -1:
+                nb_detected += 1
+                if tag_id in self.valid_ids:
+                    nb_success += 1
                 else:
-                    self.method[i]["non-tag"] += 1
-
-            # Collect data to feed my learning algorithm
-            if results and is_same and is_valid:
-                if self.images_stock.get(results[0][0], False) is False:
-                    self.images_stock[results[0][0]] = []
-                self.images_stock[results[0][0]].append(results[0][1])
-            elif results and all(res[0] == -1 for res in results):
+                    nb_error += 1
+                if tag_id in selected.keys():
+                    nb_doublon += 1
+                else:
+                    selected[tag_id] = approx[i]
+                    self.homothetie_markers[tag_id] = rot_image*255
+                if self.images_stock.get(tag_id, False) is False:
+                    self.images_stock[tag_id] = []
+                self.images_stock[tag_id].append(rot_image)
+            else:
+                nb_nontag += 1
                 if self.images_stock.get(-1, False) is False:
                     self.images_stock[-1] = []
-                self.images_stock[-1].append(results[0][1])
+                self.images_stock[-1].append(rot_image)
 
-
-        self.nb_tags = len(detected)
+        self.nb_selected = len(selected)
         self.nb_quads = len(pos)
-        self.detected = detected.keys()
-        return detected
+        self.nb_detected = nb_detected
+        self.nb_success = nb_success
+        self.nb_error = nb_error
+        self.nb_nontag = nb_nontag
+        self.nb_doublon = nb_doublon
+        self.detected = selected.keys()
+        return selected
+
 
     def update_positions(self, positions, markers):
         positions = {}
@@ -182,6 +184,7 @@ class Detector(object):
         return fgmask
 
     def update(self, frame, seconds):
+        self.previous_tags = self.current_tags[:]
         #self.fgmask = self.backgroundSubtractor(frame)
         self.frame = np.copy(frame)
         h, w, _ = frame.shape
@@ -199,4 +202,5 @@ class Detector(object):
         positions = self.update_positions(self.positions,self.markers_dict)
         self.trajectory, self.path_ima = self.update_trajectory(frame.copy(), self.trajectory, self.positions, positions)
         self.detect_time = self.updateDetectTime(self.detect_time, self.markers_dict.keys(), seconds)
+        self.current_tags = self.markers_dict.keys()
         self.positions = positions
