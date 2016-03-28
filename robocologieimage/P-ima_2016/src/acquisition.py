@@ -97,6 +97,9 @@ class Controller(object):
     def getActive(self):
         return {cam_id: cam for cam_id, cam in self.cameras.items() if not cam.done and cam.active}
 
+    def getDeactive(self):
+        return {cam_id: cam for cam_id, cam in self.cameras.items() if cam.done or not cam.active}
+
     def update(self, new_cam_ids=[]):
         for cam_id in new_cam_ids:
             exist = self.addCamera(cam_id)

@@ -68,7 +68,7 @@ if __name__ == "__main__":
     master.collect_data(NPZ_DATA)
 
     # Evalute algorithm
-    master.evaluation()
+    #master.evaluation()
 
     # When everything done, kill tkinter interface and release all capture
     master.kill()
