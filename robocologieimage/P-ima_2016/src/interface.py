@@ -1,5 +1,6 @@
 from PIL import Image, ImageTk
 import Tkinter as tk
+import ttk
 import time
 import cv2
 import numpy as np
@@ -24,7 +25,7 @@ class Window:
         self.alive = False
 
     def update_image(self, frame, channel, h, w):
-        frame = cv2.resize(frame, (h, w), interpolation=cv2.INTER_NEAREST)
+        frame = cv2.resize(frame, (h, w), interpolation=cv2.INTER_AREA)
         img = Image.fromarray(frame)
         imgtk = ImageTk.PhotoImage(image=img)
         channel.imgtk = imgtk
@@ -83,7 +84,7 @@ class MainWindow(Window):
         self.curr_tag_X = None
         self.curr_tag_Y = None
         self.master = master
-        self.frame = tk.Frame(self.master)
+        self.frame = tk.Frame(self.master, bd=0)
         self.tag_app = None
         donothing = lambda x: x
         menubar = tk.Menu(self.master)
@@ -115,71 +116,71 @@ class MainWindow(Window):
         helpmenu.add_command(label="About...", command=donothing)
         menubar.add_cascade(label="Help", menu=helpmenu)
         self.master.config(menu=menubar)
-        self.adv_button = tk.Button(self.frame, text = 'New Window', width = 25, command = self.tag_window)
+        self.adv_button = ttk.Button(self.frame, text = 'New Window', width = 25, command = self.tag_window)
         self.setup()
         #self.adv_button.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=1)
         self.frame.pack(fill=tk.BOTH, expand=tk.YES)
 
     def setup(self):
-        self.main_group = tk.LabelFrame(self.frame)
+        self.main_group = tk.LabelFrame(self.frame, bd=2)
         self.main_group.pack(fill=tk.BOTH, expand=1)
-        self.left_group = tk.LabelFrame(self.main_group)
+        self.left_group = tk.LabelFrame(self.main_group, bd=0)
         self.left_group.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
-        self.right_group = tk.LabelFrame(self.main_group)
+        self.right_group = tk.LabelFrame(self.main_group, bd=0)
         self.right_group.pack(fill=tk.BOTH, expand=1, side=tk.RIGHT)
         #cameras
-        self.camera_group = tk.LabelFrame(self.left_group)
-        self.camera_group.pack(side=tk.LEFT,anchor=tk.NW)
-        buttons_frame = tk.LabelFrame(self.camera_group)
-        infos = [("original", 1), ("canny", 1), ("fgmask", 1), ("edges", 1), ("markers", 1), ("path", 1)]
+        self.camera_group = tk.LabelFrame(self.left_group, bd=0, bg="white")
+        self.camera_group.pack(side=tk.LEFT,anchor=tk.NW,expand=1,fill=tk.X)
+        buttons_frame = tk.LabelFrame(self.camera_group, bd=0)
+        infos = [("original", 1), ("canny", 1), ("edges", 1), ("markers", 1), ("path", 1)]
         for mode, height in infos:
-            tk.Button(buttons_frame, text=mode.capitalize(), command=lambda mode=mode: self.switch_mode(mode), height=height).pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+            ttk.Button(buttons_frame, text=mode.capitalize(), command=lambda mode=mode: self.switch_mode(mode)).pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         buttons_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-        self.channel_group = tk.LabelFrame(self.camera_group)
+        self.channel_group = tk.LabelFrame(self.camera_group, bd=0)
         self.channel_group.pack(side=tk.LEFT)
         #markers
-        self.tag_channel_group = tk.LabelFrame(self.right_group)
+        self.tag_channel_group = tk.LabelFrame(self.right_group, bd=0)
         self.tag_channel_group.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         # Plots
         # Add plot
-        self.adv_group = tk.LabelFrame(self.right_group)
+        self.adv_group = tk.LabelFrame(self.right_group, bd=1, bg="white")
         self.adv_group.pack(fill=tk.BOTH, expand=1, side=tk.BOTTOM)
-        descr = tk.Label(self.adv_group, text='Advanced Tag Information')
-        descr.pack()
+        #descr = tk.Label(self.adv_group, text='Advanced Tag Information', bd=0)
+        #descr.pack()
         # Marker focus
-        self.tag_focus_group = tk.LabelFrame(self.adv_group)
+        self.tag_focus_group = tk.LabelFrame(self.adv_group, bd=1, bg="white")
         self.tag_focus_group.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         ## create a label in the frame
-        self.tag_focus_descr = tk.Label(self.adv_group, text='Tag N/A (X time; Y: the position x of the robot in the image)')
+        self.tag_focus_descr = tk.Label(self.adv_group, text='Tag N/A (X time; Y: the position x of the robot in the image)', bg="white")
         self.tag_focus_descr.pack()
         self.figure_Xpos, self.subplot_Xpos = self.add_plot(self.adv_group)
         self.figure_Ypos, self.subplot_Ypos = self.add_plot(self.adv_group)
-        self.tag_focus_legend = tk.Label(self.adv_group)
-        self.tag_focus_legend.pack()
+        self.tag_focus_legend = tk.Label(self.adv_group, bg="white", bd=1)
+        self.tag_focus_legend.pack(fill=tk.BOTH)
         self.legend = tk.Label(self.frame)
         self.legend.pack()
         #others
-        self.information_bar = tk.LabelFrame(self.frame)
+        self.information_bar = tk.LabelFrame(self.frame, bd=1)
         self.information_bar.pack(fill=tk.X, expand=0)
-        self.info_txt = tk.Label(self.information_bar, text='')
+        self.info_txt = tk.Label(self.information_bar, text='', bd=1)
         self.info_txt.pack(fill=tk.X, expand=0)
 
     def create_channel(self, cam_id):
         r = len(self.channels) // 2
         c = len(self.channels) % 2
         self.channels[cam_id] = {}
-        self.channels[cam_id]['group'] = tk.LabelFrame(self.channel_group)
+        self.channels[cam_id]['group'] = tk.LabelFrame(self.channel_group, bd=0)
         self.channels[cam_id]['group'].grid(row=r, column=c)
         self.channels[cam_id]['image'] = tk.Label(self.channels[cam_id]['group'])
         self.channels[cam_id]['image'].pack(side=tk.TOP)
-        self.channels[cam_id]['descr'] = tk.Label(self.channels[cam_id]['group'], text = '', width = 25)
+        self.channels[cam_id]['descr'] = tk.Label(self.channels[cam_id]['group'], text = '', width = 25, bg="gray90")
         self.channels[cam_id]['descr'].pack(fill=tk.X, expand=1)
 
     def create_tag_channel(self, marker_id):
         r = len(self.tag_channels) // 4
         c = len(self.tag_channels) % 4
         self.tag_channels[marker_id] = {}
-        self.tag_channels[marker_id]['group'] = tk.LabelFrame(self.tag_channel_group)
+        self.tag_channels[marker_id]['group'] = tk.LabelFrame(self.tag_channel_group, bd=1)
         self.tag_channels[marker_id]['group'].grid(row=r, column=c, sticky='wens')
         self.tag_channels[marker_id]['imgroup'] = tk.LabelFrame(self.tag_channels[marker_id]['group'])
         self.tag_channels[marker_id]['imgroup'].pack(side=tk.LEFT)
@@ -189,7 +190,7 @@ class MainWindow(Window):
         self.tag_channels[marker_id]['ref_img'].pack()
         self.tag_channels[marker_id]['descr'] = tk.Label(self.tag_channels[marker_id]['group'], text = '')
         self.tag_channels[marker_id]['descr'].pack(fill=tk.X, expand=1)
-        self.tag_channels[marker_id]['tag_btn'] = tk.Button(self.tag_channels[marker_id]['group'], text = 'Select', command = lambda: self.select_tag(marker_id))
+        self.tag_channels[marker_id]['tag_btn'] = ttk.Button(self.tag_channels[marker_id]['group'], text = 'Select', command = lambda: self.select_tag(marker_id))
         self.tag_channels[marker_id]['tag_btn'].pack(fill=tk.X, expand=1, side=tk.BOTTOM)
         self.tag_channel_group.columnconfigure(c, weight=1)
 
@@ -208,7 +209,7 @@ class MainWindow(Window):
         self.master.title(self.title + ' - FPS: {} (avg. {})'.format(min(60,round(self.fps, 1)), min(60,round(self.fps_mean, 1))))
 
     def update_markers(self, detectors, seconds):
-        w, h = 40, 40
+        w, h = 30,30
         for cam_id, detector in detectors.items():
             for marker_id, marker in detector.markers_dict.items():
                 if not marker_id in self.tag_channels.keys() and detector.detect_time[marker_id] > 0.5:
@@ -234,7 +235,7 @@ class MainWindow(Window):
             # Update images
             frame = detectors[cam_id].get(self.mode).copy()
             w, h = frame.shape[:2]
-            w, h = max(w-w*70/100, 200), max(h-h*70/100, 300)
+            w, h = max(w-w*65/100, 200), max(h-h*65/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
     def update_info(self, cameras, detectors, seconds):
@@ -280,7 +281,7 @@ class MainWindow(Window):
             if not self.current_tagid:
                 self.select_tag(self.tag_channels.keys()[0])
                 self.tag_focus = {}
-                self.tag_focus['group'] = tk.LabelFrame(self.tag_focus_group)
+                self.tag_focus['group'] = tk.LabelFrame(self.tag_focus_group, bd=0, bg="white")
                 self.tag_focus['group'].pack(fill=tk.BOTH, expand=1)
                 self.tag_focus['imgroup'] = tk.LabelFrame(self.tag_focus['group'])
                 self.tag_focus['imgroup'].pack(side=tk.LEFT)
@@ -288,9 +289,9 @@ class MainWindow(Window):
                 self.tag_focus['image'].pack(side=tk.TOP)
                 self.tag_focus['ref_img'] = tk.Label(self.tag_focus['imgroup'])
                 self.tag_focus['ref_img'].pack()
-                self.tag_focus['descr'] = tk.Label(self.tag_focus['group'], text = '')
+                self.tag_focus['descr'] = tk.Label(self.tag_focus['group'], text = '', bg="white")
                 self.tag_focus['descr'].pack(fill=tk.X, expand=1, side=tk.LEFT)
-                self.tag_focus['tag_btn'] = tk.Button(self.tag_focus['group'], text = 'More..', command = lambda: self.tag_window(self.current_tagid))
+                self.tag_focus['tag_btn'] = ttk.Button(self.tag_focus['group'], text = 'More', command = lambda: self.tag_window(self.current_tagid))
                 self.tag_focus['tag_btn'].pack(fill=tk.X, side=tk.LEFT)
             for cam_id, detector in detectors.items():
                 if not detector.online:
@@ -338,7 +339,7 @@ class TagWindow(Window):
         self.tag_log = []
         self.timer = 0
         self.setup()
-        self.quitButton = tk.Button(self.frame, text = 'Quit', width = 25, command = self.close_windows)
+        self.quitButton = ttk.Button(self.frame, text = 'Quit', width = 25, command = self.close_windows)
         self.quitButton.pack()
         self.frame.pack(fill=tk.BOTH, expand=1)
         self.curr_tag_X = 0
@@ -367,7 +368,7 @@ class TagWindow(Window):
         self.tag_list = tk.Listbox(self.listbox_group, yscrollcommand=scrollbar.set)
         self.tag_list.pack(fill=tk.BOTH, expand=1)
         scrollbar.config( command = self.tag_list.yview )
-        self.valid_changetag_btn = tk.Button(self.changetag_group, text = 'Change view', width = 25, command = self.close_windows)
+        self.valid_changetag_btn = ttk.Button(self.changetag_group, text = 'Change view', width = 25, command = self.close_windows)
         self.valid_changetag_btn.pack()
         # Add plot
         self.adv_group = tk.LabelFrame(self.right_group)
@@ -377,7 +378,7 @@ class TagWindow(Window):
         descr.pack()
         self.figure_Xpos, self.subplot_Xpos = self.add_plot(self.adv_group)
         self.figure_Ypos, self.subplot_Ypos = self.add_plot(self.adv_group)
-        self.legend = tk.Label(self.adv_group, text='Drops: N/A')
+        self.legend = tk.Label(self.adv_group, text='', bd=1)
         self.legend.pack()
 
     def create_tag_channel(self, marker_id):
@@ -392,7 +393,7 @@ class TagWindow(Window):
         self.tag_channels[marker_id]['ref_img'].pack()
         self.tag_channels[marker_id]['descr'] = tk.Label(self.tag_channels[marker_id]['group'], text = '')
         self.tag_channels[marker_id]['descr'].pack(fill=tk.X, expand=1)
-        self.tag_channels[marker_id]['tag_btn'] = tk.Button(self.tag_channels[marker_id]['group'], text = 'More..')
+        self.tag_channels[marker_id]['tag_btn'] = ttk.Button(self.tag_channels[marker_id]['group'], text = 'More..')
         self.tag_channels[marker_id]['tag_btn'].pack(fill=tk.X, expand=1, side=tk.BOTTOM)
 
     def close_window(self):
@@ -435,6 +436,9 @@ class TagWindow(Window):
 class Interface(object):
     def __init__(self, title):
         self.root = tk.Tk()
+        ttk.Style().configure("TButton", padding=0, relief="flat",
+           background="#ccc", width=5)
+        #self.root.tk.call('tk', 'scaling', 1.466)
         self.root.title(title)
         self.app = MainWindow(self.root, title)
         self.root.protocol("WM_DELETE_WINDOW", self.kill)

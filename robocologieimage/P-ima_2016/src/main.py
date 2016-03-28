@@ -47,7 +47,7 @@ V2 = (VID, FOO2[0][1:2], FOO2[1][1:2], FOO2[2], REFS)
 V3 = (VID, FOO3[0][1:2], FOO3[1][1:2], FOO3[2], REFS)
 
 # Choose a pill
-CURRENT_MODE, CURRENT_ID, VALID_IDS, DESCR, CURRENT_REFS = V1
+CURRENT_MODE, CURRENT_ID, VALID_IDS, DESCR, CURRENT_REFS = V3
 
 if __name__ == "__main__":
     # Active graphical interface (you need Tkinter)
