@@ -27,7 +27,7 @@ def canny_algorithm(mat):
 
     # Blur
     #mat = cv2.medianBlur(cv2.medianBlur(mat, 3), 3)
-    mat = cv2.GaussianBlur(mat, (5,5), 0)
+    mat = cv2.GaussianBlur(mat, (3,3), 0)
 
     # Dilation/Erosion to close edges
     #kernel = np.ones((2, 2), np.uint8)
@@ -54,10 +54,10 @@ def find_contours(mat_b):
     size_x = len(mat_b[0])
     size_y = len(mat_b)
     MIN_DISTANCE = math.ceil(len(mat_b)*0.005)
-    MAX_DISTANCE = math.ceil(len(mat_b)*0.09)
+    MAX_DISTANCE = math.ceil(len(mat_b)*0.095)
     for i in range(len(edges)):
         closed = True # Contour is closed
-        epsilon = 0.035*cv2.arcLength(edges[i], True) # aproximation accuracy
+        epsilon = 0.100*cv2.arcLength(edges[i], True) # aproximation accuracy
         approx_curve = cv2.approxPolyDP(edges[i], epsilon, closed)
 
         # Candidates must have 4 corners
@@ -68,9 +68,9 @@ def find_contours(mat_b):
         if not cv2.isContourConvex(approx_curve):
             continue
 
-        if cv2.contourArea(approx_curve) > 1000:
+        if cv2.contourArea(approx_curve) > 800:
             continue
-        if cv2.contourArea(approx_curve) < 100:
+        if cv2.contourArea(approx_curve) < 50:
             continue
 
         #Not good if any of the corners lies on the edge
@@ -155,7 +155,6 @@ def get_bit_matrix(img, marker_size):
     split_coeff : découpage de l'image en x*x cases
     cell_size : w, h
     """
-    #img = (img-np.mean(img))/np.std(img) # EUREKA
     warped_size = marker_size**2
     marker = img.reshape(
         [marker_size, warped_size / marker_size, marker_size, warped_size / marker_size]
@@ -203,7 +202,7 @@ def estimate(frame, markers):
         pts = np.array(corners, np.int32)
         pts = pts.reshape((-1,1,2))
         cv2.polylines(frame,[np.array([pts[0], pts[1], pts[2], pts[3]])],True,(0,255,255),2)
-        cv2.putText(frame, str(id_), (pts[0, 0, 0], pts[0, 0, 1]), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,0), thickness=5)
+        cv2.putText(frame, str(id_), (pts[0, 0, 0], pts[0, 0, 1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,0), thickness=3)
     return frame
 
 def refine_markers(frame, markers):

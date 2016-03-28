@@ -42,9 +42,9 @@ FOO3 = [('../data/video/kinect/v2/kinect04-24-23.mp4',
 
 # Edit mode
 V0 = (CAM, LIVE, [], "LIVE", REFS)
-V1 = (VID, FOO1[0], FOO1[1], FOO1[2], REFS)
-V2 = (VID, FOO2[0], FOO2[1], FOO2[2], REFS)
-V3 = (VID, FOO3[0], FOO3[1], FOO3[2], REFS)
+V1 = (VID, FOO1[0][1:2], FOO1[1][1:2], FOO1[2], REFS)
+V2 = (VID, FOO2[0][1:2], FOO2[1][1:2], FOO2[2], REFS)
+V3 = (VID, FOO3[0][1:2], FOO3[1][1:2], FOO3[2], REFS)
 
 # Choose a pill
 CURRENT_MODE, CURRENT_ID, VALID_IDS, DESCR, CURRENT_REFS = V1
