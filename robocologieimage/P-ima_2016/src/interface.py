@@ -88,33 +88,35 @@ class MainWindow(Window):
         self.tag_app = None
         donothing = lambda x: x
         menubar = tk.Menu(self.master)
+
         filemenu = tk.Menu(menubar, tearoff=0)
-        filemenu.add_command(label="New", command=donothing)
         filemenu.add_command(label="Open", command=donothing)
         filemenu.add_command(label="Save", command=donothing)
-        filemenu.add_command(label="Save as...", command=donothing)
-        filemenu.add_command(label="Close", command=donothing)
-
         filemenu.add_separator()
-
+        filemenu.add_command(label="Generate log file", command=donothing)
+        filemenu.add_command(label="Reset all", command=donothing)
+        filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.master.quit)
         menubar.add_cascade(label="File", menu=filemenu)
+
         editmenu = tk.Menu(menubar, tearoff=0)
-        editmenu.add_command(label="Undo", command=donothing)
-
+        editmenu.add_command(label="Use SVM method", command=donothing)
+        editmenu.add_command(label="Use DeepNetwork method", command=donothing)
+        editmenu.add_command(label="Use Classic method", command=donothing)
+        editmenu.add_command(label="Use SVM and Classic method", command=donothing)
         editmenu.add_separator()
+        editmenu.add_command(label="Start fitting", command=donothing)
+        editmenu.add_command(label="Stop fitting", command=donothing)
+        editmenu.add_separator()
+        editmenu.add_command(label="Remove fitting base", command=donothing)
+        editmenu.add_command(label="Load fitting base", command=donothing)
+        editmenu.add_command(label="Save fitting base", command=donothing)
+        menubar.add_cascade(label="Detection", menu=editmenu)
 
-        editmenu.add_command(label="Cut", command=donothing)
-        editmenu.add_command(label="Copy", command=donothing)
-        editmenu.add_command(label="Paste", command=donothing)
-        editmenu.add_command(label="Delete", command=donothing)
-        editmenu.add_command(label="Select All", command=donothing)
-
-        menubar.add_cascade(label="Edit", menu=editmenu)
         helpmenu = tk.Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index", command=donothing)
         helpmenu.add_command(label="About...", command=donothing)
         menubar.add_cascade(label="Help", menu=helpmenu)
+
         self.master.config(menu=menubar)
         self.adv_button = ttk.Button(self.frame, text = 'New Window', width = 25, command = self.tag_window)
         self.setup()
@@ -128,6 +130,49 @@ class MainWindow(Window):
         self.left_group.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
         self.right_group = tk.LabelFrame(self.main_group, bd=0)
         self.right_group.pack(fill=tk.BOTH, expand=1, side=tk.RIGHT)
+        # Custom parameters
+        self.custom_group = tk.LabelFrame(self.left_group, bd=2)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Epsilon (approxPolyDP)")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Kernel (Gaussian Canny)")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Min. Distance")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Max. Distance")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Max. contourArea")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Min. contourArea")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
+        self.custom_group = tk.LabelFrame(self.left_group, bd=1)
+        self.custom_group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
+        L1 = tk.Label(self.custom_group, text="Method (SVM, DeepNetwork, Classic)")
+        L1.pack(side = tk.LEFT)
+        E1 = tk.Entry(self.custom_group, bd =2, text="0")
+        E1.pack(side = tk.RIGHT)
         #cameras
         self.camera_group = tk.LabelFrame(self.left_group, bd=0, bg="white")
         self.camera_group.pack(side=tk.LEFT,anchor=tk.NW,expand=1,fill=tk.X)
@@ -157,6 +202,10 @@ class MainWindow(Window):
         self.figure_Ypos, self.subplot_Ypos = self.add_plot(self.adv_group)
         self.tag_focus_legend = tk.Label(self.adv_group, bg="white", bd=1)
         self.tag_focus_legend.pack(fill=tk.BOTH)
+        a = ttk.Button(self.adv_group, text = 'Save')
+        a.pack(fill=tk.X, side=tk.LEFT, expand=1)
+        a = ttk.Button(self.adv_group, text = 'Reset')
+        a.pack(fill=tk.X, side=tk.LEFT, expand=1)
         self.legend = tk.Label(self.frame)
         self.legend.pack()
         #others
@@ -276,7 +325,7 @@ class MainWindow(Window):
         self.prev_tagPerQuads = nb_selected/nb_quads
 
     def update_plot(self, cameras, detectors, seconds):
-        w, h = 30, 30
+        w, h = 40,40
         if self.tag_channels:
             if not self.current_tagid:
                 self.select_tag(self.tag_channels.keys()[0])
