@@ -37,6 +37,7 @@ class Detector(object):
         self.fgbg = cv2.createBackgroundSubtractorMOG2()
         self.images_stock = {}
         self.classifier = classifier
+        self.positionsHistory = []
 
 
     def get(self, info):
@@ -183,14 +184,30 @@ class Detector(object):
         fgmask[fgmask <= 230] = 0
         return fgmask
 
-    def update(self, frame, seconds):
+    def normalize_position(self, positions, w, h):
+        normalized = {}
+        for id_ in positions:
+            normalized[id_] = np.float64(positions[id_].copy())
+            normalized[id_][0][0] = float(positions[id_][0][0]) / float(w)
+            normalized[id_][0][1] = float(positions[id_][0][1]) / float(h)
+        return normalized
+
+    def update(self, frame, parameters, seconds):
+        self.valid_ids = parameters["existing_tags"].replace("[","").replace("]","").replace(","," ").split()
+        self.valid_ids = map(int, self.valid_ids)
         self.previous_tags = self.current_tags[:]
         #self.fgmask = self.backgroundSubtractor(frame)
         self.frame = np.copy(frame)
         h, w, _ = frame.shape
         mat_g = rgb2gray(frame)
-        self.canny_mat = canny_algorithm(mat_g)
-        approx, sort = find_contours(self.canny_mat.copy())
+        self.canny_mat = canny_algorithm(mat_g, parameters['kernel'],
+                                        parameters['sigma'])
+        approx, sort = find_contours(self.canny_mat.copy(),
+                                        parameters['min_contour_area'],
+                                        parameters['max_contour_area'],
+                                        parameters['eps'],
+                                        parameters['min_dist'],
+                                        parameters['max_dist'])
         zeros = np.zeros((h, w, 3), np.uint8)
         self.edge_mat = cv2.drawContours(zeros, approx, -1, (255,255,255), 1)
         raw_markers = self.detect(mat_g, sort, approx)
@@ -199,8 +216,10 @@ class Detector(object):
             self.markers_ima = estimate(frame, self.markers_dict)
         else:
             self.markers_ima = frame
-        positions = self.update_positions(self.positions,self.markers_dict)
-        self.trajectory, self.path_ima = self.update_trajectory(frame.copy(), self.trajectory, self.positions, positions)
+        curr_positions = self.update_positions(self.positions,self.markers_dict)
+        self.normalized_positions = self.normalize_position(curr_positions, w, h)
+        self.trajectory, self.path_ima = self.update_trajectory(frame.copy(), self.trajectory, self.positions, curr_positions)
         self.detect_time = self.updateDetectTime(self.detect_time, self.markers_dict.keys(), seconds)
         self.current_tags = self.markers_dict.keys()
-        self.positions = positions
+        self.positions = curr_positions
+        self.positionsHistory.append(self.normalized_positions)

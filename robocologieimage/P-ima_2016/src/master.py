@@ -40,6 +40,7 @@ class Master(object):
 
     def run(self):
         seconds = 1e-6
+        out = None
         # Check if any camera is broadcasting and no exit call asked
         while True:
             # If exit call break the loop
@@ -47,26 +48,35 @@ class Master(object):
                 break
             elif not self.interface and not self.controller.active:
                 break
-            # Update controller for new images
-            self.controller.update()
-            # Collect broadcasting cameras
-            live_cams = self.controller.getActive()
-            for cam_id, cam in live_cams.items():
-                # Select the camera assigned detector
-                detector = self.detectors[cam_id]
-                # Run detection on next frame and update state
-                detector.update(cam.frame, seconds)
-            # Collect offline cameras
-            offline_cams = self.controller.getDeactive()
-            for cam_id, cam in offline_cams.items():
-                # Announce camera is now offline
-                self.detectors[cam_id].online = False
-            if self.interface:
+
+            if self.interface.getState() == "MainWindow":
+                if self.interface.isRecording() and not out:
+                    #print("Once only")
+                    out = cv2.VideoWriter(self.interface.getRecordId() + ".avi", -1, 20.0, (640,480))
+                # Update controller for new images
+                self.controller.update()
+                # Collect broadcasting cameras
+                live_cams = self.controller.getActive()
+                # Collect Parameters
+                parameters = self.interface.app.parameters
+                for cam_id, cam in live_cams.items():
+                    # Select the camera assigned detector
+                    detector = self.detectors[cam_id]
+                    # Run detection on next frame and update state
+                    detector.update(cam.frame, parameters, seconds)
+                # Collect offline cameras
+                offline_cams = self.controller.getDeactive()
+                for cam_id, cam in offline_cams.items():
+                    # Announce camera is now offline
+                    self.detectors[cam_id].online = False
                 # Update Tkinter interface using cameras and detectors infos
-                self.interface.update(live_cams, self.detectors, seconds)
+                self.interface.update(live_cams, self.detectors, seconds, out)
+            else:
+                self.interface.update()
             # Update timer and compute framerate
-            seconds = self.updateTime()
+            seconds = self.updateTime() + 1e-6
             fps = 1 / seconds
+        out.release()
 
     def updateTime(self):
         # End time
