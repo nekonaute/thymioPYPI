@@ -15,7 +15,7 @@ VID = 'VIDEO'
 PROJECT_TITLE = "PIMA (2016) - Multiple Camera Robot Detection"
 
 ## Project files
-LIVE = (1,)
+LIVE = (0,)
 FOO1 = [('../data/video/kinect/v1/2016-03-07-160118.webm',
        '../data/video/kinect/v1/2016-03-07-155725.webm',
        '../data/video/kinect/v1/2016-03-07-154756.webm'),
@@ -41,13 +41,13 @@ FOO3 = [('../data/video/kinect/v2/kinect04-24-23.mp4',
         "KINECT_V2_ISIR"]
 
 # Edit mode
-V0 = (CAM, LIVE, [], "LIVE", REFS)
+V0 = (CAM, LIVE, [[],[],[]], "LIVE", REFS)
 V1 = (VID, FOO1[0][1:2], FOO1[1][1:2], FOO1[2], REFS)
 V2 = (VID, FOO2[0][1:2], FOO2[1][1:2], FOO2[2], REFS)
 V3 = (VID, FOO3[0][1:2], FOO3[1][1:2], FOO3[2], REFS)
 
 # Choose a pill
-CURRENT_MODE, CURRENT_ID, VALID_IDS, DESCR, CURRENT_REFS = V3
+CURRENT_MODE, CURRENT_ID, VALID_IDS, DESCR, CURRENT_REFS = V1
 
 if __name__ == "__main__":
     # Active graphical interface (you need Tkinter)
@@ -57,10 +57,12 @@ if __name__ == "__main__":
     master = Master(PROJECT_TITLE, DESCR)
 
     # Setup controller and detectors according to mode and ids
-    master.setup_controller(CURRENT_MODE, CURRENT_ID)
-    master.setup_detectors(CURRENT_REFS, get_classifier(CLF_TYPE, CLF_NAMEFILE), VALID_IDS)
+    # master.setup_controller(CURRENT_MODE, CURRENT_ID)
+    # master.setup_detectors(CURRENT_REFS)
+    # master.setup_interface(with_GUI)
+    master.setup_controller(CAM, (0,))
+    master.setup_detectors(REFS)
     master.setup_interface(with_GUI)
-
     # Run the program
     master.run()
 
