@@ -20,21 +20,22 @@ def threshold(mat, th=0):
     (th, mat_th) = cv2.threshold(mat, th, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
     return th, mat_th
 
-def canny_algorithm(mat):
+def canny_algorithm(mat, kernel_sz=3, sigma=.10):
     """
     mat : mat matrix
     """
 
     # Blur
     #mat = cv2.medianBlur(cv2.medianBlur(mat, 3), 3)
-    mat = cv2.GaussianBlur(mat, (3,3), 0)
+    kernel_sz = 2*(int(kernel_sz/2))+1
+    #print kernel_sz
+    mat = cv2.GaussianBlur(mat, (kernel_sz, kernel_sz), 0)
 
     # Dilation/Erosion to close edges
     #kernel = np.ones((2, 2), np.uint8)
     #mat = cv2.morphologyEx(mat, cv2.MORPH_CLOSE, kernel)
 
 	# Canny edge detection using the computed median
-    sigma = .10
     v = np.median(mat)
     lower_thresh_val = int(max(0, (1.0 - sigma) * v))
     high_thresh_val = int(min(255, (1.0 + sigma) * v))
@@ -42,7 +43,7 @@ def canny_algorithm(mat):
 
     return mat
 
-def find_contours(mat_b):
+def find_contours(mat_b, min_contour_area=50, max_contour_area=800, eps_coeff=0.100, min_dist=.005, max_dist=.095):
     """
     mat_b : Binary Image matrix
     """
@@ -53,11 +54,11 @@ def find_contours(mat_b):
     marker_edges1, marker_edges2 = [], []
     size_x = len(mat_b[0])
     size_y = len(mat_b)
-    MIN_DISTANCE = math.ceil(len(mat_b)*0.005)
-    MAX_DISTANCE = math.ceil(len(mat_b)*0.095)
+    MIN_DISTANCE = math.ceil(len(mat_b)*min_dist)
+    MAX_DISTANCE = math.ceil(len(mat_b)*max_dist)
     for i in range(len(edges)):
         closed = True # Contour is closed
-        epsilon = 0.100*cv2.arcLength(edges[i], True) # aproximation accuracy
+        epsilon = eps_coeff*cv2.arcLength(edges[i], True) # aproximation accuracy
         approx_curve = cv2.approxPolyDP(edges[i], epsilon, closed)
 
         # Candidates must have 4 corners
@@ -68,9 +69,9 @@ def find_contours(mat_b):
         if not cv2.isContourConvex(approx_curve):
             continue
 
-        if cv2.contourArea(approx_curve) > 800:
+        if cv2.contourArea(approx_curve) > max_contour_area:
             continue
-        if cv2.contourArea(approx_curve) < 50:
+        if cv2.contourArea(approx_curve) < min_contour_area:
             continue
 
         #Not good if any of the corners lies on the edge
