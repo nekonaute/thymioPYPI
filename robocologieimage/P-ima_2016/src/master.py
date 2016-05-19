@@ -31,7 +31,7 @@ class Master(object):
 
     def setup_detectors(self, list_reference_tag, classifier = [], list_valid_tags = []):
         # Each camera have its own Detector engine
-        self.detectors = {cam_id : Detector(list_reference_tag, classifier, list_valid_tags[i]) for i, cam_id in enumerate(self.list_capture_id)}
+        self.detectors = {cam_id : Detector(list_reference_tag) for i, cam_id in enumerate(self.list_capture_id)}
 
     def setup_interface(self, with_GUI):
         # Interface use Tkinter for scene and detection visualization
@@ -52,7 +52,9 @@ class Master(object):
             if self.interface.getState() == "MainWindow":
                 if self.interface.isRecording() and not out:
                     #print("Once only")
-                    out = cv2.VideoWriter(self.interface.getRecordId() + ".avi", -1, 20.0, (640,480))
+                    #out = cv2.VideoWriter(self.interface.getRecordId() + ".avi", -1, 20.0, (640,480))
+                    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+                    out = cv2.VideoWriter(self.interface.getRecordId() + ".avi",fourcc, 20.0, (640,480))
                 # Update controller for new images
                 self.controller.update()
                 # Collect broadcasting cameras

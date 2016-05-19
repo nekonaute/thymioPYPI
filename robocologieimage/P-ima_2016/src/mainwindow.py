@@ -12,13 +12,13 @@ class MainWindow(Window):
         self.title = title
         self.fps = 0
         self.fps_mean = 0
-        self.total_drops = 0
-        self.total_quads = 0
-        self.total_tags_selected = 0
-        self.total_tags_all = 0
-        self.total_success = 0
-        self.total_error = 0
-        self.total_doublon = 0
+        self.total_drops = 1e-6
+        self.total_quads = 1e-6
+        self.total_tags_selected = 1e-6
+        self.total_tags_all = 1e-6
+        self.total_success = 1e-6
+        self.total_error = 1e-6
+        self.total_doublon = 1e-6
         self.prev_dropsPerTag = 0
         self.prev_tagPerQuads = 1
         self.curr_tag_drop = 0
@@ -311,7 +311,12 @@ class MainWindow(Window):
                     self.curr_tag_X = tag_X
                     self.curr_tag_Y = tag_Y
                     self.tag_focus_legend['text'] = "Drop: {}".format(self.curr_tag_drop)
-                    self.tag_focus['descr']['text'] = "Tag {}\n Position X:{:4}, Position Y:{:4}\nRunning Time (seconds): {}\nCamera: {}".format(str(self.current_tagid), round(detector.normalized_positions[self.current_tagid][0][0], 3), round(detector.normalized_positions[self.current_tagid][0][1],3), round(detector.detect_time[self.current_tagid], 1), ', '.join([cam[-8:-1] for cam in detectors.keys() if self.current_tagid in detectors[cam].markers_dict.keys()]))
+                    self.tag_focus['descr']['text'] = "Tag {}\n Position X:{:4}, Position Y:{:4}\nRunning Time (seconds): {}\nCamera: {}".format(
+                            str(self.current_tagid),
+                            round(detector.normalized_positions[self.current_tagid][0][0], 3),
+                            round(detector.normalized_positions[self.current_tagid][0][1],3),
+                            round(detector.detect_time[self.current_tagid], 1),
+                            ', '.join([str(cam) for cam in detectors.keys() if self.current_tagid in detectors[cam].markers_dict.keys()]))
                     # Update images
                     frame = detector.homothetie_markers[self.current_tagid]
                     self.update_image(frame, self.tag_focus['image'], w, h)
