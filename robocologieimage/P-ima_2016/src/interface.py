@@ -3,50 +3,66 @@ import Tkinter as tk
 import ttk
 import cv2
 
-
+from window import Window
 from mainwindow import MainWindow
 from startwindow import StartWindow
+from controllerwindow import ControllerWindow
 
 class Interface(object):
-    def __init__(self, title):
+    def __init__(self, title, parameters):
         self.root = tk.Tk()
         ttk.Style().configure("TButton", padding=0, relief="flat",
            background="#ccc", width=5)
         #self.root.tk.call('tk', 'scaling', 1.466)
         self.root.title(title)
-        self.app = StartWindow(self.root, title)
+        self.parameters = parameters
+        self.app = Window(self.root, self.parameters)
         self.root.protocol("WM_DELETE_WINDOW", self.kill)
-        self.alive = True
+        self.online = True
         self.title = title
 
-    def update(self, cameras=None, detectors=None, seconds=None, out=None):
-        if isinstance(self.app, MainWindow):
-            self.app.update(cameras, detectors, seconds, out)
-            if self.app.if_end_acquisition:
-                self.root.withdraw()
-                self.root = tk.Toplevel(self.root)
-                self.app = StartWindow(self.root, self.title, self.app.parameters)
-        elif isinstance(self.app, StartWindow):
-            self.app.update()
-            if self.app.if_init_acquisition:
-                self.root.withdraw()
-                self.root = tk.Toplevel(self.root)
-                self.app = MainWindow(self.root, self.title, self.app.parameters)
+
+    def switchState(self, state_type, *args):
+        self.root.withdraw()
+        self.root = tk.Toplevel(self.root)
+        self.app = state_type(self.root, self.parameters, *args)
+        self.online = True
+
+    def update(self, *args):
+        self.app.update(*args)
         self.root.update()
+        if self.app.isEnd():
+            self.online = False
         #self.root.update_idletasks()
 
-    def getState(self):
+    def isOnline(self):
+        return self.online
+
+    def getStateType(self, state_name):
+        if state_name == "MainWindow":
+            return MainWindow
+        elif state_name == "StartWindow":
+            return StartWindow
+        elif state_name == "ControllerWindow":
+            return ControllerWindow
+
+    def getCurrentStateName(self):
         if isinstance(self.app, MainWindow):
             return "MainWindow"
         elif isinstance(self.app, StartWindow):
             return "StartWindow"
+        elif isinstance(self.app, ControllerWindow):
+            return "ControllerWindow"
+
+    def getParameters(self):
+        return self.app.parameters
 
     @property
     def exit(self):
-        return self.alive == False
+        return self.online == False
 
     def kill(self):
-        self.alive = False
+        self.online = False
         #self.root.destroy()
         self.root.quit()
         cv2.destroyAllWindows()

@@ -13,6 +13,7 @@ class Material(object):
 
     def next(self):
         ret, frame = self.device.read()
+        print frame
         if (ret == False): # failed to capture
             if not self.done:
                 print "Camera ended (id={})".format(self.id)
@@ -31,83 +32,98 @@ class Material(object):
         """ Releases video capture device. """
         cv2.VideoCapture(self.id).release()
 
+    def getFrame(self):
+        return self.frame
+
+
 class Video(Material):
     def __init__(self, video_id):
         super(Video, self).__init__(video_id)
         self.device = cv2.VideoCapture(self.id)
+        self.active = False
+
+    def open(self):
         self.active = True
 
 class Camera(Material):
-    def __init__(self, cam_id):
-        super(Camera, self).__init__(cam_id)
-        self.active = self.open()
+    def __init__(self, capture_id):
+        super(Camera, self).__init__(capture_id)
+        self.active = False
 
     def open(self):
         try:
-            self.device = cv2.VideoCapture(self.id)
+            self.device = cv2.VideoCapture("../data/video/kinect/v2kinect04-29-27.mp4")
         except cv2.error as e:
             print "Camera not connected (id={})".format(self.id)
-            return False
+            self.active = False
         else:
             print "New camera added (id={})".format(self.id)
             self.device.set(cv2.CAP_PROP_FRAME_HEIGHT, 600*2);
             self.device.set(cv2.CAP_PROP_FRAME_WIDTH, 800*2);
             self.device.set(cv2.CAP_PROP_FPS, 30);
             print "Parameters: {}x{} fps={}".format(int(self.device.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.device.get(cv2.CAP_PROP_FRAME_HEIGHT)), self.device.get(cv2.CAP_PROP_FPS))
-        return True
+        self.active = True
 
     def update(self):
         super(Camera, self).update()
 
 class Controller(object):
-    def __init__(self, mode, ids):
-        assert isinstance(ids, tuple)
-        if mode == 'CAMERA':
-            self.cameras = {camid : Camera(camid) for camid in ids}
-        elif mode == 'VIDEO':
-            self.cameras = {camid : Video(camid) for camid in ids}
+    def __init__(self, captures):
+        assert isinstance(captures, list)
+        self.captures = {}
+        for capture_id in captures:
+            try:
+                capture_id = int(capture_id)
+            except ValueError:
+                self.captures[capture_id] = Video(capture_id)
+            else:
+                self.captures[capture_id] = Camera(capture_id)
+
 
     def kill(self, ids):
         """
-        Kill cameras whose identifier is found in `camera_list`.
-        camera_list : camera object list
+        Kill captures whose identifier is found in `capture_list`.
+        capture_list : capture object list
         """
-        for cam_id in ids:
-            self.cameras[cam_id].kill()
+        for capture_id in ids:
+            self.captures[capture_id].kill()
 
-    def addCamera(self, cam_id):
-        if cam_id in self.cameras.keys():
+    def addCamera(self, capture_id):
+        if capture_id in self.captures.keys():
             return False
-        self.cameras[cam_id] = Camera(cam_id)
+        self.captures[capture_id] = Camera(capture_id)
         return True
 
-    def openCamera(self, cam_id):
-        assert cam_id in self.cameras.keys()
-        camera = self.cameras[cam_id]
-        if not camera.active:
-            camera.active = camera.open()
-        return camera.active
+    def openCaptures(self):
+        for capture_id in self.captures:
+            capture = self.captures[capture_id]
+            if not capture.active:
+                capture.open()
 
     def getAll(self):
-        return {cam_id : cam for cam_id, cam in self.cameras.items()}
+        return {capture_id : cam for capture_id, cam in self.captures.items()}
 
     def killAll(self):
-        self.kill(self.cameras.keys())
+        self.kill(self.captures.keys())
 
     def getActive(self):
-        return {cam_id: cam for cam_id, cam in self.cameras.items() if not cam.done and cam.active}
+        online_captures = {}
+        for capture_id, capture in self.captures.items():
+            #print(not capture.done, capture.active)
+            if not capture.done and capture.active:
+                online_captures[capture_id] = capture
+        return online_captures
 
     def getDeactive(self):
-        return {cam_id: cam for cam_id, cam in self.cameras.items() if cam.done or not cam.active}
+        offline_captures = {}
+        for capture_id, capture in self.captures.items():
+            if capture.done or not capture.active:
+                offline_captures[capture_id] = capture
+        return offline_captures
 
-    def update(self, new_cam_ids=[]):
-        for cam_id in new_cam_ids:
-            exist = self.addCamera(cam_id)
-            if not exist:
-                self.openCamera(cam_id)
-
+    def update(self):
         live_cams = self.getActive()
-        for cam_id, cam in live_cams.items():
+        for capture_id, cam in live_cams.items():
             cam.update()
 
     @property
