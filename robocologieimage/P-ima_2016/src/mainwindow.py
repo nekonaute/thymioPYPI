@@ -6,10 +6,14 @@ import cv2
 import numpy as np
 
 from window import Window
+from interface_utilities import save_acquisition
+
+from tkFileDialog import asksaveasfilename
 
 class MainWindow(Window):
-    def __init__(self, master, title, parameters):
-        self.title = title
+    def __init__(self, master, parameters):
+        Window.__init__(self, master, parameters)
+        self.title = "title"
         self.fps = 0
         self.fps_mean = 0
         self.total_drops = 0
@@ -36,43 +40,10 @@ class MainWindow(Window):
         self.frame = tk.Frame(self.master, bd=0)
         self.tag_app = None
 
-        self.if_end_acquisition = False
-        self.parameters = parameters
+        self.if_end_task = False
         self.entries = {}
         self.if_record = parameters.get("record", False)
 
-        donothing = lambda x: x
-        menubar = tk.Menu(self.master)
-
-        filemenu = tk.Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Open", command=donothing)
-        filemenu.add_command(label="Save", command=donothing)
-        filemenu.add_separator()
-        filemenu.add_command(label="Generate log file", command=donothing)
-        filemenu.add_command(label="Reset all", command=donothing)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.master.quit)
-        menubar.add_cascade(label="File", menu=filemenu)
-
-        editmenu = tk.Menu(menubar, tearoff=0)
-        editmenu.add_command(label="Use SVM method", command=donothing)
-        editmenu.add_command(label="Use DeepNetwork method", command=donothing)
-        editmenu.add_command(label="Use Classic method", command=donothing)
-        editmenu.add_command(label="Use SVM and Classic method", command=donothing)
-        editmenu.add_separator()
-        editmenu.add_command(label="Start fitting", command=donothing)
-        editmenu.add_command(label="Stop fitting", command=donothing)
-        editmenu.add_separator()
-        editmenu.add_command(label="Remove fitting base", command=donothing)
-        editmenu.add_command(label="Load fitting base", command=donothing)
-        editmenu.add_command(label="Save fitting base", command=donothing)
-        menubar.add_cascade(label="Detection", menu=editmenu)
-
-        helpmenu = tk.Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="About...", command=donothing)
-        menubar.add_cascade(label="Help", menu=helpmenu)
-
-        self.master.config(menu=menubar)
         self.adv_button = ttk.Button(self.frame, text = 'New Window', width = 25, command = self.tag_window)
         self.setup()
         #self.adv_button.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=1)
@@ -81,7 +52,8 @@ class MainWindow(Window):
     def end_acquisition(self, *args):
         self.if_end_acquisition = True
         for cam_id, detector in self.detectors.items():
-            self.saveAcquisition(detector.positionsHistory)
+            name = "acquisition_"+self.parameters["time"]
+            save_acquisition(detector.positionsHistory, name, self.master)
 
     def do_record(self, *args):
         self.if_record = True
@@ -103,7 +75,7 @@ class MainWindow(Window):
         self.left_group.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
         self.right_group = tk.LabelFrame(self.main_group, bd=0)
         self.right_group.pack(fill=tk.BOTH, expand=1, side=tk.RIGHT)
-        self.parametrization(self.left_group, self.entries, self.parameters)
+        self.parametrization(self.left_group)
 
 
         self.action_group = tk.LabelFrame(self.frame, bd=0)
@@ -235,13 +207,13 @@ class MainWindow(Window):
             # Update texts
             self.channels[cam_id]['descr']['text'] = 'cam {} {} {} tags {} - {}% Robot Detected / Robot Existing'.format(str(cam_id)[-8:-1], " "*10, int(detector.nb_selected), detector.detected, 100*round(len(detector.valid_ids)/(float(detector.nb_selected)+1e-6),3))
             # Update images
-            frame = detectors[cam_id].get(self.mode).copy()
+            frame = detectors[cam_id].getImage(self.mode).copy()
             w, h = frame.shape[:2]
             w, h = max(w-w*65/100, 200), max(h-h*65/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
-        if self.if_record:
-            self.out.write(cv2.resize(frame, (640, 480), interpolation=cv2.INTER_AREA))
+            if self.if_record:
+                self.out.write(cv2.resize(frame, (640, 480), interpolation=cv2.INTER_AREA))
             #print("Recorded")
 
     def update_info(self, cameras, detectors, seconds):
@@ -276,8 +248,11 @@ class MainWindow(Window):
         self.total_doublon += int(nb_doublon)
         self.total_drops += int(drops)
         self.legend['text'] = 'Quad: {:6}    Tag: {:6} ({:4}%)    '.format(self.total_quads, self.total_tags_all, round(100*(self.total_tags_all/(self.total_quads+1e-8)), 1))
-        self.legend['text'] += 'Unique: {:6} ({:4}%)    '.format(self.total_tags_selected, round(100*self.total_tags_selected/(self.total_tags_all), 1))
-        self.legend['text'] += 'Doublon: {:6} ({:4}%)    Success: {:6} ({:4}%)    Error: {:6} ({:4}%)    Drop: {:6} ({:4}%)'.format(self.total_doublon, round(100*self.total_doublon/(self.total_tags_all), 1), self.total_success, round(100*self.total_success/(self.total_success+self.total_error), 1), self.total_error, round(100*self.total_error/(self.total_success+self.total_error), 1),self.total_drops, round(100*(self.total_drops/(self.total_tags_selected+1e-8)), 1))
+        self.legend['text'] += 'Unique: {:6} ({:4}%)    '.format(self.total_tags_selected, round(100*self.total_tags_selected/(self.total_tags_all+1e-8), 1))
+        self.legend['text'] += 'Doublon: {:6} ({:4}%)    '.format(self.total_doublon, round(100*self.total_doublon/(self.total_tags_all+1e-8), 1))
+        self.legend['text'] += 'Success: {:6} ({:4}%)    '.format(self.total_success, round(100*self.total_success/(self.total_success+self.total_error+1e-8), 1))
+        self.legend['text'] += 'Error: {:6} ({:4}%)    '.format(self.total_error, round(100*self.total_error/(self.total_success+self.total_error+1e-8), 1))
+        self.legend['text'] += 'Drop: {:6} ({:4}%)'.format(self.total_drops, round(100*(self.total_drops/(self.total_tags_selected+1e-8)), 1))
         self.prev_dropsPerTag = drops/nb_selected
         self.prev_tagPerQuads = nb_selected/nb_quads
 

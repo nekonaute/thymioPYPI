@@ -1,15 +1,12 @@
 from PIL import Image, ImageTk
 import Tkinter as tk
 import ttk
-import json
-import pickle
 
 import cv2
 
 import numpy as np
 
 import matplotlib
-import time
 matplotlib.rc("figure", facecolor="white")
 matplotlib.use('TkAgg')
 
@@ -21,7 +18,43 @@ from mpl_toolkits.mplot3d import Axes3D
 from tkFileDialog import askopenfilename
 from tkFileDialog import asksaveasfilename
 
+from interface_utilities import get_default_parameters
+from interface_utilities import load_parameters
+from interface_utilities import save_parameters
+
 class Window:
+    def __init__(self, master, parameters):
+        self.master = master
+        self.parameters = parameters
+        self.entries = {}
+        self.if_end_task = False
+
+        # Configurate Menubar & Frame
+        self.setup_menubar()
+        self.setup_frame()
+
+    def setup_frame(self):
+        self.frame = tk.Frame(self.master, bd=0)
+        self.main_group = tk.LabelFrame(self.frame, bd=2)
+        self.main_group.pack(fill=tk.BOTH, expand=1)
+        self.left_group = tk.LabelFrame(self.main_group, bd=0)
+        self.left_group.pack(fill=tk.BOTH, expand=1, side=tk.LEFT)
+        self.right_group = tk.LabelFrame(self.main_group, bd=0)
+        self.right_group.pack(fill=tk.BOTH, expand=1, side=tk.RIGHT)
+
+    def setup_menubar(self):
+        # Configurate Menubar
+        start_style = ttk.Style()
+        start_style.configure('St.TButton', foreground='maroon')
+        menubar = tk.Menu(self.master)
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Quit", command=self.master.destroy)
+        menubar.add_cascade(label="File", menu=filemenu)
+        self.master.config(menu=menubar)
+
+    def isEnd(self):
+        return self.if_end_task
+
     def switch_mode(self, mode):
         self.mode = mode
 
@@ -66,8 +99,7 @@ class Window:
             return drop
         return False
 
-    @staticmethod
-    def create_entry(parent, text_label, text_entry, key, entries):
+    def create_entry(self, parent, text_label, text_entry, key):
         group = tk.LabelFrame(parent, bd=2)
         group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
         L1 = tk.Label(group, text=text_label)
@@ -76,102 +108,99 @@ class Window:
         E1 = tk.Entry(group, bd =2, width=30, textvariable=entryText)
         entryText.set(text_entry)
         E1.pack(side = tk.RIGHT)
-        entries[key] = entryText
+        self.entries[key] = entryText
 
-    @staticmethod
-    def create_scale(parent, text_label, value_entry, minv, maxv, step, key, entries):
+    def create_scale(self, parent, text_label, value_entry, minv, maxv, step, key):
         group = tk.LabelFrame(parent, bd=2)
         group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
         L1 = tk.Label(group, text=text_label)
         L1.pack(side = tk.LEFT)
         var = tk.DoubleVar()
-        S1 = tk.Scale(group, variable=var,orient=tk.HORIZONTAL, showvalue=0, from_=minv, to=maxv,resolution=step, sliderlength=5, width=20, length=150)
+        S1 = tk.Scale(group, variable=var,orient=tk.HORIZONTAL, showvalue=0, from_=minv, to=maxv,resolution=step, sliderlength=7, width=20, length=150)
         S1.pack(side = tk.RIGHT)
         var.set(value_entry)
         L1 = tk.Label(group, textvariable = var)
         L1.pack(side = tk.RIGHT)
-        entries[key] = var
+        self.entries[key] = var
 
-    def openjson(self):
-        filename = askopenfilename(parent=self.master)
-        with open(filename, 'r') as fp:
-            data = json.load(fp)
-        return data
-
-    def loadParams(self, parameters, entries=None):
-        data = self.openjson()
-        for key in data:
-            if isinstance(entries, dict):
-                entries[key].set(data[key])
-            parameters[key] = data[key]
-
-    def saveParams(self, parameters):
-        filename = asksaveasfilename(parent=self.master)
-        with open(filename, 'w') as fp:
-            json.dump(parameters, fp, sort_keys=True, indent=4)
-
-    def saveAcquisition(self, data):
-        filename = asksaveasfilename(parent=self.master, initialfile=self.parameters["record_name"]+".pkl")
-        with open(filename, 'wb') as fp:
-            pickle.dump(data, fp)
-
-    def applyParams(self, entries, parameters):
-        for key in entries:
-            parameters[key] = entries[key].get()
-
-    def parametrization(self, parent, entries, parameters):
-        # Custom parameters
-        start_style = ttk.Style()
-        start_style.configure('St.TButton', foreground='maroon')
-
+    def parametrization(self, parent):
         # Record setup
         group = tk.LabelFrame(parent, bd=2)
         group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
-        self.loadButton = ttk.Button(group, text = 'Load Parameters', width = 20, command=lambda: self.loadParams(parameters, entries))
-        self.loadButton.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-        self.saveButton = ttk.Button(group, text = 'Save Parameters', width = 20, command=lambda: self.saveParams(parameters))
-        self.saveButton.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-        self.applyButton = ttk.Button(group, text = 'Apply', width = 20, command=lambda: self.applyParams(entries, parameters))
-        self.applyButton.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
-
+        self.reset_button = ttk.Button(group,
+                                        text='Reset',
+                                        width=20,
+                                        command=self.resetParameters)
+        self.reset_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.load_button = ttk.Button(group,
+                                text='Load Parameters',
+                                width=20,
+                                command=self.loadParameters)
+        self.load_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.save_button = ttk.Button(group,
+                                text='Save Parameters',
+                                width=20,
+                                command=self.saveParameters)
+        self.save_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.apply_button = ttk.Button(group,
+                                text = 'Apply',
+                                width = 20,
+                                command=self.applyEntriesToParams)
+        self.apply_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         # Epsilon setup
-        existing_tags = parameters.get("existing_tags", '[]')
-        self.create_entry(parent, "Existing Tags", existing_tags, "existing_tags", entries)
-
+        existing_tags = self.parameters["existing_tags"]
+        self.create_entry(parent, "Existing Tags", existing_tags, "existing_tags")
         # Epsilon setup
-        eps, inf, sup, steps = parameters.get("eps", 0.100), 0, 1, .001
-        self.create_scale(parent, "Epsilon Coeff (approxPolyDP)", eps, inf, sup, steps, "eps", entries)
-
+        eps, inf, sup, steps = self.parameters["eps"], 0, 1, .001
+        self.create_scale(parent, "Epsilon Coeff (approxPolyDP)", eps, inf, sup, steps, "eps")
         # Kernel setup
-        kernel, inf, sup, steps = parameters.get("kernel", 3), 3, 9, 1
-        self.create_scale(parent, "Kernel (Gaussian Canny)", kernel, inf, sup, steps, "kernel", entries)
-
+        kernel, inf, sup, steps = self.parameters["kernel"], 3, 9, 1
+        self.create_scale(parent, "Kernel (Gaussian Canny)", kernel, inf, sup, steps, "kernel")
         # Canny Edge Sigma setup
-        sigma, inf, sup, steps = parameters.get("sigma", .10), 0, 1, 0.001
-        self.create_scale(parent, "Sigma (Gaussian Canny)", sigma, inf, sup, steps, "sigma", entries)
-
+        sigma, inf, sup, steps = self.parameters["sigma"], 0, 1, 0.001
+        self.create_scale(parent, "Sigma (Gaussian Canny)", sigma, inf, sup, steps, "sigma")
+        # Distance seup
+        min_dist, inf, sup, steps = self.parameters["min_dist"], 0, 0.095, .001
+        self.create_scale(parent, "Min. Distance", min_dist, inf, sup, steps, "min_dist")
         # Distance setup
-        min_dist, inf, sup, steps = parameters.get("min_dist", 0.005), 0, 0.095, .001
-        self.create_scale(parent, "Min. Distance", min_dist, inf, sup, steps, "min_dist", entries)
-
-        # Distance setup
-        max_dist, inf, sup, steps = parameters.get("max_dist", 0.095), 0, 0.3, .001
-        self.create_scale(parent, "Max. Distance", max_dist, inf, sup, steps, "max_dist", entries)
-
+        max_dist, inf, sup, steps = self.parameters["max_dist"], 0, 0.3, .001
+        self.create_scale(parent, "Max. Distance", max_dist, inf, sup, steps, "max_dist")
         # Method setup
-        min_contour_area, inf, sup, steps = parameters.get("min_contour_area", 50), 0, 300, 10
-        self.create_scale(parent, "Min. contourArea", min_contour_area, inf, sup, steps, "min_contour_area", entries)
-
+        min_contour_area, inf, sup, steps = self.parameters["min_contour_area"], 0, 300, 10
+        self.create_scale(parent, "Min. contourArea", min_contour_area, inf, sup, steps, "min_contour_area")
         # Method setup
-        max_contour_area, inf, sup, steps = parameters.get("max_contour_area", 800), 100, 2000, 50
-        self.create_scale(parent, "Max. contourArea", max_contour_area, inf, sup, steps, "max_contour_area", entries)
-
+        max_contour_area, inf, sup, steps = self.parameters["max_contour_area"], 100, 2000, 50
+        self.create_scale(parent, "Max. contourArea", max_contour_area, inf, sup, steps, "max_contour_area")
         # Method setup
-        method, inf, sup, steps = parameters.get("method", 0), 0, 2, 1
-        self.create_scale(parent, "Method (SVM, DeepNetwork, Classic)", method, inf, sup, steps, "method", entries)
-
+        method, inf, sup, steps = self.parameters["method"], 0, 2, 1
+        self.create_scale(parent, "Method (SVM, DeepNetwork, Classic)", method, inf, sup, steps, "method")
         # Record setup
-        record_name = parameters.get("record_name", "record_"+time.strftime("%Y%m%d-%H%M%S"))
-        self.create_entry(parent, "Record Name", record_name, "record_name", entries)
+        record_name = self.parameters["record_name"]
+        self.create_entry(parent, "Record Name", record_name, "record_name")
 
-        self.applyParams(entries, parameters)
+    def loadParameters(self):
+        filename = askopenfilename(parent=self.master)
+        self.parameters.update(load_parameters(filename))
+        self.applyParamsToEntries()
+
+    def saveParameters(self):
+        self.applyEntriesToParams()
+        initial_name = "parameters_"+self.parameters["time"]+".json"
+        filename = asksaveasfilename(parent=self.master, initialfile=initial_name)
+        save_parameters(self.parameters, filename)
+
+    def resetParameters(self):
+        self.parameters.update(get_default_parameters())
+        self.applyParamsToEntries()
+
+    def applyParamsToEntries(self):
+        for key in self.parameters:
+            if key in self.entries:
+                self.entries[key].set(self.parameters[key])
+        save_parameters(self.parameters)
+
+    def applyEntriesToParams(self):
+        for key in self.entries:
+            self.parameters[key] = self.entries[key].get()
+        save_parameters(self.parameters)
+        

@@ -15,39 +15,48 @@ BORDERS = [
 MARKER_SIZE = 5
 
 class Detector(object):
-    def __init__(self, refs, classifier=None, valid_ids=[]):
+    def __init__(self, refs, classifier=None):
         self.refs = refs
-        self.valid_ids = valid_ids
+
+        # Detection log
         self.nb_tags = 0 # marker nb
         self.nb_quads = 0 # quadrangle nb
+
+        # Different images
         self.frame = None
         self.canny_mat = None
         self.edge_mat = None
-        self.markers_ima = None
-        self.fgmask = None
+        self.markers_mat = None
+
+        # State
         self.online = True
+
+        # Variables
         self.markers_dict = {}
         self.positions = {}
         self.current_tags = []
         self.trajectory = {}
         self.detect_time = {}
         self.homothetie_markers = {}
-        self.method = [{"quads":.0, "detected":.0, "success":.0, "error":.0, "non-tag":.0} for _ in range(2)]
-        self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
-        self.fgbg = cv2.createBackgroundSubtractorMOG2()
-        self.images_stock = {}
-        self.classifier = classifier
         self.positionsHistory = []
 
+        # SVM/NeuralNetwork
+        self.method = [{"quads":.0, "detected":.0, "success":.0, "error":.0, "non-tag":.0} for _ in range(2)]
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(3,3))
+        self.images_stock = {}
+        self.classifier = classifier
 
-    def get(self, info):
-        return {'edges' : self.edge_mat,
-        'canny' : self.canny_mat,
-        'markers': self.markers_ima,
-        'path': self.path_ima,
-        'original' : self.frame,
-        'fgmask' : self.fgmask}[info]
-
+    def getImage(self, image_type):
+        if image_type == "markers":
+            return self.markers_mat
+        elif image_type == "edges":
+            return self.edge_mat
+        elif image_type == "canny":
+            return self.canny_mat
+        elif image_type == "path":
+            return self.path_mat
+        elif image_type == "original":
+            return self.frame
 
     def intensity_detection(self, marker, image):
         tag_id = -1
@@ -61,6 +70,7 @@ class Detector(object):
                 tag_id = self.refs[j].tolist().index(marker.tolist())
             except ValueError:
                 rot_image = np.rot90(rot_image)
+                #marker = get_bit_matrix(rot_image, MARKER_SIZE)
             else:
                 return tag_id, rot_image
         return -1, image
@@ -213,9 +223,9 @@ class Detector(object):
         raw_markers = self.detect(mat_g, sort, approx)
         if raw_markers:
             self.markers_dict = raw_markers
-            self.markers_ima = estimate(frame, self.markers_dict)
+            self.markers_mat = estimate(frame, self.markers_dict)
         else:
-            self.markers_ima = frame
+            self.markers_mat = frame
         curr_positions = self.update_positions(self.positions,self.markers_dict)
         self.normalized_positions = self.normalize_position(curr_positions, w, h)
         self.trajectory, self.path_ima = self.update_trajectory(frame.copy(), self.trajectory, self.positions, curr_positions)
