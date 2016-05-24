@@ -70,6 +70,7 @@ class Master(object):
         for capture_id in self.controller.captures:
             self.detectors[capture_id] = Detector(get_refs(references))
 
+
     def setup_detection_gui(self):
         window_name = "MainWindow"
         window_type = self.interface.getStateType(window_name)

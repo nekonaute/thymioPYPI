@@ -15,6 +15,7 @@ if __name__ == "__main__":
     master = Master(PROJECT_TITLE, WITH_GUI)
 
     # Setup controller and detectors according to mode and ids
+
     master.setup_parameters()
     if WITH_GUI:
         master.setup_interface()
