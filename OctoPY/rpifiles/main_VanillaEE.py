@@ -25,5 +25,6 @@ if __name__ == '__main__':
     print 'starting loop'
     #loop = gobject.MainLoop()
     #call the callback of Braitenberg algorithm
-    handle = gobject.timeout_add (100, main.step) #every 0.1 sec
+    handle = gobject.timeout_add (10, main.step) #every 0.1 sec
     loop.run()
+  
