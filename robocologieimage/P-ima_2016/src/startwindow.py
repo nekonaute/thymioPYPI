@@ -51,7 +51,7 @@ class StartWindow(Window):
                             variable = record_var,
                             onvalue = 1, offvalue = 0,
                             height=1, width = 10)
-        record_var.set(1)
+        record_var.set(0)
         checkbtn.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         entries["record"] = record_var
         parameters["record"] = record_var.get()

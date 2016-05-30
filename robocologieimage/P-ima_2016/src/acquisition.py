@@ -2,6 +2,7 @@
  # -*- coding: utf-8 -*-
 import cv2
 import numpy as np
+import freenect
 
 class Material(object):
     def __init__(self, id_):
@@ -72,19 +73,26 @@ class Kinect(Material):
     def next(self):
         done = True
         frame,_ = freenect.sync_get_video(self.id)
-        frame = cv2.cvtColor(array, cv2.COLOR_RGB2BGR)
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        # undistort
+        h, w = frame.shape[:2]
+        K = np.array([[6526.37013657, 0.00000000, 313.68782938], [0.00000000, 526.37013657, 259.01834898,], [0.00000000, 0.00000000, 1.00000000 ]])
+        d = np.array([0.18126525, -0.39866885, 0.00000000, 0.00000000, 0.00000000]) # just use first two terms (no translation)
+        newcamera, roi = cv2.getOptimalNewCameraMatrix(K, d, (w,h), 0)
+        frame = cv2.undistort(frame, K, d, None, newcamera)
         cv2.waitKey(0)
-        if frame:
+        if frame is not None:
             done = False
         return done, frame
 
     def open(self):
         try:
-            array,_ = freenect.sync_get_video(self.id)
-            array = cv2.cvtColor(array,cv2.COLOR_RGB2BGR)
+            frame,_ = freenect.sync_get_video(self.id)
+            frame = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
         except cv2.error as e:
             print "Camera not connected (id={})".format(self.id)
             self.active = False
         else:
-            print "New camera added (id={})".format(self.id)
+            w, h = frame.shape[:2]
+            print "New camera added (id={}, size={}x{})".format(self.id, w, h)
         self.active = True

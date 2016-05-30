@@ -1,6 +1,6 @@
 {
     "captures": [
-        "D:/Code/thymioPYPI/robocologieimage/P-ima_2016/data/video/kinect/v2/kinect04-24-23.mp4"
+        0
     ], 
     "eps": 0.1, 
     "existing_tags": "[]", 
@@ -11,7 +11,7 @@
     "min_contour_area": 50.0, 
     "min_dist": 0.005, 
     "record": 0, 
-    "record_name": "record_20160525-210502", 
+    "record_name": "record_20160530-125022", 
     "sigma": 0.1, 
-    "time": "20160525-210502"
+    "time": "20160530-125022"
 }

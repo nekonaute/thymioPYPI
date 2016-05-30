@@ -10,10 +10,12 @@ from interface_utilities import save_acquisition
 
 from tkFileDialog import asksaveasfilename
 
+PROJECT_TITLE = "PIMA (2016) - Multiple Camera Robot Detection"
+
 class MainWindow(Window):
     def __init__(self, master, parameters):
         Window.__init__(self, master, parameters)
-        self.title = "title"
+        self.title = PROJECT_TITLE
         self.fps = 0
         self.fps_mean = 0
         self.total_drops = 1e-6
@@ -209,7 +211,7 @@ class MainWindow(Window):
             # Update images
             frame = detectors[cam_id].getImage(self.mode).copy()
             w, h = frame.shape[:2]
-            w, h = max(w-w*55/100, 200), max(h-h*55/100, 300)
+            #w, h = max(w-w*26/100, 200), max(h-h*26/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
             if self.if_record:
@@ -219,12 +221,12 @@ class MainWindow(Window):
     def update_info(self, cameras, detectors, seconds):
         # Compute data
         drops = .0
-        nb_selected = 1e-6
-        nb_detected = 1e-6
-        nb_quads = 1e-6
-        nb_success = 1e-6
-        nb_error = 1e-6
-        nb_doublon = 1e-6
+        nb_selected = 0
+        nb_detected = 0
+        nb_quads = 0
+        nb_success = 0
+        nb_error = 0
+        nb_doublon = 0
         for cam_id, cam in cameras.items():
             detector = detectors[cam_id]
             if not detector.online:
@@ -247,19 +249,19 @@ class MainWindow(Window):
         self.total_success += int(nb_success)
         self.total_doublon += int(nb_doublon)
         self.total_drops += int(drops)
-        self.legend['text'] = 'Quad: {:6}    Tag: {:6} ({:4}%)    '.format(self.total_quads, self.total_tags_all, round(100*(self.total_tags_all/(self.total_quads+1e-8)), 1))
-        self.legend['text'] += 'Unique: {:6} ({:4}%)    '.format(self.total_tags_selected, round(100*self.total_tags_selected/(self.total_tags_all+1e-8), 1))
-        self.legend['text'] += 'Doublon: {:6} ({:4}%)    '.format(self.total_doublon, round(100*self.total_doublon/(self.total_tags_all+1e-8), 1))
-        self.legend['text'] += 'Success: {:6} ({:4}%)    '.format(self.total_success, round(100*self.total_success/(self.total_success+self.total_error+1e-8), 1))
-        self.legend['text'] += 'Error: {:6} ({:4}%)    '.format(self.total_error, round(100*self.total_error/(self.total_success+self.total_error+1e-8), 1))
-        self.legend['text'] += 'Drop: {:6} ({:4}%)'.format(self.total_drops, round(100*(self.total_drops/(self.total_tags_selected+1e-8)), 1))
-        self.prev_dropsPerTag = drops/nb_selected
-        self.prev_tagPerQuads = nb_selected/nb_quads
+        self.legend['text'] = 'Quad: {:6}    Tag: {:6} ({:4}%)    '.format(int(self.total_quads), int(self.total_tags_all), round(100*(self.total_tags_all/(self.total_quads+1e-8)), 1))
+        self.legend['text'] += 'Unique: {:6} ({:4}%)    '.format(int(self.total_tags_selected), round(100*self.total_tags_selected/(self.total_tags_all+1e-8), 1))
+        self.legend['text'] += 'Doublon: {:6} ({:4}%)    '.format(int(self.total_doublon), round(100*self.total_doublon/(self.total_tags_all+1e-8), 1))
+        self.legend['text'] += 'Success: {:6} ({:4}%)    '.format(int(self.total_success), round(100*self.total_success/(self.total_success+self.total_error+1e-8), 1))
+        self.legend['text'] += 'Error: {:6} ({:4}%)    '.format(int(self.total_error), round(100*self.total_error/(self.total_success+self.total_error+1e-8), 1))
+        self.legend['text'] += 'Drop: {:6} ({:4}%)'.format(int(self.total_drops), round(100*(self.total_drops/(self.total_tags_selected+1e-8)), 1))
+        self.prev_dropsPerTag = drops/(nb_selected+1e-8)
+        self.prev_tagPerQuads = nb_selected/(nb_quads+1e-8)
 
     def update_plot(self, cameras, detectors, seconds):
         w, h = 40,40
         if self.tag_channels:
-            if not self.current_tagid:
+            if self.current_tagid is None:
                 self.select_tag(self.tag_channels.keys()[0])
                 self.tag_focus = {}
                 self.tag_focus['group'] = tk.LabelFrame(self.tag_focus_group, bd=0, bg="white")
