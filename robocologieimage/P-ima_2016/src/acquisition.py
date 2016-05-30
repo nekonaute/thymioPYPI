@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import freenect
+import random
 
 class Material(object):
     def __init__(self, id_):
@@ -66,6 +67,8 @@ class Camera(Material):
         self.active = True
 
 class Kinect(Material):
+    ctx = freenect.init()
+
     def __init__(self, capture_id):
         super(Kinect, self).__init__(capture_id)
         self.active = False
@@ -73,6 +76,7 @@ class Kinect(Material):
     def next(self):
         done = True
         frame,_ = freenect.sync_get_video(self.id)
+
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         # undistort
         h, w = frame.shape[:2]
@@ -87,12 +91,18 @@ class Kinect(Material):
 
     def open(self):
         try:
-            frame,_ = freenect.sync_get_video(self.id)
-            frame = cv2.cvtColor(frame,cv2.COLOR_RGB2BGR)
+            ctx = freenect.init()
+            self.device = freenect.open_device(self.ctx, self.id)
+            freenect.set_led(self.device, 1)
+            #freenect.set_video_mode(self.device, freenect.RESOLUTION_HIGH, freenect.VIDEO_RGB)
+            #freenect.set_depth_mode(self.device, freenect.RESOLUTION_HIGH, freenect.DEPTH_REGISTERED)
+            freenect.close_device(self.device)
         except cv2.error as e:
             print "Camera not connected (id={})".format(self.id)
             self.active = False
         else:
+            frame,_ = freenect.sync_get_video(self.id)
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
             w, h = frame.shape[:2]
             print "New camera added (id={}, size={}x{})".format(self.id, w, h)
         self.active = True
