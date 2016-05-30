@@ -7,6 +7,9 @@ import time
 from ThymioFunctions import *
 from optparse import OptionParser
 
+
+DISTANCE_MAX_VISION = 4500
+
 class vision :
 	
 	
@@ -17,7 +20,8 @@ class vision :
 	
 	#Fonction who must update the enter array and return it
 	def updateVision(self):
-		""" DO SOMETHING (but not yet)"""
+		
+		""" DO SOMETHING (but not enough yet)"""
 		for i in xrange (7):
 			self.enter[i] = getSensorValue(i)
 			self.enter[i+7] = getSensorValue(i)
