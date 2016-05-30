@@ -129,22 +129,22 @@ class Window:
         group.pack(fill=tk.X, expand=0, side=tk.BOTTOM)
         self.reset_button = ttk.Button(group,
                                         text='Reset',
-                                        width=20,
+                                        width=17,
                                         command=self.resetParameters)
         self.reset_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         self.load_button = ttk.Button(group,
                                 text='Load Parameters',
-                                width=20,
+                                width=17,
                                 command=self.loadParameters)
         self.load_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         self.save_button = ttk.Button(group,
                                 text='Save Parameters',
-                                width=20,
+                                width=17,
                                 command=self.saveParameters)
         self.save_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         self.apply_button = ttk.Button(group,
                                 text = 'Apply',
-                                width = 20,
+                                width = 17,
                                 command=self.applyEntriesToParams)
         self.apply_button.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
         # Epsilon setup
@@ -203,4 +203,3 @@ class Window:
         for key in self.entries:
             self.parameters[key] = self.entries[key].get()
         save_parameters(self.parameters)
-        

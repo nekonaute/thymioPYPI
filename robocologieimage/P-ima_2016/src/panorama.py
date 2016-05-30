@@ -7,7 +7,7 @@ class Stitcher:
 	def __init__(self):
 		# determine if we are using OpenCV v3.X
 		self.isv3 = imutils.is_cv3()
-        self.cachedH = None
+		self.cachedH = None
 
 	def stitch(self, images, ratio=0.75, reprojThresh=4.0):
 		# unpack the images
@@ -40,7 +40,7 @@ class Stitcher:
 
 		# return the stitched image
 		return result
-        
+
 	def detectAndDescribe(self, image):
 		# convert the image to grayscale
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

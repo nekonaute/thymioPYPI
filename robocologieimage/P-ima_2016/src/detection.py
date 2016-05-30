@@ -203,6 +203,7 @@ class Detector(object):
         return normalized
 
     def update(self, frame, parameters, seconds):
+        self.markers_dict = {}
         self.valid_ids = parameters["existing_tags"].replace("[","").replace("]","").replace(","," ").split()
         self.valid_ids = map(int, self.valid_ids)
         self.previous_tags = self.current_tags[:]

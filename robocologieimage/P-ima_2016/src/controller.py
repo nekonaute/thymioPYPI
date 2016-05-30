@@ -1,7 +1,7 @@
  #!/usr/bin/python
  # -*- coding: utf-8 -*-
 from acquisition import Video
-from acquisition import Camera
+from acquisition import Camera, Kinect
 
 class Controller(object):
     def __init__(self, captures):
@@ -13,7 +13,8 @@ class Controller(object):
             except ValueError:
                 self.captures[capture_id] = Video(capture_id)
             else:
-                self.captures[capture_id] = Camera(capture_id)
+                # self.captures[capture_id] = Camera(capture_id)
+                self.captures[capture_id] = Kinect(capture_id)
         print(self.captures)
 
     def kill(self, ids):

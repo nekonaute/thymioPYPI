@@ -10,6 +10,7 @@ from detection import Detector
 
 from interface_utilities import load_parameters, get_default_parameters
 from utilities import get_refs
+from panorama import Stitcher
 
 PREV_PARAM_FILENAME = "temp_parameters.json"
 DEFAULT_PARAM_FILENAME = "default_parameters.json"
@@ -96,12 +97,43 @@ class Master(object):
     def releaseAll(self):
         if self.output_video:
             self.output_video.release()
+    #
+    # def run(self):
+    #     seconds = 1e-6
+    #     online_captures = {}
+    #     # Check if any camera is broadcasting and no exit call asked
+    #     while True:
+    #         if self.if_interface:
+    #             # Update Tkinter interface using cameras and detectors infos
+    #             self.updateInterface(online_captures, seconds)
+    #         if self.if_record:
+    #             # Start recording broadcast
+    #             self.initRecording()
+    #         # Update controller for new images
+    #         self.controller.update()
+    #         # Collect broadcasting cameras
+    #         online_captures = self.controller.getActive()
+    #         offline_captures = self.controller.getDeactive()
+    #         self.deactiveDetectors(offline_captures)
+    #         self.controller.kill(offline_captures)
+    #         for capture_id, capture in online_captures.items():
+    #             # Select the camera assigned detector
+    #             detector = self.detectors[capture_id]
+    #             # Run detection on next frame and update state
+    #             frame = capture.getFrame()
+    #             detector.update(frame, self.parameters, seconds)
+    #         # Collect offline cameras
+    #         # Update timer and compute framerate
+    #         seconds = self.updateTime() + 1e-6
+    #         fps = 1 / seconds
 
     def run(self):
         seconds = 1e-6
         online_captures = {}
+        st = Stitcher()
         # Check if any camera is broadcasting and no exit call asked
         while True:
+            imgs = []
             if self.if_interface:
                 # Update Tkinter interface using cameras and detectors infos
                 self.updateInterface(online_captures, seconds)
@@ -115,12 +147,18 @@ class Master(object):
             offline_captures = self.controller.getDeactive()
             self.deactiveDetectors(offline_captures)
             self.controller.kill(offline_captures)
-            for capture_id, capture in online_captures.items():
-                # Select the camera assigned detector
-                detector = self.detectors[capture_id]
-                # Run detection on next frame and update state
-                frame = capture.getFrame()
-                detector.update(frame, self.parameters, seconds)
+            if len(online_captures) == 2:
+                for capture_id, capture in online_captures.items():
+                    imgs.append(capture.getFrame())
+                ret, pano = st.stitch(imgs)
+                self.detector[capture_id].update(pano, self.parameters, seconds)
+            else:
+                for capture_id, capture in online_captures.items():
+                    # Select the camera assigned detector
+                    detector = self.detectors[capture_id]
+                    # Run detection on next frame and update state
+                    frame = capture.getFrame()
+                    detector.update(frame, self.parameters, seconds)
             # Collect offline cameras
             # Update timer and compute framerate
             seconds = self.updateTime() + 1e-6
