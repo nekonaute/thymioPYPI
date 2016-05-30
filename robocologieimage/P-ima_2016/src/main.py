@@ -6,11 +6,9 @@ from utilities import get_refs
 # Do not modify
 DEFAULT_REFS = "../data/ref_markers_512bits.json"
 PROJECT_TITLE = "PIMA (2016) - Multiple Camera Robot Detection"
+WITH_GUI = True
 
 if __name__ == "__main__":
-    # Active graphical interface (you need Tkinter)
-    WITH_GUI = True
-
     # Initizalize world
     master = Master(PROJECT_TITLE, WITH_GUI)
 

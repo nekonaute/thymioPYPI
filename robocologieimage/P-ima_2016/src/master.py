@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 
 from interface import Interface
-from acquisition import Controller
+from controller import Controller
 from detection import Detector
 
 from interface_utilities import load_parameters, get_default_parameters
@@ -70,7 +70,6 @@ class Master(object):
         for capture_id in self.controller.captures:
             self.detectors[capture_id] = Detector(get_refs(references))
 
-
     def setup_detection_gui(self):
         window_name = "MainWindow"
         window_type = self.interface.getStateType(window_name)
@@ -102,7 +101,6 @@ class Master(object):
         seconds = 1e-6
         online_captures = {}
         # Check if any camera is broadcasting and no exit call asked
-        print(self.parameters)
         while True:
             if self.if_interface:
                 # Update Tkinter interface using cameras and detectors infos
@@ -116,14 +114,13 @@ class Master(object):
             online_captures = self.controller.getActive()
             offline_captures = self.controller.getDeactive()
             self.deactiveDetectors(offline_captures)
-            # Collect Parameters
-            parameters = self.interface.getParameters()
+            self.controller.kill(offline_captures)
             for capture_id, capture in online_captures.items():
                 # Select the camera assigned detector
                 detector = self.detectors[capture_id]
                 # Run detection on next frame and update state
                 frame = capture.getFrame()
-                detector.update(frame, parameters, seconds)
+                detector.update(frame, self.parameters, seconds)
             # Collect offline cameras
             # Update timer and compute framerate
             seconds = self.updateTime() + 1e-6

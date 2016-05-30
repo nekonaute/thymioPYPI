@@ -209,7 +209,7 @@ class MainWindow(Window):
             # Update images
             frame = detectors[cam_id].getImage(self.mode).copy()
             w, h = frame.shape[:2]
-            w, h = max(w-w*65/100, 200), max(h-h*65/100, 300)
+            w, h = max(w-w*55/100, 200), max(h-h*55/100, 300)
             self.update_image(frame, self.channels[cam_id]['image'], h, w)
 
             if self.if_record:
@@ -291,7 +291,7 @@ class MainWindow(Window):
                             round(detector.normalized_positions[self.current_tagid][0][0], 3),
                             round(detector.normalized_positions[self.current_tagid][0][1],3),
                             round(detector.detect_time[self.current_tagid], 1),
-                            ', '.join([str(cam) for cam in detectors.keys() if self.current_tagid in detectors[cam].markers_dict.keys()]))
+                            ', '.join(["{}".format(str(cam))[-4:] for cam in detectors.keys() if self.current_tagid in detectors[cam].markers_dict.keys()]))
                     # Update images
                     frame = detector.homothetie_markers[self.current_tagid]
                     self.update_image(frame, self.tag_focus['image'], w, h)
