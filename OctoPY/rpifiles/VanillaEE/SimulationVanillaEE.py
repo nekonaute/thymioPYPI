@@ -72,12 +72,12 @@ class SimulationVanillaEE(Simulation.Simulation) :
 				self.evaluation()
 			
 				self.updateFitness()
-			
+    
 				print self.fitness
 		
-# 			self.resourcesManagement()
+ 			self.resourcesManagement()
 		
-# 			self.tchatBetweenRobot()
+ 			self.tchatBetweenRobot()
 		
 			self.evolution()
 			
@@ -88,7 +88,7 @@ class SimulationVanillaEE(Simulation.Simulation) :
 			loop.quit()
 			return False
 
-
+#    evaluate the environement and control the wheel
 	def evaluation(self):
 		entry = self.eye.updateVision()
 		s = ""
@@ -102,16 +102,20 @@ class SimulationVanillaEE(Simulation.Simulation) :
 		#setMotorSpeed(0, 0)
 		#setMotorSpeed(100, 100)
 	
+# manage the resources, if it had any in the enveronement, it will not be use
 	def resourcesManagement(self):
 		if (self.resources > 0):
 			self.resources += -1 ;
 		if (self.resources == 0):
 			self.alive = False
 	
+ # this function is use to speak with other robot, you are free to change it
+ # in this state, it will sens to all other robots is genome and is fitness
 	def tchatBetweenRobot(self):
 		self.broadcast()
 		
-	
+# this function is use to evolve the robots when we considerate the genome pool and their associate fitness
+  #you can change it, but it is not welcoming
 	def evolution(self):
 		if (self.ticks == self.generations):
 			ticks = 0
@@ -138,7 +142,8 @@ class SimulationVanillaEE(Simulation.Simulation) :
 				self.fitness = 0
 		
 		
-	
+#	make a selection with the differents genomes in the genome pool
+  #the tournamentSize define how many genome we take randomly ans then we selectionate the best of them
 	def tournament(self,tourmanentSize):
 		if tourmanentSize <= 0 :
 			print "ERROR : tournamentSize incorrect"
@@ -157,12 +162,12 @@ class SimulationVanillaEE(Simulation.Simulation) :
 		return greatessGenome
 		
 		
-		
+      #say if the genome of this agent is the same than an other
 	def equals(self, other):
 		
 		return  self.myGenome.equals (other.myGenome)
 			
-		
+   #function to receive message of other robots
 	def receiveComMessage(self, data) :
 		sender = ""
 		value = []
@@ -170,6 +175,7 @@ class SimulationVanillaEE(Simulation.Simulation) :
 			sender = data["senderHostname"]
 
 			if "value" in data.keys() :
+                      flash(red, bleu)
 				value = data["value"]
 				self.__listMessages.append((sender, value))
 				self.genomePool.append(value[0])
@@ -186,7 +192,7 @@ class SimulationVanillaEE(Simulation.Simulation) :
 
 
 
-
+#    boradcast his genome to all robots 
 	def broadcast (self):
 		try :
 			
@@ -199,7 +205,7 @@ class SimulationVanillaEE(Simulation.Simulation) :
 		except :
 			self.mainLogger.critical('SimulationTestCommunication - Unexpected error' )
 
-
+#update his fitness we what he see
 	def updateFitness(self) :
 		Sk = 0
 		for i in range (7):
@@ -209,9 +215,11 @@ class SimulationVanillaEE(Simulation.Simulation) :
 		self.oldtransitifAcelleration = getAccelerometerValue(0)
 		self.oldAngularAcelleration= getAccelerometerValue(1)
 		
+  #do i have really to comment ?
 	def getTrasitiveAcceleration(self):
 		return getAccelerometerValue(0) - self.oldtransitifAcelleration
 		
+  #refer to the comment of getTransitiveAcceleration
 	def getAngularAceeleration(self):
 		return getAccelerometerValue(1) - self.oldAngularAcelleration	
 		
