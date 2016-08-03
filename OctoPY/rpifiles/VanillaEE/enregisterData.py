@@ -1,66 +1,145 @@
+#!/usr/bin/env/python
+
+import Simulation
+import Params
+import copy
 
 
-
-
-class data(Simulation.Simulation) :
+class data() :
     
-    def __init__(self, controller, mainLogger) :
-        self.fileName = ["fitness","reservoirSize","active","genome"]
-        self.variable = ""
-        
-        """comminication"""
-        Simulation.Simulation.__init__(self, controller, mainLogger)
-        listRpis = Params.params.list_rpis
-        self.__listRpis = listRpis.split(',')
-        self.__frequencyMess = int(Params.params.frequency_mess)
-        self.__maxMess = int(Params.params.max_mess)
-
-        self.__listMessages = list()
-        self.__cptStep = 0
-        
-        
-
-    def preActions(self) :
-        pass
-
-    def postActions(self) :
-        pass
-
-    def step(self) :
-        try :
-            while len(self.__listMessages) > 0 :
-                message = self.__listMessages.pop(0)
-                self.mainLogger.debug('SimulationTestCommunication - Received ' + str(message[1]) + ' from ' + str(message[0]))
-
-            if (self.__cptStep % self.__frequencyMess == 0) and ((self.__cptStep/self.__frequencyMess) < self.__maxMess) :
-                recipientsList = ''
-
-                for rpi in self.__listRpis :
-                    recipientsList += str(rpi) + ','
-                self.sendMessage(recipients = recipientsList, value = self.__cptStep)
-
-            self.__cptStep += 1
-            time.sleep(0.5)
-        except :
-            self.mainLogger.critical('SimulationTestCommunication - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-
-
-
-
-    def receiveComMessage(self, data) :
-        if "senderHostname" in data.keys() :
-            sender = data["senderHostname"]
-
-            if "value" in data.keys() :
-                value = data["value"]
-                self.__listMessages.append((sender, value))
-            else :
-                self.mainLogger.error('SimulationTestCommunication - Receiving message from ' + str(sender) + ' without value data : ' + str(data))
-        else :
-            self.mainLogger.error('SimulationTestCommunication - Receiving message without sender : ' + str(data)) 
+   def __init__(self,myController):
+         """ record of log """
+         self.recordGenome= []
+         self.recordFitness= []
+         self.recordReservoirSize= []
+         self.recordAgentAlive= []
+         self.myController = myController
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbGenome.csv","w")
+         mon_file.write("number of Genome\n")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitness.csv","w")
+         mon_file.write("median fitness\n")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/reservoirSize.csv","w")
+         mon_file.write("median reservoir size\n")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitnessMax.csv","w")
+         mon_file.write("max fitness\n")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/reservoirSizeMax.csv","w")
+         mon_file.write("max reservoir size\n")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbAlive.csv","w")
+         mon_file.write("number of agent active\n")
+         mon_file.close()
+   
+   
             
-            
-            
+   def setFitness(self,fitness) :
+        self.recordFitness = fitness
+        
+   def setGenome(self,Genome) :
+        self.recordGenome = Genome
+        
+   def setAgentAlive(self,AgentAlive) :
+        self.recordAgentAlive = AgentAlive
+        
+   def setReservoirSize(self,ReservoirSize) :
+        self.recordReservoirSize = ReservoirSize
+        
+   def setAll(self,arrayFitness, arrayGenome,arrayAgentAlive= [],arrayReservoirSize=[]):
+       self.setFitness(arrayFitness)
+       self.setGenome(arrayGenome)
+       self.setAgentAlive(arrayAgentAlive)
+       self.setReservoirSize(arrayReservoirSize)
+       
+       
+   def save(self):
+         
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbGenome.csv","a")
+         mon_file.write(str(self.countGenome(self.recordGenome))+";")
+         mon_file.close()
+         fitnessSort = self.sort (self.recordFitness)
+         median = self.getMedian(fitnessSort)
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitness.csv","a")
+         mon_file.write(str(median)+";")
+         mon_file.close()
+         maxi =fitnessSort[len(fitnessSort)-1]
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitnessMax.csv","a")
+         mon_file.write(str(maxi)+";")
+         mon_file.close()
+         mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbAlive.csv","a")
+         mon_file.write(str(self.countAlive(self.recordAgentAlive))+";")
+         mon_file.close()
+         if self.myController.actualGeneration >= self.myController.numberOfGeneration:
+             mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbGenome.csv","a")
+             mon_file.write("\n")
+             mon_file.close()
+             mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitness.csv","a")
+             mon_file.write("\n")
+             mon_file.close()
+             mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/fitnessMax.csv","a")
+             mon_file.write("\n")
+             mon_file.close()
+             mon_file = open ("/home/pi/dev/thymioPYPI/OctoPY/rpifiles/VanillaEE/log/nbAlive.csv","a")
+             mon_file.write("\n")
+             mon_file.close()
+
+
+#all in one  (and not one in all)         
+   def update(self,arrayFitness, arrayGenome,arrayAgentAlive= [],arrayReservoirSize=[]):    
+       self.setAll(arrayFitness, arrayGenome,arrayAgentAlive,arrayReservoirSize)
+       self.save()
+       
+       
+       
+       
+       
+       
+       
+   # sort the array given and return the result     
+   def sort (self, array):
+       copied = copy.deepcopy(array)
+       result = []
+       while len(copied) != 0:
+           mini = copied[0]
+           argmin =0
+           for j in range (len(copied)):
+               if (mini > copied[j]):
+                   mini = copied[j]
+                   argmin = j
+           result.append(copied[argmin])
+           copied.pop(argmin)
+       return result
+     
+    
+   #give the median of the array which is sort before    
+   def getMedian(self, arraySort):
+       return arraySort[int(len(arraySort)/2)]
+       
+       
+   def countAlive(self,array):
+        nbAlive=0
+        for i in range (len(array)):
+            nbAlive += array[i]
+        return nbAlive               
+               
+   def countGenome(self, arrayGenome):
+       nbgenome =0
+       arrayExistant=[]
+       for i in range (len(arrayGenome)):
+           exist = False
+           for j in arrayExistant :
+               if (arrayGenome[i].getID() == j):
+                   exist = True
+           if ( not exist):
+               nbgenome +=1
+               arrayExistant.append(arrayGenome[i].getID())
+       return nbgenome
+       
+       
+       
+       
             
             
             

@@ -2,41 +2,55 @@
 
 import numpy as np
 import random
-
+import math
 import copy
+
+MAX_SPEED_VALUE = 200
 
 class genome :
     
-    def __init__(self, geneSize = 0,_genome = None ) :
+    def __init__(self,owner="", geneSize = 0, gene = [] ) :
+        self.owner = owner
         if (geneSize != 0):
             self.gene = np.zeros(geneSize)
             for i in range (geneSize) :
-                self.gene[i]= -0.1 + random.random()*0.2
-            self.gene[len(self.gene)/2 -1] *=1000 # based speed
-            self.gene[len(self.gene)-1] *=1000 # based speed
-        elif (_genome != None):
-            self = copy.deepcopy(_genome)  
+                self.gene[i]= (-1 + random.random()*2) * 5
+#            self.gene[len(self.gene)/2 -1] *=100 # based speed
+#            self.gene[len(self.gene)-1] *=100 # based speed
+        elif (gene != []):
+            self.gene = gene 
         
     def evaluationLeft(self, enter):
         result = 0
-        for i in range (len(self.gene)/2):
+        for i in range (len(self.gene)/2 ):
             if (i< len(enter)):
                 result += self.gene[i] * enter[i]
             else :
                 result += self.gene[i]
-        return result  
+        return self.fonctionActivation(result)  
     
     def evaluationRight(self,enter):
         result = 0
-        for i in range (len(self.gene)/2):
+        genomeSize =len(self.gene)/2
+        for i in range (genomeSize ):
             if (i< len(enter)):
-                result += self.gene[i+len(self.gene)/2] * enter[i]
+                result += self.gene[i+genomeSize] * enter[i]
             else :
-                result += self.gene[i+len(self.gene)/2]
-        return result 
+                result += self.gene[i+genomeSize]
+        return self.fonctionActivation(result) 
+        
+        
+        
+    def fonctionActivation(self,x):
+        result = (1/(1+ math.exp(-x))) * MAX_SPEED_VALUE *2  - MAX_SPEED_VALUE
+        if result > MAX_SPEED_VALUE:
+            result = MAX_SPEED_VALUE
+        if (result < -1* MAX_SPEED_VALUE):
+            result = -1 * MAX_SPEED_VALUE
+        return result
     
     def MutationLinear(self,alpha,epsilon):
-        copyGenome = genome (self)
+        copyGenome = genome(owner= self.owner ,gene= copy.deepcopy(self.gene))
         for i in range (alpha) :
             rand = random.randint(0, len(self.gene))
             copyGenome[rand] = copyGenome[rand] * (-1)**(random.randint(0,100)) *random.random() * epsilon
@@ -44,9 +58,9 @@ class genome :
         
     
     def MutationGaussian(self,sigma ):
-        copyGenome = genome (self)
+        copyGenome = genome(owner= self.owner ,gene= copy.deepcopy(self.gene))
         for i in range (len(self.gene)) :
-            copyGenome[i] = np.random.normal(copyGenome[i], sigma)
+            copyGenome.setGene(i, np.random.normal(copyGenome.getGene(i), sigma))
         return copyGenome 
         
     
@@ -57,6 +71,13 @@ class genome :
     #set the gene value to the position index
     def setGene(self, index,value):
         self.gene[index] = value
+        
+    def getID(self):
+        return self.owner
+        
+     #replace the gene by the gene given in entry   
+    def setAllGenes(self,genes ):
+        self.gene = genes
     
     #obtain the value of the index position
     def getGene(self, index):
@@ -65,19 +86,22 @@ class genome :
     
     
     def equals(self, other):
-        if (len(self.gene) != len(other.gene) ):
+        if (len(self.gene) != other.getSize() ):
             return False
         for i in range ( len(self.gene)):
-            if (self.gene[i] != other.gene[i]):
+            if (self.gene[i] != other.getGene(i)):
                 return False
         return True
     
     def toString(self):
         s = ""
-        for i in range (len(self.gene)):
+        for i in range (len(self.gene)-1):
             s += str(self.getGene(i)) +"|"
-        s += "\n"
+        s += str(self.getGene(len(self.gene) -1))
+        s+= "$"+str(self.owner)
         return s
+        
+        
     
     
     

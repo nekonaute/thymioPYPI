@@ -4,28 +4,46 @@ import dbus
 import dbus.mainloop.glib
 import gobject
 import time
-from ThymioFunctions import *
+#from ThymioFunctions import *
 from optparse import OptionParser
+import Simulation
 
 
 DISTANCE_MAX_VISION = 4500
+PROX_SENSORS_MAX_VALUE = 4500
 
 class vision :
 	
 	
-	def __init__(self):
+	def __init__(self,size, controller):
 		"""must detect separatly the robot [0,6] , the resources [7,13] and the other obstacles [14,20]"""
-		self.enter =np.zeros(7*3) 
+		self.enter =np.zeros(size) 
+		self.controller = controller
 	
 	
 	#Fonction who must update the enter array and return it
-	def updateVision(self):
+	def updateVisionOld(self):
 		
-		""" DO SOMETHING (but not enough yet)"""
+		""" DO SOMETHING """
+#		self.controller.waitForControllerResponse()
+		self.controller.tController.readSensorsRequest()
+		self.controller.waitForControllerResponse()
+		proxSensors = self.controller.tController.getPSValues()
 		for i in xrange (7):
-			self.enter[i] = getSensorValue(i)
-			self.enter[i+7] = getSensorValue(i)
-			self.enter[i+14] = getSensorValue(i)
+			self.enter[i] = PROX_SENSORS_MAX_VALUE - proxSensors[i]
+			self.enter[i+7] = PROX_SENSORS_MAX_VALUE - proxSensors[i]
+			self.enter[i+14] = PROX_SENSORS_MAX_VALUE - proxSensors[i]
 			
 		return self.enter
 		
+  
+	def updateVision(self):
+#		self.controller.waitForControllerResponse()
+		self.controller.tController.readSensorsRequest()
+		self.controller.waitForControllerResponse()
+		proxSensors = self.controller.tController.getPSValues()
+		self.enter= [0,0,0,0,0,0,0]
+		for i in xrange (7):
+			self.enter[i] =  abs ((1.0* proxSensors[i])/ DISTANCE_MAX_VISION)
+			
+		return self.enter
