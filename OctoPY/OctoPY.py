@@ -583,7 +583,7 @@ class OctoPYInteractive(cmd.Cmd) :
 		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
+		print '\n'.join([ 'look [range] [-s save_table]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---
@@ -602,7 +602,13 @@ class OctoPYInteractive(cmd.Cmd) :
 				else :
 					IPs = args[1:]
 
-			octoPYInstance.sendMessage(message, IPs, data)
+			if message < -1 or message >= MessageType.ACK :
+				octoPYInstance.logger.error('sendMessage - Incorrect message value: ' + str(message) + ' !')
+			else :
+				if message == MessageType.REGISTER :
+					octoPYInstance.logger.error('sendMessage - REGISTER cannot be used directly !')
+				else :
+					octoPYInstance.sendMessage(message, IPs, data)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 
@@ -620,7 +626,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			if len(args) < 2 or not(args[1].isdigit()) :
 				# We propose the list of all the messages
 				completions = MessageType.getAllAttributes()
-				completions = [str(att[0] + ":" + str(att[1])) for att in completions]
+				completions = [str(att[0] + ":" + str(att[1])) for att in completions if int(att[1]) >= 0 and int(att[1]) <= int(MessageType.SET)]
 			else :
 				# Else we return all the hostnames
 				if octoPYInstance.hashThymiosHostnames != None :
