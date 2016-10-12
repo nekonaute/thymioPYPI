@@ -41,7 +41,7 @@ mainLogger = None
 # Messages from CommandsListener
 class MessageCommand() :
 	NONE = -1
-	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA = range(0, 8)
+	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA, COM = range(0, 9)
 
 
 # Simulation observer
@@ -134,6 +134,13 @@ class MainController() :
 		else :
 			self.__simulation.addData(data)
 
+	def __comMessage(self, data) :
+		mainLogger.debug('MainController - Sending com message...')
+		if not self.__simulation or self.__simulation.isStopped() :
+			mainLogger.error('MainController - Request for sending com message while no simulation started.')
+		else :
+			self.__simulation.receiveComMessage(data)
+
 	def __stopSimulation(self) :
 		if not self.__simulation or self.__simulation.isStopped() :
 			mainLogger.error('MainController - Request for simulation stop while no simulation started.')
@@ -173,7 +180,7 @@ class MainController() :
 			return False
 
 		if "ID" not in data :
-			mainLogger.error("MainController - No ID for registering observer.")
+			mainLogger.e__controllerrror("MainController - No ID for registering observer.")
 			return False
 
 		observerIP = data["IP"]
@@ -191,6 +198,19 @@ class MainController() :
 		mainLogger.debug("MainController - Notifying with : " + str(params))
 		for observer in self.__observers :
 			observer.notify(**params)
+
+
+	def sendMessage(self, **params) :
+		mainLogger.debug("MainController - Sending message with : " + str(params))
+
+		message = utils.Message()
+		message.msgType = MessageType.COM
+		message.data = params
+
+		# We send the communication message
+		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		sock.connect(('192.168.0.210', 44444))
+		sendOneMessage(sock, message)
 
 
 	def getCommand(self, command, data = None) :
@@ -232,6 +252,8 @@ class MainController() :
 							self.__setSimulation(commandData)
 						elif command == MessageCommand.DATA :
 							self.__sendData(commandData)
+						elif command == MessageCommand.COM :
+							self.__comMessage(commandData)
 						elif command == MessageCommand.STOP :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
@@ -267,6 +289,9 @@ class CommandsListener(threading.Thread) :
 
 	def run(self):
 		while 1:
+			"""TEST"""
+			mainLogger.debug("!!!######################DEBUT DU WHILE 1 ###############################################!!!")
+			"""TEST"""
 			try:
 				# Waiting for client...
 				mainLogger.debug("CommandsListener - Waiting on accept...")
@@ -296,6 +321,9 @@ class CommandsListener(threading.Thread) :
 					data = message.data
 				elif message.msgType == MessageType.DATA :
 					messageCommand = MessageCommand.DATA
+					data = message.data
+				elif message.msgType == MessageType.COM :
+					messageCommand = MessageCommand.COM
 					data = message.data
 				elif message.msgType == MessageType.STOP :
 					messageCommand = MessageCommand.STOP
