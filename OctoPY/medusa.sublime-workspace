@@ -4,6 +4,62 @@
 		"selected_items":
 		[
 			[
+				"e",
+				"excludeFiles"
+			],
+			[
+				"list",
+				"listExcludeFiles"
+			],
+			[
+				"fil",
+				"fileRead"
+			],
+			[
+				"FIL",
+				"FILE_EXCLUDE"
+			],
+			[
+				"__wei",
+				"__weightsHtoO2"
+			],
+			[
+				"hid",
+				"hiddenNeurons"
+			],
+			[
+				"hi",
+				"hiddenNN"
+			],
+			[
+				"_main",
+				"__mainLogger"
+			],
+			[
+				"__cam",
+				"__cameraUpdate"
+			],
+			[
+				"__ca",
+				"__cameraUpdate"
+			],
+			[
+				"__main",
+				"__mainLogger"
+			],
+			[
+				"Camera",
+				"CameraThread"
+			],
+			[
+				"det",
+				"detectColors"
+			],
+			[
+				"mai",
+				"mainSimul"
+			],
+			[
 				"to",
 				"totalRight"
 			],
@@ -188,10 +244,6 @@
 				"randint"
 			],
 			[
-				"list",
-				"listSquares"
-			],
-			[
 				"_ge",
 				"_genome"
 			],
@@ -262,10 +314,6 @@
 			[
 				"return",
 				"returncode"
-			],
-			[
-				"e",
-				"exceptional"
 			],
 			[
 				"soc",
@@ -400,10 +448,34 @@
 	"buffers":
 	[
 		{
-			"file": "/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
+			"file": "/home/arthur/Documents/Thesis/Manuscript/src/C2_Article2.tex",
 			"settings":
 			{
-				"buffer_size": 36875,
+				"buffer_size": 44776,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/arthur/Documents/Thesis/Manuscript/src/C2_Article1.tex",
+			"settings":
+			{
+				"buffer_size": 38031,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/arthur/Documents/Thesis/Manuscript/src/C1_Article2.tex",
+			"settings":
+			{
+				"buffer_size": 4300,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/arthur/Documents/Thesis/Manuscript/src/C1_Article1.tex",
+			"settings":
+			{
+				"buffer_size": 38363,
 				"line_ending": "Unix"
 			}
 		}
@@ -432,6 +504,49 @@
 	},
 	"file_history":
 	[
+		"/home/arthur/Documents/Thesis/bibAdditions.bib",
+		"/home/arthur/Documents/Thesis/Manuscript/src/C1_Article1.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/introduction.tex",
+		"/home/arthur/Documents/Article Leadership/Article.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/TODO",
+		"/home/arthur/Documents/Thesis/Manuscript/src/C2_Intro.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/content.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/part2.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/C1_Intro.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/chapter2.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/manuscript.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/chapter1.tex",
+		"/home/arthur/Documents/Article Leadership/Article.bib",
+		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsArticleLeadership.py",
+		"/home/arthur/Documents/Thesis/Manuscript/bib/thesis.bib",
+		"/home/arthur/Documents/Thesis/compareBib.py",
+		"/home/arthur/Documents/Presentation_EPFL/QuestionsEPFL.txt",
+		"/home/arthur/Documents/ArticlePLOS/Soumission/ArticleSubmission_BernardAndreBredeche.tex",
+		"/home/arthur/Documents/Thesis/Manuscript/src/C2_Article1.tex",
+		"/home/arthur/Documents/Thesis/tmp",
+		"/home/arthur/Documents/ArticleALIFE/biblioALIFE",
+		"/lib/udev/hwdb.d/60-keyboard.hwdb",
+		"/lib/udev/hwdb.d/70-keyboard.hwdb",
+		"/home/arthur/Documents/Thesis/Manuscript/Makefile",
+		"/home/arthur/Documents/Thesis/exclude.txt",
+		"/home/arthur/Documents/Mendeley/Biblio.bib",
+		"/home/arthur/Documents/Biblio/Biblio.bib",
+		"/home/arthur/Documents/Thesis/Manuscript/saveTmp",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Camera.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/MainController.py",
+		"/home/arthur/thymioPYPI/OctoPY/OctoPY.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHunt/SimulationStagHunt.py",
+		"/home/arthur/Documents/Thesis/Plan.txt",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHuntLeader.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHuntFollower.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/ThymioController.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/Simulation.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/StagHuntThread/SimulationStagHuntThread.py",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHuntThread.cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_StagHunt (copy).cfg",
+		"/home/arthur/thymioPYPI/OctoPY/rpifiles/config_SimulationStagHuntThread.cfg",
+		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
 		"/home/arthur/thymioPYPI/medusa/medusa.py",
 		"/home/arthur/Downloads/pithymio.py",
 		"/home/arthur/thymioPYPI/medusa/rpifiles/SimulationBraitenberg/SimulationBraitenberg.py",
@@ -469,7 +584,6 @@
 		"/home/arthur/thymioPYPI/medusa/rpifiles/_init_thymio.sh",
 		"/home/arthur/ThymioErrors.txt",
 		"/home/arthur/thymioPYPI/medusa/config.json",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
 		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/rpis/algorithm.py",
 		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/reboot_all.sh",
 		"/home/arthur/thymioPYPI/amsterdam/three_fold_adaptation/scripts/start_all.sh",
@@ -517,46 +631,7 @@
 		"/home/arthur/thymioPYPI/paris/Bazar/script.py",
 		"/home/arthur/Documents/Article PROCB/ArticlePROCB.tex",
 		"/home/arthur/Documents/Article PROCB/JBA_ArticlePROCB.tex",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionEaFinite.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/wscript",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllPayoffEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/defparams.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionEa.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/BestPayoffEval.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/includes.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/StagHunt.cpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/refactResults.py",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsGeneration.py",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllPayoffsEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/BestFitEval.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/AllFitEvalStat.hpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/drawGraphs.perl",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/PhenInvasion.hpp",
-		"/home/arthur/sferes2-0.99/sferes/parallel.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/FitnessProp.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/EvalInvasion.hpp",
-		"/home/arthur/sferes2-0.99/sferes/misc/rand.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionGen.hpp",
-		"/home/arthur/sferes2-0.99/sferes/ea/nsga2.hpp",
-		"/home/arthur/sferes2-0.99/sferes/ea/ea.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/Elitist-CoEvo.hpp",
-		"/home/arthur/sferes2-0.99/sferes/phen/indiv.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/PhenChasseur.hpp",
-		"/home/arthur/sferes2-0.99/sferes/misc.hpp",
-		"/home/arthur/sferes2-0.99/exp/StagHunt-Following/ElitistGen.hpp",
-		"/home/arthur/sferes2-0.99/scriptsArthur/rmGen.py",
-		"/home/arthur/sferes2-0.99/sferes/gen/evo_float.hpp",
-		"/home/arthur/sferes2-0.99/test.py",
-		"/home/arthur/WorldOfSprites/World.java",
-		"/home/arthur/Documents/Article ECAL/ArticleECAL.tex",
-		"/home/arthur/Downloads/2015ACLI3355.bib",
-		"/home/arthur/Documents/Article PROCB/ArticlePROCB.bib",
-		"/home/arthur/Dropbox/Taff/Article PROCB BCK/ArticlePROCB.bib",
-		"/home/arthur/Documents/Article PROCB v. 2015-01-23/ArticlePROCB.bib",
-		"/home/arthur/Documents/Article PROCB/Masri : 16h 17h 18h",
-		"/home/arthur/Dropbox/Taff/Article ECAL/ArticleECAL.tex",
-		"/home/arthur/Documents/Article ECAL v. 2015-03-16/ArticleECAL.tex",
-		"/home/arthur/.config/sublime-text-2/Packages/User/Preferences.sublime-settings"
+		"/home/arthur/sferes2-0.99/exp/StagHunt-Invasion/InvasionEaFinite.hpp"
 	],
 	"find":
 	{
@@ -571,9 +646,83 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"Bernard",
+			"\\subsection",
+			"Subsections",
+			"multi-robots",
+			"Multi-robots",
+			"multi-robots",
+			"multi-",
+			"refered",
+			"heterogenous",
+			"aeruginosas",
+			"Pseudomonas",
+			"aeruginoas",
+			"public ",
+			"preys",
+			"tabPlotGeneration)/10",
+			"board",
+			"125 if hunted solitary",
+			"preys",
+			"Tinbergen1969",
+			"Nolfi2008",
+			"heterogeneous",
+			"heterogeneity",
+			"model",
+			"embodied",
+			"black box",
+			"enforceme",
+			"freeloa",
+			"cleaner",
+			"reciprocity",
+			"~\\parencite{Trivers1971}",
+			"reciprocity",
+			"group au",
+			"Lehmann2006",
+			"West2011",
+			"Szathamary1995",
+			"goal",
+			"siderophores",
+			"elastase",
+			"cheater",
+			"gut",
+			"behaviour-bas",
+			"hyena",
+			"lion",
+			"Hymenop",
+			"Hyme",
+			"micro",
+			"subsection:RL",
+			"stockage",
+			"Bredec",
+			"Bonabeau1999",
+			"swarm robotics",
+			"Brooks",
+			"stimul",
+			"behaviour-",
+			"Stone1995",
+			"e",
+			" \n",
+			"DEP_DIR",
+			"line",
+			"For",
+			"Baale",
+			"hyena",
+			"agg",
+			"fondamental",
+			"modeling",
+			"\\ref",
+			"ref",
+			"\\ref",
+			"weightsHtoO2",
+			"__weightsHtoO2",
+			"computeNN",
+			"commandRecei",
+			"getCamera",
+			"SimulationStagHunt",
 			"__sound",
 			"self.stop",
 			".stop",
@@ -627,81 +776,7 @@
 			"Dirt",
 			"Dirty",
 			"loadHostnamesTable",
-			"sort",
-			"exit",
-			"randin",
-			"random.rand()",
-			"epoch",
-			"Graph(",
-			"{",
-			"001",
-			"ping -",
-			"queryThymios",
-			"rate0",
-			"RATE0",
-			"RATE",
-			"RATE0005",
-			"TRUSTED_CLIENTS",
-			"listThymiosState",
-			"sendMessage",
-			"communicate",
-			"ping",
-			"IPs",
-			"listThymiosState",
-			"resolveAddress",
-			"rangeArg",
-			"myIP",
-			"options.send",
-			"sendMessage",
-			"options",
-			"sockACK",
-			"waitingACK",
-			"sendMessage",
-			"sockACK",
-			"CommandsListener",
-			"json",
-			"fileHander",
-			"err",
-			"lev",
-			"])\n",
-			"2015_06_01",
-			"behaviourTraces",
-			"behavior",
-			"this->pop_offsprings",
-			"recombination_",
-			"RECOMBINATION",
-			"2015_05_19",
-			"Invasion",
-			"setting15",
-			"SETTING15",
-			"FitEval",
-			"ALL_PAYOFFS",
-			"ea.pop()[i]",
-			"BEST_FIT",
-			"evaluation",
-			"lastEval",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEval",
-			"evaluation",
-			"lastEval",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"lastEvalRun",
-			"lastEval",
-			"tabEvaluation",
-			"evaluation",
-			"tabEvaluation",
-			"evaluation",
-			"lastEvalRun",
-			"lastEval"
+			"sort"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -727,27 +802,110 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/home/arthur/sferes2-0.99/scriptsArthur/drawGraphsECAL.py",
+					"file": "/home/arthur/Documents/Thesis/Manuscript/src/C2_Article2.tex",
 					"settings":
 					{
-						"buffer_size": 36875,
+						"buffer_size": 44776,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13054,
-								13054
+								4570,
+								4570
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7276.0,
+						"translation.y": 432.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/arthur/Documents/Thesis/Manuscript/src/C2_Article1.tex",
+					"settings":
+					{
+						"buffer_size": 38031,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								337,
+								337
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 324.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/arthur/Documents/Thesis/Manuscript/src/C1_Article2.tex",
+					"settings":
+					{
+						"buffer_size": 4300,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								516,
+								516
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/arthur/Documents/Thesis/Manuscript/src/C1_Article1.tex",
+					"settings":
+					{
+						"buffer_size": 38363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								159,
+								159
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -797,16 +955,64 @@
 		"selected_items":
 		[
 			[
+				"came",
+				"rpifiles/Camera.py"
+			],
+			[
+				"simu",
+				"rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"ma",
+				"rpifiles/MainController.py"
+			],
+			[
+				"oc",
+				"OctoPY.py"
+			],
+			[
+				"simula",
+				"rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
+				"ca",
+				"rpifiles/Camera.py"
+			],
+			[
+				"config_staghuntle",
+				"rpifiles/config_StagHuntLeader.cfg"
+			],
+			[
+				"config_staghuntf",
+				"rpifiles/config_StagHuntFollower.cfg"
+			],
+			[
+				"config_st",
+				"rpifiles/config_StagHunt.cfg"
+			],
+			[
+				"sim",
+				"rpifiles/Simulation.py"
+			],
+			[
+				"thy",
+				"rpifiles/ThymioController.py"
+			],
+			[
+				"camera",
+				"rpifiles/Camera.py"
+			],
+			[
+				"simulationst",
+				"rpifiles/StagHunt/SimulationStagHunt.py"
+			],
+			[
 				"si",
 				"rpifiles/Simulation.py"
 			],
 			[
 				"pa",
 				"rpifiles/Params.py"
-			],
-			[
-				"sim",
-				"rpifiles/Simulation.py"
 			],
 			[
 				"bra",
@@ -819,10 +1025,6 @@
 			[
 				"u",
 				"utils.py"
-			],
-			[
-				"ma",
-				"rpifiles/MainController.py"
 			],
 			[
 				"ae",
@@ -843,10 +1045,6 @@
 			[
 				"",
 				"hostnames_table.json"
-			],
-			[
-				"simu",
-				"rpifiles/Simulation.py"
 			],
 			[
 				"cfg",
