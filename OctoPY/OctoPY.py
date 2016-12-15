@@ -348,7 +348,7 @@ class OctoPY() :
 						sendOneMessage(sock, optSend)
 
 					# Com message
-					elif message = MessageType.COM :
+					elif message == MessageType.COM :
 						optSend.msgType = MessageType.COM
 						optSend.data = data
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -545,13 +545,16 @@ class OctoPY() :
 
 	def comMessage(self, **params) :
 		# We get the list of IPs to send the message to
-		if not "recipients" in params :
-			self.__logger.error("comMessage - No recipient for communication found.")
-			return False
-		else :
-			recipientsList = list(params["recipients"])
-			params = {params[key] for key in params.keys() if key != "recipients"}
-			octoPYInstance.sendMessage(MessageType.COM, recipientsList, **params)
+		recipientsList = []
+		if "recipients" in params :
+			recipientsList = params["recipients"].split(',')
+			params = {key:params[key] for key in params.keys() if key != "recipients"}
+
+		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
+
+
+	def exit(self) :
+		self.__msgListener.stop()
 
 	
 
@@ -580,7 +583,7 @@ class OctoPYInteractive(cmd.Cmd) :
 		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
+		print '\n'.join([ 'look [range] [-s save_table]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---
@@ -599,7 +602,13 @@ class OctoPYInteractive(cmd.Cmd) :
 				else :
 					IPs = args[1:]
 
-			octoPYInstance.sendMessage(message, IPs, data)
+			if message < -1 or message >= MessageType.ACK :
+				octoPYInstance.logger.error('sendMessage - Incorrect message value: ' + str(message) + ' !')
+			else :
+				if message == MessageType.REGISTER :
+					octoPYInstance.logger.error('sendMessage - REGISTER cannot be used directly !')
+				else :
+					octoPYInstance.sendMessage(message, IPs, data)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 
@@ -617,7 +626,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			if len(args) < 2 or not(args[1].isdigit()) :
 				# We propose the list of all the messages
 				completions = MessageType.getAllAttributes()
-				completions = [str(att[0] + ":" + str(att[1])) for att in completions]
+				completions = [str(att[0] + ":" + str(att[1])) for att in completions if int(att[1]) >= 0 and int(att[1]) <= int(MessageType.SET)]
 			else :
 				# Else we return all the hostnames
 				if octoPYInstance.hashThymiosHostnames != None :
@@ -734,6 +743,7 @@ class OctoPYInteractive(cmd.Cmd) :
 
 	# --- Exit ---
 	def do_exit(self, line) :
+		octoPYInstance.exit()
 		return True
 
 	def help_exit(self) :
@@ -785,7 +795,7 @@ class MessageListener(threading.Thread) :
 					message.data["hostIP"] = addr
 					self.__octoPYInstance.notify(**message.data)
 				elif message.msgType == MessageType.COM :
-					senderHostname = getHostnameFromIP(addr)
+					senderHostname = self.__octoPYInstance.getHostnameFromIP(addr)
 					message.data["senderHostname"] = senderHostname 
 					self.__octoPYInstance.comMessage(**message.data)
 			except:
@@ -794,6 +804,7 @@ class MessageListener(threading.Thread) :
 		self.__octoPYInstance.logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
+		self.__sock.close()
 		self.__stop.set()
 
 
