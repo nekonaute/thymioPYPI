@@ -1,0 +1,2 @@
+This folder is for the experiment CollectiveGathering.
+This is a simple experiment to make demonstration at the Fête De La Science. Robots move randomly avoiding obstacles which decreases their energy. When their energy is low, they look for the black ground targets to refill. When refilled, they explore again.
