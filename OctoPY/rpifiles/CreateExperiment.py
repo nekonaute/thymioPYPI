@@ -31,6 +31,15 @@ simulation_path = """ + folder + """.""" + classFile
 		print("Creating __init__.py file...")
 		os.mknod(os.path.join(folder, "__init__.py"))
 
+		# Creation of the readme file
+		print("Creating readme file...")
+		with open(os.path.join(folder, "readme.txt"), "w") as fileOut :
+			codeFile = """This folder is for the experiment """ +  args.experiment + """.
+
+--- DESCRIBE EXPERIMENT HERE ---"""
+
+			fileOut.write(codeFile)
+
 		# Creation of the Simulation file
 		print("Creating simulation file " + classFile + "...")
 		with open(os.path.join(folder, classFile + ".py"), "w") as fileOut :
