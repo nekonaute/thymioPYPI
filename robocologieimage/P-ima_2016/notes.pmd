@@ -1,0 +1,207 @@
+file   ::: m1 detected  m1 correct  ::: m2 detected  m2 correct ::: Change
+----------:::--------------------------:::-------------------------:::-------
+10620.web ::: 335 (92.54) ::: 3  (100.0) ::: epsilon=0.018
+10620.web ::: 241 (98.34) ::: 3  (100.0) ::: epsilon=0.018
+10620.web ::: 118 (99.15) ::: 0  (000.0) ::: epsilon=0.015
+10620.web ::: 2   (100.0) ::: 0  (000.0) ::: epsilon=0.010
+
+12058.web ::: 1695 (58.64) ::: 244 (32.38) :: epsilon=0.035
+12058.web ::: 1647 (58.71) ::: 236 (32.63) :: epsilon=0.025
+12058.web ::: 755 (63.05) ::: 117 (26.5) :: epsilon=0.017
+12058.web ::: 195 (61.54) ::: 38 (21.05) :: epsilon=0.014
+
+Choix epsilon : 0.025
+
+12058.web ::: 1647 (58.71) ::: 236 (32.63) :: NA
+12058.web ::: 734 (55.31) ::: 106 (34.91) :: w/ hierarchy[0][i][3]
+12058.web ::: 902 (61.2) ::: 128 (31.25) :: w/ hierarchy[0][i][0]
+12058.web ::: 729 (51.99) ::: 127 (31.5) :: w/ hierarchy[0][i][0]
+
+Choix hierarchy : NA
+
+55725.web ::: 1053 (73.5) ::: 394 (31.22) :: medianblur x medianblur
+55725.web ::: 1296 (76.54) ::: 376 (26.86) :: GaussianBlur kernel 3
+55725.web ::: 1671 (77.2) ::: 399 (29.57) :: GaussianBlur kernel 5
+
+Choix Blur : Gaussian kernel 5
+
+KINECT_ISIR
+::1:: 3852.0 (3550.0 - 92.16)
+::2:: 953.0 (321.0 - 33.68)
+::T:: 4805 (3871 - 80.56)
+Configuration :: (Canny) int(max(0, (1.0 - 1.33) * v)) [resp 0.66]
+Verdict : Refused
+
+KINECT_ISIR
+::1:: 3923.0 (3617.0 - 92.2)
+::2:: 944.0 (317.0 - 33.58)
+::T:: 4867 (3934 - 80.83)
+Configuration :: (Canny) int(max(0, (1.0 - sigma) * v)) [sigma = 0.20]
+Verdict : Refused
+
+KINECT_ISIR
+::1:: 3939.0 (3632.0 - 92.21)
+::2:: 949.0 (321.0 - 33.83)
+::T:: 4888 (3953 - 80.87)
+::S:: 564.156999588s
+Configuration :: (Canny) int(max(0, (1.0 - sigma) * v)) [sigma = 0.15]
+Verdict : Valid
+
+KINECT_ISIR
+::1:: 3603.0 (3303.0 - 91.67)
+::2:: 1192.0 (408.0 - 34.23)
+::T:: 4795 (3711 - 77.39)
+Configuration :: (Canny) with equalizeHist
+Verdict : Refused
+
+KINECT_ISIR
+::1:: 3939.0 (3632.0 - 92.21)
+::2:: 83.0 (69.0 - 83.13)
+::T:: 4022 (3701 - 92.02)
+Configuration :: (get_bit_matrix2 ONLY) Mean adaptiveThreshold (11, 2)
+Verdict : Refused
+
+KINECT_ISIR
+::1:: 3939.0 (3632.0 - 92.21)
+::2:: 63.0 (56.0 - 88.89)
+::T:: 4002 (3688 - 92.15)
+Configuration :: (get_bit_matrix2 ONLY) Gaussian adaptiveThreshold (11, 2)
+Verdict : Refused
+
+KINECT_ISIR
+::1:: 3939.0 (3632.0 - 92.21)
+::2:: 2644.0 (1037.0 - 39.22)
+::T:: 6583 (4669 - 70.93)
+::S:: 614.96399641s
+Configuration :: (get_bit_matrix2) mean_white > 150
+
+KINECT_ISIR
+::1:: 3939.0 (3632.0 - 92.21)
+::2:: 949.0 (321.0 - 33.83)
+::T:: 4888 (3953 - 80.87)
+::S:: 660.325997591s
+Configuration :: (get_bit_matrix2) median_white > 127
+
+KINECT_ISIR
+::1:: 3939 (Total) 3633 (Correct 92.23%) 306 (Error 7.77%) 0 (Maybe 0.0%)
+::2:: 4185 (Total) 2222 (Correct 53.09%) 1963 (Error 46.91%) 0 (Maybe 0.0%)
+::3:: 6122 (Total) 2377 (Correct 38.83%) 286 (Error 4.67%) 3459 (Maybe 56.5%)
+::T:: 14246 (Total) 8232 (Correct 57.78%) 2555 (Error 17.93%) 3459 (Maybe 24.28%)
+::S:: 280s
+Configuration :: Add SVM
+
+KINECT_ISIR
+::1:: 3939 (Total) 3633 (Correct 92.23%) 306 (Error 7.77%) 0 (Maybe 0.0%)
+::2:: 6122 (Total) 2278 (Correct 37.21%) 429 (Error 7.01%) 3415 (Maybe 55.78%)
+::T:: 10061 (Total) 5911 (Correct 58.75%) 735 (Error 7.31%) 3415 (Maybe 33.94%)
+::S:: 213s
+Configuration :: Replace M2 by SVM
+
+KINECT_ISIR
+::1:: 3939 (Total) 3633 (Correct 92.23%) 306 (Error 7.77%) 0 (Maybe 0.0%)
+::2:: 5785 (Total) 1910 (Correct 33.02%) 522 (Error 9.02%) 3353 (Maybe 57.96%)
+::T:: 9724 (Total) 5543 (Correct 57.0%) 828 (Error 8.52%) 3353 (Maybe 34.48%)
+::S:: 117s
+
+
+KINECT_HOUSE
+::1:: 4296 (Total) 3449 (Correct 80.28%) 847 (Error 19.72%) 0 (Maybe 0.0%)
+::2:: 0 (Total) 0 (Correct 100.0%) 0 (Error 100.0%) 0 (Maybe 100.0%)
+::T:: 4296 (Total) 3449 (Correct 80.28%) 847 (Error 19.72%) 0 (Maybe 0.0%)
+::S:: 169s
+KINECT_HOUSE
+::1:: 4748 (Total) 4710 (Correct 99.2%) 38 (Error 0.8%) 0 (Maybe 0.0%)
+::2:: 0 (Total) 0 (Correct 100.0%) 0 (Error 100.0%) 0 (Maybe 100.0%)
+::T:: 4748 (Total) 4710 (Correct 99.2%) 38 (Error 0.8%) 0 (Maybe 0.0%)
+::S:: 202s
+KINECT_ISIR
+::1:: 5247 (Total) 4825 (Correct 91.96%) 422 (Error 8.04%) 0 (Maybe 0.0%)
+::2:: 0 (Total) 0 (Correct 100.0%) 0 (Error 100.0%) 0 (Maybe 100.0%)
+::T:: 5247 (Total) 4825 (Correct 91.96%) 422 (Error 8.04%) 0 (Maybe 0.0%)
+::S:: 133s
+Configuration :: image was normalized by subtracting its mean and setting the standard deviation to one. > 0.5
+
+KINECT_ISIR
+::1:: 8381 (Total) 8129 (Correct 96.99%) 252 (Error 3.01%) 0 (Maybe 0.0%)
+::2:: 0 (Total) 0 (Correct 100.0%) 0 (Error 100.0%) 0 (Maybe 100.0%)
+::T:: 8381 (Total) 8129 (Correct 96.99%) 252 (Error 3.01%) 0 (Maybe 0.0%)
+::S:: 157s
+Configuration :: Without dilatation/erosion
+        if cv2.contourArea(approx_curve) > 1000
+            continue
+        if cv2.contourArea(approx_curve) < 100:
+            continue
+
+KINECT_ISIR
+::1:: 8364 (Total) 8128 (Correct 97.18%) 236 (Error 2.82%) 0 (Maybe 0.0%)
+::2:: 0 (Total) 0 (Correct 100.0%) 0 (Error 100.0%) 0 (Maybe 100.0%)
+::T:: 8364 (Total) 8128 (Correct 97.18%) 236 (Error 2.82%) 0 (Maybe 0.0%)
+::S:: 150s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_ISIR
+::1:: 8381 (Total) 8129 (Correct 96.99%) 252 (Error 3.01%) 0 (Maybe 0.0%)
+::2:: 1204 (Total) 0 (Correct 0.0%) 0 (Error 0.0%) 1204 (Maybe 100.0%)
+::T:: 9585 (Total) 8129 (Correct 84.81%) 252 (Error 2.63%) 1204 (Maybe 12.56%)
+::S:: 545s
+
+Version 2
+
+KINECT_V2_ISIR
+::1:: 15607 (Total) 15310 (Correct 98.1%) 297 (Error 1.9%) 0 (Maybe 0.0%)
+::2:: 7881 (Total) 0 (Correct 0.0%) 7881 (Error 100.0%) 0 (Maybe 0.0%)
+::T:: 23488 (Total) 15310 (Correct 65.18%) 8178 (Error 34.82%) 0 (Maybe 0.0%)
+::Running Time:: 253s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+
+KINECT_V1_ISIR
+::1:: 9214 (Quads) 7251 (Tags 78.7%: [7087 (Correct 97.74%) 164 (Error 2.26%)] 1963 (Non-Tags 21.3%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 9214 (Quads) 7251 (Tags 78.7%: [7087 (Correct 97.74%) 164 (Error 2.26%)] 1963 (Non-Tags 21.3%)
+::Running Time:: 38s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 13334 (Quads) 8381 (Tags 62.85%: [8129 (Correct 96.99%) 252 (Error 3.01%)] 4953 (Non-Tags 37.15%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 13334 (Quads) 8381 (Tags 62.85%: [8129 (Correct 96.99%) 252 (Error 3.01%)] 4953 (Non-Tags 37.15%)
+::Running Time:: 39s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14483 (Quads) 8397 (Tags 57.98%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6086 (Non-Tags 42.02%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14483 (Quads) 8397 (Tags 57.98%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6086 (Non-Tags 42.02%)
+::Running Time:: 40s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 16700 (Quads) 8401 (Tags 50.31%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8299 (Non-Tags 49.69%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 16700 (Quads) 8401 (Tags 50.31%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8299 (Non-Tags 49.69%)
+::Running Time:: 40s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 16690 (Quads) 8401 (Tags 50.34%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8289 (Non-Tags 49.66%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 16690 (Quads) 8401 (Tags 50.34%: [8134 (Correct 96.82%) 267 (Error 3.18%)] 8289 (Non-Tags 49.66%)
+::Running Time:: 42s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14330 (Quads) 8396 (Tags 58.59%: [8134 (Correct 96.88%) 262 (Error 3.12%)] 5934 (Non-Tags 41.41%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14330 (Quads) 8396 (Tags 58.59%: [8134 (Correct 96.88%) 262 (Error 3.12%)] 5934 (Non-Tags 41.41%)
+::Running Time:: 41s
+Configuration :: cv2.contourArea(approx_curve) < 300
+
+KINECT_V1_ISIR
+::1:: 14415 (Quads) 8397 (Tags 58.25%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6018 (Non-Tags 41.75%)
+::2:: 0 (Quads) 0 (Tags 100.0%: [0 (Correct 100.0%) 0 (Error 100.0%)] 0 (Non-Tags 100.0%)
+::T:: 14415 (Quads) 8397 (Tags 58.25%: [8134 (Correct 96.87%) 263 (Error 3.13%)] 6018 (Non-Tags 41.75%)
+::Running Time:: 41s
+MIN_DISTANCE = math.ceil(len(mat_b)*0.005)
+  MAX_DISTANCE = math.ceil(len(mat_b)*0.09)
+  epsilon = 0.055*cv2.arcLength(edges[i], True)

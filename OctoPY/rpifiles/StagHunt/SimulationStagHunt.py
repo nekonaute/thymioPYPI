@@ -194,6 +194,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 		index = 0
 		index = self.getProximityInputs(inputs, index)
 
+		# self.log("Sensors : ")
+		# string = ""
+		# for i in range(0, 6) : 
+		# 	string += str(inputs[0][i]) + "/"
+		# self.log(string)
+
 		index = self.getCameraInputs(inputs, index)
 
 		self.log("Camera : ")
@@ -307,10 +313,15 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 	def step(self) :
 		try :
+			timeBegStep = time.clock()
 			inputs = self.getInputs()
+			timeStop = time.clock()
+			self.log('Time getInputs : ' + str(timeStop - timeBegStep))
 
 			if inputs != None :
 				outputs = self.computeNN(inputs)
+				timeStop = time.clock()
+				self.log('Time computeNN : ' + str(timeStop - timeBegStep))
 
 				# # TODO: debug
 				# self.stop()
@@ -328,7 +339,7 @@ class SimulationStagHunt(Simulation.Simulation) :
 					self.waitForControllerResponse()
 				else :
 					self.tController.writeMotorsSpeedRequest([0.0, 0.0])
-					self.waitForControllerResponse
+					self.waitForControllerResponse()
 
 			time.sleep(Params.params.time_step/1000.0)
 		except :
