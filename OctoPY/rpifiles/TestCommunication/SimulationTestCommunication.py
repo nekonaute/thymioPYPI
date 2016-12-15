@@ -31,7 +31,7 @@ class SimulationTestCommunication(Simulation.Simulation) :
 				message = self.__listMessages.pop(0)
 				self.mainLogger.debug('SimulationTestCommunication - Received ' + str(message[1]) + ' from ' + str(message[0]))
 
-			if (self.__cptStep % self.__frequencyMess == 0) and (self.__cptStep < self.__maxMess) :
+			if (self.__cptStep % self.__frequencyMess == 0) and ((self.__cptStep/self.__frequencyMess) < self.__maxMess) :
 				recipientsList = ''
 
 				for rpi in self.__listRpis :

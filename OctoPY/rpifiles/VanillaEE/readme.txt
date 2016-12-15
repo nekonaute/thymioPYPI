@@ -1,0 +1,2 @@
+This folder is for the experiment VanillaEE.
+This experiment is used to show the implementation of a simple embodied evolution scenario where robots have to evolve the basic fitness from (Nolfi & Floreano 2000), that is to say: move in a straight line and avoid obstacles.
