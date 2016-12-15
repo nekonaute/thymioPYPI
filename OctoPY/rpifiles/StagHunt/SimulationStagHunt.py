@@ -52,8 +52,9 @@ COLORS_DETECT = {
 														# "input3" : 0
 													},
 									"green" : { 
-														"min" : np.array([32, 180, 50]),
-														"max" : np.array([60, 255, 255]),
+														"min" : np.array([35, 78, 40]),
+														# "min" : np.array([32, 40, 40]),
+														"max" : np.array([75, 255, 255]),
 														"input1" : 1,
 														"input2" : 0,
 														"input3" : 0
@@ -61,13 +62,13 @@ COLORS_DETECT = {
 														# "input2" : 1,
 														# "input3" : 0
 													},
-									# "blue" : { 
-									# 					"min" : np.array([84, 50, 50]),
-									# 					"max" : np.array([110, 255, 255]),
-									# 					"input1" : 1,
-									# 					"input2" : 0,
-									# 					"input3" : 0
-									# 				},
+									"blue" : { 
+														"min" : np.array([90, 50, 50]),
+														"max" : np.array([135, 255, 255]),
+														"input1" : 0,
+														"input2" : 0,
+														"input3" : 1
+													},
 								}
 
 
@@ -194,6 +195,12 @@ class SimulationStagHunt(Simulation.Simulation) :
 		index = 0
 		index = self.getProximityInputs(inputs, index)
 
+		# self.log("Sensors : ")
+		# string = ""
+		# for i in range(0, 6) : 
+		# 	string += str(inputs[0][i]) + "/"
+		# self.log(string)
+
 		index = self.getCameraInputs(inputs, index)
 
 		self.log("Camera : ")
@@ -204,6 +211,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 				string += "Red"
 			elif inputs[0][cpt] == 1 and inputs[0][cpt + 1] == 0 and inputs[0][cpt + 2] == 0 :
 				string += "Green"
+			elif inputs[0][cpt] == 0 and inputs[0][cpt + 1] == 0 and inputs[0][cpt + 2] == 1 :
+				string += "Blue"
 			else :
 				string += "None"
 			string += "/"
@@ -294,8 +303,8 @@ class SimulationStagHunt(Simulation.Simulation) :
 			hiddenNN.resize((1, Params.params.nb_hidden + 1))
 			hiddenNN[0, -1] = 1.0
 
-			# outputsNN = np.dot(hiddenNN, self.__weightsHtoO)
-			outputsNN = np.dot(hiddenNN, self.__weightsHtoO2)
+			outputsNN = np.dot(hiddenNN, self.__weightsHtoO)
+			# outputsNN = np.dot(hiddenNN, self.__weightsHtoO2)
 
 			for i in range(0, Params.params.nb_outputs) :
 				outputs[i] = sigmoid(outputsNN[0, i])
@@ -307,28 +316,35 @@ class SimulationStagHunt(Simulation.Simulation) :
 
 	def step(self) :
 		try :
+			timeBegStep = time.clock()
 			inputs = self.getInputs()
+			timeStop = time.clock()
+			self.log('Time getInputs : ' + str(timeStop - timeBegStep))
 
 			if inputs != None :
 				outputs = self.computeNN(inputs)
+				timeStop = time.clock()
+				self.log('Time computeNN : ' + str(timeStop - timeBegStep))
 
 				# # TODO: debug
 				# self.stop()
 				# time.sleep(Params.params.time_step/1000.0)
 				# return
 
-				# self.log("Outputs :")
-				# self.log(str(outputs[0]) + "/" + str(outputs[1]))
+				self.log("Outputs :")
+				self.log(str(outputs[0]) + "/" + str(outputs[1]))
 				if (outputs[0] >= 0) and (outputs[1] >= 0) :
-					vLeft = (outputs[0] * 2.0) - 1.0
-					vRight = (outputs[1] * 2.0) - 1.0
-					# self.log("Speed :")
-					# self.log(str(vLeft) + "/" + str(vRight))
+					# vLeft = (outputs[0] * 2.0) - 1.0
+					# vRight = (outputs[1] * 2.0) - 1.0
+					vRight = (outputs[0] * 2.0) - 1.0
+					vLeft = (outputs[1] * 2.0) - 1.0
+					self.log("Speed :")
+					self.log(str(vLeft) + "/" + str(vRight))
 					self.tController.writeMotorsSpeedRequest([vLeft * Params.params.max_speed, vRight * Params.params.max_speed])
 					self.waitForControllerResponse()
 				else :
 					self.tController.writeMotorsSpeedRequest([0.0, 0.0])
-					self.waitForControllerResponse
+					self.waitForControllerResponse()
 
 			time.sleep(Params.params.time_step/1000.0)
 		except :
