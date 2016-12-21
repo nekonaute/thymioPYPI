@@ -602,10 +602,11 @@ class OctoPYInteractive(cmd.Cmd) :
 				else :
 					IPs = args[1:]
 
-			if message < -1 or message >= MessageType.ACK :
+			# octoPYInstance.logger.error(str(MessageType.INIT) + "/" + str(MessageType.ACK))
+			if int(message) < int(MessageType.INIT) or int(message) >= int(MessageType.ACK) :
 				octoPYInstance.logger.error('sendMessage - Incorrect message value: ' + str(message) + ' !')
 			else :
-				if message == MessageType.REGISTER :
+				if int(message) == int(MessageType.REGISTER) :
 					octoPYInstance.logger.error('sendMessage - REGISTER cannot be used directly !')
 				else :
 					octoPYInstance.sendMessage(message, IPs, data)
