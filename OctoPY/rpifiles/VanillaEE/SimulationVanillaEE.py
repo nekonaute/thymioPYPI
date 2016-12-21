@@ -292,13 +292,13 @@ class SimulationVanillaEE(Simulation.Simulation) :
 
 #update his fitness we what he see
 	def updateFitness(self) :
-		Sk = 0
+		Sk = PROX_SENSORS_MAX_VALUE
 		self.tController.readSensorsRequest()
 		self.waitForControllerResponse()
 		proxSensors = self.tController.getPSValues()
 		for i in xrange (7):
-			Sk = max(Sk,  proxSensors[i])
-		self.fitness = self.updateFitnessWindow((self.getTrasitiveAcceleration()/ (2*MAX_SPEED_VALUE)) * (1- self.getAngularAceeleration()/ (2*MAX_SPEED_VALUE ))* (1- Sk/PROX_SENSORS_MAX_VALUE ))
+			Sk = min(Sk, PROX_SENSORS_MAX_VALUE - proxSensors[i])
+		self.fitness = self.updateFitnessWindow((self.getTrasitiveAcceleration()/ MAX_SPEED_VALUE) * (1- self.getAngularAceeleration()/ MAX_SPEED_VALUE )* (1- Sk/PROX_SENSORS_MAX_VALUE ))
 		
 
 
@@ -318,11 +318,11 @@ class SimulationVanillaEE(Simulation.Simulation) :
   
   #do i really have  to comment ?
 	def getTrasitiveAcceleration(self):
-		return abs(self.left + self.right) 
+		return abs(self.left + self.right) / MAX_SPEED_VALUE
 		
   #refer to the comment of getTransitiveAcceleration
 	def getAngularAceeleration(self):
-		return abs(self.left - self.right)
+		return abs(self.left - self.right) / MAX_SPEED_VALUE	
            
          
 	"""MESSAGE"""       

@@ -24,7 +24,7 @@ class vision :
 	#Fonction who must update the enter array and return it
 	def updateVisionOld(self):
 		
-		""" DO SOMETHING """
+		""" DO SOMETHING (but not enough yet)"""
 #		self.controller.waitForControllerResponse()
 		self.controller.tController.readSensorsRequest()
 		self.controller.waitForControllerResponse()
@@ -44,6 +44,6 @@ class vision :
 		proxSensors = self.controller.tController.getPSValues()
 		self.enter= [0,0,0,0,0,0,0]
 		for i in xrange (7):
-			self.enter[i] =  abs ((1.0* proxSensors[i])/ DISTANCE_MAX_VISION)
+			self.enter[i] = proxSensors[i]/ DISTANCE_MAX_VISION
 			
 		return self.enter
