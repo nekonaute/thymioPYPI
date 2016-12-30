@@ -56,7 +56,7 @@ class """ + mainClass + """(Simulation.Simulation) :
 		pass
 
 	def postActions(self) :
-		pass
+		self.tController.writeMotorsSpeedRequest([0, 0])
 
 	def step(self) :
 		pass"""
