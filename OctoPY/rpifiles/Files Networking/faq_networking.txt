@@ -32,7 +32,7 @@ http://wifi.ist.utl.pt/configuracoes/linux/wpa_supplicant/
 http://askubuntu.com/questions/333424/how-can-i-check-the-information-of-currently-installed-wifi-drivers
 
 
-Q: How can I share my wireless internet access through a wire connection ?
+Q: How can I share my wireless internet access through a wired connection ?
 
 A:
 On the host accessing the internet by wireless connection:
