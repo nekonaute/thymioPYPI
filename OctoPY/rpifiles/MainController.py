@@ -180,7 +180,7 @@ class MainController() :
 			return False
 
 		if "ID" not in data :
-			mainLogger.error("MainController - No ID for registering observer.")
+			mainLogger.e__controllerrror("MainController - No ID for registering observer.")
 			return False
 
 		observerIP = data["IP"]
@@ -289,6 +289,9 @@ class CommandsListener(threading.Thread) :
 
 	def run(self):
 		while 1:
+			"""TEST"""
+			mainLogger.debug("!!!######################DEBUT DU WHILE 1 ###############################################!!!")
+			"""TEST"""
 			try:
 				# Waiting for client...
 				mainLogger.debug("CommandsListener - Waiting on accept...")
