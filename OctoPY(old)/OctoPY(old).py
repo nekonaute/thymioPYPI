@@ -3,9 +3,7 @@
 import argparse
 import subprocess
 import sys
-import datetime
 import os
-import glob
 import re
 import logging
 import traceback
@@ -349,14 +347,6 @@ class OctoPY() :
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
 
-					# Com message
-					elif message == MessageType.COM :
-						optSend.msgType = MessageType.COM
-						optSend.data = data
-						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-						sock.connect((str(destIP), 55555))
-						sendOneMessage(sock, optSend)
-
 					# Stop simulation
 					elif message == MessageType.STOP :
 						optSend.msgType = MessageType.STOP
@@ -396,7 +386,7 @@ class OctoPY() :
 
 
 	def queryThymios(self, IPs) :
-		dest = self.resolveAddresses(IPs)
+		dest = resolveAddresses(IPs)
 
 		if dest != None :
 			try :
@@ -427,7 +417,7 @@ class OctoPY() :
 			sockAnswer.bind((LISTENER_HOST, LISTENER_PORT))
 			sockAnswer.listen(5)
 
-			optSend = utils.Message()
+			optSend = Message()
 			optSend.message = MessageType.QUERY
 			for destIP in dest :
 				try :
@@ -455,7 +445,6 @@ class OctoPY() :
 				if not (readable or writable or exceptional) :
 					self.__logger.debug('queryThymios - No answer from ' + ' '.join(waitingAnswer) + ' after ' + str(timeOut) + ' seconds')
 					sleepingHosts = waitingAnswer
-					addr = None
 					break
 				else :
 					for sock in readable :
@@ -478,25 +467,25 @@ class OctoPY() :
 
 			self.__listThymiosStates = []
 			for IP in downHosts :
-				hostname = self.getHostnameFromIP(IP)
+				hostname = getHostnameFromIP(IP)
 				hostTuple = (hostname, IP, 'Down')
 				self.__listThymiosStates.append(hostTuple)
 				self.__logger.info('queryThymios - ' + str(addr) + ' is down')
 
 			for IP in sleepingHosts :
-				hostname = self.getHostnameFromIP(IP)
+				hostname = getHostnameFromIP(IP)
 				hostTuple = (hostname, IP, 'Sleeping')
 				self.__listThymiosStates.append(hostTuple)
 				self.__logger.info('queryThymios - ' + str(addr) + ' is sleeping')
 
 			for IP in listeningHosts :
-				hostname = self.getHostnameFromIP(IP)
+				hostname = getHostnameFromIP(IP)
 				hostTuple = (hostname, IP, 'Listening')
 				self.__listThymiosStates.append(hostTuple)
 				self.__logger.info('queryThymios - ' + str(addr) + ' is listening')
 
 			for IP in startedHosts :
-				hostname = self.getHostnameFromIP(IP)
+				hostname = getHostnameFromIP(IP)
 				hostTuple = (hostname, IP, 'Started')
 				self.__listThymiosStates.append(hostTuple)
 				self.__logger.info('queryThymios - ' + str(addr) + ' is started')
@@ -544,21 +533,6 @@ class OctoPY() :
 			if controller != None :
 				self.__logger.debug("notify - Notifying controller.")
 				controller.notify(**params)
-
-
-	def comMessage(self, **params) :
-		# We get the list of IPs to send the message to
-		recipientsList = []
-		if "recipients" in params :
-			recipientsList = params["recipients"].split(',')
-			params = {key:params[key] for key in params.keys() if key != "recipients"}
-
-		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
-
-
-	def exit(self) :
-		self.__msgListener.stop()
-
 	
 
 
@@ -586,7 +560,7 @@ class OctoPYInteractive(cmd.Cmd) :
 		octoPYInstance.lookUp(lookRange, getHostname)
 
 	def help_look(self) :
-		print '\n'.join([ 'look [range] [-s save_table]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
+		print '\n'.join([ 'look [range] [-s]', 'Look for all thymios connected on the network in the specified range of IPs (192.168.0.111-150 by default). If argument "-s" is provided, ssh is used to get the hostname of each robot.', ])
 
 
 	# --- Send message ---
@@ -605,13 +579,7 @@ class OctoPYInteractive(cmd.Cmd) :
 				else :
 					IPs = args[1:]
 
-			# if message < -1 or message >= MessageType.ACK :
-			#	octoPYInstance.logger.error('sendMessage - Incorrect message value: ' + str(message) + ' !')
-			#else :
-			if message == MessageType.REGISTER :
-				octoPYInstance.logger.error('sendMessage - REGISTER cannot be used directly !')
-			else :
-				octoPYInstance.sendMessage(message, IPs, data)
+			octoPYInstance.sendMessage(message, IPs, data)
 		else :
 			octoPYInstance.logger.critical('sendMessage - No message specified !')
 
@@ -629,7 +597,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			if len(args) < 2 or not(args[1].isdigit()) :
 				# We propose the list of all the messages
 				completions = MessageType.getAllAttributes()
-				completions = [str(att[0] + ":" + str(att[1])) for att in completions if int(att[1]) >= 0 and int(att[1]) <= int(MessageType.SET)]
+				completions = [str(att[0] + ":" + str(att[1])) for att in completions]
 			else :
 				# Else we return all the hostnames
 				if octoPYInstance.hashThymiosHostnames != None :
@@ -746,7 +714,6 @@ class OctoPYInteractive(cmd.Cmd) :
 
 	# --- Exit ---
 	def do_exit(self, line) :
-		octoPYInstance.exit()
 		return True
 
 	def help_exit(self) :
@@ -755,104 +722,8 @@ class OctoPYInteractive(cmd.Cmd) :
 
 	# --- EOF exit ---
 	def do_EOF(self, line) :
-		return True	
-	
-	
-	# --- Put file(s) on Thymio(s) ---
-	def do_put(self,args) :		
-		if args :
-			args = args.split(' ')
-			if len(args) > 1 :
-				src_path = args[0]
-				dest_path=args[1]
-				hosts = args[2:]
-					
-				dest = octoPYInstance.resolveAddresses(hosts)
-				
-				# expanding ~
-				src_path=os.path.expanduser(src_path)
-				
-				# expanding *
-				if src_path[-1]=="*":
-					old_dir = os.path.dirname(os.path.realpath(__file__))
-					os.chdir(src_path[:-1])
-					src_path=glob.glob(src_path)
-					os.chdir(old_dir)
-				else :
-					src_path=[src_path]
-				
-				if dest != None :
-					for destIP in dest :
-						scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "scp","-r"] +src_path+ [PIUSERNAME + "@" + str(destIP) + ":" + dest_path]
-						proc = subprocess.Popen(scpcommand)
-				else :
-					octoPYInstance.logger.critical('No host found. Type \'help look\' for more infos.')
-			else :
-				octoPYInstance.logger.critical('Missing argument. Type \'help put\' for help.')
-		else :
-			octoPYInstance.logger.critical('Type \'help put\' for help.')		
-				
-	def help_put(self):
-		print 'put <src_path> <dest_path> [hosts list]\n'+\
-			 'Sends file(s) from the server to a specified list of hosts or all host saved in the hostnames table. This uses scp.\n'+\
-                 'Your current path on server is :\n'+os.path.dirname(os.path.realpath(__file__))
+		return True
 
-
-	# --- Get file(s) from Thymio(s)
-	def do_get(self,args) :		
-		if args :
-			args = args.split(' ')
-			if len(args) > 1 :
-				src_path = args[0]
-				dest_path=args[1]
-				hosts = args[2:]
-				delete=False
-				
-				# -d argument ?
-				if len(hosts)>=1:
-					if hosts[0]=="-r":
-						delete=True
-						hosts=hosts[1:]
-				
-				dest = octoPYInstance.resolveAddresses(hosts)
-				
-				# expanding ~
-				dest_path=os.path.expanduser(dest_path)
-				
-				old_dir = os.path.dirname(os.path.realpath(__file__))
-				
-				now = datetime.datetime.now()
-				now = now.strftime("%Y%m%d_%H%M%S")
-
-				if dest != None :
-					for destIP in dest :
-						host_name = octoPYInstance.getHostnameFromIP(u'' + str(destIP))		
-						subfolder = now +"_"+ host_name
-						os.chdir(dest_path)
-						os.mkdir(subfolder)
-						os.chdir(old_dir)
-
-						if delete:
-							scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "rsync","-aq", "--remove-source-files", PIUSERNAME + "@" + str(destIP) + ":" + src_path, dest_path+"/"+subfolder]
-							proc=subprocess.Popen(scpcommand)
-							proc.wait()
-							subprocess.Popen(["/usr/bin/sshpass", "-p", PIPASSWORD,"ssh",  PIUSERNAME + "@" + str(destIP), "find", src_path, "-type d", "-delete"])
-						else :
-							scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "rsync","-aq", PIUSERNAME + "@" + str(destIP) + ":" + src_path, dest_path+"/"+subfolder]
-							subprocess.Popen(scpcommand)	
-				else :
-					octoPYInstance.logger.critical('No host found. Type \'help look\' for more infos.')
-			else :
-				octoPYInstance.logger.critical('Missing argument. Type \'help get\' for help.')
-		else :
-			octoPYInstance.logger.critical('Type \'help get\' for help.')		
-				
-	def help_get(self):
-		print 'get <src_path> <dest_folder> [-r] [hosts list]\n'+\
-			 'Sends file(s) from a specified list of hosts or all host saved in the hostnames table to the server. '+\
-			 'Destination on server must be an existing folder so that subfolders for each host are created inside.\n'+\
-			 'If \'-r\' is provided, successfully sent files will be deleted from hosts.\n'+\
-			 'Your current path on server is :\n'+os.path.dirname(os.path.realpath(__file__))
 
 
 class MessageListener(threading.Thread) :
@@ -893,17 +764,12 @@ class MessageListener(threading.Thread) :
 				if message.msgType == MessageType.NOTIFY :
 					message.data["hostIP"] = addr
 					self.__octoPYInstance.notify(**message.data)
-				elif message.msgType == MessageType.COM :
-					senderHostname = self.__octoPYInstance.getHostnameFromIP(addr)
-					message.data["senderHostname"] = senderHostname 
-					self.__octoPYInstance.comMessage(**message.data)
 			except:
 				self.__octoPYInstance.logger.critical('MessageListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		self.__octoPYInstance.logger.debug('MessageListener - Exiting...')
 
 	def stop(self) :
-		self.__sock.close()
 		self.__stop.set()
 
 

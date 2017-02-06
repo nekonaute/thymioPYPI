@@ -1,0 +1,14 @@
+# Class name of the simulation
+simulation_name = SimulationVanillaEE
+
+# Path of simulation
+simulation_path = VanillaEE.SimulationVanillaEE
+
+# List of other rpis
+list_rpis = pi2no10,pino09
+
+# Frequency at which to send messages
+int frequency_mess = 5
+
+# Maximal number of messages to send
+int max_mess = 10
