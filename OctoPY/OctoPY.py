@@ -5,7 +5,6 @@ import subprocess
 import sys
 import datetime
 import os
-import glob
 import re
 import logging
 import traceback
@@ -769,28 +768,32 @@ class OctoPYInteractive(cmd.Cmd) :
 					
 				dest = octoPYInstance.resolveAddresses(hosts)
 				
-				# expanding ~
-				src_path=os.path.expanduser(src_path)
-				
-				# expanding *
-				if src_path[-1]=="*":
-					old_dir = os.path.dirname(os.path.realpath(__file__))
-					os.chdir(src_path[:-1])
-					src_path=glob.glob(src_path)
-					os.chdir(old_dir)
-				else :
-					src_path=[src_path]
-				
 				if dest != None :
 					for destIP in dest :
-						scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "scp","-r"] +src_path+ [PIUSERNAME + "@" + str(destIP) + ":" + dest_path]
-						proc = subprocess.Popen(scpcommand)
+						scpcommand = "/usr/bin/sshpass "+"-p "+PIPASSWORD+" scp "+"-r "+src_path+" "+PIUSERNAME + "@" + str(destIP) + ":" + dest_path
+						proc = subprocess.Popen(scpcommand,shell=True)
 				else :
 					octoPYInstance.logger.critical('No host found. Type \'help look\' for more infos.')
 			else :
 				octoPYInstance.logger.critical('Missing argument. Type \'help put\' for help.')
 		else :
-			octoPYInstance.logger.critical('Type \'help put\' for help.')		
+			octoPYInstance.logger.critical('Type \'help put\' for help.')
+			
+	def complete_put(self, text, line, beidx, endidx) :
+		completions = []
+		args = [arg for arg in line.split(' ') if len(arg) > 0]
+
+		if len(args) >= 3 :
+			if text :
+				# If the user has begun to type a hostname, we complete it
+				if octoPYInstance.hashThymiosHostnames != None :
+					completions = [hostname for hostname in octoPYInstance.hashThymiosHostnames.keys() if hostname.startswith(text)]
+			else :
+				# We return all the hostnames
+				if octoPYInstance.hashThymiosHostnames != None :
+					completions = octoPYInstance.hashThymiosHostnames.keys()
+
+		return completions
 				
 	def help_put(self):
 		print 'put <src_path> <dest_path> [hosts list]\n'+\
@@ -804,7 +807,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			args = args.split(' ')
 			if len(args) > 1 :
 				src_path = args[0]
-				dest_path=args[1]
+				dest_path=os.path.expanduser(args[1])
 				hosts = args[2:]
 				delete=False
 				
@@ -815,9 +818,6 @@ class OctoPYInteractive(cmd.Cmd) :
 						hosts=hosts[1:]
 				
 				dest = octoPYInstance.resolveAddresses(hosts)
-				
-				# expanding ~
-				dest_path=os.path.expanduser(dest_path)
 				
 				old_dir = os.path.dirname(os.path.realpath(__file__))
 				
@@ -833,19 +833,35 @@ class OctoPYInteractive(cmd.Cmd) :
 						os.chdir(old_dir)
 
 						if delete:
-							scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "rsync","-aq", "--remove-source-files", PIUSERNAME + "@" + str(destIP) + ":" + src_path, dest_path+"/"+subfolder]
-							proc=subprocess.Popen(scpcommand)
+							scpcommand = "/usr/bin/sshpass "+"-p "+PIPASSWORD+" rsync "+"-aq "+"--remove-source-files "+PIUSERNAME + "@" + str(destIP) + ":" + src_path+" "+dest_path+"/"+subfolder
+							proc=subprocess.Popen(scpcommand,shell=True)
 							proc.wait()
-							subprocess.Popen(["/usr/bin/sshpass", "-p", PIPASSWORD,"ssh",  PIUSERNAME + "@" + str(destIP), "find", src_path, "-type d", "-delete"])
+							subprocess.Popen("/usr/bin/sshpass "+"-p "+PIPASSWORD+" ssh "+PIUSERNAME + "@" + str(destIP)+" find "+ src_path+" -type d "+"-delete",shell=True,stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 						else :
-							scpcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "rsync","-aq", PIUSERNAME + "@" + str(destIP) + ":" + src_path, dest_path+"/"+subfolder]
-							subprocess.Popen(scpcommand)	
+							scpcommand = "/usr/bin/sshpass "+"-p "+PIPASSWORD+" rsync "+"-aq "+PIUSERNAME + "@" + str(destIP) + ":" + src_path+" "+dest_path+"/"+subfolder
+							subprocess.Popen(scpcommand,shell=True)	
 				else :
 					octoPYInstance.logger.critical('No host found. Type \'help look\' for more infos.')
 			else :
 				octoPYInstance.logger.critical('Missing argument. Type \'help get\' for help.')
 		else :
-			octoPYInstance.logger.critical('Type \'help get\' for help.')		
+			octoPYInstance.logger.critical('Type \'help get\' for help.')
+			
+	def complete_get(self, text, line, beidx, endidx) :
+		completions = []
+		args = [arg for arg in line.split(' ') if len(arg) > 0]
+
+		if len(args) >= 3 :
+			if text :
+				# If the user has begun to type a hostname, we complete it
+				if octoPYInstance.hashThymiosHostnames != None :
+					completions = [hostname for hostname in octoPYInstance.hashThymiosHostnames.keys() if hostname.startswith(text)]
+			else :
+				# We return all the hostnames
+				if octoPYInstance.hashThymiosHostnames != None :
+					completions = octoPYInstance.hashThymiosHostnames.keys()
+
+		return completions
 				
 	def help_get(self):
 		print 'get <src_path> <dest_folder> [-r] [hosts list]\n'+\
