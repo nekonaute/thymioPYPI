@@ -43,8 +43,11 @@ class LightSensor:
 		time.sleep(2)
 	    
 	def lightCaptor(self):
+		"""
+		Retourne 1 si plus de luminosité perçue à gauche qu'à droite, 0 sinon.
+		"""
 		if self.camera == None:
-			self.logger.debug("LightSensor - lightCaptor() : camera non initialisee.")
+			self.logger.debug("LightSensor - lightCaptor() : camera not initialized.")
 		else:
 			stream = io.BytesIO()
     
@@ -64,6 +67,6 @@ class LightSensor:
 			l_right = image_right.mean()
 			l_right=l_right/255.0
 			
-			return l_left,l_right
+			return 1 if (l_left > l_right) else 0
 						
 			
