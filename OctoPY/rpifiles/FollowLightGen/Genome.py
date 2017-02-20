@@ -42,7 +42,7 @@ class Genome:
 	
 	def sigmoide(self,x):
 		
-		return (1/(1+ math.exp(-4*x))) * Params.maxSpeedValue *2  - Params.maxSpeedValue
+		return (1/(1+ math.exp(-4*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
 		
 	def evaluation(self, sensors):
 		
@@ -64,7 +64,7 @@ class Genome:
 		copyGenome = Genome(self.logger, geneValue = copy.deepcopy(self.gene))
 		
 		for i in range (len(self.gene)) :
-			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], Params.sigma)
+			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], Params.params.sigma)
 			
 		return copyGenome 		
 		
