@@ -29,8 +29,8 @@ class LightSensor:
 	      # initialize the camera and grab a reference to the raw camera capture
 
 		self.camera = pc.PiCamera()
-		self.camera.resolution = (Params.resolution_X, Params.resolution_Y)
-		self.camera.brightness = Params.brightness
+		self.camera.resolution = (Params.params.resolution_X, Params.params.resolution_Y)
+		self.camera.brightness = Params.params.brightness
 			
 		#self.camera.start_preview()
 		time.sleep(2)
@@ -44,7 +44,7 @@ class LightSensor:
 	    
 	def lightCaptor(self):
 		"""
-		Retourne 1 si plus de luminosité perçue à gauche qu'à droite, 0 sinon.
+		Retourne le couple (quantité de lumière perçue, 1 si plus de luminosité perçue à gauche qu'à droite 0 sinon).
 		"""
 		if self.camera == None:
 			self.logger.debug("LightSensor - lightCaptor() : camera not initialized.")
@@ -59,14 +59,16 @@ class LightSensor:
 			image = image[:, :, ::-1]
 			
 
-			image_left = image[:,:Params.resolution_X/10*3]
-			image_right = image[:,Params.resolution_X/10*7:]
+			image_left = image[:,:Params.params.resolution_X/10*3]
+			image_right = image[:,Params.params.resolution_X/10*7:]
 			
 			l_left = image_left.mean()
 			l_left=l_left/255.0
 			l_right = image_right.mean()
 			l_right=l_right/255.0
 			
-			return 1 if (l_left > l_right) else 0
+			stream.close()
+			
+			return (l_left+l_right)/2.0,1 if (l_left > l_right) else 0
 						
 			
