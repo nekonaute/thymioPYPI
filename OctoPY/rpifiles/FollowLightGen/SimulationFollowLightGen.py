@@ -13,6 +13,7 @@ Comportement évolutionniste de suivi de lumière.
 import time
 import random
 import ast
+import logging
 
 import Simulation
 import Params
@@ -25,7 +26,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
-		self.mainLogger = mainLogger		
+		self.mainLogger = mainLogger
+		self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
 		self.ls = LightSensor.LightSensor(mainLogger) 	# capteur de lumière				
@@ -40,7 +42,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 								
 
 	def preActions(self) :
-		self.log("SimulationFollowLightGen - preActions()")
+		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
 		self.tController.writeColorRequest([99,0,0])
 		self.waitForControllerResponse()
 		self.tController.writeSoundRequest([200,1])
@@ -48,7 +50,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 
 
 	def postActions(self) :
-		self.log("SimulationFollowLightGen - postActions()")
+		self.mainLogger.debug("SimulationFollowLightGen - postActions()")
 		self.tController.writeMotorsSpeedRequest([0, 0])
 		self.waitForControllerResponse()
 		self.tController.writeColorRequest([0,0,0])
@@ -69,9 +71,11 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			
 		# changement de génération	
 		else:
-			self.log("SimulationFollowLightGen - step() : generation n°"+str((self.iter%self.lifetime)))
-			self.log("SimulationFollowLightGen - step() : fitness :"+str(self.fitness))
+			self.mainLogger.info("SimulationFollowLightGen - step() : generation n°"+str((self.iter/self.lifetime)))
+			self.mainLogger.info("SimulationFollowLightGen - step() : fitness :"+str(self.fitness))
 			self.genome = None
+			self.tController.writeMotorsSpeedRequest([0, 0])
+			self.waitForControllerResponse()
 			
 			if len(self.genomeList) > 0:
 				self.genome = self.applyVariation(self.select(self.genomeList))
@@ -105,6 +109,11 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		sensors = self.getSensors()
 		l, r = self.genome.evaluation(sensors)
 		
+		self.left=l
+		self.right=r
+		
+		self.mainLogger.info(str(l)+" "+str(r))
+		
 		self.tController.writeMotorsSpeedRequest([l, r])
 		self.waitForControllerResponse()
 	
@@ -112,19 +121,38 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		w = Params.params.windowSize
 		if len(self.fitnessWindow) == w:
 			self.fitnessWindow.pop(0)
-			
-		cur_fit = 0.0
-		self.fitnessWindow.append( self.lightValue)
+
+		# récupération des cap
+		mean_sensors = 0.0
+		proxSensors = self.getSensors()[:-1]
+		for i in xrange (len(proxSensors)):
+			mean_sensors += proxSensors[i]
+		mean_sensors/=len(proxSensors)
+								
+		speedValue = (self.getTransitiveAcceleration()) * \
+				   (1 - self.getAngularAcceleration()) * \
+				   (1 - mean_sensors)
+							
+		self.fitnessWindow.append(self.lightValue * speedValue)
+
+		self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - mean_sensors))+" "+str(self.lightValue))		
 		
+		cur_fit = 0.0
 		for f in self.fitnessWindow:
-			cur_fit += f
+			cur_fit += f	
 		
 		return cur_fit/len(self.fitnessWindow)
+		
+	def getTransitiveAcceleration(self):
+		return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
+		
+	def getAngularAcceleration(self):
+		return abs(self.left - self.right) / (2*Params.params.maxSpeedValue)
 	
 	def broadcast(self,genome,fitness):
 		if(random.random()<1.0):		
 			try :
-				recipientsList = 'pi3no03' # TODO
+				recipientsList = Params.params.hostnames
 				myValue = str(fitness)+'$'+str(genome.gene)			
 					
 				self.sendMessage(recipients = recipientsList, value = myValue)              
@@ -171,7 +199,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				
 				self.genomeList.append((fitness,gene))
 				
-				self.mainLogger.debug("RECEIVED MESSAGE FROM: " + str(sender)+ "\n MESSAGE :" + str(value))#+ value)
+				#self.mainLogger.debug("RECEIVED MESSAGE FROM: " + str(sender)+ "\n MESSAGE :" + str(value))
 			else :
 				self.mainLogger.error('SimulationFollowLightGen - Receiving message from ' + str(sender) + ' without value data : ' + str(data))
 		else :
