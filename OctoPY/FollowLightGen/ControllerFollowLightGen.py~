@@ -51,7 +51,7 @@ class ControllerFollowLightGen(Controller.Controller) :
 
 		# Kill controllers
 		self.log("Kill controller...")
-		#self.octoPYInstance.sendMessage(MessageType.KILL, [])
+		self.octoPYInstance.sendMessage(MessageType.KILL, [])
 		
 		self.log("ControllerFollowLightGen - postActions : Appel a self.stop")
 		self.stop()

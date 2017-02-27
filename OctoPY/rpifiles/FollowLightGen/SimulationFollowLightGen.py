@@ -14,6 +14,7 @@ import time
 import random
 import ast
 import logging
+import subprocess
 
 import Simulation
 import Params
@@ -38,10 +39,16 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []						# valeurs de fitness du robot		
 		self.lifetime = Params.params.lifetime			# durée d'évaluation d'une génération
+		self.hostname = None						# hostname
 		
 								
 
 	def preActions(self) :
+		if self.hostname == None :
+			proc = subprocess.Popen(["hostname"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+			(out, err) = proc.communicate()
+			self.hostname = out.rstrip()
+		
 		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
 		self.tController.writeColorRequest([99,0,0])
 		self.waitForControllerResponse()
@@ -192,16 +199,17 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		value = []
 		if "senderHostname" in data.keys() :
 			sender = data["senderHostname"]
-			if "value" in data.keys():
-				value = data["value"].split("$")
-				fitness = float(value[0])
-				gene = ast.literal_eval(value[1])
-				
-				self.genomeList.append((fitness,gene))
-				
-				#self.mainLogger.debug("RECEIVED MESSAGE FROM: " + str(sender)+ "\n MESSAGE :" + str(value))
-			else :
-				self.mainLogger.error('SimulationFollowLightGen - Receiving message from ' + str(sender) + ' without value data : ' + str(data))
+			if sender!=self.hostname:
+				if "value" in data.keys():
+					value = data["value"].split("$")
+					fitness = float(value[0])
+					gene = ast.literal_eval(value[1])
+					
+					self.genomeList.append((fitness,gene))
+					
+					#self.mainLogger.debug("RECEIVED MESSAGE FROM: " + str(sender)+ "\n MESSAGE :" + str(value))
+				else :
+					self.mainLogger.error('SimulationFollowLightGen - Receiving message from ' + str(sender) + ' without value data : ' + str(data))
 		else :
 			self.mainLogger.error('SimulationFollowLightGen - Receiving message without sender : ' + str(data))	
 		
@@ -210,3 +218,5 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		# raspberry 3,8
 		#set config_FollowLightGen.cfg
 		#put ~/thymioPYPI/OctoPY/rpifiles/FollowLightGen ~/dev/thymioPYPI/OctoPY/rpifiles
+		#put ~/thymioPYPI/OctoPY/rpifiles/config_FollowLightGen.cfg ~/dev/thymioPYPI/OctoPY/rpifiles
+		#get ~/dev/thymioPYPI/OctoPY/rpifiles/log/MainController.log /home/pi/log
