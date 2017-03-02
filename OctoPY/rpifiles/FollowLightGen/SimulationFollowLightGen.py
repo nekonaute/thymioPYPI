@@ -28,7 +28,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
 		self.mainLogger = mainLogger
-		self.mainLogger.setLevel(logging.INFO)		
+		#self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
 		self.ls = LightSensor.LightSensor(mainLogger) 	# capteur de lumière				
@@ -50,23 +50,25 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.hostname = out.rstrip()
 		
 		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
+		
 		self.tController.writeColorRequest([99,0,0])
 		self.waitForControllerResponse()
 		self.tController.writeSoundRequest([200,1])
-		self.waitForControllerResponse()		
+		self.waitForControllerResponse()				
 
 
 	def postActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGen - postActions()")
+		
 		self.tController.writeMotorsSpeedRequest([0, 0])
 		self.waitForControllerResponse()
 		self.tController.writeColorRequest([0,0,0])
-		self.waitForControllerResponse()	
+		self.waitForControllerResponse()
 		
 		self.ls.killCam()
 
 	def step(self) :
-		
+		self.mainLogger.debug("SimulationFollowLigtGen - step()")
 		# evaluation de la génération
 		if self.iter%self.lifetime != 0:
 			if self.genome!=None:
@@ -83,6 +85,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.genome = None
 			self.tController.writeMotorsSpeedRequest([0, 0])
 			self.waitForControllerResponse()
+			
 			
 			if len(self.genomeList) > 0:
 				self.genome = self.applyVariation(self.select(self.genomeList))
@@ -101,7 +104,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		proxSensors = self.tController.getPSValues()
 		
 		for i in range(7):
-			l.append(proxSensors[i]/ Params.params.maxProxSensorValue)
+			l.append(proxSensors[i]/Params.params.maxProxSensorValue)
 			
 		self.lightValue, lightLR = self.ls.lightCaptor()
 		l.append(lightLR)
@@ -122,7 +125,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.info(str(l)+" "+str(r))
 		
 		self.tController.writeMotorsSpeedRequest([l, r])
-		self.waitForControllerResponse()
+		self.waitForControllerResponse()		
 	
 	def computeFitness(self):
 		w = Params.params.windowSize

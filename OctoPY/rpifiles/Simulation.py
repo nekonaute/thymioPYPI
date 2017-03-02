@@ -54,8 +54,9 @@ class Simulation(threading.Thread) :
 						self.__restart.wait()
 
 			self.postActions()
-
+			
 			self.tController.stop()
+			
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 			self.tController.stop()

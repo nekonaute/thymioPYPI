@@ -14,8 +14,6 @@ Controleur principal du comportement évolutionniste de suivi de lumière.
 import time
 
 import Controller
-import OctoPY
-import Params
 
 from utils import MessageType
 
@@ -29,7 +27,6 @@ class ControllerFollowLightGen(Controller.Controller) :
 	def preActions(self) :	
 		
 		if self.octoPYInstance.hashThymiosHostnames :
-			self.log("Helloooo555")
 			# Init all robots
 			self.log("Send init...")
 			self.octoPYInstance.sendMessage(MessageType.INIT, [])
@@ -45,23 +42,22 @@ class ControllerFollowLightGen(Controller.Controller) :
 			self.octoPYInstance.sendMessage(MessageType.START, [])
 
 	def postActions(self) :
+		time.sleep(5)
 		self.log("Stop simulation...")
 		self.octoPYInstance.sendMessage(MessageType.STOP, [])
-		time.sleep(1)
+		time.sleep(5)
 
 		# Kill controllers
-		self.log("Kill controller...")
-		#self.octoPYInstance.sendMessage(MessageType.KILL, [])
+		self.log("Kill main controller...")
+		self.octoPYInstance.sendMessage(MessageType.KILL, [])
 		
-		self.log("ControllerFollowLightGen - postActions : Appel a self.stop")
-		self.stop()
 
 	def step(self) :
 		self.stepp+=1
 		time.sleep(1)
 		self.log(self.stepp)
 		if self.stepp>MAX:
-			self.postActions()
+			self.stop()
 
 	def notify(self, **arg) :
 		pass

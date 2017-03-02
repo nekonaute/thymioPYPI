@@ -811,7 +811,7 @@ class OctoPYInteractive(cmd.Cmd) :
 				hosts = args[2:]
 				delete=False
 				
-				# -d argument ?
+				# -r argument ?
 				if len(hosts)>=1:
 					if hosts[0]=="-r":
 						delete=True
