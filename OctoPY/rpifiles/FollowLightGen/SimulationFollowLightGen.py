@@ -13,6 +13,7 @@ Comportement évolutionniste de suivi de lumière.
 import time
 import random
 import ast
+import logging
 import subprocess
 
 import Simulation
@@ -27,7 +28,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
 		self.mainLogger = mainLogger
-		#self.mainLogger.setLevel(logging.INFO)		
+		self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
 		self.ls = LightSensor.LightSensor(mainLogger) 	# capteur de lumière				
@@ -37,21 +38,20 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.iter = 1								# nombre d'itérations total
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []						# valeurs de fitness du robot		
-		self.lifetime = Params.params.lifetime			# durée d'évaluation d'une génération
 		self.hostname = None						# hostname
 		
 								
 
 	def preActions(self) :
+		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
+		
 		if self.hostname == None :
 			proc = subprocess.Popen(["hostname"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			(out, err) = proc.communicate()
 			self.hostname = out.rstrip()
+
+		self.mainLogger.info("SimulationFollowLightGen - preActions() : PARAMETRES\n"+str(Params.params.lifetime))		
 		
-		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
-		
-		self.tController.writeColorRequest([99,0,0])
-		self.waitForControllerResponse()
 		self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()				
 
@@ -59,17 +59,12 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 	def postActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGen - postActions()")
 		
-		self.tController.writeMotorsSpeedRequest([0, 0])
-		self.waitForControllerResponse()
-		self.tController.writeColorRequest([0,0,0])
-		self.waitForControllerResponse()
-		
 		self.ls.killCam()
 
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
 		# evaluation de la génération
-		if self.iter%self.lifetime != 0:
+		if self.iter%Params.params.lifetime != 0:
 			if self.genome!=None:
 				self.move()
 				self.fitness = self.computeFitness()
@@ -79,20 +74,23 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			
 		# changement de génération	
 		else:
-			self.mainLogger.info("SimulationFollowLightGen - step() : generation n°"+str((self.iter/self.lifetime)))
-			self.mainLogger.info("SimulationFollowLightGen - step() : fitness :"+str(self.fitness))
-			self.genome = None
+			if self.genome!=None:
+				self.mainLogger.info("SimulationFollowLightGen - step() : generation n°"+str((self.iter/Params.params.lifetime)))
+				self.mainLogger.info("SimulationFollowLightGen - step() : fitness : "+str(self.fitness))
+				self.mainLogger.info("SimulationFollowLightGen - step() : genome was : "+str(self.genome.gene))
+				#self.genome = None
+				self.fitnessWindow = []
+			
 			self.tController.writeMotorsSpeedRequest([0, 0])
 			self.waitForControllerResponse()
 			
 			
 			if len(self.genomeList) > 0:
-				self.genome = self.applyVariation(self.select(self.genomeList))
+				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize))
 
 			self.genomeList=[]			
 			
 		self.iter+=1
-		time.sleep(0.5)
 		
 	def getSensors(self):
 		
@@ -121,8 +119,6 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.left=l
 		self.right=r
 		
-		self.mainLogger.info(str(l)+" "+str(r))
-		
 		self.tController.writeMotorsSpeedRequest([l, r])
 		self.waitForControllerResponse()		
 	
@@ -132,19 +128,18 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.fitnessWindow.pop(0)
 
 		# récupération des cap
-		mean_sensors = 0.0
+		max_sensors = 0.0
 		proxSensors = self.getSensors()[:-1]
 		for i in xrange (len(proxSensors)):
-			mean_sensors += proxSensors[i]
-		mean_sensors/=len(proxSensors)
+			max_sensors = max(max_sensors,proxSensors[i])
 								
 		speedValue = (self.getTransitiveAcceleration()) * \
 				   (1 - self.getAngularAcceleration()) * \
-				   (1 - mean_sensors)
+				   (1 - max_sensors)
 							
-		self.fitnessWindow.append(self.lightValue * speedValue)
+		self.fitnessWindow.append(speedValue)
 
-		self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - mean_sensors))+" "+str(self.lightValue))		
+		self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
 		
 		cur_fit = 0.0
 		for f in self.fitnessWindow:
@@ -159,7 +154,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		return abs(self.left - self.right) / (2*Params.params.maxSpeedValue)
 	
 	def broadcast(self,genome,fitness):
-		if(random.random()<1.0):		
+		proba = max(Params.params.minSendProba,self.fitness)
+		if(random.random()<proba):		
 			try :
 				recipientsList = Params.params.hostnames
 				myValue = str(fitness)+'$'+str(genome.gene)			
@@ -171,17 +167,16 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 	def getGenomeFromOther(self):
 		return []
 		
-	def select(self,genes):
-		# TODO comportement par défaut best
-		best_i = 0
-		best_fit = 0
+	def select(self,genes,k):
+		""" 
+		Selectionne un genome parmis ceux contenus dans genes, en effectuant un tournoi de taille k
+		"""
 		
-		for i in range(len(genes)):
-			if genes[i][0] > best_fit:
-				best_fit=genes[i][0]
-				best_i=i
-				
-		selectedGene = genes[best_i][1]
+		l=list(genes)
+		l.sort()
+		l=l[:k]
+		
+		selectedGene = l[random.randint(0,len(l)-1)][1]
 		
 		return Genome.Genome(self.mainLogger,geneValue=selectedGene)
 		

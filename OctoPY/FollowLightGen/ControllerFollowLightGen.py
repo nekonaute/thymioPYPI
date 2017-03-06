@@ -17,12 +17,12 @@ import Controller
 
 from utils import MessageType
 
-MAX=10
-
 class ControllerFollowLightGen(Controller.Controller) :
 	def __init__(self, controller, mainLogger) :
 		Controller.Controller.__init__(self, controller, mainLogger)
+		
 		self.stepp=0
+		self.max=100 # en secondes
 		
 	def preActions(self) :	
 		
@@ -54,8 +54,8 @@ class ControllerFollowLightGen(Controller.Controller) :
 	def step(self) :
 		self.stepp+=1
 		time.sleep(1)
-		self.log(self.stepp)
-		if self.stepp>MAX:
+		self.log("seconds = "+str(self.stepp))
+		if self.stepp>self.max:
 			self.stop()
 
 	def notify(self, **arg) :
