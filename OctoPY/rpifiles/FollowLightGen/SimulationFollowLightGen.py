@@ -13,7 +13,6 @@ Comportement évolutionniste de suivi de lumière.
 import time
 import random
 import ast
-import logging
 import subprocess
 
 import Simulation

@@ -17,7 +17,7 @@ import Controller
 
 from utils import MessageType
 
-MAX=8
+MAX=10
 
 class ControllerFollowLightGen(Controller.Controller) :
 	def __init__(self, controller, mainLogger) :
@@ -42,10 +42,9 @@ class ControllerFollowLightGen(Controller.Controller) :
 			self.octoPYInstance.sendMessage(MessageType.START, [])
 
 	def postActions(self) :
-		time.sleep(5)
 		self.log("Stop simulation...")
 		self.octoPYInstance.sendMessage(MessageType.STOP, [])
-		time.sleep(5)
+		time.sleep(2)
 
 		# Kill controllers
 		self.log("Kill main controller...")

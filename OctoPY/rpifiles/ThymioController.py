@@ -139,11 +139,9 @@ class ThymioController(threading.Thread):
 			with self.__performActionReq:
 				# Wait for requests:
 				while len(self.__request) == 0 and not self.__stop.isSet() :
-					self.__mainLogger.debug("ThymioController - execute : boucle1")
-					self.__performActionReq.wait()
+					self.__performActionReq.wait(0.1)
 
 				while len(self.__request) :
-					self.__mainLogger.debug("ThymioController - execute : boucle2")
 					request = self.__request.pop(0)
 					# self.__mainLogger.debug("Request : " + str(request))
 
@@ -202,9 +200,7 @@ class ThymioController(threading.Thread):
 		except :
 			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
-		self.__mainLogger.debug("ThymioController - execute : AVANT if self.__stop.isSet()")
 		if self.__stop.isSet() :
-			self.__mainLogger.debug("ThymioController - execute : DANS if self.__stop.isSet()")
 			self.killController()
 			return False
 		else :
@@ -281,7 +277,6 @@ class ThymioController(threading.Thread):
 		self.__dbusSetMotorspeed()
 
 	def stop(self) :
-		self.__mainLogger.debug("ThymioController - stop : appel a stop()")
 		self.__stop.set()
 
 	def killController(self) :
