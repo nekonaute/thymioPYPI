@@ -179,8 +179,6 @@ class ThymioController(threading.Thread):
 						self.__stopThymio()
 
 					# Notifying that simulation has been set
-					
-					self.__mainLogger.info("On est dans le fameux while")
 					self.__simulation.thymioControllerPerformedAction()
 
 				# while self.__request == MessageRequest.NONE and not self.__stop.isSet() :

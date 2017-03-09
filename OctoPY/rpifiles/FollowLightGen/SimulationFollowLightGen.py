@@ -28,7 +28,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
 		self.mainLogger = mainLogger
-		self.mainLogger.setLevel(logging.INFO)		
+		#self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
 		self.ls = LightSensor.LightSensor(mainLogger) 	# capteur de lumière				
@@ -39,12 +39,13 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []						# valeurs de fitness du robot		
 		self.hostname = None						# hostname
-		
-								
+		self.acc = [0,0,0]							# accélérations				
+				
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
 		
+		# hostname 
 		if self.hostname == None :
 			proc = subprocess.Popen(["hostname"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			(out, err) = proc.communicate()
@@ -53,7 +54,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.info("SimulationFollowLightGen - preActions() : PARAMETRES\n"+str(Params.params.lifetime))		
 		
 		self.tController.writeSoundRequest([200,1])
-		self.waitForControllerResponse()				
+		self.waitForControllerResponse()		
 
 
 	def postActions(self) :
@@ -63,6 +64,26 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
+		
+		if self.iter == 1:
+			# étalonnage des accélérations
+			self.tar()			
+		
+		
+		
+		
+		[i for i in range(10000000)]
+		
+		self.tController.readAccRequest()
+		self.waitForControllerResponse()
+		self.acc = self.tController.getAccValues()
+		self.acc = [self.acc[i] - self.tarAcc[i] for i in xrange(3)]
+		
+
+		self.mainLogger.info("======================================================SimulationFollowLigtGen - step() : Valeur accelerometre gauche "+str(self.acc[0])+", arriere "+str(self.acc[1])+", bas "+str(self.acc[2]))
+		self.mainLogger.info("SimulationFollowLigtGen - step() : tarAcc "+str(self.tarAcc))
+				
+		"""
 		# evaluation de la génération
 		if self.iter%Params.params.lifetime != 0:
 			if self.genome!=None:
@@ -89,8 +110,22 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize))
 
 			self.genomeList=[]			
-			
+					"""
 		self.iter+=1
+		time.sleep(0.2)
+		
+	def tar(self):
+		"""
+		Permet d'étalonner les valeurs de l'accéléromètre.
+		"""		
+		
+		
+		
+		self.tController.readAccRequest()
+		
+		self.waitForControllerResponse()
+		
+		self.tarAcc = self.tController.getAccValues()
 		
 	def getSensors(self):
 		
