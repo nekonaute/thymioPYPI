@@ -35,6 +35,10 @@ class Simulation(threading.Thread) :
 		if not debug :
 			self.__tcPA = False
 			self.__tcPerformedAction = threading.Condition()
+			
+			self.__tcGV = False
+			self.__tcGotValue = threading.Condition()			
+			
 			self.tController = ThymioController.ThymioController(self, mainLogger) 
 			self.tController.start()
 
@@ -124,6 +128,17 @@ class Simulation(threading.Thread) :
 				self.__tcPerformedAction.wait()
 			# self.mainLogger.debug("WAIT ENDED")
 			self.__tcPA = False
+			
+	def thymioControllerGotValue(self) :
+		with self.__tcGotValue:
+			self.__tcGV = True
+			self.__tcGotValue.notify()
+			
+	def waitForControllerValue(self) :
+		with self.__tcGotValue :
+			while not self.__tcGV and not self.__stop.isSet() :
+				self.__tcGotValue.wait()
+			self.__tcGV = False
 
 	def startThymioController(self) :
 		self.tController.start()

@@ -67,15 +67,13 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		
 		if self.iter == 1:
 			# étalonnage des accélérations
-			self.tar()			
+			#self.tar()			
 		
 		
-		
-		
-		[i for i in range(10000000)]
+		#[i for i in range(10000000)]
 		
 		self.tController.readAccRequest()
-		self.waitForControllerResponse()
+		self.waitForControllerValue()
 		self.acc = self.tController.getAccValues()
 		self.acc = [self.acc[i] - self.tarAcc[i] for i in xrange(3)]
 		
@@ -119,12 +117,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		Permet d'étalonner les valeurs de l'accéléromètre.
 		"""		
 		
-		
-		
 		self.tController.readAccRequest()
-		
-		self.waitForControllerResponse()
-		
+		self.waitForControllerValue()
 		self.tarAcc = self.tController.getAccValues()
 		
 	def getSensors(self):

@@ -86,9 +86,11 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
-				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 
+				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 	
+				self.__mainLogger.info("__dbusGetVariable : ligne after getVariable")
 				ok = True
 			except:
+				self.__mainLogger.info("__dbusGetVariable : error")
 				ok = False
 	
 	def __dbusSetMotorspeed(self):
@@ -133,7 +135,7 @@ class ThymioController(threading.Thread):
 	def __dbusGetAccReply(self,r):
 		self.__mainLogger.info("On est dans le dbusGetAccReply")
 		self.__acc = r
-		
+		self.__simulation.thymioControllerGotValue()
 		self.__mainLogger.info("On est fin le dbusGetAccReply")
 	
 	def __dbusGetAcc(self):
@@ -179,9 +181,9 @@ class ThymioController(threading.Thread):
 						self.__stopThymio()
 
 					# Notifying that simulation has been set
-					
-					self.__mainLogger.info("On est dans le fameux while")
+					self.__mainLogger.info("__execute : before self.__simulation.thymioControllerPerformedAction()")
 					self.__simulation.thymioControllerPerformedAction()
+					self.__mainLogger.info("__execute : after self.__simulation.thymioControllerPerformedAction()")
 
 				# while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
 				# 	self.__performActionReq.wait()
