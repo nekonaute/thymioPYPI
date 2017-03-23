@@ -181,9 +181,7 @@ class ThymioController(threading.Thread):
 						self.__stopThymio()
 
 					# Notifying that simulation has been set
-					self.__mainLogger.info("__execute : before self.__simulation.thymioControllerPerformedAction()")
 					self.__simulation.thymioControllerPerformedAction()
-					self.__mainLogger.info("__execute : after self.__simulation.thymioControllerPerformedAction()")
 
 				# while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
 				# 	self.__performActionReq.wait()

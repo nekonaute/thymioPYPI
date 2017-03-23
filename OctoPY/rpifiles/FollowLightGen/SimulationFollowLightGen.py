@@ -11,6 +11,7 @@ Encadrant : Nicolas Bredeche
 Comportement évolutionniste de suivi de lumière.
 """
 import time
+import math
 import random
 import ast
 import logging
@@ -39,7 +40,11 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []						# valeurs de fitness du robot		
 		self.hostname = None						# hostname
-		self.acc = [0,0,0]							# accélérations				
+		self.speed = [0,0,0]						# vitesse estimée par accélérations
+		
+		self.tarAcc = [0,0,0]						# valeurs initiales de l'accéléromètre	
+		self.acc = [0,0,0]							# valeur de l'accélération
+		self.prevAccTime = 0						# temps de la prise de la valeur précédente de l'accélération
 				
 
 	def preActions(self) :
@@ -50,6 +55,9 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			proc = subprocess.Popen(["hostname"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			(out, err) = proc.communicate()
 			self.hostname = out.rstrip()
+
+		# étalonnage des accélérations
+		self.tar()
 
 		self.mainLogger.info("SimulationFollowLightGen - preActions() : PARAMETRES\n"+str(Params.params.lifetime))		
 		
@@ -65,23 +73,29 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
 		
-		if self.iter == 1:
-			# étalonnage des accélérations
-			#self.tar()			
-		
-		
-		#[i for i in range(10000000)]
 		
 		self.tController.readAccRequest()
-		self.waitForControllerValue()
+		self.waitForControllerResponse()
 		self.acc = self.tController.getAccValues()
 		self.acc = [self.acc[i] - self.tarAcc[i] for i in xrange(3)]
 		
+		if(self.prevAccTime==0):	
+			t0=time.time()
+		else:
+			t0=self.prevAccTime
+		t1=time.time()
+		self.prevAccTime=t1	
+		
+		delta=t1-t0
+		self.speed = [self.speed[i]+(self.acc[i] if math.fabs(self.acc[i])>-1 else 0)*delta for i in xrange(3)]
+		
+		
+		
 
 		self.mainLogger.info("======================================================SimulationFollowLigtGen - step() : Valeur accelerometre gauche "+str(self.acc[0])+", arriere "+str(self.acc[1])+", bas "+str(self.acc[2]))
-		self.mainLogger.info("SimulationFollowLigtGen - step() : tarAcc "+str(self.tarAcc))
-				
-		"""
+		self.mainLogger.info("SimulationFollowLigtGen - step() : speed  "+str(self.speed))
+		self.mainLogger.info("SimulationFollowLigtGen - step() : tarAcc  "+str(self.tarAcc))		
+		
 		# evaluation de la génération
 		if self.iter%Params.params.lifetime != 0:
 			if self.genome!=None:
@@ -107,19 +121,21 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			if len(self.genomeList) > 0:
 				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize))
 
-			self.genomeList=[]			
-					"""
+			self.genomeList=[]	
+			
 		self.iter+=1
-		time.sleep(0.2)
+		time.sleep(0.1)
 		
 	def tar(self):
 		"""
 		Permet d'étalonner les valeurs de l'accéléromètre.
 		"""		
 		
-		self.tController.readAccRequest()
-		self.waitForControllerValue()
-		self.tarAcc = self.tController.getAccValues()
+		while self.tarAcc==[0,0,0]:
+			time.sleep(0.1)
+			self.tController.readAccRequest()
+			self.waitForControllerResponse()
+			self.tarAcc = self.tController.getAccValues()
 		
 	def getSensors(self):
 		
