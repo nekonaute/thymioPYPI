@@ -36,9 +36,9 @@ class SimulationFollowTAG(Simulation.Simulation) :
 		newresults, orientation = self.tag_detector.retrieve_tag_orientations()
 		if orientation!=[] and newresults:
 			if orientation[0] == 0:
-				self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing left' )
+				#self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing left' )
 				self.tController.writeMotorsSpeedRequest(go_left)
 			else:
-				self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing right' )
+				#self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing right' )
 				self.tController.writeMotorsSpeedRequest(go_right)
 		

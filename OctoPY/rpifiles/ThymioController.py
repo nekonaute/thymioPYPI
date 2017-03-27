@@ -21,7 +21,7 @@ class MessageRequest() :
 	MOTORS, COLOR, SOUND = range(10, 13)
 
 	KILL = 99
-
+		
 
 class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
@@ -59,8 +59,7 @@ class ThymioController(threading.Thread):
 		self.__asebaNetwork.LoadScripts(AESL_PATH, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 		# Schedules first run of the controller
 		glib.idle_add(self.__execute)
-
-
+	
 	def __dbusError(self, e):
 		# there was an error on D-Bus, stop loop
 		self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())

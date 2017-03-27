@@ -46,7 +46,7 @@ class LightSensor:
 		"""
 		Retourne le couple (quantité de lumière perçue, 1 si plus de luminosité perçue à gauche qu'à droite 0 sinon).
 		"""
-		"""
+		
 		if self.camera == None:
 			self.logger.debug("LightSensor - lightCaptor() : camera not initialized.")
 		else:
@@ -71,6 +71,3 @@ class LightSensor:
 			stream.close()
 			
 			return (l_left+l_right)/2.0,1 if (l_left > l_right) else 0
-		"""
-		return 0.2,0.2
-			

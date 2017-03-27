@@ -74,6 +74,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
 		
 		
+		"""
 		self.tController.readAccRequest()
 		self.waitForControllerResponse()
 		self.acc = self.tController.getAccValues()
@@ -84,7 +85,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		else:
 			t0=self.prevAccTime
 		t1=time.time()
-		self.prevAccTime=t1	
+		self.prevAccTime=t1
 		
 		delta=t1-t0
 		self.speed = [self.speed[i]+(self.acc[i] if math.fabs(self.acc[i])>-1 else 0)*delta for i in xrange(3)]
@@ -94,8 +95,10 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 
 		self.mainLogger.info("======================================================SimulationFollowLigtGen - step() : Valeur accelerometre gauche "+str(self.acc[0])+", arriere "+str(self.acc[1])+", bas "+str(self.acc[2]))
 		self.mainLogger.info("SimulationFollowLigtGen - step() : speed  "+str(self.speed))
-		self.mainLogger.info("SimulationFollowLigtGen - step() : tarAcc  "+str(self.tarAcc))		
+		self.mainLogger.info("SimulationFollowLigtGen - step() : tarAcc  "+str(self.tarAcc))	
+		"""
 		
+			
 		# evaluation de la génération
 		if self.iter%Params.params.lifetime != 0:
 			if self.genome!=None:
@@ -124,7 +127,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.genomeList=[]	
 			
 		self.iter+=1
-		time.sleep(0.1)
+		time.sleep(1.5)
 		
 	def tar(self):
 		"""
