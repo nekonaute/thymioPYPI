@@ -290,7 +290,7 @@ class CommandsListener(threading.Thread) :
 	def run(self):
 		while 1:
 			"""TEST"""
-			#mainLogger.debug("!!!######################DEBUT DU WHILE 1 ###############################################!!!")
+			mainLogger.debug("!!!######################DEBUT DU WHILE 1 ###############################################!!!")
 			"""TEST"""
 			try:
 				# Waiting for client...

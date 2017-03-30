@@ -36,7 +36,7 @@ class Genome:
 					self.size=size
 					self.gene=geneValue
 			else:
-				# generation d'un genome de taille size avec genes compris entre -1 et 1
+				# generation d'un genome de taille size avec genes compris entre 0 et 1
 				self.gene = [-1+random.random()*2 for i in range(size)] 
 				self.size=size
 	

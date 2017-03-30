@@ -36,13 +36,13 @@ class Genome:
 					self.size=size
 					self.gene=geneValue
 			else:
-				# generation d'un genome de taille size avec genes compris entre -1 et 1
-				self.gene = [-1+random.random()*2 for i in range(size)] 
+				# generation d'un genome de taille size avec genes compris entre -4 et 4
+				self.gene = [-4+random.random()*8 for i in range(size)] 
 				self.size=size
 	
 	def sigmoide(self,x):
 		
-		return (1/(1+ math.exp(-3*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
+		return (1/(1+ math.exp(-x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
 		
 	def evaluation(self, sensors):
 		
@@ -60,11 +60,11 @@ class Genome:
 		return (self.sigmoide(sum_g), self.sigmoide(sum_d))
 		
 		
-	def mutationGaussienne(self):
+	def mutationGaussienne(self, sigma):
 		copyGenome = Genome(self.logger, geneValue = copy.deepcopy(self.gene))
 		
 		for i in range (len(self.gene)) :
-			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], Params.params.sigma)
+			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], sigma)
 			
 		return copyGenome 		
 		

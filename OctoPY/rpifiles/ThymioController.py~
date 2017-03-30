@@ -21,7 +21,7 @@ class MessageRequest() :
 	MOTORS, COLOR, SOUND = range(10, 13)
 
 	KILL = 99
-
+		
 
 class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
@@ -59,8 +59,7 @@ class ThymioController(threading.Thread):
 		self.__asebaNetwork.LoadScripts(AESL_PATH, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 		# Schedules first run of the controller
 		glib.idle_add(self.__execute)
-
-
+	
 	def __dbusError(self, e):
 		# there was an error on D-Bus, stop loop
 		self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
@@ -86,9 +85,11 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
-				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 
+				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 	
+				self.__mainLogger.debug("__dbusGetVariable : ligne after getVariable")
 				ok = True
 			except:
+				self.__mainLogger.debug("__dbusGetVariable : error")
 				ok = False
 	
 	def __dbusSetMotorspeed(self):
@@ -131,10 +132,10 @@ class ThymioController(threading.Thread):
 		self.__dbusGetVariable("motor.right.speed", self.__dbusGetMotorSpeedRightReply)
 		
 	def __dbusGetAccReply(self,r):
-		self.__mainLogger.info("On est dans le dbusGetAccReply")
+		self.__mainLogger.debug("On est dans le dbusGetAccReply")
 		self.__acc = r
-		
-		self.__mainLogger.info("On est fin le dbusGetAccReply")
+		self.__simulation.thymioControllerGotValue()
+		self.__mainLogger.debug("On est fin le dbusGetAccReply")
 	
 	def __dbusGetAcc(self):
 	

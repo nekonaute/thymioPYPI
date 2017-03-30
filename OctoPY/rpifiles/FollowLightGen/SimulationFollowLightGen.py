@@ -8,7 +8,7 @@ Encadrant : Nicolas Bredeche
 @author Tanguy SOTO
 @author Parham SHAMS
 
-Comportement évolutionniste de suivi de lumière.
+Comportement évolutionniste de suivi de lumière : basé sur VanillaEE
 """
 import time
 import math
@@ -175,7 +175,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		if len(self.fitnessWindow) == w:
 			self.fitnessWindow.pop(0)
 
-		# récupération des cap
+		# récupération des capteurs
 		max_sensors = 0.0
 		proxSensors = self.getSensors()[:-1]
 		for i in xrange (len(proxSensors)):
