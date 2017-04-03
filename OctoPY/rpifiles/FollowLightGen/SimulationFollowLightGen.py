@@ -66,7 +66,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 
 
 	def postActions(self) :
-		self.mainLogger.debug("SimulationFollowLightGen - postActions()")
+		self.mainLogger.debug("SimulationFollowLightGen - postActions()")		
 		
 		self.ls.killCam()
 

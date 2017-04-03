@@ -1,4 +1,15 @@
 #!/usr/bin/env/python
+# -*- coding: utf-8 -*- 
+
+"""
+P_ANDROIDE UPMC 2017
+Encadrant : Nicolas Bredeche
+
+@author Tanguy SOTO
+@author Parham SHAMS
+
+Comportement évolutionniste de suivi de lumière : basé sur VanillaEE
+"""
 
 import Simulation
 import Params
@@ -16,9 +27,15 @@ class SimulationApplyEvolvedGenome(Simulation.Simulation) :
 		self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
-		self.ls = LightSensor.LightSensor(mainLogger) 					# capteur de lumière				
-		self.ls.initCam()											# initialisation de la caméra
-		self.genome = Genome.Genome(geneValue=Params.params.genome)		# genome que l'on veut appliquer
+		self.ls = LightSensor.LightSensor(mainLogger) 							# capteur de lumière				
+		self.ls.initCam()													# initialisation de la caméra
+			
+		genes = Params.params.genome.split(",") # genome que l'on veut appliquer
+		for i in range(len(genes)):
+			genes[i] = float(genes[i])
+		
+		self.genome = Genome.Genome(self.mainLogger, geneValue=genes)
+		
 	def preActions(self) :
 		self.mainLogger.debug("SimulationApplyEvolvedGenome - preActions()")
 		

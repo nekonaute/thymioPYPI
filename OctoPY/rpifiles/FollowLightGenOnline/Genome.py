@@ -31,7 +31,7 @@ class Genome:
 		else:
 			if geneValue!=[]:
 				if len(geneValue)!=size:
-					self.log.debug("Genome - init() : size argument differs from the size of geneValue, size is set to len(geneValue)")
+					self.logger.debug("Genome - init() : size argument differs from the size of geneValue, size is set to len(geneValue)")
 				else:
 					self.size=size
 					self.gene=geneValue
@@ -47,7 +47,7 @@ class Genome:
 	def evaluation(self, sensors):
 		
 		if len(sensors)!=self.size/2-1:
-			self.log.debug("Genome - evaluation() : number of sensors doesn't match with genome size")
+			self.logger.debug("Genome - evaluation() : number of sensors doesn't match with genome size")
 			return (0,0)
 			
 		# initialisation avec les biais
