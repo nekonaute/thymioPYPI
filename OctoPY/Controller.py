@@ -1,13 +1,14 @@
-import OctoPY
-import Params
-from utils import recvall, recvOneMessage, sendOneMessage, MessageType
-import utils
-
 import logging
 import threading
-import socket
-import sys
-import traceback
+
+import Params
+
+"""
+OCTOPY : Controller.py
+
+Basic model for all controllers : every controller will automatically inherit
+from this class when created with CreateController.py
+"""
 
 from abc import ABCMeta, abstractmethod
 
@@ -28,7 +29,6 @@ class Controller(threading.Thread) :
 
 		self.__stop = threading.Event()
 		self.__ID = Controller.getNewID()
-
 
 	@staticmethod
 	def getNewID() :
@@ -59,21 +59,17 @@ class Controller(threading.Thread) :
 	def postActions(self) :
 		pass		
 
-
 	def stop(self) :
 		self.__stop.set()
 
 	def log(self, message, level = logging.DEBUG) :
 		self.octoPYInstance.logger.log(level, message)
 
-
 	def register(self, IPs = []) :
 		self.octoPYInstance.registerController(self, IPs)
 
-
 	def notify(self, **params) :
 		pass
-
 
 	@staticmethod
 	def checkForCompParams() :

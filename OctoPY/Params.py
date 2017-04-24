@@ -3,6 +3,13 @@ import re
 import sys, traceback
 import logging
 
+"""
+OCTOPY : utils.py
+
+Read a configuration file an create the associated class Params to store its
+parameters.
+"""
+
 params = None
 
 class Params :
@@ -51,7 +58,6 @@ class Params :
 		else :
 			self.__mainLogger.critical("Params - No parameter " + name + " found.")
 			return None
-
 
 
 if __name__ == "__main__" :

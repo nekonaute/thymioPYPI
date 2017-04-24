@@ -2,6 +2,7 @@
 
 # Configure the server-router-robots network.
 
+
 # Not necessary but might be needed when the connection has not previously been properly cut
 sudo ifdown eth1
 

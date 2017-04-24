@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 
-import io
 import argparse
 import os
 
+"""
+OCTOPY : CreateController.py
+
+Script used to create a configuration file (.cfg file) and folder containing 
+a file with basic code for a controller.
+"""
 
 def main(args) :
 	folder = args.controller
