@@ -1,10 +1,8 @@
 import picamera
 import traceback
-import os
 import sys
 import logging
 import cv2
-from PIL import Image
 import numpy as np
 import time
 import io
