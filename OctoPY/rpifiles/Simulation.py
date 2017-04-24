@@ -2,14 +2,19 @@ import threading
 import traceback
 import logging
 import sys
-
 from abc import ABCMeta, abstractmethod
-
-import numpy as np
 
 import ThymioController
 import Params
 
+
+"""
+OCTOPY : Simulation.py
+
+Basic model for any simulation : every simulation will automatically inherit from 
+this class when created by CreateExperiment.py.
+N.B : takes care of launching "its" ThymioController.
+"""
 
 class Simulation(threading.Thread) :
 	__metaclass__ = ABCMeta
@@ -34,10 +39,7 @@ class Simulation(threading.Thread) :
 		# Thymio controller
 		if not debug :
 			self.__tcPA = False
-			self.__tcPerformedAction = threading.Condition()
-			
-			self.__tcGV = False
-			self.__tcGotValue = threading.Condition()			
+			self.__tcPerformedAction = threading.Condition()			
 			
 			self.tController = ThymioController.ThymioController(self, mainLogger) 
 			self.tController.start()
@@ -110,7 +112,6 @@ class Simulation(threading.Thread) :
 	def stop(self) :
 		self.__stop.set()
 
-
 	def isStopped(self) :
 		return self.__stop.isSet()
 
@@ -129,18 +130,7 @@ class Simulation(threading.Thread) :
 				self.__tcPerformedAction.wait()
 			# self.mainLogger.debug("WAIT ENDED")
 			self.__tcPA = False
-			
-	def thymioControllerGotValue(self) :
-		with self.__tcGotValue:
-			self.__tcGV = True
-			self.__tcGotValue.notify()
-			
-	def waitForControllerValue(self) :
-		with self.__tcGotValue :
-			while not self.__tcGV and not self.__stop.isSet() :
-				self.__tcGotValue.wait()
-			self.__tcGV = False
-
+	
 	def startThymioController(self) :
 		self.tController.start()
 
@@ -155,7 +145,6 @@ class Simulation(threading.Thread) :
 		self.mainLogger.debug("Simulation - Sending message with : " + str(params))
 		self.controller.sendMessage(**params)
 
-
 	# --- Functions for easy thymio movement ---
 	def turn(self, angle) :
 		try :
@@ -167,7 +156,7 @@ class Simulation(threading.Thread) :
 			angularSpeed = (angle * 32.0)/9.0
 
 			if angle < 1 and angle > -1 :
-				m = np.max(motorsSpeed)
+				#m = np.max(motorsSpeed)
 				self.tController.writeMotorsSpeedRequest(motorsSpeed)
 				self.waitForControllerResponse()
 
@@ -180,7 +169,6 @@ class Simulation(threading.Thread) :
 			self.waitForControllerResponse()
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-
 
 	def move(self, angle, speedLeft, speedRight) :
 		try :
@@ -221,7 +209,7 @@ class Simulation(threading.Thread) :
 
 
 	@staticmethod
-	def checkForCompParams() :
+	def checkForCompParams(self) :
 		for param in Simulation.compParams :
 			if not Params.params.checkParam(param) :
 				self.mainLogger.error("Simulation - Parameter " + param + " not found.")

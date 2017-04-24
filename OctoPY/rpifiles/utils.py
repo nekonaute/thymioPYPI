@@ -1,6 +1,14 @@
 import struct
 import pickle
 import inspect
+import sys
+import traceback
+
+"""
+OCTOPY : utils.py
+
+Stores usefull classes and methods.
+"""
 
 class MessageType :
     # Special
@@ -47,4 +55,5 @@ def sendOneMessage(conn, data):
         conn.sendall(struct.pack('!I', length))
         conn.sendall(packed_data)
     except :
-        self.__logger.error("sendOneMessage - Unexpected error while sending message to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+        destIP = str(conn.getpeername())
+        print "sendOneMessage - Unexpected error while sending message to "+ destIP +" : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc() 

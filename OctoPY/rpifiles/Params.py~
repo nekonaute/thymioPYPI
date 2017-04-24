@@ -3,13 +3,6 @@ import re
 import sys, traceback
 import logging
 
-"""
-OCTOPY : utils.py
-
-Read a configuration file an create the associated class Params to store its
-parameters.
-"""
-
 params = None
 
 class Params :
@@ -44,6 +37,7 @@ class Params :
 							self.__params[param[-2]] = value
 				except :
 					self.__mainLogger.critical('Params - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+
 
 
 	def checkParam(self, param) :

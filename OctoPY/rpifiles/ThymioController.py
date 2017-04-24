@@ -6,6 +6,11 @@ import threading
 import traceback
 import sys
 
+"""
+OCTOPY : ThymioController.py
+
+Plays the role of interface between the simulation and the Thymio robot.
+"""
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 AESL_PATH = os.path.join(CURRENT_FILE_PATH, ('asebaCommands.aesl'))
@@ -41,10 +46,10 @@ class ThymioController(threading.Thread):
 		self.__psGroundAmbiantSensors = [0,0]
 		self.__psGroundReflectedSensors = [0,0]
 		self.__psGroundDeltaSensors = [0,0]
+		self.__acc = [0,0,0]
 		self.__motorspeed = [0,0]
 		self.__color = [0,0,0]
 		self.__sound = [0,0]
-		self.__acc = [0,0,0]
 
 
 		# Init the main loop
@@ -54,7 +59,6 @@ class ThymioController(threading.Thread):
 		# Create Aseba network 
 		asebaNetworkObject = bus.get_object('ch.epfl.mobots.Aseba', '/')
 		self.__asebaNetwork = dbus.Interface(asebaNetworkObject, dbus_interface='ch.epfl.mobots.AsebaNetwork')
-		# self.__mainLogger.debug('Aseba nodes: ' + str(self.__asebaNetwork.GetNodesList()))
 		# Load the aesl file
 		self.__asebaNetwork.LoadScripts(AESL_PATH, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 		# Schedules first run of the controller
@@ -66,7 +70,6 @@ class ThymioController(threading.Thread):
 		self.__mainLogger.critical('dbus error: %s' % str(e) + "\nNow sleeping for 1 second and retrying...")
 		time.sleep(1)
 		raise Exception("dbus error")
-		# self.__loop.quit()
 
 	def __dbusEventReply(self):
 		# correct replay on D-Bus, ignore
@@ -132,14 +135,9 @@ class ThymioController(threading.Thread):
 		self.__dbusGetVariable("motor.right.speed", self.__dbusGetMotorSpeedRightReply)
 		
 	def __dbusGetAccReply(self,r):
-		self.__mainLogger.debug("On est dans le dbusGetAccReply")
 		self.__acc = r
-		self.__simulation.thymioControllerGotValue()
-		self.__mainLogger.debug("On est fin le dbusGetAccReply")
 	
 	def __dbusGetAcc(self):
-	
-		self.__mainLogger.debug("On est dans le dbusGetAcc")
 		self.__dbusGetVariable("acc", self.__dbusGetAccReply)
 
 	def __execute(self):
@@ -154,7 +152,6 @@ class ThymioController(threading.Thread):
 
 				while len(self.__request) :
 					request = self.__request.pop(0)
-					# self.__mainLogger.debug("Request : " + str(request))
 
 					if request == MessageRequest.SENSORS :
 						# Read sensor values
@@ -172,8 +169,10 @@ class ThymioController(threading.Thread):
 						# Read motorspeed
 						self.__dbusGetMotorSpeed()
 					elif request == MessageRequest.COLOR :
+						# Write Color
 						self.__dbusSetColor()
 					elif request == MessageRequest.SOUND :
+						# Write Sound
 						self.__dbusSetSound()
 					elif request == MessageRequest.STOP :
 						# Stop Thymio
@@ -181,36 +180,6 @@ class ThymioController(threading.Thread):
 
 					# Notifying that simulation has been set
 					self.__simulation.thymioControllerPerformedAction()
-
-				# while self.__request == MessageRequest.NONE and not self.__stop.isSet() :
-				# 	self.__performActionReq.wait()
-
-				# self.__mainLogger.debug("Request : " + str(self.__request))
-
-				# if self.__request == MessageRequest.SENSORS :
-				# 	# Read sensor values
-				# 	self.__dbusGetProxSensors()
-				# elif self.__request == MessageRequest.GROUND :
-				# 	# Read ground sensor values
-				# 	self.__dbusGetGroundSensors()
-				# elif self.__request == MessageRequest.MOTORS :
-				# 	# Write motorspeed
-				# 	self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
-				# elif self.__request == MessageRequest.MOTORSREAD :
-				# 	# Read motorspeed
-				# 	self.__dbusGetMotorSpeed()
-				# elif self.__request == MessageRequest.COLOR :
-				# 	self.__dbusSetColor()
-				# elif self.__request == MessageRequest.SOUND :
-				# 	self.__dbusSetSound()
-				# elif self.__request == MessageRequest.STOP :
-				# 	# Stop Thymio
-				# 	self.__stopThymio()
-
-				# self.__request = MessageRequest.NONE
-
-				# # Notifying that simulation has been set
-				# self.__simulation.thymioControllerPerformedAction()
 		except :
 			self.__mainLogger.critical('ThymioController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
@@ -222,21 +191,16 @@ class ThymioController(threading.Thread):
 
 	def readSensorsRequest(self):
 		with self.__performActionReq:
-			# self.__request = MessageRequest.SENSORS
 			self.__request.append(MessageRequest.SENSORS)
 			self.__performActionReq.notify()
-			# self.__mainLogger.debug('SENSORS REQUEST : ' + str(self.__request))
 
 	def readGroundSensorsRequest(self):
 		with self.__performActionReq:
-			# self.__request = MessageRequest.GROUND
 			self.__request.append(MessageRequest.GROUND)
 			self.__performActionReq.notify()
-			# self.__mainLogger.debug('GROUND REQUEST : ' + str(self.__request))
 
 	def readMotorsSpeedRequest(self) :
 		with self.__performActionReq :
-			# self.__request = MessageRequest.MOTORSREAD
 			self.__request.append(MessageRequest.MOTORSREAD)
 			self.__performActionReq.notify()
 			
@@ -248,36 +212,30 @@ class ThymioController(threading.Thread):
 	def writeMotorsSpeedRequest(self, motorspeed):
 		with self.__performActionReq:
 			self.__motorspeed = motorspeed
-			# self.__request = MessageRequest.MOTORS
 			self.__request.append(MessageRequest.MOTORS)
 			self.__performActionReq.notify()
 
 	def writeColorRequest(self, color):
 		with self.__performActionReq:
 			self.__color = color
-			# self.__request = MessageRequest.COLOR
 			self.__request.append(MessageRequest.COLOR)
 			self.__performActionReq.notify()
 
 	def writeSoundRequest(self, sound):
 		with self.__performActionReq:
 			self.__sound = sound
-			# self.__request = MessageRequest.SOUND
 			self.__request.append(MessageRequest.SOUND)
 			self.__performActionReq.notify()
 
 	def killRequest(self) :
 		with self.__performActionReq :
 			self.__request.append(MessageRequest.KILL)
-			# self.__request = MessageRequest.KILL
 			self.__performActionReq.notify()
 
 	def stopThymioRequest(self):
 		with self.__performActionReq:
 			self.__request.append(MessageRequest.STOP)
-			# self.__request = MessageRequest.STOP
 			self.__performActionReq.notify()
-
 
 	def getMotorSpeed(self):
 		return self.__motorspeed
@@ -309,7 +267,6 @@ class ThymioController(threading.Thread):
 
 	def run(self):
 		self.__mainLogger.debug('ThymioController - Running.')
-
 		# Run gobject loop
 		self.__loop = gobject.MainLoop()
 		self.__loop.run()
