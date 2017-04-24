@@ -7,36 +7,38 @@ import traceback
 import threading
 import socket
 import argparse
-import glib, gobject
+import gobject
 import dbus, dbus.mainloop.glib
-import time
 import importlib
 import subprocess
 
 import utils
-from utils import recvall, recvOneMessage, sendOneMessage, MessageType
+from utils import recvOneMessage, sendOneMessage, MessageType
 import Params
 import Simulation
 
+"""
+OCTOPY : MainController.py
 
+Communicates with OctoPY.py, listens to the received commands and executes the 
+associated action. For instance, start, pause, restart the simulation... 
+"""
+
+global mainLogger
+mainLogger = None
 
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
 
-# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'default_simulation.cfg')
-# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'config_CollectiveGathering.cfg')
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'braitenberg.cfg')
-# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'simulationMusic.cfg')
-# DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, 'detectColor.cfg')
+# set the default experiment used
+default_experiment = 'braitenberg.cfg'
+
+DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, default_experiment)
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
 TRUSTED_CLIENTS = ['192.168.0.210', '192.168.0.110']
-
-
-global mainLogger
-mainLogger = None
 
 # Messages from CommandsListener
 class MessageCommand() :
@@ -180,7 +182,7 @@ class MainController() :
 			return False
 
 		if "ID" not in data :
-			mainLogger.e__controllerrror("MainController - No ID for registering observer.")
+			mainLogger.error("MainController - No ID for registering observer.")
 			return False
 
 		observerIP = data["IP"]
@@ -264,6 +266,7 @@ class MainController() :
 							self.__register(commandData)
 			except KeyboardInterrupt :
 				self.__killController()
+				killed = True
 				break
 			except :
 				mainLogger.critical('MainController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
@@ -289,9 +292,6 @@ class CommandsListener(threading.Thread) :
 
 	def run(self):
 		while 1:
-			"""TEST"""
-			#mainLogger.debug("!!!######################DEBUT DU WHILE 1 ###############################################!!!")
-			"""TEST"""
 			try:
 				# Waiting for client...
 				mainLogger.debug("CommandsListener - Waiting on accept...")
@@ -381,3 +381,4 @@ if __name__ == '__main__' :
 		controller.run()
 	except:
 		mainLogger.critical('Error in main: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+		exit(1)

@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 
-import io
 import argparse
 import os
 
+"""
+OCTOPY : CreateExpermient.py
+
+Script allowing to create an expermiment, creating all the necessary files.
+"""
 
 def main(args) :
 	folder = args.experiment

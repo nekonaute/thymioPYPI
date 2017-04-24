@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import io
 import argparse
 import os
 import re
@@ -38,7 +37,7 @@ def main(args) :
 							s = reName.search(line)
 
 							if s :
-								simulationName = s.group(1)
+								#simulationName = s.group(1)
 								fileWrite += "simulation_name = Simulation" + args.destination + "\n"
 							else :
 								s = rePath.search(line)
