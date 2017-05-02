@@ -19,29 +19,32 @@ import Params
 
 import LightSensor
 import Genome
+#from tag_recognition import Tag_Detector
+
 
 class SimulationFollowLightGenOnline(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
 		self.mainLogger = mainLogger
-		self.mainLogger.setLevel(logging.INFO)		
+		self.mainLogger.setLevel(logging.CRITICAL)		
 		
 		# initialisations
-		self.ls = LightSensor.LightSensor(mainLogger) 	# capteur de lumière				
-		self.ls.initCam()							# initialisation de la caméra
+		self.ls = LightSensor.toto(self.mainLogger) 	# capteur de lumière				
+		#self.ls.initCam()							# initialisation de la caméra
 		self.champion = Genome.Genome(mainLogger,size=18) # (7 capteurs de proximité, 1 biais, 1 entrée binaire pour la lumière) * 2 (moteurs)
 		self.challenger = None		
 		self.generation = 1							# nombre de generation total
 		self.fitnessChampion = 0						# fitness du champion
 		self.fitnessChallenger = 0					# fitness du challenger
 		self.sigma = Params.params.sigma				# sigma
-		self.sleep = 0.3
+		self.sleep = 0.001
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenOnline - preActions()")
 	
 		self.mainLogger.info("SimulationFollowLightGen - preActions() : PARAMETRES\n"+str(Params.params.lifetime))		
+		self.ls.start()		
 		
 		self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()	
@@ -51,11 +54,13 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		self.mainLogger.info("SimulationFollowLightGenOnline - postActions() :"+str(self.fitnessChampion))
 		self.mainLogger.info("SimulationFollowLightGenOnline - postActions() :"+str(self.champion.gene))
 		
-		
-		self.ls.killCam()
+		self.ls.shutdown()
 
 	def step(self) :
-		self.mainLogger.info("SimulationFollowLigtGenOnline - step()")
+		self.mainLogger.critical("SimulationFollowLigtGenOnline - step()")
+		new_res,res = self.ls.get_light_data()
+		self.mainLogger.critical(str(res))
+		self.mainLogger.critical(str(new_res))
 	
 		# N génération passée		
 		if(self.generation == Params.params.N):
@@ -69,8 +74,8 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 			self.challenger = self.applyVariation(self.champion, self.sigma)
 			self.runAndEvaluate(self.challenger,"challenger")
 			
-			self.mainLogger.info("SimulationFollowLigtGenOnline - step() : old fitness : "+str(self.fitnessChampion))
-			self.mainLogger.info("SimulationFollowLigtGenOnline - step() : new fitness : "+str(self.fitnessChallenger))
+			self.mainLogger.critical("SimulationFollowLigtGenOnline - step() : old fitness : "+str(self.fitnessChampion))
+			self.mainLogger.critical("SimulationFollowLigtGenOnline - step() : new fitness : "+str(self.fitnessChallenger))
 				
 			if self.fitnessChallenger > self.fitnessChampion:
 				self.mainLogger.info("SimulationFollowLigtGenOnline - step() : nouveau champion")				
@@ -114,7 +119,19 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		for i in range(7):
 			l.append(proxSensors[i]/Params.params.maxProxSensorValue)
 			
-		self.lightValue, lightLR = 0.5, 1# self.ls.lightCaptor()
+		new_res,res = self.ls.get_light_data()
+		self.mainLogger.critical(str(res))
+		self.mainLogger.critical(str(new_res))
+		if res!=None:
+			self.lightValue, lightLR = (150,1)
+			tags =  res
+			tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes = tags
+			self.mainLogger.critical("tag : "+str(tags_ids))
+
+		else:
+			self.lightValue, lightLR = (150,1)
+		
+		self.mainLogger.critical("More left :"+str(lightLR))
 		l.append(lightLR)
 	
 		return l
@@ -138,7 +155,7 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 								
 		speedValue = (self.getTransitiveAcceleration()) * \
 				   (1 - self.getAngularAcceleration()) * \
-				   (1 - max_sensors)
+				   (1 - max_sensors)#*self.lightValue
 						
 		self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
 		

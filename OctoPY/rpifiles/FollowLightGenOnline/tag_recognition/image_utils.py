@@ -1,9 +1,30 @@
 import numpy as np
 import cv2
 
+def convert_to_HSV(image):
+    """
+        convert image to HSV color space
+    """
+    hsv_image = cv2.cvtColor(image,cv2.COLOR_BGR2HSV)
+    return hsv_image
+
 def draw_contours(image,contours):
     cv2.drawContours(image, contours, -1, (0,255,0), 3)
     return image
+
+def threshold_range(image,lower, upper):
+    thresholded = cv2.inRange(image, lower, upper)
+    return thresholded
+
+def findContours(image,structure_type,approx_method):
+    """
+        Organize found contours
+    """
+    return cv2.findContours(image,structure_type,approx_method)
+
+def masked_image(image,mask_image):
+    """ Bitwise-AND mask and original image """
+    res = cv2.bitwise_and(image,image, mask= mask_image)
 
 def show_image(image,window='image',still=True,fps=25.):
     cv2.imshow(window,image)
@@ -24,7 +45,7 @@ def threshold(image,t):
     ret,thresh = cv2.threshold(image,t,255,0)
     return thresh
 
-def resize_image(image,fx=0.25,fy=0.25,interpolation=cv2.INTER_LINEAR):
+def resize_image(image,fx=0.5,fy=0.5,interpolation=cv2.INTER_LINEAR):
     return cv2.resize(image,None,fx=fx,fy=fy,interpolation=interpolation)
 
 def convert_grey(image):

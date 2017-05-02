@@ -16,7 +16,7 @@ class SimulationFollowTAG(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		# initialize camera controller
 		#self.tag_detector = Tag_Detector.Tag_Detector()
-		self.tag_detector = Tag_Detector.Tag_detection_experiment()
+		self.tag_detector = Tag_Detector.Tag_Detector()
 
 	def preActions(self) :
 		# start camera controller
@@ -37,8 +37,8 @@ class SimulationFollowTAG(Simulation.Simulation) :
 		#go_right = [215.1, 125.0]
 
 		#newresults, orientation = self.tag_detector.retrieve_tag_orientations()
-		newresults, tags_info = self.tag_detector.retrieve_post_results()
-        	tags_contours,tags_aligned,tags_ids,tags_distances,tags_rotations = tags_info
+		newresults, tags_info = self.tag_detector.get_tag_data()
+        	tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes = tags_info
 		if tags_ids!=[] and newresults:
 			for i in xrange(len(tags_ids)):
 				self.mainLogger.debug('SimulationFollowTAG - tag id: %d' % tags_ids[i] )
