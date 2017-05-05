@@ -18,6 +18,31 @@ def __info__():
 
 TAG_ID_ERROR = -1
 
+lk_params = dict(
+            winSize  = (10,10), # max extimation of movement
+            maxLevel = 2, # LK hypothese is true at lowest level
+            criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+
+def estimate_next_positions(prec_frame,curr_frame,prec_contours,actual_side_size=1):
+    prec_points = np.float32(prec_contours).reshape(-1,1,2)
+    global lk_params
+    next_points, status, err = cv2.calcOpticalFlowPyrLK(prec_frame,curr_frame,prec_points)
+    n_pts = len(next_points)/4
+    next_contours, next_distances, next_rotations = [],[],[]
+    status_contours = np.zeros(n_pts,np.dtype(np.bool))
+    for i in xrange(n_pts):
+        if len(next_points[i*4:(i*4)+4])==4 and np.all(status[i*4:(i*4)+4]):
+            status_contours[i] = True
+            p1, p2, p3, p4 = next_points[i*4:(i*4)+4]
+            p1, p2, p3, p4 = map(int,p1[0]),map(int,p2[0]),map(int,p3[0]),map(int,p4[0])
+            contour = np.array([ [p1],[p2],[p3],[p4] ])
+            rect = cnt2rect(contour)
+            bb = bounding_box(contour)
+            next_distances += [ estimate_distance(rect) ]
+            next_rotations += [ estimate_rotation(bb) ]
+            next_contours += [ contour ]
+    return status_contours, next_contours, next_distances, next_rotations
+
 def rad_to_deg(angle):
     # angle*(180/pi)
     return np.rad2deg(angle)
@@ -66,13 +91,13 @@ def identify_tag_id(tag_image,tiles_x=3,tiles_y=3):
         The most significant bit is on the top left, the others follows as shown:
 
          ------- ------- -------
-        | bit_9 | bit_8 | bit_7 |
+        | bit_0 | bit_3 | bit_6 |
         |       |       |       |
          ------- ------- -------
-        | bit_6 | bit_5 | bit_4 |
+        | bit_1 | bit_4 | bit_7 |
         |       |       |       |
          ------- ------- -------
-        | bit_3 | bit_2 | bit_1 |
+        | bit_2 | bit_5 | bit_8 |
         |       |       |       |
          ------- ------- -------
 
@@ -84,9 +109,10 @@ def identify_tag_id(tag_image,tiles_x=3,tiles_y=3):
     tag_image = (tag_image/float(max_val))*255.
     tag_image[tag_image>127] = 255
     tag_image[tag_image<=127] = 0
+
     y,x = tag_image.shape
     dx,dy = x/(tiles_x*2),y/(tiles_y*2)
-    dtau = dx/2 # witdth of the filter applied to sampling
+    dtau = dx/3 if dx/3 >0 else 1 # witdth of the filter applied to sampling
     id_tag = 0
     for i in xrange(tiles_x):
         for j in xrange(tiles_y):
@@ -118,7 +144,7 @@ def threshold_tag(tag_image):
 
 # using kernprof -v -l for profiling
 # @profile
-def rectify_perspective_transform(image,rect,maxWidth=30,maxHeight=30,bleed=3):
+def rectify_perspective_transform(image,rect,maxWidth=30,maxHeight=30):
     """
         Finds and apply inverse perspective transformation for image rectification.
 
@@ -126,6 +152,11 @@ def rectify_perspective_transform(image,rect,maxWidth=30,maxHeight=30,bleed=3):
 
         bleed: cropping contour in pixel from each side.
         bottom_off: offset from the identification tag to the botton tag.
+
+        In certain cases the rotation can prevent the tag to be rectified correctly
+        by checking the diagonal and antidiagonal of the 2x2 matrix where the
+        cofficients proportional to the roation are stored we can use a bleed
+        margin to correcte certaing distortions.
          _______________
         |     bleed     |
         |   ---------   |
@@ -145,6 +176,13 @@ def rectify_perspective_transform(image,rect,maxWidth=30,maxHeight=30,bleed=3):
 
     # calculate the perspective transform matrix and warp
     M = cv2.getPerspectiveTransform(rect, dst)
+    # correction:
+    # sometimes correcting rotated images introduces errors
+    diag_vals = np.abs(M[0,0] + M[1,1])
+    anti_diag_vals = np.abs(M[0,1] + M[1,0])
+    bleed = 1
+    if diag_vals > anti_diag_vals:
+        bleed = maxWidth/5
     # attention opencv returns inveresd h and w!!!
     warp = cv2.warpPerspective(image, M, (maxWidth,maxHeight))
     warp_tag = warp[bleed:maxHeight-bleed,bleed:maxWidth-bleed]
@@ -152,11 +190,12 @@ def rectify_perspective_transform(image,rect,maxWidth=30,maxHeight=30,bleed=3):
 
 # using kernprof -v -l for profiling
 # @profile
+CNT,IDS,DST,ROT = 0,1,2,3
 def detect_tags(gray_image, ar, actual_side_size=2, sigma=0.3):
     edge_image = edge_detection(gray_image, sigma=sigma)
     tags_contours = find_tags_contours(edge_image,ar)
     tags_ids, tags_distances, \
-    tags_rotations, tags_bounding_boxes = [],[],[],[]
+    tags_rotations, tags_bounding_boxes, tags_aligned = [],[],[],[],[]
     for tag_contour in tags_contours:
         tag_rect = cnt2rect(tag_contour)
         tag_aligned = rectify_perspective_transform(gray_image,tag_rect)
@@ -166,7 +205,8 @@ def detect_tags(gray_image, ar, actual_side_size=2, sigma=0.3):
         tag_bounding_box = bounding_box(tag_contour)
         tags_rotations += [ estimate_rotation(tag_bounding_box) ]
         tags_bounding_boxes += tag_bounding_box
-    return tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes
+        tags_aligned += [ tag_aligned ]
+    return tags_contours, tags_ids, tags_distances, tags_rotations
 
 # using kernprof -v -l for profiling
 # @profile
@@ -203,6 +243,8 @@ def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
             -sigma is the variance of the area_ratio.
             -eps is the minimum area in pixels for a contour to be considered.
     """
+
+    # this function is horrible...
     contours, hierarchy = image_utils.findContours(edge_image,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
     if hierarchy is None:
         return contours
@@ -212,16 +254,20 @@ def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
     occour = np.zeros(N,np.dtype(np.bool))
     for curr in xrange(1,N):
         if not occour[curr]:
+
             # we do not approximate first contour
             # following depths will be checked
             # if all checks are clear than it will check for the parent
             # this saves up a lot of computation.
+
+            # level
             child = hierarchy[curr][2]
             if child!=-1 and child<N-1:
                 if is_tag_cnt(contours[curr],contours[child],ar,sigma,eps):
                     child_approxTop = approx_cnt(contours[child])
                     if len(child_approxTop) == 4:
-                        next_curr = child+1
+                        # next level
+                        next_curr = hierarchy[child][2]
                         next_child = hierarchy[next_curr][2]
                         if next_child!=-1 and next_child<N-1:
                             next_curr_approxTop = approx_cnt(contours[next_curr])
@@ -229,18 +275,41 @@ def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
                                 if is_tag_cnt(next_curr_approxTop,contours[next_child],ar,sigma,eps):
                                     next_child_approxTop = approx_cnt(contours[next_child])
                                     if len(next_child_approxTop) == 4:
-                                        curr_approxTop = approx_cnt(contours[curr])
-                                        if len(curr_approxTop) == 4:
-                                            if not occour[curr]:
-                                                occour[curr] = True
-                                            if not occour[child]:
-                                                occour[child] = True
-                                            if not occour[next_curr]:
-                                                occour[next_curr] = True
-                                            if not occour[next_child]:
-                                                occour[next_child] = True
-                                                # save deepest contour
-                                                tag_contours += [next_child_approxTop]
+                                        # next next Level
+                                        next_next_curr = hierarchy[next_child][2]
+                                        next_next_child = hierarchy[next_next_curr][2]
+                                        if next_next_curr!=-1 and next_next_curr<N-1 and next_next_child!=-1:
+                                            next_next_curr_approxTop = approx_cnt(contours[next_next_curr])
+                                            next_next_child_approxTop = approx_cnt(contours[next_next_child])
+                                            if len(next_next_curr_approxTop)==4 and len(next_next_child_approxTop)==4:
+                                                # next next next level
+                                                next_next_next_curr = hierarchy[next_next_child][2]
+                                                next_next_next_child = hierarchy[next_next_next_curr][2]
+                                                if next_next_next_curr!=-1 and next_next_next_child!=-1:
+                                                    next_next_next_curr_approxTop = approx_cnt(contours[next_next_next_curr])
+                                                    next_next_next_child_approxTop = approx_cnt(contours[next_next_next_child])
+                                                    if len(next_next_next_curr_approxTop)==4 and len(next_next_next_child_approxTop)==4:
+                                                        curr_approxTop = approx_cnt(contours[curr])
+                                                        if len(curr_approxTop) == 4:
+                                                            if not occour[curr]:
+                                                                occour[curr] = True
+                                                            if not occour[child]:
+                                                                occour[child] = True
+                                                            if not occour[next_curr]:
+                                                                occour[next_curr] = True
+                                                            if not occour[next_child]:
+                                                                occour[next_child] = True
+                                                            if not occour[next_next_curr]:
+                                                                occour[next_next_curr] = True
+                                                            if not occour[next_next_child]:
+                                                                occour[next_next_child] = True
+                                                            if not occour[next_next_next_curr]:
+                                                                occour[next_next_next_curr] = True
+                                                            if not occour[next_next_next_child]:
+                                                                occour[next_next_next_child] = True
+                                                                # save deepest contour
+                                                                tag_contours += [next_next_next_child_approxTop]
+
     return tag_contours
 
 

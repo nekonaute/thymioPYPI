@@ -48,26 +48,30 @@ if __name__ == '__main__':
     time.sleep(2)
     print "let's start!!!"
     tags_info = None
+    t = 0
     while(RUNNING):
-        newresults, tags_info = tag_detection_experiment.get_tag_data()
-        tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes= tags_info
+        
+        tests.log("","")
+        newresults, tags_info = tag_detection_experiment.get_results()
+        tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
         message= '\tdtime: ' + `tag_detection_experiment.perf_time`# + '\n'
-        tests.log(message,"")
         if newresults and len(tags_contours)>0:
+            dt = time.time()-t
+            t = time.time()
             message = 'distances: ' + `tags_distances` #+ '\n'
-            message+= '\trotations: ' + `tags_rotations` # + '\n'
-            message+= '\tids: ' + `tags_ids`
-            message += '\tdtime: ' + `tag_detection_experiment.perf_time`# + '\n'
+            #message+= '\trotations: ' + `tags_rotations` # + '\n'
+            #message+= '\tids: ' + `tags_ids`
+            message = '\tdtime: %f.3' % dt# + '\n'
+            message += '\tptime: %f.3' % tag_detection_experiment.perf_time# + '\n'
             tests.log(message,"")
         if TESTING:
             TESTING = False
-            tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes = tags_info
+            tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
             rgb_image = np.zeros((tag_detection_experiment.prec_frame.shape[0],tag_detection_experiment.prec_frame.shape[1],3),dtype=np.uint8)
             rgb_image[:,:,0] = tag_detection_experiment.prec_frame
             rgb_image[:,:,1] = rgb_image[:,:,0]
             rgb_image[:,:,2] = rgb_image[:,:,0]
             rgb_image = image_utils.draw_contours(rgb_image,tags_contours)
             image_utils.show_image(rgb_image)
-            image_utils.show_image(tag_detection_experiment.color_image)
     tag_detection_experiment.shutdown()
     print "good bye"

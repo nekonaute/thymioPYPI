@@ -89,7 +89,7 @@ class ThymioController(threading.Thread):
 		while not ok:
 			try:
 				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 	
-				self.__mainLogger.debug("__dbusGetVariable : ligne after getVariable")
+				#self.__mainLogger.debug("__dbusGetVariable : ligne after getVariable")
 				ok = True
 			except:
 				self.__mainLogger.debug("__dbusGetVariable : error")

@@ -2,11 +2,15 @@
 
 import Simulation
 import Params
+
 import time
+import numpy as np
+import cv2
 
-#from raspberry_vision import Tag_Detector
+from camera_tools import Tag_Detector, tag_recognition
+from camera_tools import settings
+from camera_tools.tag_recognition import CNT,IDS,DST,ROT
 
-from tag_recognition import Tag_detection_experiment
 
 class SimulationFollowTAG(Simulation.Simulation) :
 	"""
@@ -15,14 +19,14 @@ class SimulationFollowTAG(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		# initialize camera controller
-		#self.tag_detector = Tag_Detector.Tag_Detector()
-		self.tag_detector = Tag_detection_experiment()
+		self.image_shape = settings.camera_settings['resolution']
+		self.tag_detector = Tag_Detector.Tag_Detector()
 
 	def preActions(self) :
 		# start camera controller
 		self.mainLogger.debug('SimulationFollowTAG - starting tag_detector' )
 		self.tag_detector.start()
-		
+
 		self.mainLogger.debug('SimulationFollowTAG - camera warm up' )
 		time.sleep(3)
 
@@ -32,20 +36,42 @@ class SimulationFollowTAG(Simulation.Simulation) :
 		self.mainLogger.debug('SimulationFollowTAG - camera_controller shutting down' )
 		self.tController.writeMotorsSpeedRequest([0, 0])
 
-	def step(self) :
-		#go_left = [125.0, 215.1]
-		#go_right = [215.1, 125.0]
+	def go_left(self):
+		self.mainLogger.debug('SimulationFollowTAG - go_left")
+		l_r_motor = [125.0, 250.0]
+		self.tController.writeMotorsSpeedRequest(l_r_motor)
+		self.waitForControllerResponse()
 
-		#newresults, orientation = self.tag_detector.retrieve_tag_orientations()
-		newresults, tags_info = self.tag_detector.retrieve_post_results()
-        tags_contours,tags_aligned,tags_ids,tags_distances,tags_rotations = tags_info
-		if tags_ids!=[] and newresults:
-			for tag_id in tags_ids:
-				self.mainLogger.debug('SimulationFollowTAG - tag id: %d' % tag_id )
-			#if tags_rotations[0] > 0:
-				#self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing left' )
-				#self.tController.writeMotorsSpeedRequest(go_left)
-			#else:
-				#self.mainLogger.debug('SimulationFollowTAG - saw a triangle pointing right' )
-				#self.tController.writeMotorsSpeedRequest(go_right)
-		
+	def go_right(self):
+		self.mainLogger.debug('SimulationFollowTAG - go_right")
+		l_r_motor = [250.0, 125.0]
+		self.tController.writeMotorsSpeedRequest(l_r_motor)
+		self.waitForControllerResponse()
+
+	def stop(self):
+		self.mainLogger.debug('SimulationFollowTAG - stop")
+		l_r_motor = [0.0, 0.0]
+		self.tController.writeMotorsSpeedRequest(l_r_motor)
+		self.waitForControllerResponse()
+
+	def follow(self,cnt):
+		M = cv2.moments(cnt)
+		cx = int(M['m10']/M['m00'])
+		if cx < self.image_shape[0]/2:
+			self.go_left()
+		else:
+			self.go_right()
+
+	def step(self) :
+		newresults, tags_info = self.tag_detector.get_results()
+		if newresults and tags_info != None:
+			tag_cnt =  tags_info[CNT]
+			tags_ids = tags_info[IDS]
+			tag_dist = tags_info[DST]
+			if tag_dist != []:
+				nearest = np.argmin(np.array(tag_dist))
+				cnt = tag_cnt[nearest]
+				self.follow(cnt)
+				self.mainLogger.debug('SimulationFollowTAG - following tag: %d' % tags_ids[nearest] )
+		else:
+			self.stop()

@@ -9,7 +9,7 @@ DIAGONAL_KEY = 'diagonal'
 
 tags_settings = {
                     'double_square' : {
-                        'area_ratio' : 1.44,
+                        'area_ratio' : 1.2,
                         'diagonal' : 7.5,#cm
                         'bits' : 9
                     },

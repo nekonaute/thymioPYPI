@@ -29,7 +29,7 @@ def masked_image(image,mask_image):
 def show_image(image,window='image',still=True,fps=25.):
     cv2.imshow(window,image)
     cv2.waitKey(0) # wait untill key
-    #cv2.destroyAllWindows()
+    cv2.destroyAllWindows()
     #cv2.waitKey(int((1/fps)*1000)) # in ms
 
 def read_image(path):

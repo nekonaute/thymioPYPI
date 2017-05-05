@@ -127,7 +127,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.genomeList=[]	
 			
 		self.iter+=1
-		time.sleep(1.5)
+		time.sleep(0.03)
 		
 	def tar(self):
 		"""

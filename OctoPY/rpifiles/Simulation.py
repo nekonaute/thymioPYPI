@@ -209,10 +209,10 @@ class Simulation(threading.Thread) :
 
 
 	@staticmethod
-	def checkForCompParams(self) :
+	def checkForCompParams() :
 		for param in Simulation.compParams :
 			if not Params.params.checkParam(param) :
-				self.mainLogger.error("Simulation - Parameter " + param + " not found.")
+				#self.mainLogger.error("Simulation - Parameter " + param + " not found.")
 				return False
 
 		return True
