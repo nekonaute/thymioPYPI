@@ -149,7 +149,10 @@ class MainController() :
 		else :
 			mainLogger.info('MainController - Stopping simulation')
 			self.__simulation.stop()
+			self.__simulation.join()
+			
 			self.__simulation = None
+			mainLogger.info('MainController - Stopped simulation')
 
 	def __loadSimulation(self) :
 		mainLogger.debug('MainController - Loading simulation...')
@@ -259,6 +262,7 @@ class MainController() :
 						elif command == MessageCommand.STOP :
 							self.__stopSimulation()
 						elif command == MessageCommand.KILL :
+							self.__stopSimulation()
 							self.__killController()
 							killed = True
 							break

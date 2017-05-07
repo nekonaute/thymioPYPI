@@ -13,14 +13,14 @@ Controleur principal du comportement évolutionniste de suivi de lumière.
 
 import time
 
-from controllers import Controller
-from controllers import Params
+import Controller
+import Params
 
 from utils import MessageType
 
 class ControllerFollowLightGen(Controller.Controller) :
-	def __init__(self, controller, mainLogger) :
-		Controller.Controller.__init__(self, controller, mainLogger)
+	def __init__(self, octoPYInstance, detached) :
+		Controller.Controller.__init__(self, octoPYInstance, detached)
 		
 		self.stepp=0
 		self.max=5 # en secondes

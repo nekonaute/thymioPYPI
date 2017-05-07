@@ -11,42 +11,44 @@ a file with basic code for a controller.
 """
 
 def main(args) :
-	folder = args.controller
+	CONTROLLERS_FOLDER = "controllers"
+	subfolder = args.controller
+	folder = os.path.join(CONTROLLERS_FOLDER,subfolder)
 	configFile = "config_" + args.controller + ".cfg"
 	classFile = "Controller" + args.controller
 	mainClass = classFile
 
 	if not os.path.isdir(folder) :
+		# Creation of the experiment folder
+		print("Creating folder " + folder + " ...")
+		os.mkdir(folder)
+
 		# Creation of the configuration file
-		print("Creating configuration file " + configFile + "...")
-		with open(configFile, "w") as fileOut :
+		print("Creating configuration file " + configFile + " ...")
+		with open(CONTROLLERS_FOLDER+"/"+configFile, "w") as fileOut :
 			codeFile = """# Class name of the controller
 controller_name = """ + mainClass + """
 
 # Path of controller
-controller_path = """ + folder + """.""" + classFile
+controller_path = """ + subfolder + """.""" + classFile
 
 			fileOut.write(codeFile)
 
-		# Creation of the experiment folder
-		print("Creating folder " + folder + "...")
-		os.mkdir(folder)
-
 		# Creation of the __init__.py file
-		print("Creating __init__.py file...")
+		print("Creating __init__.py file ...")
 		os.mknod(os.path.join(folder, "__init__.py"))
 
 		# Creation of the Simulation file
-		print("Creating controller file " + classFile + "...")
+		print("Creating controller file " + classFile + ".py ...")
 		with open(os.path.join(folder, classFile + ".py"), "w") as fileOut :
 			codeFile = """#!/usr/bin/env/python
 
-from controllers import Controller
-from controllers import Params
+import Controller
+import Params
 
 class """ + mainClass + """(Controller.Controller) :
-	def __init__(self, controller, mainLogger) :
-		Controller.Controller.__init__(self, controller, mainLogger)
+	def __init__(self, octoPYInstance, detached) :
+		Controller.Controller.__init__(self, octoPYInstance, detached)
 
 	def preActions(self) :
 		pass

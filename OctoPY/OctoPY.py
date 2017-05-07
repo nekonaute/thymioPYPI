@@ -12,14 +12,14 @@ import json
 import socket, select
 import threading
 
-import imp
+import importlib
 import ipaddress
 import paramiko
 import cmd
 
 import utils
-from controllers import Params
-from controllers import Controller
+import Params
+import Controller
 from utils import recvOneMessage, sendOneMessage, MessageType
 
 """
@@ -57,6 +57,7 @@ class OctoPY() :
 		self.__hashThymiosHostnames = None
 		self.__listThymiosStates = None
 		self.__controllers = []
+		self.__sshConnection = None
 
 		# Creation of the logging handlers
 		level = logging.INFO
@@ -88,6 +89,9 @@ class OctoPY() :
 		# We start the message listener
 		self.__msgListener = MessageListener(self)
 		self.__msgListener.start()
+		
+		#
+		self.__isInit = False
 
 	def getLogger(self) :
 		return self.__logger
@@ -263,7 +267,6 @@ class OctoPY() :
 				try :
 					# Init thymio
 					if message == MessageType.INIT :
-
 						sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
 						if myIP == None :
 							proc = subprocess.Popen(["hostname", "-I"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -271,7 +274,10 @@ class OctoPY() :
 
 							myIP = ipaddress.ip_address(u'' + out.split(' ')[0])
 
-						proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'MainController.py'), '-d', '-i', str(myIP), '&'], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+						proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'MainController.py'), '-d', '-i', str(myIP), '&'], close_fds=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+						self.__sshConnection = proc
+						
+						self.__isInit = True
 
 					# Start simulation
 					elif message == MessageType.START :
@@ -327,12 +333,13 @@ class OctoPY() :
 
 					# Kill thymio
 					elif message == MessageType.KILL :
+						self.__isInit = False
 						optSend.msgType = MessageType.KILL
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
 						sendOneMessage(sock, optSend)
 
-					# Switch off thymio
+					# Switch off raspberry
 					elif message == MessageType.OFF :
 						sshcommand = ["/usr/bin/sshpass", "-p", PIPASSWORD, "ssh", "-X", PIUSERNAME + "@" + str(destIP)]
 						proc = subprocess.Popen(sshcommand + ["sudo", "shutdown", "-h", "now"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -464,10 +471,12 @@ class OctoPY() :
 
 			# We check for the basic parameters
 			if Controller.Controller.checkForCompParams() :
+				"""
 				path = str(Params.params.controller_path).replace('.','/')+'.py'
 				path = os.path.join(CONTROLLER_FILE_PATH,path)
-				self.__logger.debug(path)
-				controllerModule = imp.load_source(str(Params.params.controller_path),path)
+				"""
+				controller_path = Params.params.controller_path
+				controllerModule = importlib.import_module('controllers.'+str(controller_path),package='OctoPY')
 				controllerClass = getattr(controllerModule, Params.params.controller_name)
 				newController = controllerClass(self, detached)
 				self.__controllers.append(newController)
@@ -512,11 +521,24 @@ class OctoPY() :
 		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
 
 	def exit(self) :
+		# exit -> send 5	
+		if self.__isInit:
+			self.sendMessage('5', [], None)
+		
+		# Closing sockets and connections
 		self.__msgListener.stop()
+		
+		if self.__sshConnection!=None:
+			self.__sshConnection.terminate()
+			
+		self.__logger.info("Exiting OctoPY")
 
 
 class OctoPYInteractive(cmd.Cmd) :
 	prompt = ">> "
+	
+	def emptyline(self):
+		return ""
 
 	def logger(self) :
 		return octoPYInstance.logger
@@ -775,7 +797,7 @@ class OctoPYInteractive(cmd.Cmd) :
 							scpcommand = "/usr/bin/sshpass "+"-p "+PIPASSWORD+" rsync "+"-aq "+"--remove-source-files "+PIUSERNAME + "@" + str(destIP) + ":" + src_path+" "+dest_path+"/"+subfolder
 							proc=subprocess.Popen(scpcommand,shell=True)
 							proc.wait()
-							subprocess.Popen("/usr/bin/sshpass "+"-p "+PIPASSWORD+" ssh "+PIUSERNAME + "@" + str(destIP)+" find "+ src_path+" -type d "+"-delete",shell=True,stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+							subprocess.Popen("/usr/bin/sshpass "+"-p "+PIPASSWORD+" ssh "+PIUSERNAME + "@" + str(destIP)+" find "+ src_path+" -type d "+"-delete"+" ; exit",shell=True,stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 						else :
 							scpcommand = "/usr/bin/sshpass "+"-p "+PIPASSWORD+" rsync "+"-aq "+PIUSERNAME + "@" + str(destIP) + ":" + src_path+" "+dest_path+"/"+subfolder
 							subprocess.Popen(scpcommand,shell=True)	
@@ -859,32 +881,21 @@ class MessageListener(threading.Thread) :
 
 if __name__ == '__main__' :
 	parser = argparse.ArgumentParser()
-	parser.add_argument('-l', '--look', default = None, const = "192.168.0.111-150", nargs = '?', help = "Look for the alive thymios")
-	parser.add_argument('-s', '--send', default = None, nargs = '+', help = "Send a message to a specified thymio or all thymios")
-	parser.add_argument('-q', '--query', default = None, nargs = '*', help = "Query the state of a specified thymio or all thymios")
-	parser.add_argument('-I', '--interactive', default = False, action = "store_true", help = "Starts OctoPY in interactive mode")
+	
 	parser.add_argument('-L', '--log', default = False, action = "store_true", help = "Log messages in a file")
 	parser.add_argument('-d', '--debug', default = True, action = "store_true", help = "Debug mode")
 	args = parser.parse_args()
 
 	octoPYInstance = OctoPY(args.log, args.debug)
 
-	if args.interactive :
-		OctoPYInteractive().cmdloop()
-	else :
-		if args.look != None :
-			octoPYInstance.lookUp(args.look)
-		elif args.send != None :
-			message = args.send[0]
-			IPs = []
-
-			if len(args.send) > 1 :
-				IPs = args.send[1:]
-
-			octoPYInstance.sendMessage(message, IPs)
-		elif args.query != None :
-			IPs = args.query
-			octoPYInstance.queryThymios(IPs)
-		else :
-			octoPYInstance.logger.info("Starting in interactive mode.")
-			OctoPYInteractive().cmdloop()
+	octoPYInstance.logger.info("Starting in interactive mode.")
+	
+	octoPYInteractive = None
+	try:
+		octoPYInteractive = OctoPYInteractive()
+		octoPYInteractive.cmdloop()
+	except KeyboardInterrupt:
+		octoPYInstance.exit()
+	except:
+		octoPYInstance.logger.critical('OctoPY - Unexpected error :\n' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+		octoPYInstance.exit()

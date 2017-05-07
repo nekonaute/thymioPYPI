@@ -23,7 +23,7 @@ class ControllerFollowLightGen(Controller.Controller) :
 		Controller.Controller.__init__(self, controller, mainLogger)
 		
 		self.stepp=0
-		self.max=100 # en secondes
+		self.max=5 # en secondes
 		
 	def preActions(self) :	
 		
