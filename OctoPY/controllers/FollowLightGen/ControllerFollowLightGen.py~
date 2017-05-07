@@ -13,7 +13,8 @@ Controleur principal du comportement évolutionniste de suivi de lumière.
 
 import time
 
-import Controller
+from controllers import Controller
+from controllers import Params
 
 from utils import MessageType
 
@@ -34,7 +35,7 @@ class ControllerFollowLightGen(Controller.Controller) :
 
 			# Load simulation
 			self.log("Load simulation...")
-			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_FollowLightGen.cfg")
+			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_FollowLightGenOnline.cfg")
 			time.sleep(2)
 
 			# Start simulation

@@ -270,6 +270,8 @@ class MainController() :
 				break
 			except :
 				mainLogger.critical('MainController - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+				self.__killController()
+				killed = True
 
 		mainLogger.debug("MainController - Exiting")
 

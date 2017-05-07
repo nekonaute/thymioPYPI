@@ -41,9 +41,8 @@ controller_path = """ + folder + """.""" + classFile
 		with open(os.path.join(folder, classFile + ".py"), "w") as fileOut :
 			codeFile = """#!/usr/bin/env/python
 
-import Controller
-import OctoPY
-import Params
+from controllers import Controller
+from controllers import Params
 
 class """ + mainClass + """(Controller.Controller) :
 	def __init__(self, controller, mainLogger) :

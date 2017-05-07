@@ -2,13 +2,13 @@
 
 import time
 
-import Controller
-import OctoPY
-import Params
+
+from controllers import Controller
+from controllers import Params
 
 from utils import MessageType
 
-MAX = 50
+MAX = 30
 
 class ControllerTestNotifications(Controller.Controller) :
 	def __init__(self, octoPYInstance, controller) :
@@ -32,17 +32,16 @@ class ControllerTestNotifications(Controller.Controller) :
 			self.log("Load simulation...")
 			self.octoPYInstance.sendMessage(MessageType.SET, [], "config_TestNotifications.cfg")
 			# time.sleep(2)
-			self.stop()
 
 			# Start simulation
-			# self.log("Start simulation...")
-			# self.octoPYInstance.sendMessage(MessageType.START, [])
-			# time.sleep(2)
+			self.log("Start simulation...")
+			self.octoPYInstance.sendMessage(MessageType.START, [])
+			#time.sleep(2)
 
 	def postActions(self) :
 		# Stop simulation
-		# self.log("Stop simulation...")
-		# self.octoPYInstance.sendMessage(MessageType.STOP, [])
+		self.log("Stop simulation...")
+		self.octoPYInstance.sendMessage(MessageType.STOP, [])
 		# time.sleep(2)
 
 		# Kill controllers
@@ -50,7 +49,7 @@ class ControllerTestNotifications(Controller.Controller) :
 		self.octoPYInstance.sendMessage(MessageType.KILL, [])
 
 	def step(self) :
-		pass
+		time.sleep(0.1)
 
 	def notify(self, **params) :
 		self.log("Received notification from " + str(params["hostIP"]))

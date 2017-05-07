@@ -21,6 +21,7 @@ class Controller(threading.Thread) :
 
 	def __init__(self, octoPYInstance, detached) :
 		threading.Thread.__init__(self)
+		
 
 		self.octoPYInstance = octoPYInstance
 
@@ -39,13 +40,16 @@ class Controller(threading.Thread) :
 		return self.__ID
 
 	ID = property(getID)
-
 		
 	def run(self) :
 		self.preActions()
 
-		while not self.__stop.isSet() :
-			self.step()
+		try :
+			while not self.__stop.isSet() :
+				self.step()
+				
+		except KeyboardInterrupt :
+			self.stop()
 
 		self.postActions()
 

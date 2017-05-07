@@ -20,6 +20,7 @@ class SimulationTestNotifications(Simulation.Simulation) :
 		pass
 
 	def step(self) :
+		self.log("SimulationTestNotifications - step()")
 		try :
 			value = random.randint(0, 9)
 			self.log("Random value : " + str(value))

@@ -12,14 +12,14 @@ import json
 import socket, select
 import threading
 
-import importlib
+import imp
 import ipaddress
 import paramiko
 import cmd
 
 import utils
-import Params
-import Controller
+from controllers import Params
+from controllers import Controller
 from utils import recvOneMessage, sendOneMessage, MessageType
 
 """
@@ -31,6 +31,8 @@ Main class used to remotely control the robots.
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 HOSTNAMES_TABLE_FILE_PATH = os.path.join(CURRENT_FILE_PATH, 'hostnames_table.json')
+
+CONTROLLER_FILE_PATH = os.path.join(CURRENT_FILE_PATH, 'controllers')
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'OctoPY.log')
 
@@ -458,11 +460,14 @@ class OctoPY() :
 	def launchController(self, controller, detached) :
 		try :
 			self.__logger.debug('launchController - Loading controller...')
-			Params.params = Params.Params(controller, self.__logger)
+			Params.params = Params.Params(os.path.join(CONTROLLER_FILE_PATH,controller), self.__logger)
 
 			# We check for the basic parameters
 			if Controller.Controller.checkForCompParams() :
-				controllerModule = importlib.import_module(Params.params.controller_path)
+				path = str(Params.params.controller_path).replace('.','/')+'.py'
+				path = os.path.join(CONTROLLER_FILE_PATH,path)
+				self.__logger.debug(path)
+				controllerModule = imp.load_source(str(Params.params.controller_path),path)
 				controllerClass = getattr(controllerModule, Params.params.controller_name)
 				newController = controllerClass(self, detached)
 				self.__controllers.append(newController)
@@ -678,7 +683,7 @@ class OctoPYInteractive(cmd.Cmd) :
 			octoPYInstance.logger.critical('launchController - No controller specified !')
 
 	def help_launch(self) :
-		print '\n'.join([ 'launch controller_path [-d detached]', 'Launches a simulation controller.'])
+		print '\n'.join([ 'launch controller_config_file [-d detached]', 'Launches a simulation controller.'])
 
 	# --- Exit ---
 	def do_exit(self, line) :
