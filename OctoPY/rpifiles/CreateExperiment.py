@@ -10,15 +10,21 @@ Script allowing to create an expermiment, creating all the necessary files.
 """
 
 def main(args) :
-	folder = args.experiment
+	SIMULATIONS_FOLDER = "experiments"
+	subfolder = args.experiment
+	folder = os.path.join(SIMULATIONS_FOLDER,subfolder)
 	configFile = "config_" + args.experiment + ".cfg"
 	classFile = "Simulation" + args.experiment
 	mainClass = classFile
 
-	if not os.path.isdir(folder) :
+	if not os.path.isdir(folder) :		
+		# Creation of the experiment folder
+		print("Creating folder " + folder + "...")
+		os.mkdir(folder)		
+		
 		# Creation of the configuration file
-		print("Creating configuration file " + configFile + "...")
-		with open(configFile, "w") as fileOut :
+		print("Creating configuration file " + configFile + " ...")
+		with open(SIMULATIONS_FOLDER+"/"+configFile, "w") as fileOut :
 			codeFile = """# Class name of the simulation
 simulation_name = """ + mainClass + """
 
@@ -27,16 +33,12 @@ simulation_path = """ + folder + """.""" + classFile
 
 			fileOut.write(codeFile)
 
-		# Creation of the experiment folder
-		print("Creating folder " + folder + "...")
-		os.mkdir(folder)
-
 		# Creation of the __init__.py file
-		print("Creating __init__.py file...")
+		print("Creating __init__.py file ...")
 		os.mknod(os.path.join(folder, "__init__.py"))
 
 		# Creation of the readme file
-		print("Creating readme file...")
+		print("Creating readme file ...")
 		with open(os.path.join(folder, "readme.txt"), "w") as fileOut :
 			codeFile = """This folder is for the experiment """ +  args.experiment + """.
 
@@ -45,7 +47,7 @@ simulation_path = """ + folder + """.""" + classFile
 			fileOut.write(codeFile)
 
 		# Creation of the Simulation file
-		print("Creating simulation file " + classFile + "...")
+		print("Creating simulation file " + classFile + ".py ...")
 		with open(os.path.join(folder, classFile + ".py"), "w") as fileOut :
 			codeFile = """#!/usr/bin/env/python
 

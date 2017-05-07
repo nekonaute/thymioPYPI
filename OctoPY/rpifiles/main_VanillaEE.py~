@@ -1,4 +1,4 @@
-from VanillaEE.SimulationVanillaEE import *
+from experiments.VanillaEE.SimulationVanillaEE import *
 
 """
 

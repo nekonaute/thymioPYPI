@@ -4,7 +4,7 @@ import sys, traceback
 import logging
 
 """
-OCTOPY : utils.py
+OCTOPY : Params.py
 
 Read a configuration file an create the associated class Params to store its
 parameters.

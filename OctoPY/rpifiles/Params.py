@@ -4,7 +4,7 @@ import sys, traceback
 import logging
 
 """
-OCTOPY : utils.py
+OCTOPY : Params.py
 
 Read a configuration file an create the associated class Params to store its
 parameters.
@@ -67,6 +67,6 @@ if __name__ == "__main__" :
 	consoleHandler = logging.StreamHandler()
 	consoleHandler.setLevel(logging.DEBUG)
 	mainLogger.addHandler(consoleHandler)
-	params = Params("./default_simulation.cfg", mainLogger)
+	params = Params("experiments/default_simulation.cfg", mainLogger)
 	print("simulation_name : " + params.simulation_name)
 	print("simulation_path : " + params.simulation_path)

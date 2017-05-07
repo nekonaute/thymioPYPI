@@ -12,8 +12,8 @@ import dbus, dbus.mainloop.glib
 import importlib
 import subprocess
 
-import utils
-from utils import recvOneMessage, sendOneMessage, MessageType
+import Utils
+from Utils import recvOneMessage, sendOneMessage, MessageType
 import Params
 import Simulation
 
@@ -30,11 +30,12 @@ mainLogger = None
 CURRENT_FILE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 LOG_PATH = os.path.join(CURRENT_FILE_PATH, 'log', 'MainController.log')
+EXPERIMENTS_PATH = os.path.join(CURRENT_FILE_PATH, 'experiments')
 
 # set the default experiment used
 default_experiment = 'braitenberg.cfg'
 
-DEFAULT_SIMULATION_CFG = os.path.join(CURRENT_FILE_PATH, default_experiment)
+DEFAULT_SIMULATION_CFG = os.path.join(EXPERIMENTS_PATH, default_experiment)
 
 COMMANDS_LISTENER_HOST = ''
 COMMANDS_LISTENER_PORT = 55555
@@ -45,7 +46,6 @@ class MessageCommand() :
 	NONE = -1
 	START, PAUSE, RESTART, STOP, KILL, SET, REGISTER, DATA, COM = range(0, 9)
 
-
 # Simulation observer
 class Observer() :
 	def __init__(self, IP, ID) :
@@ -54,7 +54,7 @@ class Observer() :
 
 	def notify(self, **params) :
 		mainLogger.debug("Observer - Notified with : " + str(params))
-		message = utils.Message()
+		message = Utils.Message()
 		message.msgType = MessageType.NOTIFY
 
 		params['recipient'] = self.__ID
@@ -124,8 +124,8 @@ class MainController() :
 
 	def __setSimulation(self, configFile) :
 		mainLogger.debug('MainController - Setting simulation...')
-		if os.path.isfile(os.path.join(CURRENT_FILE_PATH, configFile)) :
-			self.__simulationConfig = os.path.join(CURRENT_FILE_PATH, configFile)
+		if os.path.isfile(os.path.join(EXPERIMENTS_PATH, configFile)) :
+			self.__simulationConfig = os.path.join(EXPERIMENTS_PATH, configFile)
 		else :
 			mainLogger.error('MainController - No configuration file named ' + configFile)
 
@@ -156,11 +156,12 @@ class MainController() :
 
 	def __loadSimulation(self) :
 		mainLogger.debug('MainController - Loading simulation...')
-		Params.params = Params.Params(self.__simulationConfig, mainLogger)
+		Params.params = Params.Params(os.path.join(EXPERIMENTS_PATH,self.__simulationConfig), mainLogger)
 
 		# We check for the basic parameters
 		if Simulation.Simulation.checkForCompParams() :
-			simModule = importlib.import_module(Params.params.simulation_path)
+			simulation_path = Params.params.simulation_path
+			simModule = importlib.import_module('experiments.'+str(simulation_path),package='rpifiles')
 			simClass = getattr(simModule, Params.params.simulation_name)
 			self.__simulation = simClass(self, mainLogger)
 		else :
@@ -208,7 +209,7 @@ class MainController() :
 	def sendMessage(self, **params) :
 		mainLogger.debug("MainController - Sending message with : " + str(params))
 
-		message = utils.Message()
+		message = Utils.Message()
 		message.msgType = MessageType.COM
 		message.data = params
 

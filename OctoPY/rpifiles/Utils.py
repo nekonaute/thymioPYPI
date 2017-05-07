@@ -5,7 +5,7 @@ import sys
 import traceback
 
 """
-OCTOPY : utils.py
+OCTOPY : Utils.py
 
 Stores usefull classes and methods.
 """

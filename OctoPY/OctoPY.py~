@@ -17,10 +17,10 @@ import ipaddress
 import paramiko
 import cmd
 
-import Utils
+import utils
 import Params
 import Controller
-from Utils import recvOneMessage, sendOneMessage, MessageType
+from utils import recvOneMessage, sendOneMessage, MessageType
 
 """
 OCTOPY : OctoPY.py
@@ -262,7 +262,7 @@ class OctoPY() :
 			for destIP in dest :
 				self.__logger.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
-				optSend = Utils.Message()
+				optSend = utils.Message()
 
 				try :
 					# Init thymio
@@ -390,7 +390,7 @@ class OctoPY() :
 			sockAnswer.bind((LISTENER_HOST, LISTENER_PORT))
 			sockAnswer.listen(5)
 
-			optSend = Utils.Message()
+			optSend = utils.Message()
 			optSend.message = MessageType.QUERY
 			for destIP in dest :
 				try :
