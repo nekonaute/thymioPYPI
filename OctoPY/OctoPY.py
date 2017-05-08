@@ -11,6 +11,7 @@ import traceback
 import json
 import socket, select
 import threading
+import time
 
 import importlib
 import ipaddress
@@ -57,7 +58,7 @@ class OctoPY() :
 		self.__hashThymiosHostnames = None
 		self.__listThymiosStates = None
 		self.__controllers = []
-		self.__sshConnection = None
+		self.__sshConnections = []
 
 		# Creation of the logging handlers
 		level = logging.INFO
@@ -89,9 +90,6 @@ class OctoPY() :
 		# We start the message listener
 		self.__msgListener = MessageListener(self)
 		self.__msgListener.start()
-		
-		#
-		self.__isInit = False
 
 	def getLogger(self) :
 		return self.__logger
@@ -275,9 +273,7 @@ class OctoPY() :
 							myIP = ipaddress.ip_address(u'' + out.split(' ')[0])
 
 						proc = subprocess.Popen(sshcommand + ["asebamedulla", "ser:device=/dev/ttyACM0", "&", "python", os.path.join(THYMIO_SCRIPTS_PATH, 'MainController.py'), '-d', '-i', str(myIP), '&'], close_fds=True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-						self.__sshConnection = proc
-						
-						self.__isInit = True
+						self.__sshConnections.append(proc)
 
 					# Start simulation
 					elif message == MessageType.START :
@@ -333,7 +329,6 @@ class OctoPY() :
 
 					# Kill thymio
 					elif message == MessageType.KILL :
-						self.__isInit = False
 						optSend.msgType = MessageType.KILL
 						sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 						sock.connect((str(destIP), 55555))
@@ -517,17 +512,36 @@ class OctoPY() :
 		octoPYInstance.sendMessage(MessageType.COM, recipientsList, params)
 
 	def exit(self) :
-		# exit -> send 5	
-		if self.__isInit:
-			self.sendMessage('5', [], None)
+		self.__logger.info("Closing OctoPY ...")
+
+		# === exit -> send 5	
+		message = 5
+		data = None
+		dest = self.resolveAddresses([])
 		
-		# Closing sockets and connections
+		for destIP in dest :
+			sent = True
+			try :
+				optSend = Utils.Message()
+				optSend.msgType = MessageType.KILL
+				sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				sock.connect((str(destIP), 55555))
+				sendOneMessage(sock, optSend)
+			except:
+				self.__logger.error("sendMessage - Unexpected error while sending message " + str(message) + " to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+				sent = False
+		
+			if sent:
+				self.__logger.info("sendMessage - sending message " + str(message) + " to " + str(destIP))	
+				
+		# === Closing sockets and connections
 		self.__msgListener.stop()
 		
-		if self.__sshConnection!=None:
-			self.__sshConnection.terminate()
+		time.sleep(3)
+		for conn in self.__sshConnections:
+			conn.terminate()
 			
-		self.__logger.info("Exiting OctoPY")
+		self.__logger.info("OctoPY closed.")
 
 
 class OctoPYInteractive(cmd.Cmd) :

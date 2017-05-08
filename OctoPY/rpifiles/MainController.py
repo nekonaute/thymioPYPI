@@ -11,6 +11,7 @@ import gobject
 import dbus, dbus.mainloop.glib
 import importlib
 import subprocess
+import time
 
 import Utils
 from Utils import recvOneMessage, sendOneMessage, MessageType
@@ -172,7 +173,8 @@ class MainController() :
 		if self.__simulation and not self.__simulation.isStopped() :
 			mainLogger.debug("MainController - Killing simulation.")
 			self.__simulation.stop()
-
+		
+		time.sleep(1.5)
 		mainLogger.debug("MainController - Killing asebamedulla.")
 		proc = subprocess.Popen(["sh", os.path.join(CURRENT_FILE_PATH, "killAseba.sh")], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		(out, err) = proc.communicate()
