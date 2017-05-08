@@ -173,12 +173,16 @@ class MainController() :
 		if self.__simulation and not self.__simulation.isStopped() :
 			mainLogger.debug("MainController - Killing simulation.")
 			self.__simulation.stop()
+			self.__simulation.join()
+			
+			self.__simulation = None
 		
 		time.sleep(1.5)
 		mainLogger.debug("MainController - Killing asebamedulla.")
 		proc = subprocess.Popen(["sh", os.path.join(CURRENT_FILE_PATH, "killAseba.sh")], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		(out, err) = proc.communicate()
 
+		self.__cmdListener.MyRunning = False
 
 	def __register(self, data) :
 		mainLogger.debug("MainController - Registering...")
@@ -283,7 +287,6 @@ class MainController() :
 		mainLogger.debug("MainController - Exiting")
 
 
-
 class CommandsListener(threading.Thread) :
 	def __init__(self, controller) :
 		threading.Thread.__init__(self)
@@ -300,7 +303,8 @@ class CommandsListener(threading.Thread) :
 		self.__sock.listen(5)
 
 	def run(self):
-		while 1:
+		self.MyRunning = True
+		while self.MyRunning:
 			try:
 				# Waiting for client...
 				mainLogger.debug("CommandsListener - Waiting on accept...")
@@ -351,6 +355,8 @@ class CommandsListener(threading.Thread) :
 				mainLogger.critical('CommandsListener - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 
 		mainLogger.debug('CommandsListener - Exiting...')
+		self.__sock.close()
+		mainLogger.debug('CommandsListener - Exited')
 
 
 if __name__ == '__main__' :
@@ -391,3 +397,6 @@ if __name__ == '__main__' :
 	except:
 		mainLogger.critical('Error in main: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
 		exit(1)
+		
+	mainLogger.debug("MainController - Exited")
+	exit(0)

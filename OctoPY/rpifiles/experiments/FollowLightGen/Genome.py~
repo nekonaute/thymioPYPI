@@ -47,7 +47,7 @@ class Genome:
 	def evaluation(self, sensors):
 		
 		if len(sensors)!=self.size/2-1:
-			self.log.debug("Genome - evaluation() : number of sensors doesn't match with genome size")
+			self.logger.debug("Genome - evaluation() : number of sensors doesn't match with genome size")
 			return (0,0)
 			
 		# initialisation avec les biais

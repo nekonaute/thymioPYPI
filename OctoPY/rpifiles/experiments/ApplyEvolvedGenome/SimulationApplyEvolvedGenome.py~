@@ -24,7 +24,7 @@ class SimulationApplyEvolvedGenome(Simulation.Simulation) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
 		self.mainLogger = mainLogger
-		#self.mainLogger.setLevel(logging.INFO)		
+		self.mainLogger.setLevel(logging.INFO)		
 		
 		# initialisations
 		self.ls = LightSensor.LightSensor(self.mainLogger) 	# capteur de lumière	

@@ -42,7 +42,7 @@ class Genome:
 	
 	def sigmoide(self,x):
 		
-		return (1/(1+ math.exp(-3*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
+		return (1/(1+ math.exp(-2*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
 		
 	def evaluation(self, sensors):
 		

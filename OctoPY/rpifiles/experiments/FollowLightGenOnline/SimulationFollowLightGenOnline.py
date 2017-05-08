@@ -10,6 +10,7 @@ Encadrant : Nicolas Bredeche
 
 Comportement évolutionniste de suivi de lumière basé sur (1+1) Online
 """
+
 import time
 import logging
 import random
@@ -19,31 +20,55 @@ import Params
 
 import LightSensor
 import Genome
-#from tag_recognition import Tag_Detector
-
 
 class SimulationFollowLightGenOnline(Simulation.Simulation) :
 	def __init__(self, controller, mainLogger) :
 		Simulation.Simulation.__init__(self, controller, mainLogger)
 		
-		self.mainLogger = mainLogger
-		self.mainLogger.setLevel(logging.CRITICAL)		
+		# définition de notre niveau de log
+		self.mainLogger = mainLogger		
+		
+		self.SIMU = logging.INFO + 1 
+		logging.addLevelName(self.SIMU, "SIMU")
+		
+		def simu(message, *args, **kws):
+		    if self.mainLogger.isEnabledFor(self.SIMU):
+		        self.mainLogger._log(self.SIMU, message, args, **kws) 
+		self.mainLogger.simu = simu
+		
+		self.mainLogger.setLevel(self.SIMU)		
+		
+		self.mainLogger.debug("SimulationFollowLightGenOnline - __init__()")
 		
 		# initialisations
-		self.ls = LightSensor.toto(self.mainLogger) 	# capteur de lumière				
-		#self.ls.initCam()							# initialisation de la caméra
+		self.ls = LightSensor.LightSensor(self.mainLogger) 	# capteur de lumière	
 		self.champion = Genome.Genome(mainLogger,size=18) # (7 capteurs de proximité, 1 biais, 1 entrée binaire pour la lumière) * 2 (moteurs)
 		self.challenger = None		
 		self.generation = 1							# nombre de generation total
+		self.nbReevalued = 0
 		self.fitnessChampion = 0						# fitness du champion
 		self.fitnessChallenger = 0					# fitness du challenger
 		self.sigma = Params.params.sigma				# sigma
-		self.sleep = 0.001
+		self.sleep = Params.params.wait
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenOnline - preActions()")
 	
-		self.mainLogger.info("SimulationFollowLightGen - preActions() : PARAMETRES\n"+str(Params.params.lifetime))		
+		self.mainLogger.simu("======================================")
+		self.mainLogger.simu("=== SimulationFollowLightGenOnline ===")
+		self.mainLogger.simu("======================================")
+		self.mainLogger.simu("-------------------")
+		self.mainLogger.simu("Parameters :")
+		self.mainLogger.simu("N "+str(Params.params.N))
+		self.mainLogger.simu("lifetime "+str(Params.params.lifetime))
+		self.mainLogger.simu("sleep "+str(Params.params.wait))
+		self.mainLogger.simu("Preevaluate "+str(Params.params.Preevaluate))
+		self.mainLogger.simu("sigma "+str(Params.params.sigma))
+		self.mainLogger.simu("minSigma "+str(Params.params.minSigma))
+		self.mainLogger.simu("maxSigma "+str(Params.params.maxSigma))
+		self.mainLogger.simu("-------------------")
+		self.mainLogger.simu("Start :")		
+		
 		self.ls.start()		
 		
 		self.tController.writeSoundRequest([200,1])
@@ -51,37 +76,41 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 
 	def postActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenOnline - postActions()")
-		self.mainLogger.info("SimulationFollowLightGenOnline - postActions() :"+str(self.fitnessChampion))
-		self.mainLogger.info("SimulationFollowLightGenOnline - postActions() :"+str(self.champion.gene))
+		
+		self.mainLogger.simu("-------------------")
+		self.mainLogger.simu("End :")
+		self.mainLogger.simu("fitness_champion "+str(self.fitnessChampion))
+		self.mainLogger.simu("champion "+str(self.champion.gene))
+		self.mainLogger.simu("======================================")		
 		
 		self.ls.shutdown()
 
 	def step(self) :
-		self.mainLogger.critical("SimulationFollowLigtGenOnline - step()")
-		new_res,res = self.ls.get_light_data()
-		self.mainLogger.critical(str(res))
-		self.mainLogger.critical(str(new_res))
+		self.mainLogger.debug("SimulationFollowLigtGenOnline - step()")
 	
 		# N génération passée		
 		if(self.generation == Params.params.N):
 			self.stop()
 		
 		if random.random() < Params.params.Preevaluate or self.generation==1:
-			self.mainLogger.info("SimulationFollowLigtGenOnline - step() : reevaluate champion")	
 			self.recover(self.champion)
+			self.mainLogger.simu(str(self.generation)+" champion_recovered")
 			self.runAndEvaluate(self.champion,"champion")
+			
+			self.mainLogger.simu(str(self.generation)+" champion_reevaluated-"+str(self.nbReevalued)+" "+str(self.fitnessChampion))	
 		else :	
 			self.challenger = self.applyVariation(self.champion, self.sigma)
 			self.runAndEvaluate(self.challenger,"challenger")
 			
-			self.mainLogger.critical("SimulationFollowLigtGenOnline - step() : old fitness : "+str(self.fitnessChampion))
-			self.mainLogger.critical("SimulationFollowLigtGenOnline - step() : new fitness : "+str(self.fitnessChallenger))
+			self.mainLogger.simu(str(self.generation)+" challenger_evaluated "+str(self.fitnessChallenger))	
 				
 			if self.fitnessChallenger > self.fitnessChampion:
-				self.mainLogger.info("SimulationFollowLigtGenOnline - step() : nouveau champion")				
+				self.mainLogger.simu(str(self.generation)+" new_champion "+str(self.fitnessChampion)+" "+str(self.fitnessChallenger))				
 				self.champion = self.challenger
 				self.fitnessChampion = self.fitnessChallenger
 				self.sigma = Params.params.minSigma
+				
+				self.nbReevalued = 0
 			else :
 				self.sigma = min(Params.params.maxSigma, self.sigma*2)
 			
@@ -93,20 +122,46 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 	"""
 	
 	def runAndEvaluate(self, candidate, nameCandidate):
-		self.fitnessChallenger=0
+		self.mainLogger.debug("SimulationFollowLigtGenOnline - runAndEvaluate()")
+		
+		if(nameCandidate=="champion"):
+			self.fitnessChampion = 0
+		elif(nameCandidate=="challenger"):	
+			self.fitnessChallenger = 0
 		
 		for i in range(Params.params.lifetime):
 			self.move(candidate)
 			self.computeFitness(nameCandidate)
 				
-			time.sleep(self.sleep)	
+			time.sleep(self.sleep)
 	
 	def recover(self, candidate):
+		self.mainLogger.debug("SimulationFollowLigtGenOnline - recover()") 
+		
+		self.nbReevalued+=1		
+		
 		for i in range(Params.params.lifetime):
-			
 			self.move(candidate)
-			
 			time.sleep(self.sleep)
+			
+		
+	def computeFitness(self, nameCandidate):
+		# récupération des capteurs
+		max_sensors = 0.0
+		proxSensors = self.getSensors()[:-1]
+		for i in xrange (len(proxSensors)):
+			max_sensors = max(max_sensors,proxSensors[i])
+								
+		speedValue = (self.getTransitiveAcceleration()) * \
+				   (1 - self.getAngularAcceleration()) * \
+				   (1 - max_sensors)#*self.lightValue
+						
+		#self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
+		
+		if(nameCandidate=="champion"):
+			self.fitnessChampion = self.fitnessChampion + speedValue
+		elif(nameCandidate=="challenger"):	
+			self.fitnessChallenger = self.fitnessChallenger + speedValue
 			
 	def getSensors(self):
 		
@@ -118,20 +173,14 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		
 		for i in range(7):
 			l.append(proxSensors[i]/Params.params.maxProxSensorValue)
-			
+		
+		
 		new_res,res = self.ls.get_light_data()
-		self.mainLogger.critical(str(res))
-		self.mainLogger.critical(str(new_res))
 		if res!=None:
-			self.lightValue, lightLR = (150,1)
-			tags =  res
-			tags_contours,tags_ids,tags_distances,tags_rotations, tags_bounding_boxes = tags
-			self.mainLogger.critical("tag : "+str(tags_ids))
-
+			self.lightValue, lightLR = res
 		else:
 			self.lightValue, lightLR = (150,1)
 		
-		self.mainLogger.critical("More left :"+str(lightLR))
 		l.append(lightLR)
 	
 		return l
@@ -145,24 +194,6 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		
 		self.tController.writeMotorsSpeedRequest([l, r])
 		self.waitForControllerResponse()			
-	
-	def computeFitness(self, nameCandidate):
-		# récupération des capteurs
-		max_sensors = 0.0
-		proxSensors = self.getSensors()[:-1]
-		for i in xrange (len(proxSensors)):
-			max_sensors = max(max_sensors,proxSensors[i])
-								
-		speedValue = (self.getTransitiveAcceleration()) * \
-				   (1 - self.getAngularAcceleration()) * \
-				   (1 - max_sensors)#*self.lightValue
-						
-		self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
-		
-		if(nameCandidate=="champion"):
-			self.fitnessChampion = self.fitnessChampion + speedValue
-		elif(nameCandidate=="challenger"):	
-			self.fitnessChallenger = self.fitnessChallenger + speedValue
 		
 	def getTransitiveAcceleration(self):
 		return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
@@ -176,6 +207,6 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		
 	# raspberry 3,8
 	#set config_FollowLightGenOnline.cfg
-	#put ~/thymioPYPI/OctoPY/rpifiles/FollowLightGenOnline ~/dev/thymioPYPI/OctoPY/rpifiles
-	#put ~/thymioPYPI/OctoPY/rpifiles/config_FollowLightGenOnline.cfg ~/dev/thymioPYPI/OctoPY/rpifiles
+	#put rpifiles/experiments/FollowLightGenOnline ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
+	#put /rpifiles/experiments/config_FollowLightGenOnline.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
 	#get ~/dev/thymioPYPI/OctoPY/rpifiles/log/MainController.log /home/pi/log

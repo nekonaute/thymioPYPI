@@ -235,7 +235,7 @@ class OctoPY() :
 					try :
 						dest.append(ipaddress.ip_address(u'' + recip))
 					except :
-						self.__logger.debug("resolveAddresses - " + recip + " is not a known host nor a valid IP address")
+						self.__logger.info("resolveAddresses - " + recip + " is not a known host nor a valid IP address")
 						continue
 		else :
 			# If no host was specified, we send to every known hosts
@@ -258,7 +258,8 @@ class OctoPY() :
 		if dest != None :
 
 			for destIP in dest :
-				self.__logger.info("sendMessage - sending message " + str(message) + " to " + str(destIP))
+				
+				self.__logger.debug("sendMessage - sending message " + str(message) + " to " + str(destIP))
 
 				optSend = Utils.Message()
 
@@ -528,7 +529,7 @@ class OctoPY() :
 				sock.connect((str(destIP), 55555))
 				sendOneMessage(sock, optSend)
 			except:
-				self.__logger.error("sendMessage - Unexpected error while sending message " + str(message) + " to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
+				#self.__logger.error("sendMessage - Unexpected error while sending message " + str(message) + " to " + str(destIP) + " : " + str(sys.exc_info()[0]) + " - " + traceback.format_exc()) 
 				sent = False
 		
 			if sent:
@@ -863,13 +864,13 @@ class MessageListener(threading.Thread) :
 		while not self.__stop.isSet() :
 			try:
 				# Waiting for client...
-				self.__octoPYInstance.logger.debug("MessageListener - Waiting on accept...")
+				#self.__octoPYInstance.logger.debug("MessageListener - Waiting on accept...")
 				conn, (addr, port) = self.__sock.accept()
 				
 				# Receive one message
-				self.__octoPYInstance.logger.debug('MessageListener - Receiving message...')
+				#self.__octoPYInstance.logger.debug('MessageListener - Receiving message...')
 				message = recvOneMessage(conn)
-				self.__octoPYInstance.logger.debug('MessageListener - Received ' + str(message))
+				#self.__octoPYInstance.logger.debug('MessageListener - Received ' + str(message))
 
 				# The listener transmits the desired message
 				if message.msgType == MessageType.NOTIFY :
@@ -893,7 +894,7 @@ if __name__ == '__main__' :
 	parser = argparse.ArgumentParser()
 	
 	parser.add_argument('-L', '--log', default = False, action = "store_true", help = "Log messages in a file")
-	parser.add_argument('-d', '--debug', default = True, action = "store_true", help = "Debug mode")
+	parser.add_argument('-d', '--debug', default = False, action = "store_true", help = "Debug mode")
 	args = parser.parse_args()
 
 	octoPYInstance = OctoPY(args.log, args.debug)

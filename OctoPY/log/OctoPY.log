@@ -1,0 +1,6 @@
+2017-05-08 21:22:49,551 - INFO: loadHostnamesTable - Loading hostnames table
+2017-05-08 21:22:49,552 - INFO: Starting in interactive mode.
+2017-05-08 21:22:57,046 - INFO: lookUp - executing nmap
+2017-05-08 21:22:58,999 - INFO: lookUp - nmap done
+2017-05-08 21:23:01,494 - INFO: Closing OctoPY ...
+2017-05-08 21:23:04,506 - INFO: OctoPY closed.
