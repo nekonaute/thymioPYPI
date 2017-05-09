@@ -47,7 +47,7 @@ class Camera_Controller(threading.Thread):
             self.camera.awb_gains = self.awb_gains
         if not self.aexposure:
             #self.camera.shutter_speed = self.camera.exposure_speed
-            self.camera.exposure_mode = "sports" #'off'
+            self.camera.exposure_mode = "sports"
         self.camera.resolution = self.resolution
         self.camera.framerate = self.framerate
 

@@ -19,18 +19,18 @@ class Tag_Detector(Detector):
         self.color_image = None
         self.set_preprocessing_function(image_utils.convert_to_HSV)
         self.count_curr_frame = 0
-        self.frame_buffer_size = 2
+        self.frame_buffer_size = 3
         self.delta_positions = {}
         self.positions = {}
 
     def post_processing_function(self,image):
         arear_ratio = self.tag_settings[settings.AREA_RATIO_KEY]
-        actual_side_size = self.tag_settings[settings.DIAGONAL_KEY]
+        actual_side_size = self.tag_settings[settings.SIDE_KEY]
         self.perf_time = time.time()
         if self.count_curr_frame == 0:
             self.prec_frame = image[:,:,2]
             self.tag_results = tag_recognition.detect_tags(self.prec_frame ,arear_ratio, actual_side_size=actual_side_size)
-        elif self.count_curr_frame == 1:
+        elif self.count_curr_frame == 1 or self.count_curr_frame == 2:
             prec_contours = self.tag_results[CNT]
             prec_frame = self.prec_frame
             curr_frame = image[:,:,2]
