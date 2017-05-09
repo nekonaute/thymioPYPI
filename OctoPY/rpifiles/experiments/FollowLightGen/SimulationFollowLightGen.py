@@ -49,6 +49,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []					# valeurs de fitness du robot		
 		self.hostname = None						# hostname
+		self.tags_ids = []
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
@@ -73,7 +74,9 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.simu("-------------------")
 		self.mainLogger.simu("Start :")
 		
-		self.ls.start()		
+		self.ls.start()
+
+		time.sleep(5)		
 		
 		self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()
@@ -118,6 +121,9 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.iter+=1
 		time.sleep(Params.params.wait)
 		
+		if self.iter==Params.params.duration:
+			self.stop()
+		
 	def getSensors(self):
 		
 		l = []
@@ -129,11 +135,18 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		for i in range(7):
 			l.append(proxSensors[i]/Params.params.maxProxSensorValue)
 			
-		new_res,res = self.ls.get_light_data()
+		new_res,res = self.ls.get_data()
 		if res!=None:
-			self.lightValue, lightLR = res
+			self.lightValue = res[0]
+			lightLR = res[1]
+			
+			tags_info = res[2]
+			tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
+			self.tags_ids = tags_ids
+			self.mainLogger.simu(str(self.tags_ids))
 		else:
 			self.lightValue, lightLR = (150,1)
+			self.tags_ids = []			
 			
 		l.append(lightLR)
 	
@@ -168,6 +181,9 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				   (1 - self.getAngularAcceleration()) * \
 				   (1 - max_sensors)
 							
+		if speedValue<0:
+			speedValue=0					
+							
 		self.fitnessWindow.append(speedValue)
 
 		#self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
@@ -188,10 +204,21 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		proba = self.fitness
 		if(random.random()<proba):		
 			try :
+				currRecipientsList = self.hostname
 				recipientsList = Params.params.hostnames
+				recipientsList = recipientsList.split(',')
+				idsList = Params.params.ids
+				idsList = idsList.split(',')
+
+				for i in xrange(len(idsList)):
+					if int(idsList[i]) in self.tags_ids:
+						currRecipientsList+=","
+						currRecipientsList+=str(recipientsList[i])
+				
 				myValue = str(fitness)+'$'+str(genome.gene)			
-					
-				self.sendMessage(recipients = recipientsList, value = myValue)              
+				
+				#self.mainLogger.simu("broadcast - "+currRecipientsList)
+				self.sendMessage(recipients = currRecipientsList, value = myValue)              
 			except :
 				self.mainLogger.error('"SimulationFollowLightGen - error in broadcast()' )
 		

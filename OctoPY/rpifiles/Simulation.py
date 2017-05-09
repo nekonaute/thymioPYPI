@@ -66,6 +66,7 @@ class Simulation(threading.Thread) :
 			
 		except :
 			self.mainLogger.critical('Simulation - Unexpected error : ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+			self.postActions()
 			self.tController.stop()
 			self.tController.join()
 

@@ -155,6 +155,9 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 		speedValue = (self.getTransitiveAcceleration()) * \
 				   (1 - self.getAngularAcceleration()) * \
 				   (1 - max_sensors)#*self.lightValue
+							
+		if speedValue<0:
+			speedValue=0
 						
 		#self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
 		
@@ -208,5 +211,5 @@ class SimulationFollowLightGenOnline(Simulation.Simulation) :
 	# raspberry 3,8
 	#set config_FollowLightGenOnline.cfg
 	#put rpifiles/experiments/FollowLightGenOnline ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
-	#put /rpifiles/experiments/config_FollowLightGenOnline.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
+	#put rpifiles/experiments/config_FollowLightGenOnline.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
 	#get ~/dev/thymioPYPI/OctoPY/rpifiles/log/MainController.log /home/pi/log

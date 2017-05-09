@@ -10,6 +10,9 @@ import tests
 
 import signal
 import time
+from datetime import datetime
+
+
 
 RUNNING = True
 TESTING = False
@@ -48,22 +51,29 @@ if __name__ == '__main__':
     time.sleep(2)
     print "let's start!!!"
     tags_info = None
-    t = 0
+    acc_time = 0
+    count_pass = -1
+    dt = 0
     while(RUNNING):
-        
-        tests.log("","")
+        """
+        count_pass +=1
+        dt = time.time() - dt
+        acc_time = acc_time + dt
+        dt = time.time()
+        if acc_time >1:
+            message = "fps %d2.2" % count_pass
+            acc_time = 0"""
+
         newresults, tags_info = tag_detection_experiment.get_results()
         tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
-        message= '\tdtime: ' + `tag_detection_experiment.perf_time`# + '\n'
+
         if newresults and len(tags_contours)>0:
-            dt = time.time()-t
-            t = time.time()
-            message = 'distances: ' + `tags_distances` #+ '\n'
-            #message+= '\trotations: ' + `tags_rotations` # + '\n'
-            #message+= '\tids: ' + `tags_ids`
-            message = '\tdtime: %f.3' % dt# + '\n'
-            message += '\tptime: %f.3' % tag_detection_experiment.perf_time# + '\n'
-            tests.log(message,"")
+            #message = 'distances: ' + `tags_distances`
+            #message+= '\trotations: ' + `tags_rotations`
+            message = '\tids: ' + `tags_ids`
+            #message+= '\tdtime: ' + `tag_detection_experiment.perf_time`
+            message+= datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+            print message
         if TESTING:
             TESTING = False
             tags_contours, tags_ids, tags_distances, tags_rotations = tags_info

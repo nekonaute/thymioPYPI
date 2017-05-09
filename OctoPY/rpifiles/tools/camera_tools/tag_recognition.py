@@ -20,8 +20,9 @@ TAG_ID_ERROR = -1
 
 lk_params = dict(
             winSize  = (10,10), # max extimation of movement
-            maxLevel = 2, # LK hypothese is true at lowest level
-            criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+            maxLevel = 4, # LK hypothese is true at lowest level
+            criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03)
+            )
 
 def estimate_next_positions(prec_frame,curr_frame,prec_contours,actual_side_size=1):
     prec_points = np.float32(prec_contours).reshape(-1,1,2)
@@ -38,7 +39,7 @@ def estimate_next_positions(prec_frame,curr_frame,prec_contours,actual_side_size
             contour = np.array([ [p1],[p2],[p3],[p4] ])
             rect = cnt2rect(contour)
             bb = bounding_box(contour)
-            next_distances += [ estimate_distance(rect) ]
+            next_distances += [ estimate_distance(rect,actual_side_size=actual_side_size) ]
             next_rotations += [ estimate_rotation(bb) ]
             next_contours += [ contour ]
     return status_contours, next_contours, next_distances, next_rotations
@@ -236,14 +237,21 @@ def is_tag_cnt(cnt_p, cnt_c, ar, sigma, eps):
 # @profile
 def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
     """
-        CHAIN_APPROX_NONE fast result and better response for skewed tags.
+    Tag Robust detection is achieved by creating a series of tests
+    There are 5 layers of countours for each tag. Tag info is stored in the
+    innermost contour.
 
-        ar is the area_ratio of the tags markers (3 inscribed squares)
-        eps and sigma are found experimentally:
-            -sigma is the variance of the area_ratio.
-            -eps is the minimum area in pixels for a contour to be considered.
+        level -------------------------------
+        | next level-----------------------  |
+        | | next level-------------------  | |
+        | | | next next level----------  | | |
+        | | | | next next level----  | | | | |
+
+    ar is the area_ratio of the tags countours.
+    eps and sigma are found experimentally:
+        -sigma is the variance of the area_ratio.
+        -eps is the minimum area in pixels for a contour to be considered.
     """
-
     # this function is horrible...
     contours, hierarchy = image_utils.findContours(edge_image,cv2.RETR_TREE,cv2.CHAIN_APPROX_NONE)
     if hierarchy is None:
@@ -288,7 +296,9 @@ def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
                                                 if next_next_next_curr!=-1 and next_next_next_child!=-1:
                                                     next_next_next_curr_approxTop = approx_cnt(contours[next_next_next_curr])
                                                     next_next_next_child_approxTop = approx_cnt(contours[next_next_next_child])
-                                                    if len(next_next_next_curr_approxTop)==4 and len(next_next_next_child_approxTop)==4:
+                                                    if is_tag_cnt(next_next_next_curr_approxTop,next_next_next_child_approxTop,ar,sigma,eps) and \
+                                                        len(next_next_next_curr_approxTop)==4 and len(next_next_next_child_approxTop)==4:
+                                                        # check level
                                                         curr_approxTop = approx_cnt(contours[curr])
                                                         if len(curr_approxTop) == 4:
                                                             if not occour[curr]:

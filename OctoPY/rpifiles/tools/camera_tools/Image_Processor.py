@@ -87,10 +87,8 @@ class Image_Processor(threading.Thread):
         self.set_post_processing_function()
 
     def initialize_results(self):
-        # jollyfull threading problem reference
-        self.available_chop_stick = False
-        self.pick_up_chop_stick = False
-        self.tag_orientations = None
+        self.new_results_ready = False
+        self.new_results_retrived = False
 
     def initialize_locks(self):
         self.processing_result_lock = threading.Lock()
@@ -110,27 +108,25 @@ class Image_Processor(threading.Thread):
     def run(self):
         self.running = True
         self.camera_controller.start()
-        imgray = None
-        contours_tag = None
-        new_frame = False
+        self.new_frame = False
         while(self.running):
             with self.camera_controller.processing_buffer_lock:
                 if self.camera_controller.processing_buffer != None:
                     self.pre_result = self.pre_processing(self.camera_controller.processing_buffer)
-                    new_frame = True
+                    self.new_frame = True
             if self.pre_result != None:
                 with self.processing_result_lock:
-                    if new_frame:
-                        new_frame = False
+                    if self.new_frame:
+                        self.new_frame = False
                         self.post_result = self.post_processing(self.pre_result)
-                        self.available_chop_stick = True
-                        self.pick_up_chop_stick = False
+                        self.new_results_ready = True
+                        self.new_results_retrived = False
         self.shutdown()
 
     def retrieve_post_results(self):
         with self.processing_result_lock:
-            if self.pick_up_chop_stick:
-                self.available_chop_stick = False
-            self.pick_up_chop_stick = True
+            if self.new_results_retrived:
+                self.new_results_ready = False
+            self.new_results_retrived = True
             # flag will indicate either results are new or not
-            return self.available_chop_stick ,self.post_result
+            return self.new_results_ready , self.post_result
