@@ -27,7 +27,6 @@ class MessageRequest() :
 
 	KILL = 99
 		
-
 class ThymioController(threading.Thread):
 	def __init__(self, simulation, mainLogger):
 		threading.Thread.__init__(self)
@@ -50,7 +49,8 @@ class ThymioController(threading.Thread):
 		self.__motorspeed = [0,0]
 		self.__color = [0,0,0]
 		self.__sound = [0,0]
-
+		
+		self.__newValue = {"PSValues":False, "GroundSensorsValues":False, "MotorSpeed":False, "AccValues":False}
 
 		# Init the main loop
 		dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -88,11 +88,10 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
-				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError) 	
-				#self.__mainLogger.debug("__dbusGetVariable : ligne after getVariable")
+				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError)
 				ok = True
 			except:
-				self.__mainLogger.debug("__dbusGetVariable : error")
+				self.__mainLogger.error("ThymioController - error getting variable : "+str(varName))
 				ok = False
 	
 	def __dbusSetMotorspeed(self):
@@ -106,18 +105,22 @@ class ThymioController(threading.Thread):
 	
 	def __dbusGetProxSensorsReply(self, r):
 		self.__psValue = r
+		self.__newValue["PSValues"] = True
 
 	def __dbusGetProxSensors(self):
 		self.__dbusGetVariable("prox.horizontal", self.__dbusGetProxSensorsReply)
 
 	def __dbusGetGroundAmbiantReply(self, r):
 		self.__psGroundAmbiantSensors = r
+		self.__newValue["GroundSensorsValues"] = True
 
 	def __dbusGetGroundReflectedReply(self, r):
 		self.__psGroundReflectedSensors = r
+		self.__newValue["GroundSensorsValues"] = True
 
 	def __dbusGetGroundDeltaReply(self, r):
-		self.__psGroundDeltaSensors = r	
+		self.__psGroundDeltaSensors = r
+		self.__newValue["GroundSensorsValues"] = True
 
 	def __dbusGetGroundSensors(self):
 		self.__dbusGetVariable("prox.ground.ambiant", self.__dbusGetGroundAmbiantReply)
@@ -126,9 +129,11 @@ class ThymioController(threading.Thread):
 
 	def __dbusGetMotorSpeedLeftReply(self, r) :
 		self.__motorspeed[0] = int(r)
+		self.__newValue["MotorSpeed"] = True
 
 	def __dbusGetMotorSpeedRightReply(self, r) :
 		self.__motorspeed[1] = int(r)
+		self.__newValue["MotorSpeed"] = True
 
 	def __dbusGetMotorSpeed(self):
 		self.__dbusGetVariable("motor.left.speed", self.__dbusGetMotorSpeedLeftReply)
@@ -136,6 +141,7 @@ class ThymioController(threading.Thread):
 		
 	def __dbusGetAccReply(self,r):
 		self.__acc = r
+		self.__newValue["AccValues"] = True
 	
 	def __dbusGetAcc(self):
 		self.__dbusGetVariable("acc", self.__dbusGetAccReply)
@@ -238,16 +244,33 @@ class ThymioController(threading.Thread):
 			self.__performActionReq.notify()
 
 	def getMotorSpeed(self):
+		self.__newValue["MotorSpeed"] = False
 		return self.__motorspeed
 
 	def getPSValues(self):
+		self.__newValue["PSValues"] = False
 		return self.__psValue
 
 	def getGroundSensorsValues(self):
+		self.__newValue["GroundSensorsValues"] = False
 		return (self.__psGroundAmbiantSensors, self.__psGroundReflectedSensors, self.__psGroundDeltaSensors)
 
 	def getAccValues(self):
+		self.__newValue["AccValues"] = True
 		return self.__acc
+		
+	def isNewValue(self, varName):
+		"""
+		Return True if the value of varName has been updated by the Thymio since the 
+		last time the user got the value.
+		
+		:varName: String, "MotorSpeed", "PSValues", "GroundSensorsValues" or "AccValues"	
+		:return: boolean
+		"""
+		if varName not in self.__newValue.keys():
+			self.__mainLogger.error("ThymioController - isNewValue() : "+str(varName)+" is not a known value name")
+		else:
+			return self.__newValue[varName]
 
 	def __stopThymio(self) :
 		# Red LEDs: Thymio stops moving

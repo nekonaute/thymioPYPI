@@ -29,7 +29,7 @@ def main(args) :
 simulation_name = """ + mainClass + """
 
 # Path of simulation
-simulation_path = """ + folder + """.""" + classFile
+simulation_path = """ + subfolder + """.""" + classFile
 
 			fileOut.write(codeFile)
 
