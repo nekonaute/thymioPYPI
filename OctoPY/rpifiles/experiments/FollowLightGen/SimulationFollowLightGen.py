@@ -42,7 +42,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.debug("SimulationFollowLightGen - __init__()")
 		
 		# initialisations
-		self.ls = LightSensor.LightAndTagSensor(self.mainLogger) 	# capteur de lumière	
+		self.ls = LightSensor.LightAndTagSensor(self.mainLogger) 	# capteur de lumière
 		self.genome = Genome.Genome(mainLogger,size=18) 	# (7 capteurs de proximité, 1 biais, 1 entrée binaire pour la lumière) * 2 (moteurs)
 		self.genomeList = []						# liste de couples contenant les génomes reçus et la fitness associée
 		self.iter = 1							# nombre d'itérations total
@@ -50,6 +50,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.fitnessWindow = []					# valeurs de fitness du robot		
 		self.hostname = None						# hostname
 		self.tags_ids = []
+		self.histo_size = 40
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGen - preActions()")
@@ -59,6 +60,16 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			proc = subprocess.Popen(["hostname"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 			(out, err) = proc.communicate()
 			self.hostname = out.rstrip()
+			proc.wait()
+		
+		# Genome we want to spread
+		if self.hostname=="pi3no08888":
+			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
+			for i in range(len(genes)):
+				genes[i] = float(genes[i])
+		
+			self.genome = Genome.Genome(self.mainLogger, geneValue=genes)
+		
 	
 		self.mainLogger.simu("======================================")
 		self.mainLogger.simu("====== SimulationFollowLightGen ======")
@@ -74,9 +85,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		self.mainLogger.simu("-------------------")
 		self.mainLogger.simu("Start :")
 		
-		self.ls.start()
-
-		time.sleep(5)		
+		self.ls.start()		
 		
 		self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()
@@ -115,6 +124,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			
 			if len(self.genomeList) > 0:
 				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize))
+			else:
+				self.genome = self.applyVariation(self.genome)
 
 			self.genomeList=[]	
 			
@@ -142,11 +153,15 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			
 			tags_info = res[2]
 			tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
-			self.tags_ids = tags_ids
-			self.mainLogger.simu(str(self.tags_ids))
+			self.tags_ids.append(tags_ids)
+			if len(self.tags_ids)>self.histo_size:
+				self.tags_ids.pop(0)
+			#self.mainLogger.simu(str(self.tags_ids))
 		else:
 			self.lightValue, lightLR = (150,1)
-			self.tags_ids = []			
+			self.tags_ids.append([])
+			if len(self.tags_ids)>self.histo_size:
+				self.tags_ids.pop(0)	
 			
 		l.append(lightLR)
 	
@@ -206,19 +221,21 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			try :
 				currRecipientsList = self.hostname
 				recipientsList = Params.params.hostnames
-				recipientsList = recipientsList.split(',')
+				#recipientsList = recipientsList.split(',')
 				idsList = Params.params.ids
 				idsList = idsList.split(',')
-
+				
 				for i in xrange(len(idsList)):
-					if int(idsList[i]) in self.tags_ids:
-						currRecipientsList+=","
-						currRecipientsList+=str(recipientsList[i])
+					for j in self.tags_ids:
+						if int(idsList[i]) in j:
+							currRecipientsList+=","
+							currRecipientsList+=str(recipientsList[i])
+							break
 				
 				myValue = str(fitness)+'$'+str(genome.gene)			
 				
 				#self.mainLogger.simu("broadcast - "+currRecipientsList)
-				self.sendMessage(recipients = currRecipientsList, value = myValue)              
+				self.sendMessage(recipients = recipientsList, value = myValue)              
 			except :
 				self.mainLogger.error('"SimulationFollowLightGen - error in broadcast()' )
 		
@@ -234,6 +251,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		
 		l=list(genes)
 		l.sort()
+		l.reverse()
 		l=l[:k]
 		
 		selectedGene = l[random.randint(0,len(l)-1)][1]
