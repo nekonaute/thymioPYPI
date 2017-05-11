@@ -63,7 +63,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no08888":
+		if self.hostname=="pi3no08":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])
@@ -221,7 +221,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			try :
 				currRecipientsList = self.hostname
 				recipientsList = Params.params.hostnames
-				#recipientsList = recipientsList.split(',')
+				recipientsList = recipientsList.split(',')
 				idsList = Params.params.ids
 				idsList = idsList.split(',')
 				
@@ -235,7 +235,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				myValue = str(fitness)+'$'+str(genome.gene)			
 				
 				#self.mainLogger.simu("broadcast - "+currRecipientsList)
-				self.sendMessage(recipients = recipientsList, value = myValue)              
+				self.sendMessage(recipients = currRecipientsList, value = myValue)              
 			except :
 				self.mainLogger.error('"SimulationFollowLightGen - error in broadcast()' )
 		
@@ -289,8 +289,6 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.mainLogger.error('SimulationFollowLightGen - Receiving message without sender : ' + str(data))	
 		
 		
-		# raspberry 3,8
 		#set config_FollowLightGen.cfg
 		#put rpifiles/experiments/FollowLightGen ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
 		#put rpifiles/experiments/config_FollowLightGen.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
-		#get ~/dev/thymioPYPI/OctoPY/rpifiles/log/MainController.log /home/pi/log
