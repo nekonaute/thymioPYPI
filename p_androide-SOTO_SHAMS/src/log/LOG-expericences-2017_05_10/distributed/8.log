@@ -1,0 +1,869 @@
+2016-12-16 15:05:01,674 - SIMU: ======================================
+2016-12-16 15:05:01,675 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:05:01,675 - SIMU: ======================================
+2016-12-16 15:05:01,675 - SIMU: -------------------
+2016-12-16 15:05:01,676 - SIMU: Parameters :
+2016-12-16 15:05:01,676 - SIMU: duration 24000
+2016-12-16 15:05:01,676 - SIMU: lifetime 60
+2016-12-16 15:05:01,677 - SIMU: sleep 0.1
+2016-12-16 15:05:01,677 - SIMU: windowSize 20
+2016-12-16 15:05:01,677 - SIMU: tournamentSize 5
+2016-12-16 15:05:01,677 - SIMU: sigma 0.1
+2016-12-16 15:05:01,678 - SIMU: -------------------
+2016-12-16 15:05:01,678 - SIMU: Start :
+2016-12-16 15:05:12,069 - SIMU: 1 generation ended 0.0494980544241
+2016-12-16 15:05:23,124 - SIMU: 2 generation ended 0.050477075366
+2016-12-16 15:05:33,376 - SIMU: 3 generation ended 0.050477075366
+2016-12-16 15:05:44,470 - SIMU: 4 generation ended 0.253746523487
+2016-12-16 15:05:55,844 - SIMU: 5 generation ended 0.181307082553
+2016-12-16 15:06:06,989 - SIMU: 6 generation ended 0.231002663366
+2016-12-16 15:06:17,930 - SIMU: 7 generation ended 0.231002663366
+2016-12-16 15:06:27,308 - SIMU: -------------------
+2016-12-16 15:06:27,309 - SIMU: End :
+2016-12-16 15:06:27,310 - SIMU: fitness_champion 0.202605188616
+2016-12-16 15:06:27,313 - SIMU: champion [-0.48661908003874865, -0.19671075707341823, -0.06509904543406506, -0.17145305921500603, 0.7655954610240505, 0.15162694829493306, -0.671191844419453, -0.8729279328859167, 0.8517413485817691, -0.5493644327115036, -0.5916646633899522, -0.9589361507912679, 0.4934757652769409, -0.29799295233494305, 0.15910279656070714, -0.6243233225812254, -0.3457598077082523, 0.07759469172543733]
+2016-12-16 15:06:27,315 - SIMU: ======================================
+2016-12-16 15:07:45,420 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:07:53,598 - DEBUG: MainController - Running.
+2016-12-16 15:07:53,599 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:08:20,942 - DEBUG: CommandsListener - Received command from (192.168.0.210, 45498)
+2016-12-16 15:08:20,943 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:08:20,945 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x192a7d8>
+2016-12-16 15:08:20,946 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:08:20,946 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:08:20,947 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:08:20,968 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:08:20,969 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:08:35,124 - DEBUG: CommandsListener - Received command from (192.168.0.210, 45503)
+2016-12-16 15:08:35,125 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:08:35,126 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x192a0f8>
+2016-12-16 15:08:35,127 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:08:35,127 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:08:35,128 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:08:35,136 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:08:35,137 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:08:35,138 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:08:35,712 - DEBUG: ThymioController - Running.
+2016-12-16 15:08:38,103 - SIMU: ======================================
+2016-12-16 15:08:38,104 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:08:38,105 - SIMU: ======================================
+2016-12-16 15:08:38,106 - SIMU: -------------------
+2016-12-16 15:08:38,106 - SIMU: Parameters :
+2016-12-16 15:08:38,107 - SIMU: duration 24000
+2016-12-16 15:08:38,108 - SIMU: lifetime 60
+2016-12-16 15:08:38,108 - SIMU: sleep 0.1
+2016-12-16 15:08:38,109 - SIMU: windowSize 20
+2016-12-16 15:08:38,110 - SIMU: tournamentSize 5
+2016-12-16 15:08:38,111 - SIMU: sigma 0.1
+2016-12-16 15:08:38,111 - SIMU: -------------------
+2016-12-16 15:08:38,112 - SIMU: Start :
+2016-12-16 15:08:47,995 - SIMU: 1 generation ended 0.130971143232
+2016-12-16 15:08:58,821 - SIMU: 2 generation ended 0.120677674682
+2016-12-16 15:09:09,260 - SIMU: 3 generation ended 0.151425466797
+2016-12-16 15:09:20,540 - SIMU: 4 generation ended 0.126880278519
+2016-12-16 15:09:31,702 - SIMU: 5 generation ended 0.147334602084
+2016-12-16 15:09:42,726 - SIMU: 6 generation ended 0.147334602084
+2016-12-16 15:09:53,941 - SIMU: 7 generation ended 0.135062007945
+2016-12-16 15:10:04,318 - SIMU: 8 generation ended 0.143243737371
+2016-12-16 15:10:15,294 - SIMU: 9 generation ended 0.139152872658
+2016-12-16 15:10:25,836 - SIMU: 10 generation ended 0.135062007945
+2016-12-16 15:10:30,960 - SIMU: -------------------
+2016-12-16 15:10:30,964 - SIMU: End :
+2016-12-16 15:10:30,965 - SIMU: fitness_champion 0.143243737371
+2016-12-16 15:10:30,967 - SIMU: champion [-0.8806420046218801, 0.5967369923145536, -0.04702508980871256, -0.3202762580599048, -0.527868446572743, 0.4167795075947467, 0.3168961794978675, 0.2107936615891881, 0.1210445404923417, 0.1813567401370182, -0.9672362427903791, 0.3199594596444004, 0.7141291177316715, -0.8377698566546459, -0.14472360990611066, 0.05700330339052062, 0.049861400124884714, -0.8803828801597129]
+2016-12-16 15:10:30,969 - SIMU: ======================================
+2016-12-16 15:15:03,446 - SIMU: ======================================
+2016-12-16 15:15:03,447 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:15:03,448 - SIMU: ======================================
+2016-12-16 15:15:03,448 - SIMU: -------------------
+2016-12-16 15:15:03,449 - SIMU: Parameters :
+2016-12-16 15:15:03,450 - SIMU: duration 24000
+2016-12-16 15:15:03,450 - SIMU: lifetime 60
+2016-12-16 15:15:03,451 - SIMU: sleep 0.1
+2016-12-16 15:15:03,452 - SIMU: windowSize 20
+2016-12-16 15:15:03,452 - SIMU: tournamentSize 5
+2016-12-16 15:15:03,453 - SIMU: sigma 0.1
+2016-12-16 15:15:03,454 - SIMU: -------------------
+2016-12-16 15:15:03,455 - SIMU: Start :
+2016-12-16 15:15:13,940 - SIMU: 1 generation ended 0.148431573165
+2016-12-16 15:15:25,204 - SIMU: 2 generation ended 0.15097641419
+2016-12-16 15:15:36,174 - SIMU: 3 generation ended 0.158610937264
+2016-12-16 15:15:47,246 - SIMU: 4 generation ended 0.14588673214
+2016-12-16 15:15:58,095 - SIMU: 5 generation ended 0.153521255214
+2016-12-16 15:16:08,976 - SIMU: 6 generation ended 0.143341891116
+2016-12-16 15:16:19,774 - SIMU: 7 generation ended 0.153521255214
+2016-12-16 15:16:31,086 - SIMU: 8 generation ended 0.15097641419
+2016-12-16 15:16:41,782 - SIMU: 9 generation ended 0.15097641419
+2016-12-16 15:16:52,983 - SIMU: 10 generation ended 0.15097641419
+2016-12-16 15:17:03,702 - SIMU: 11 generation ended 0.133162527017
+2016-12-16 15:17:14,161 - SIMU: 12 generation ended 0.14588673214
+2016-12-16 15:17:25,776 - SIMU: 13 generation ended 0.15097641419
+2016-12-16 15:17:36,165 - SIMU: 14 generation ended 0.14588673214
+2016-12-16 15:17:47,664 - SIMU: 15 generation ended 0.15097641419
+2016-12-16 15:17:59,335 - SIMU: 16 generation ended 0.153521255214
+2016-12-16 15:18:10,113 - SIMU: 17 generation ended 0.153521255214
+2016-12-16 15:18:21,016 - SIMU: 18 generation ended 0.14588673214
+2016-12-16 15:18:31,975 - SIMU: 19 generation ended 0.156066096239
+2016-12-16 15:18:42,823 - SIMU: 20 generation ended 0.0157531432567
+2016-12-16 15:18:53,205 - SIMU: 21 generation ended 0.0503036852007
+2016-12-16 15:19:04,695 - SIMU: 22 generation ended 0.0488813032208
+2016-12-16 15:19:14,642 - SIMU: 23 generation ended 0.0831148526415
+2016-12-16 15:19:24,911 - SIMU: 24 generation ended 0.0979920168004
+2016-12-16 15:19:35,893 - SIMU: 25 generation ended 0.0804937998263
+2016-12-16 15:19:47,307 - SIMU: 26 generation ended 0.00130808929428
+2016-12-16 15:19:49,816 - SIMU: -------------------
+2016-12-16 15:19:49,881 - SIMU: End :
+2016-12-16 15:19:49,882 - SIMU: fitness_champion 0.000921506124471
+2016-12-16 15:19:49,883 - SIMU: champion [0.22320679327608817, 0.6297911570900343, -0.07671998836027649, -0.29873521569780603, 0.9555343420879572, 0.8163075531437414, -0.802854585983616, -0.15857314983466142, 0.10962942904610484, -0.8500063552169199, -0.8688396791095752, 0.6146283613814394, -0.8811157578411857, 0.8101052269959013, 0.642148682767756, 0.9874048091024263, 0.5957542652601946, -0.8126795232338284]
+2016-12-16 15:19:49,884 - SIMU: ======================================
+2016-12-16 15:21:22,916 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:22:35,929 - DEBUG: MainController - Running.
+2016-12-16 15:22:35,930 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:22:40,913 - DEBUG: CommandsListener - Received command from (192.168.0.210, 47212)
+2016-12-16 15:22:40,914 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:22:40,921 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x8ec7d8>
+2016-12-16 15:22:40,922 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:22:40,922 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:22:40,923 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:22:40,931 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:22:40,932 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:22:48,006 - DEBUG: CommandsListener - Received command from (192.168.0.210, 47217)
+2016-12-16 15:22:48,007 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:22:48,008 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x8ec0f8>
+2016-12-16 15:22:48,009 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:22:48,010 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:22:48,011 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:22:48,048 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:22:48,049 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:22:48,050 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:22:48,644 - DEBUG: ThymioController - Running.
+2016-12-16 15:22:51,025 - SIMU: ======================================
+2016-12-16 15:22:51,025 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:22:51,026 - SIMU: ======================================
+2016-12-16 15:22:51,026 - SIMU: -------------------
+2016-12-16 15:22:51,027 - SIMU: Parameters :
+2016-12-16 15:22:51,030 - SIMU: duration 24000
+2016-12-16 15:22:51,031 - SIMU: lifetime 60
+2016-12-16 15:22:51,031 - SIMU: sleep 0.1
+2016-12-16 15:22:51,032 - SIMU: windowSize 20
+2016-12-16 15:22:51,032 - SIMU: tournamentSize 5
+2016-12-16 15:22:51,033 - SIMU: sigma 0.1
+2016-12-16 15:22:51,033 - SIMU: -------------------
+2016-12-16 15:22:51,034 - SIMU: Start :
+2016-12-16 15:23:01,198 - SIMU: 1 generation ended 0.0158677558106
+2016-12-16 15:23:11,986 - SIMU: 2 generation ended 0.0240970985259
+2016-12-16 15:23:22,469 - SIMU: 3 generation ended 0.0357617981811
+2016-12-16 15:23:33,535 - SIMU: 4 generation ended 0.0569961876027
+2016-12-16 15:23:43,738 - SIMU: 5 generation ended 0.0233199257874
+2016-12-16 15:23:53,539 - SIMU: 6 generation ended 0.0610435263087
+2016-12-16 15:24:04,176 - SIMU: 7 generation ended 0.0249992785592
+2016-12-16 15:24:14,460 - SIMU: 8 generation ended 0.0434555697146
+2016-12-16 15:24:24,866 - SIMU: 9 generation ended 0.0721802941937
+2016-12-16 15:24:34,506 - SIMU: 10 generation ended 0.0717679032694
+2016-12-16 15:24:44,406 - SIMU: 11 generation ended 0.0615600465108
+2016-12-16 15:24:54,884 - SIMU: 12 generation ended 0.0353999563906
+2016-12-16 15:25:05,374 - SIMU: 13 generation ended 0.0686276220039
+2016-12-16 15:25:15,625 - SIMU: 14 generation ended 0.0234777521195
+2016-12-16 15:25:25,543 - SIMU: 15 generation ended 0.0149678774451
+2016-12-16 15:25:35,706 - SIMU: 16 generation ended 0.00557480462999
+2016-12-16 15:25:45,913 - SIMU: 17 generation ended 0.00116125432744
+2016-12-16 15:25:56,401 - SIMU: 18 generation ended 0.0383176430311
+2016-12-16 15:26:06,919 - SIMU: 19 generation ended 0.0505665288223
+2016-12-16 15:26:16,785 - SIMU: 20 generation ended 0.0422330914505
+2016-12-16 15:26:27,222 - SIMU: 21 generation ended 0.0683688296254
+2016-12-16 15:26:36,631 - SIMU: 22 generation ended 0.0634078862914
+2016-12-16 15:26:47,239 - SIMU: 23 generation ended 0.0230462295112
+2016-12-16 15:26:57,144 - SIMU: 24 generation ended 0.0144706637003
+2016-12-16 15:27:07,423 - SIMU: 25 generation ended 0.0206169188632
+2016-12-16 15:27:17,914 - SIMU: 26 generation ended 0.0402814594879
+2016-12-16 15:27:22,042 - SIMU: -------------------
+2016-12-16 15:27:22,043 - SIMU: End :
+2016-12-16 15:27:22,044 - SIMU: fitness_champion 0.0420951050891
+2016-12-16 15:27:22,045 - SIMU: champion [0.35735436568472867, 0.1380347052189569, 0.7542037959202986, -0.6941696402472742, 0.3427444918062966, 0.5189406646869079, 1.059442355694574, 0.47548175291496114, 0.4314278161040018, -0.3351961032281145, -0.2166083193656629, 0.055077221718540945, -0.8434169538713222, -1.6872486935775193, -1.4408026937132237, -1.0952622464478976, -1.0147880413498973, -0.16481424277969728]
+2016-12-16 15:27:22,046 - SIMU: ======================================
+2016-12-16 15:30:57,264 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:31:09,613 - DEBUG: MainController - Running.
+2016-12-16 15:31:09,614 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:31:11,335 - DEBUG: CommandsListener - Received command from (192.168.0.210, 50327)
+2016-12-16 15:31:11,336 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:31:11,337 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x148a7d8>
+2016-12-16 15:31:11,337 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:31:11,338 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:31:11,338 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:31:11,379 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:31:11,380 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:31:15,840 - DEBUG: CommandsListener - Received command from (192.168.0.210, 50332)
+2016-12-16 15:31:15,841 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:31:15,842 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x148a0f8>
+2016-12-16 15:31:15,843 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:31:15,843 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:31:15,844 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:31:15,845 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:31:15,846 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:31:15,847 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:31:16,448 - DEBUG: ThymioController - Running.
+2016-12-16 15:31:18,856 - SIMU: ======================================
+2016-12-16 15:31:18,858 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:31:18,859 - SIMU: ======================================
+2016-12-16 15:31:18,859 - SIMU: -------------------
+2016-12-16 15:31:18,860 - SIMU: Parameters :
+2016-12-16 15:31:18,861 - SIMU: duration 24000
+2016-12-16 15:31:18,861 - SIMU: lifetime 60
+2016-12-16 15:31:18,862 - SIMU: sleep 0.1
+2016-12-16 15:31:18,863 - SIMU: windowSize 20
+2016-12-16 15:31:18,864 - SIMU: tournamentSize 5
+2016-12-16 15:31:18,865 - SIMU: sigma 0.1
+2016-12-16 15:31:18,865 - SIMU: -------------------
+2016-12-16 15:31:18,866 - SIMU: Start :
+2016-12-16 15:31:29,912 - SIMU: 1 generation ended 0.503871941024
+2016-12-16 15:31:40,205 - SIMU: 2 generation ended 0.193114699268
+2016-12-16 15:31:49,698 - SIMU: 3 generation ended 0.205871539071
+2016-12-16 15:32:00,158 - SIMU: 4 generation ended 0.263065768131
+2016-12-16 15:32:10,174 - SIMU: 5 generation ended 0.0751379119648
+2016-12-16 15:32:15,893 - SIMU: -------------------
+2016-12-16 15:32:15,895 - SIMU: End :
+2016-12-16 15:32:15,896 - SIMU: fitness_champion 0.155916765802
+2016-12-16 15:32:15,898 - SIMU: champion [0.19292505197722096, 0.2373315778422807, -0.8662458874073646, -0.5739554359994893, -0.43314277807950863, 0.37911896767690867, -0.6105907731890858, -0.12202671545819341, -0.4827742917206827, -0.32035757315639246, 0.13011428247204065, -0.15704659669498777, -0.7308461886944839, 1.004908921164501, -0.33143691661913294, -0.9184654843721632, 0.26423391187725304, -0.030732437499904813]
+2016-12-16 15:32:15,899 - SIMU: ======================================
+2016-12-16 15:35:09,030 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:35:23,412 - DEBUG: MainController - Running.
+2016-12-16 15:35:23,413 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:35:25,600 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51777)
+2016-12-16 15:35:25,601 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:35:25,602 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12aa7d8>
+2016-12-16 15:35:25,603 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:35:25,603 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:35:25,603 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:35:25,628 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:35:25,628 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:35:25,629 - ERROR: MainController - No configuration file named config_FollowLightGen.cf
+2016-12-16 15:35:48,100 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51782)
+2016-12-16 15:35:48,101 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:35:48,102 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12aa0f8>
+2016-12-16 15:35:48,103 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:35:48,103 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:35:48,104 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:35:48,148 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:35:48,149 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:35:54,292 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51787)
+2016-12-16 15:35:54,293 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:35:54,294 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12aac10>
+2016-12-16 15:35:54,294 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:35:54,295 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:35:54,296 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:35:54,314 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:35:54,315 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:35:54,316 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:35:54,914 - DEBUG: ThymioController - Running.
+2016-12-16 15:35:57,293 - SIMU: ======================================
+2016-12-16 15:35:57,294 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:35:57,294 - SIMU: ======================================
+2016-12-16 15:35:57,295 - SIMU: -------------------
+2016-12-16 15:35:57,295 - SIMU: Parameters :
+2016-12-16 15:35:57,295 - SIMU: duration 24000
+2016-12-16 15:35:57,296 - SIMU: lifetime 60
+2016-12-16 15:35:57,296 - SIMU: sleep 0.1
+2016-12-16 15:35:57,297 - SIMU: windowSize 20
+2016-12-16 15:35:57,297 - SIMU: tournamentSize 1
+2016-12-16 15:35:57,297 - SIMU: sigma 0.1
+2016-12-16 15:35:57,298 - SIMU: -------------------
+2016-12-16 15:35:57,298 - SIMU: Start :
+2016-12-16 15:36:08,170 - SIMU: 1 generation ended 0.460725584328
+2016-12-16 15:36:18,353 - SIMU: 2 generation ended 0.0769661091064
+2016-12-16 15:36:28,245 - SIMU: 3 generation ended 0.0218314934192
+2016-12-16 15:36:38,142 - SIMU: -------------------
+2016-12-16 15:36:38,144 - SIMU: End :
+2016-12-16 15:36:38,144 - SIMU: fitness_champion 0.00185280227279
+2016-12-16 15:36:38,146 - SIMU: champion [-0.7507876536303609, -0.7340798773471913, -0.3370518585205784, 0.6455076605103326, 0.18046160696841448, -0.12410780329343896, 0.3282130202625447, -0.0613940461954824, -0.4076898823629273, 0.24648321839293222, -0.10634081067131566, 0.3600285585895898, -0.4195630794454365, 0.1434891571706448, -1.0744638606615822, 0.42473194585710405, 0.25843385394207774, -0.023721115405440803]
+2016-12-16 15:36:38,148 - SIMU: ======================================
+2016-12-16 15:37:49,339 - SIMU: ======================================
+2016-12-16 15:37:49,341 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:37:49,341 - SIMU: ======================================
+2016-12-16 15:37:49,342 - SIMU: -------------------
+2016-12-16 15:37:49,343 - SIMU: Parameters :
+2016-12-16 15:37:49,344 - SIMU: duration 24000
+2016-12-16 15:37:49,345 - SIMU: lifetime 60
+2016-12-16 15:37:49,346 - SIMU: sleep 0.1
+2016-12-16 15:37:49,347 - SIMU: windowSize 20
+2016-12-16 15:37:49,348 - SIMU: tournamentSize 1
+2016-12-16 15:37:49,348 - SIMU: sigma 0.1
+2016-12-16 15:37:49,349 - SIMU: -------------------
+2016-12-16 15:37:49,350 - SIMU: Start :
+2016-12-16 15:38:01,401 - SIMU: 1 generation ended 0.818042424808
+2016-12-16 15:38:12,416 - SIMU: 2 generation ended 0.0530632769984
+2016-12-16 15:38:16,489 - SIMU: -------------------
+2016-12-16 15:38:16,490 - SIMU: End :
+2016-12-16 15:38:16,491 - SIMU: fitness_champion 0.0392471271844
+2016-12-16 15:38:16,494 - SIMU: champion [-0.6243295007071591, -0.5228186095557015, -0.13611742753723113, -0.8401902160845227, -0.49786240591843023, 0.2718893279192136, 0.3991862935093716, 0.6967070511565808, 0.7035400779190545, 0.16762047881774272, 0.7120776046052067, -0.9265336225436663, -0.22899882228125948, -0.6393660690897712, 0.6697107320684033, 0.3779176669017653, 0.23987508008502142, -0.6995447041680639]
+2016-12-16 15:38:16,495 - SIMU: ======================================
+2016-12-16 15:39:25,721 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:39:37,213 - DEBUG: MainController - Running.
+2016-12-16 15:39:37,214 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:39:40,239 - DEBUG: CommandsListener - Received command from (192.168.0.210, 52757)
+2016-12-16 15:39:40,241 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:39:40,244 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x1b767d8>
+2016-12-16 15:39:40,245 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:39:40,246 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:39:40,247 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:39:40,278 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:39:40,279 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:39:42,583 - DEBUG: CommandsListener - Received command from (192.168.0.210, 52762)
+2016-12-16 15:39:42,584 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:39:42,586 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x1b760f8>
+2016-12-16 15:39:42,587 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:39:42,587 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:39:42,588 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:39:42,594 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:39:42,595 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:39:42,596 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:39:43,218 - DEBUG: ThymioController - Running.
+2016-12-16 15:39:45,598 - SIMU: ======================================
+2016-12-16 15:39:45,599 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:39:45,605 - SIMU: ======================================
+2016-12-16 15:39:45,605 - SIMU: -------------------
+2016-12-16 15:39:45,605 - SIMU: Parameters :
+2016-12-16 15:39:45,606 - SIMU: duration 24000
+2016-12-16 15:39:45,606 - SIMU: lifetime 60
+2016-12-16 15:39:45,607 - SIMU: sleep 0.1
+2016-12-16 15:39:45,607 - SIMU: windowSize 20
+2016-12-16 15:39:45,608 - SIMU: tournamentSize 1
+2016-12-16 15:39:45,608 - SIMU: sigma 0.1
+2016-12-16 15:39:45,609 - SIMU: -------------------
+2016-12-16 15:39:45,609 - SIMU: Start :
+2016-12-16 15:39:57,939 - SIMU: 1 generation ended 0.74061721494
+2016-12-16 15:40:10,523 - SIMU: 2 generation ended 0.242151106296
+2016-12-16 15:40:23,591 - SIMU: 3 generation ended 0.366578460686
+2016-12-16 15:40:35,334 - SIMU: 4 generation ended 0.00250862799428
+2016-12-16 15:40:43,018 - SIMU: -------------------
+2016-12-16 15:40:43,019 - SIMU: End :
+2016-12-16 15:40:43,020 - SIMU: fitness_champion 0.0
+2016-12-16 15:40:43,022 - SIMU: champion [-0.4506870994271288, -0.4937573929846173, 0.6286284378598228, 0.9161129747422768, 0.6028566261386493, 0.9855940280592863, 0.2634458764607749, -0.097757560307641, 0.674212476342093, -0.5574472013871301, 0.3747297532950227, -0.4377126975693788, 0.15420756366710886, 1.03497222875047, -0.44419213157127374, 0.08748857620861046, -0.7386457988277116, 0.4804159711964644]
+2016-12-16 15:40:43,024 - SIMU: ======================================
+2016-12-16 15:40:43,119 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:40:43,121 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:40:43,124 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:40:43,129 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:41:32,653 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:41:35,398 - DEBUG: MainController - Running.
+2016-12-16 15:41:35,399 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:41:50,042 - DEBUG: CommandsListener - Received command from (192.168.0.210, 60112)
+2016-12-16 15:41:50,043 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:41:50,045 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xc4a7d8>
+2016-12-16 15:41:50,046 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:41:50,046 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:41:50,048 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:41:50,066 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:41:50,067 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:41:55,385 - DEBUG: CommandsListener - Received command from (192.168.0.210, 60117)
+2016-12-16 15:41:55,386 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:41:55,388 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xc4a0f8>
+2016-12-16 15:41:55,388 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:41:55,389 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:41:55,390 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:41:55,434 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:41:55,435 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:41:55,436 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:41:56,039 - DEBUG: ThymioController - Running.
+2016-12-16 15:41:58,454 - SIMU: ======================================
+2016-12-16 15:41:58,456 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:41:58,456 - SIMU: ======================================
+2016-12-16 15:41:58,457 - SIMU: -------------------
+2016-12-16 15:41:58,458 - SIMU: Parameters :
+2016-12-16 15:41:58,458 - SIMU: duration 24000
+2016-12-16 15:41:58,459 - SIMU: lifetime 60
+2016-12-16 15:41:58,460 - SIMU: sleep 0.1
+2016-12-16 15:41:58,461 - SIMU: windowSize 20
+2016-12-16 15:41:58,462 - SIMU: tournamentSize 1
+2016-12-16 15:41:58,463 - SIMU: sigma 0.0001
+2016-12-16 15:41:58,464 - SIMU: -------------------
+2016-12-16 15:41:58,464 - SIMU: Start :
+2016-12-16 15:42:10,553 - SIMU: 1 generation ended 0.818042424808
+2016-12-16 15:42:23,895 - SIMU: 2 generation ended 0.292133258479
+2016-12-16 15:42:34,337 - SIMU: 3 generation ended 0.00198967880542
+2016-12-16 15:42:45,208 - SIMU: 4 generation ended 0.00102558591494
+2016-12-16 15:42:56,196 - SIMU: 5 generation ended 0.0
+2016-12-16 15:43:05,994 - SIMU: -------------------
+2016-12-16 15:43:05,995 - SIMU: End :
+2016-12-16 15:43:05,996 - SIMU: fitness_champion 0.00105013418052
+2016-12-16 15:43:05,997 - SIMU: champion [-0.7655751260273902, 0.9239682275786076, -0.22925486929867156, -0.1021169724739838, -0.31608809222792844, -0.0974301746712889, 0.7045254669580499, 0.9273644970228904, 0.1242850909276694, 0.7246263418378122, -0.5821337142960166, 0.18577159082066788, -0.7392577579902064, 0.8686155578519188, -0.5957175315316475, 0.2501730348731028, 0.09018219515954971, 0.6503133796319045]
+2016-12-16 15:43:05,998 - SIMU: ======================================
+2016-12-16 15:43:06,104 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:43:06,106 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:43:06,112 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:43:06,118 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:43:06,123 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:49:29,762 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:49:36,537 - DEBUG: MainController - Running.
+2016-12-16 15:49:36,537 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:49:45,080 - DEBUG: CommandsListener - Received command from (192.168.0.210, 40330)
+2016-12-16 15:49:45,081 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:49:45,084 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12057d8>
+2016-12-16 15:49:45,085 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:49:45,085 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:49:45,086 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:49:45,104 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:49:45,105 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:49:52,840 - DEBUG: CommandsListener - Received command from (192.168.0.210, 40335)
+2016-12-16 15:49:52,841 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:49:52,842 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12050f8>
+2016-12-16 15:49:52,843 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:49:52,844 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:49:52,845 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:49:52,872 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:49:52,873 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:49:52,874 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:49:53,461 - DEBUG: ThymioController - Running.
+2016-12-16 15:49:55,842 - SIMU: ======================================
+2016-12-16 15:49:55,843 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:49:55,843 - SIMU: ======================================
+2016-12-16 15:49:55,843 - SIMU: -------------------
+2016-12-16 15:49:55,844 - SIMU: Parameters :
+2016-12-16 15:49:55,844 - SIMU: duration 24000
+2016-12-16 15:49:55,844 - SIMU: lifetime 60
+2016-12-16 15:49:55,845 - SIMU: sleep 0.1
+2016-12-16 15:49:55,845 - SIMU: windowSize 20
+2016-12-16 15:49:55,846 - SIMU: tournamentSize 1
+2016-12-16 15:49:55,846 - SIMU: sigma 0.0001
+2016-12-16 15:49:55,847 - SIMU: -------------------
+2016-12-16 15:49:55,847 - SIMU: Start :
+2016-12-16 15:50:08,201 - SIMU: 1 generation ended 0.84922414119
+2016-12-16 15:50:20,911 - SIMU: -------------------
+2016-12-16 15:50:20,912 - SIMU: End :
+2016-12-16 15:50:20,913 - SIMU: fitness_champion 0.306427702248
+2016-12-16 15:50:20,914 - SIMU: champion [-0.7253333105787735, 3.3987463070735475, -2.858413722085808, 2.5809241319635126, -0.9528094817080709, 1.362640813001766, 3.2928063496816935, 0.6994600670332826, 4.879102728152174, -0.5730574561187235, 0.24743732863538545, 0.7603263865453838, -9.570822595630215, -0.9259000865538453, 2.207296480192947, -2.332129441896492, 0.9082467716746838, 0.6167437593577548]
+2016-12-16 15:50:20,915 - SIMU: ======================================
+2016-12-16 15:50:21,021 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:50:21,024 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:50:21,032 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:50:21,043 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:52:12,432 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:52:15,840 - DEBUG: MainController - Running.
+2016-12-16 15:52:15,842 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:52:30,614 - CRITICAL: Error in main: <class 'socket.error'> - Traceback (most recent call last):
+  File "/home/pi/dev/thymioPYPI/OctoPY/rpifiles/MainController.py", line 395, in <module>
+    controller = MainController()
+  File "/home/pi/dev/thymioPYPI/OctoPY/rpifiles/MainController.py", line 85, in __init__
+    self.__cmdListener = CommandsListener(self)
+  File "/home/pi/dev/thymioPYPI/OctoPY/rpifiles/MainController.py", line 302, in __init__
+    self.__sock.bind((COMMANDS_LISTENER_HOST, COMMANDS_LISTENER_PORT))
+  File "/usr/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 98] Address already in use
+
+2016-12-16 15:52:38,619 - DEBUG: CommandsListener - Received command from (192.168.0.210, 43500)
+2016-12-16 15:52:38,620 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:52:38,623 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12ff7d8>
+2016-12-16 15:52:38,624 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:52:38,625 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:52:38,626 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:52:38,661 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:52:38,662 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:52:44,077 - DEBUG: CommandsListener - Received command from (192.168.0.210, 43505)
+2016-12-16 15:52:44,078 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:52:44,079 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x12ff0f8>
+2016-12-16 15:52:44,080 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:52:44,081 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:52:44,082 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:52:44,129 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:52:44,130 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:52:44,131 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:52:44,730 - DEBUG: ThymioController - Running.
+2016-12-16 15:52:47,111 - SIMU: ======================================
+2016-12-16 15:52:47,112 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:52:47,112 - SIMU: ======================================
+2016-12-16 15:52:47,112 - SIMU: -------------------
+2016-12-16 15:52:47,112 - SIMU: Parameters :
+2016-12-16 15:52:47,113 - SIMU: duration 24000
+2016-12-16 15:52:47,113 - SIMU: lifetime 60
+2016-12-16 15:52:47,113 - SIMU: sleep 0.1
+2016-12-16 15:52:47,114 - SIMU: windowSize 20
+2016-12-16 15:52:47,114 - SIMU: tournamentSize 10
+2016-12-16 15:52:47,114 - SIMU: sigma 0.1
+2016-12-16 15:52:47,115 - SIMU: -------------------
+2016-12-16 15:52:47,115 - SIMU: Start :
+2016-12-16 15:52:58,899 - SIMU: 1 generation ended 0.716451593898
+2016-12-16 15:53:11,527 - SIMU: 2 generation ended 0.74175198341
+2016-12-16 15:53:16,243 - SIMU: -------------------
+2016-12-16 15:53:16,244 - SIMU: End :
+2016-12-16 15:53:16,245 - SIMU: fitness_champion 0.881726401921
+2016-12-16 15:53:16,246 - SIMU: champion [-1.059124001182523, 3.361949924815094, -2.7106039799876975, 2.5379676109445852, -1.1199149632156986, 1.3265784409223775, 3.3757748424173366, 0.708678916215529, 5.080418754955282, -0.8758955987004746, 0.2037170085169543, 0.5441823889539208, -9.912483615581602, -0.8113448241086327, 2.122676040689039, -2.4200283854372335, 1.32307089581789, 0.6799745095320624]
+2016-12-16 15:53:16,247 - SIMU: ======================================
+2016-12-16 15:53:16,349 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:53:16,352 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:53:16,354 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:53:16,356 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:54:02,981 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:54:17,618 - DEBUG: MainController - Running.
+2016-12-16 15:54:17,619 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:54:19,554 - DEBUG: CommandsListener - Received command from (192.168.0.210, 45810)
+2016-12-16 15:54:19,555 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:54:19,564 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x93a7d8>
+2016-12-16 15:54:19,565 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:54:19,565 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:54:19,567 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:54:19,585 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:54:19,585 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:55:13,703 - DEBUG: CommandsListener - Received command from (192.168.0.210, 45815)
+2016-12-16 15:55:13,704 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:55:13,705 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x93a0f8>
+2016-12-16 15:55:13,705 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:55:13,706 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:55:13,707 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:55:13,710 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:55:13,711 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:55:13,711 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:55:16,742 - SIMU: ======================================
+2016-12-16 15:55:16,744 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:55:16,744 - SIMU: ======================================
+2016-12-16 15:55:16,745 - SIMU: -------------------
+2016-12-16 15:55:16,746 - SIMU: Parameters :
+2016-12-16 15:55:16,746 - SIMU: duration 24000
+2016-12-16 15:55:16,747 - SIMU: lifetime 60
+2016-12-16 15:55:16,748 - SIMU: sleep 0.1
+2016-12-16 15:55:16,748 - SIMU: windowSize 20
+2016-12-16 15:55:16,749 - SIMU: tournamentSize 10
+2016-12-16 15:55:16,750 - SIMU: sigma 0.1
+2016-12-16 15:55:16,750 - SIMU: -------------------
+2016-12-16 15:55:16,751 - SIMU: Start :
+2016-12-16 15:55:29,205 - SIMU: 1 generation ended 0.911587573954
+2016-12-16 15:55:41,267 - SIMU: 2 generation ended 0.802451566617
+2016-12-16 15:55:53,699 - SIMU: 3 generation ended 0.792452901436
+2016-12-16 15:56:01,453 - SIMU: -------------------
+2016-12-16 15:56:01,455 - SIMU: End :
+2016-12-16 15:56:01,457 - SIMU: fitness_champion 0.807700939092
+2016-12-16 15:56:01,460 - SIMU: champion [-0.5107462051868665, 3.341154233159707, -2.974881906385844, 2.4966647130041877, -0.968206302854969, 1.4080892736130144, 3.406281311450676, 0.7148653787432464, 4.676130285334599, -0.765345227775506, 0.16115930472778592, 0.9711664927996102, -9.581896764444997, -0.9309230773304026, 2.1398259637115395, -2.3614732440058277, 1.063001371608686, 0.5830574722823532]
+2016-12-16 15:56:01,461 - SIMU: ======================================
+2016-12-16 15:56:01,552 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 15:57:31,634 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 15:57:43,338 - DEBUG: MainController - Running.
+2016-12-16 15:57:43,339 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:57:48,775 - DEBUG: CommandsListener - Received command from (192.168.0.210, 46854)
+2016-12-16 15:57:48,776 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:57:48,779 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x5047d8>
+2016-12-16 15:57:48,780 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 15:57:48,781 - DEBUG: MainController - Command 5 received.
+2016-12-16 15:57:48,781 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:57:48,804 - DEBUG: MainController - Treating command : 5
+2016-12-16 15:57:48,805 - DEBUG: MainController - Setting simulation...
+2016-12-16 15:58:31,368 - DEBUG: CommandsListener - Received command from (192.168.0.210, 46859)
+2016-12-16 15:58:31,369 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 15:58:31,371 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x5040f8>
+2016-12-16 15:58:31,372 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 15:58:31,372 - DEBUG: MainController - Command 0 received.
+2016-12-16 15:58:31,373 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 15:58:31,378 - DEBUG: MainController - Treating command : 0
+2016-12-16 15:58:31,379 - DEBUG: MainController - Loading simulation...
+2016-12-16 15:58:31,380 - DEBUG: Params - Parsing configuration file.
+2016-12-16 15:58:32,013 - DEBUG: ThymioController - Running.
+2016-12-16 15:58:34,425 - SIMU: ======================================
+2016-12-16 15:58:34,426 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 15:58:34,427 - SIMU: ======================================
+2016-12-16 15:58:34,428 - SIMU: -------------------
+2016-12-16 15:58:34,428 - SIMU: Parameters :
+2016-12-16 15:58:34,429 - SIMU: duration 24000
+2016-12-16 15:58:34,430 - SIMU: lifetime 60
+2016-12-16 15:58:34,431 - SIMU: sleep 0.1
+2016-12-16 15:58:34,432 - SIMU: windowSize 20
+2016-12-16 15:58:34,432 - SIMU: tournamentSize 10
+2016-12-16 15:58:34,433 - SIMU: sigma 0.1
+2016-12-16 15:58:34,434 - SIMU: -------------------
+2016-12-16 15:58:34,435 - SIMU: Start :
+2016-12-16 15:58:44,980 - SIMU: 1 generation ended 0.0978078909033
+2016-12-16 15:58:56,783 - SIMU: 2 generation ended 0.403526053272
+2016-12-16 15:59:07,100 - SIMU: 3 generation ended 0.0175346348014
+2016-12-16 15:59:16,885 - SIMU: 4 generation ended 0.00757745189956
+2016-12-16 15:59:26,217 - SIMU: 5 generation ended 0.00101558145729
+2016-12-16 15:59:35,851 - SIMU: 6 generation ended 0.0
+2016-12-16 15:59:46,253 - SIMU: 7 generation ended 0.000755681125982
+2016-12-16 15:59:55,413 - SIMU: 8 generation ended 0.0
+2016-12-16 16:00:05,600 - SIMU: 9 generation ended 0.0
+2016-12-16 16:00:15,934 - SIMU: 10 generation ended 0.0
+2016-12-16 16:00:25,209 - SIMU: 11 generation ended 0.0
+2016-12-16 16:00:34,909 - SIMU: 12 generation ended 0.0
+2016-12-16 16:00:44,273 - SIMU: 13 generation ended 0.0
+2016-12-16 16:00:53,908 - SIMU: 14 generation ended 0.0
+2016-12-16 16:00:56,659 - SIMU: -------------------
+2016-12-16 16:00:56,661 - SIMU: End :
+2016-12-16 16:00:56,662 - SIMU: fitness_champion 0.0
+2016-12-16 16:00:56,664 - SIMU: champion [-0.23565123237520932, 0.16106782845830692, 0.9956525573153411, 0.036407003841455426, 0.5226771606796905, -0.9729657484284712, -0.4580052046974025, 0.013883359179777663, 0.2857664264649292, -0.41836779618468917, 0.7324057285129857, -0.2514389189586206, 0.04133633390157458, 0.5002156290859964, -0.2473430155577482, -0.1554849349804019, 0.05833245534028918, 0.5370914087260454]
+2016-12-16 16:00:56,666 - SIMU: ======================================
+2016-12-16 16:03:34,206 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 16:03:45,128 - DEBUG: MainController - Running.
+2016-12-16 16:03:45,129 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:03:54,349 - DEBUG: CommandsListener - Received command from (192.168.0.210, 47461)
+2016-12-16 16:03:54,350 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:03:54,353 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x20927d8>
+2016-12-16 16:03:54,354 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:03:54,355 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:03:54,356 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:03:54,395 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:03:54,396 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:04:05,229 - DEBUG: CommandsListener - Received command from (192.168.0.210, 47466)
+2016-12-16 16:04:05,230 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:04:05,232 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x20920f8>
+2016-12-16 16:04:05,233 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:04:05,234 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:04:05,234 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:04:05,263 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:04:05,264 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:04:05,265 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:04:05,847 - DEBUG: ThymioController - Running.
+2016-12-16 16:04:08,256 - SIMU: ======================================
+2016-12-16 16:04:08,257 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:04:08,258 - SIMU: ======================================
+2016-12-16 16:04:08,259 - SIMU: -------------------
+2016-12-16 16:04:08,260 - SIMU: Parameters :
+2016-12-16 16:04:08,261 - SIMU: duration 24000
+2016-12-16 16:04:08,262 - SIMU: lifetime 60
+2016-12-16 16:04:08,263 - SIMU: sleep 0.1
+2016-12-16 16:04:08,264 - SIMU: windowSize 20
+2016-12-16 16:04:08,266 - SIMU: tournamentSize 2
+2016-12-16 16:04:08,267 - SIMU: sigma 0.1
+2016-12-16 16:04:08,268 - SIMU: -------------------
+2016-12-16 16:04:08,269 - SIMU: Start :
+2016-12-16 16:04:18,952 - SIMU: 1 generation ended 0.0705755553872
+2016-12-16 16:04:29,918 - SIMU: 2 generation ended 0.035587627914
+2016-12-16 16:04:40,482 - SIMU: 3 generation ended 0.00950334823813
+2016-12-16 16:04:51,470 - SIMU: 4 generation ended 0.0952583895548
+2016-12-16 16:05:02,580 - SIMU: 5 generation ended 0.114667475446
+2016-12-16 16:05:12,712 - SIMU: 6 generation ended 0.135372180657
+2016-12-16 16:05:22,630 - SIMU: 7 generation ended 0.135372180657
+2016-12-16 16:05:33,193 - SIMU: 8 generation ended 0.119843651748
+2016-12-16 16:05:44,109 - SIMU: 9 generation ended 0.125019828051
+2016-12-16 16:05:53,904 - SIMU: 10 generation ended 0.107399628529
+2016-12-16 16:06:03,348 - SIMU: 11 generation ended 0.0859411289528
+2016-12-16 16:06:12,915 - SIMU: 12 generation ended 0.0715659839597
+2016-12-16 16:06:22,823 - SIMU: 13 generation ended 0.0785161726884
+2016-12-16 16:06:33,436 - SIMU: 14 generation ended 0.0695960892788
+2016-12-16 16:06:43,008 - SIMU: 15 generation ended 0.0754758621124
+2016-12-16 16:06:52,529 - SIMU: 16 generation ended 0.0612642524444
+2016-12-16 16:07:02,500 - SIMU: 17 generation ended 0.0808076633231
+2016-12-16 16:07:12,730 - SIMU: 18 generation ended 0.0712234753798
+2016-12-16 16:07:22,687 - SIMU: 19 generation ended 0.0798372471715
+2016-12-16 16:07:32,559 - SIMU: 20 generation ended 0.0799530976596
+2016-12-16 16:07:42,338 - SIMU: 21 generation ended 0.0742400258339
+2016-12-16 16:07:45,251 - SIMU: -------------------
+2016-12-16 16:07:45,252 - SIMU: End :
+2016-12-16 16:07:45,254 - SIMU: fitness_champion 0.073627041777
+2016-12-16 16:07:45,256 - SIMU: champion [1.0060478273445594, 0.161169612558603, -0.8450158656030513, -0.5451736865029424, -0.8318359339960943, 0.6172377522466059, -0.6435922359045321, 0.18811604077657498, 0.04688125063383916, 0.7664184741135591, -0.4616236303560124, -0.055263100510960894, 0.33551954325681915, 0.6194009422935671, 0.0591702747863555, -0.29245765363395515, -0.7640275124689642, 0.34117591857419954]
+2016-12-16 16:07:45,257 - SIMU: ======================================
+2016-12-16 16:07:50,468 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 16:09:26,445 - DEBUG: MainController - Running.
+2016-12-16 16:09:26,445 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:09:28,562 - DEBUG: CommandsListener - Received command from (192.168.0.210, 48509)
+2016-12-16 16:09:28,563 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:09:28,566 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x16d17d8>
+2016-12-16 16:09:28,567 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:09:28,567 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:09:28,568 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:09:28,610 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:09:28,611 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:10:02,356 - DEBUG: CommandsListener - Received command from (192.168.0.210, 48514)
+2016-12-16 16:10:02,357 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:10:02,358 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x16d10f8>
+2016-12-16 16:10:02,359 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:10:02,360 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:10:02,360 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:10:02,383 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:10:02,383 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:10:02,384 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:10:02,960 - DEBUG: ThymioController - Running.
+2016-12-16 16:10:05,341 - SIMU: ======================================
+2016-12-16 16:10:05,341 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:10:05,342 - SIMU: ======================================
+2016-12-16 16:10:05,342 - SIMU: -------------------
+2016-12-16 16:10:05,342 - SIMU: Parameters :
+2016-12-16 16:10:05,343 - SIMU: duration 24000
+2016-12-16 16:10:05,343 - SIMU: lifetime 60
+2016-12-16 16:10:05,343 - SIMU: sleep 0.1
+2016-12-16 16:10:05,344 - SIMU: windowSize 20
+2016-12-16 16:10:05,344 - SIMU: tournamentSize 10
+2016-12-16 16:10:05,344 - SIMU: sigma 0.1
+2016-12-16 16:10:05,345 - SIMU: -------------------
+2016-12-16 16:10:05,345 - SIMU: Start :
+2016-12-16 16:10:14,393 - SIMU: -------------------
+2016-12-16 16:10:14,396 - SIMU: End :
+2016-12-16 16:10:14,397 - SIMU: fitness_champion 0.00461341217306
+2016-12-16 16:10:14,398 - SIMU: champion [0.8028028430711946, -0.23582806877206197, 0.6271189724602149, -0.1393248093904147, 0.02915422053946415, 0.24277032240012208, -0.1480812481999889, 0.2859233847523157, 0.2847795690667627, 0.27901007363619956, -0.4313825334885111, 0.4134090874625589, 0.5321417079139792, 0.8303043548811748, 0.6896670839531347, -0.5513797656517085, -0.8808142878110263, 0.690286157437461]
+2016-12-16 16:10:14,401 - SIMU: ======================================
+2016-12-16 16:10:14,498 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 16:10:50,914 - SIMU: ======================================
+2016-12-16 16:10:50,916 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:10:50,916 - SIMU: ======================================
+2016-12-16 16:10:50,917 - SIMU: -------------------
+2016-12-16 16:10:50,918 - SIMU: Parameters :
+2016-12-16 16:10:50,918 - SIMU: duration 24000
+2016-12-16 16:10:50,919 - SIMU: lifetime 60
+2016-12-16 16:10:50,921 - SIMU: sleep 0.1
+2016-12-16 16:10:50,923 - SIMU: windowSize 20
+2016-12-16 16:10:50,924 - SIMU: tournamentSize 10
+2016-12-16 16:10:50,925 - SIMU: sigma 0.1
+2016-12-16 16:10:50,926 - SIMU: -------------------
+2016-12-16 16:10:50,927 - SIMU: Start :
+2016-12-16 16:11:00,485 - SIMU: 1 generation ended 0.0117249663337
+2016-12-16 16:11:11,243 - SIMU: 2 generation ended 0.37369726308
+2016-12-16 16:11:21,802 - SIMU: 3 generation ended 0.256816111323
+2016-12-16 16:11:33,503 - SIMU: 4 generation ended 0.468749073258
+2016-12-16 16:11:44,805 - SIMU: 5 generation ended 0.342040395742
+2016-12-16 16:11:56,879 - SIMU: 6 generation ended 0.585126851181
+2016-12-16 16:12:09,377 - SIMU: 7 generation ended 0.0246440330432
+2016-12-16 16:12:20,710 - SIMU: 8 generation ended 0.000726018687764
+2016-12-16 16:12:31,931 - SIMU: 9 generation ended 0.000935023362601
+2016-12-16 16:12:43,289 - SIMU: 10 generation ended 0.00120880894982
+2016-12-16 16:12:55,425 - SIMU: 11 generation ended 0.00114095224431
+2016-12-16 16:13:02,657 - SIMU: -------------------
+2016-12-16 16:13:02,658 - SIMU: End :
+2016-12-16 16:13:02,659 - SIMU: fitness_champion 0.00117257808787
+2016-12-16 16:13:02,661 - SIMU: champion [-1.192626225675185, -0.06122817628609596, -0.6605312466361398, 1.218809309225592, -1.2242781558078846, -1.1708599918394205, -0.8845079061500846, 0.34731790827469544, -0.6901182821577146, 0.26816347901082843, -0.20199773001150384, 0.08364315296368532, -0.2442658832627473, -1.7495151791494892, 0.5625064392695065, -0.2792912097546541, -0.08587371479036585, -1.2761072918679939]
+2016-12-16 16:13:02,662 - SIMU: ======================================
+2016-12-16 16:15:53,303 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 16:15:55,831 - DEBUG: MainController - Running.
+2016-12-16 16:15:55,832 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:16:19,890 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51300)
+2016-12-16 16:16:19,891 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:16:19,893 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xa147d8>
+2016-12-16 16:16:19,894 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:16:19,895 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:16:19,895 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:16:19,900 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:16:19,901 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:16:22,114 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51305)
+2016-12-16 16:16:22,115 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:16:22,116 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xa140f8>
+2016-12-16 16:16:22,116 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:16:22,117 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:16:22,118 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:16:22,166 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:16:22,167 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:16:22,168 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:16:22,805 - DEBUG: ThymioController - Running.
+2016-12-16 16:16:25,186 - SIMU: ======================================
+2016-12-16 16:16:25,186 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:16:25,187 - SIMU: ======================================
+2016-12-16 16:16:25,187 - SIMU: -------------------
+2016-12-16 16:16:25,188 - SIMU: Parameters :
+2016-12-16 16:16:25,188 - SIMU: duration 24000
+2016-12-16 16:16:25,188 - SIMU: lifetime 60
+2016-12-16 16:16:25,189 - SIMU: sleep 0.1
+2016-12-16 16:16:25,189 - SIMU: windowSize 20
+2016-12-16 16:16:25,189 - SIMU: tournamentSize 10
+2016-12-16 16:16:25,190 - SIMU: sigma 0.1
+2016-12-16 16:16:25,190 - SIMU: -------------------
+2016-12-16 16:16:25,191 - SIMU: Start :
+2016-12-16 16:16:35,687 - SIMU: 1 generation ended 0.0
+2016-12-16 16:16:36,314 - SIMU: -------------------
+2016-12-16 16:16:36,315 - SIMU: End :
+2016-12-16 16:16:36,316 - SIMU: fitness_champion 0.0
+2016-12-16 16:16:36,317 - SIMU: champion [0.48298921281580476, 0.8522473158578429, -0.4958888299628443, -0.15111441097077177, -0.5088347514801022, 0.11158636330769775, 0.41872116724726804, 0.20856140744487908, 0.20278594038271372, 0.05976907416539594, -0.21016759080497077, -0.5727862350866502, 0.259533923203777, 0.6438583835533948, 1.0154293486081603, -0.8499441314798282, 0.9753353892601813, 0.06065306912261881]
+2016-12-16 16:16:36,317 - SIMU: ======================================
+2016-12-16 16:17:10,602 - SIMU: ======================================
+2016-12-16 16:17:10,603 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:17:10,604 - SIMU: ======================================
+2016-12-16 16:17:10,604 - SIMU: -------------------
+2016-12-16 16:17:10,605 - SIMU: Parameters :
+2016-12-16 16:17:10,606 - SIMU: duration 24000
+2016-12-16 16:17:10,606 - SIMU: lifetime 60
+2016-12-16 16:17:10,607 - SIMU: sleep 0.1
+2016-12-16 16:17:10,608 - SIMU: windowSize 20
+2016-12-16 16:17:10,609 - SIMU: tournamentSize 10
+2016-12-16 16:17:10,610 - SIMU: sigma 0.1
+2016-12-16 16:17:10,610 - SIMU: -------------------
+2016-12-16 16:17:10,612 - SIMU: Start :
+2016-12-16 16:17:21,058 - SIMU: 1 generation ended 0.25128729748
+2016-12-16 16:17:32,749 - SIMU: 2 generation ended 0.550609173666
+2016-12-16 16:17:44,683 - SIMU: 3 generation ended 0.628818567064
+2016-12-16 16:17:55,406 - SIMU: 4 generation ended 0.229732223637
+2016-12-16 16:18:06,855 - SIMU: 5 generation ended 0.00162086510369
+2016-12-16 16:18:17,338 - SIMU: 6 generation ended 0.131928378321
+2016-12-16 16:18:27,132 - SIMU: 7 generation ended 0.247287126792
+2016-12-16 16:18:37,282 - SIMU: 8 generation ended 0.426363422841
+2016-12-16 16:18:50,516 - SIMU: 9 generation ended 0.211196097477
+2016-12-16 16:19:02,279 - SIMU: 10 generation ended 0.551942186254
+2016-12-16 16:19:14,229 - SIMU: 11 generation ended 0.00291236072141
+2016-12-16 16:19:25,884 - SIMU: 12 generation ended 0.0
+2016-12-16 16:19:36,287 - SIMU: 13 generation ended 0.476434328794
+2016-12-16 16:19:47,736 - SIMU: 14 generation ended 0.38650961185
+2016-12-16 16:19:59,136 - SIMU: 15 generation ended 0.436750018776
+2016-12-16 16:20:10,681 - SIMU: 16 generation ended 0.430967981679
+2016-12-16 16:20:22,469 - SIMU: 17 generation ended 0.689575618035
+2016-12-16 16:20:33,783 - SIMU: 18 generation ended 0.284815853016
+2016-12-16 16:20:42,419 - SIMU: -------------------
+2016-12-16 16:20:42,421 - SIMU: End :
+2016-12-16 16:20:42,423 - SIMU: fitness_champion 0.0259731916197
+2016-12-16 16:20:42,425 - SIMU: champion [1.207889171039432, -1.0231385405464974, 0.20123920683090135, 0.5108641440938, -0.9306571353654911, 0.5190135980011635, -0.8746504888044773, -0.3501145356160102, 1.4028297576002555, 0.3846934886476214, -0.0415713615314862, 0.7967120339873619, 0.20449484230812934, 1.5706164507777745, 0.40455121869096317, 1.1994929052103098, 0.0412643421319599, 0.538183708953661]
+2016-12-16 16:20:42,427 - SIMU: ======================================
+2016-12-16 16:21:28,723 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 16:22:59,218 - DEBUG: MainController - Running.
+2016-12-16 16:22:59,219 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:24:11,114 - DEBUG: CommandsListener - Received command from (192.168.0.210, 59385)
+2016-12-16 16:24:11,115 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:24:11,117 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x92f7d8>
+2016-12-16 16:24:11,118 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:24:11,118 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:24:11,119 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:24:11,147 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:24:11,148 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:24:13,087 - DEBUG: CommandsListener - Received command from (192.168.0.210, 59390)
+2016-12-16 16:24:13,088 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:24:13,089 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x92f0f8>
+2016-12-16 16:24:13,090 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:24:13,091 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:24:13,092 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:24:13,114 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:24:13,115 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:24:13,116 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:24:16,135 - SIMU: ======================================
+2016-12-16 16:24:16,136 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:24:16,137 - SIMU: ======================================
+2016-12-16 16:24:16,137 - SIMU: -------------------
+2016-12-16 16:24:16,137 - SIMU: Parameters :
+2016-12-16 16:24:16,138 - SIMU: duration 24000
+2016-12-16 16:24:16,138 - SIMU: lifetime 60
+2016-12-16 16:24:16,138 - SIMU: sleep 0.1
+2016-12-16 16:24:16,139 - SIMU: windowSize 20
+2016-12-16 16:24:16,139 - SIMU: tournamentSize 10
+2016-12-16 16:24:16,139 - SIMU: sigma 0.5
+2016-12-16 16:24:16,140 - SIMU: -------------------
+2016-12-16 16:24:16,140 - SIMU: Start :
+2016-12-16 16:24:26,783 - SIMU: 1 generation ended 0.358750687835
+2016-12-16 16:24:36,883 - SIMU: 2 generation ended 0.253781247402
+2016-12-16 16:19:58,952 - DEBUG: MainController - Running.
+2016-12-16 16:19:58,954 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:19:59,863 - DEBUG: CommandsListener - Received command from (192.168.0.210, 33323)
+2016-12-16 16:19:59,864 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:19:59,867 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xf6b7d8>
+2016-12-16 16:19:59,868 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:19:59,869 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:19:59,870 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:19:59,870 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:19:59,871 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:24:40,723 - DEBUG: CommandsListener - Received command from (192.168.0.210, 33328)
+2016-12-16 16:24:40,724 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:24:40,725 - DEBUG: CommandsListener - Received <Utils.Message instance at 0xf6b0f8>
+2016-12-16 16:24:40,726 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:24:40,727 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:24:40,727 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:24:40,736 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:24:40,737 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:24:40,738 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:24:42,431 - DEBUG: ThymioController - Running.
+2016-12-16 16:24:44,964 - SIMU: ======================================
+2016-12-16 16:24:44,965 - SIMU: ====== SimulationFollowLightGen ======
+2016-12-16 16:24:44,966 - SIMU: ======================================
+2016-12-16 16:24:44,966 - SIMU: -------------------
+2016-12-16 16:24:44,967 - SIMU: Parameters :
+2016-12-16 16:24:44,968 - SIMU: duration 24000
+2016-12-16 16:24:44,968 - SIMU: lifetime 60
+2016-12-16 16:24:44,969 - SIMU: sleep 0.1
+2016-12-16 16:24:44,970 - SIMU: windowSize 20
+2016-12-16 16:24:44,970 - SIMU: tournamentSize 10
+2016-12-16 16:24:44,971 - SIMU: sigma 0.1
+2016-12-16 16:24:44,972 - SIMU: -------------------
+2016-12-16 16:24:44,972 - SIMU: Start :
+2016-12-16 16:24:56,805 - SIMU: 1 generation ended 0.622341128301
+2016-12-16 16:25:08,222 - SIMU: 2 generation ended 0.0665723622201
+2016-12-16 16:25:16,116 - SIMU: -------------------
+2016-12-16 16:25:16,117 - SIMU: End :
+2016-12-16 16:25:16,118 - SIMU: fitness_champion 0.0
+2016-12-16 16:25:16,119 - SIMU: champion [-0.533727542238818, 0.11669197581699317, -0.9886481360565533, -0.22361888080627568, 0.561645941104288, 0.2822829047211805, 0.6934626492196001, 0.12747940351993958, 0.8260428614219074, 0.0056824601835642335, 0.08338215698110249, 0.30806629055389173, -1.2424270291834385, 0.4449417905712487, 0.11289031529116542, -0.41009120584301384, 0.01545163653172138, 1.0324923937681494]
+2016-12-16 16:25:16,120 - SIMU: ======================================
