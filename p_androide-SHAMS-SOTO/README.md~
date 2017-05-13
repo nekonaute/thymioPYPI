@@ -34,6 +34,9 @@ Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées 
 | FollowLightGen | [thymioPYPI / OctoPY / experiments / config_FollowLightGen.cfg][flgc] |
 | ApplyEvolvedGenome | [thymioPYPI / OctoPY / experiments / config_ApplyEvolvedGenome.cfg][aegc] |
 
+| Analyse des résultats |
+| ------ |
+|[thymioPYPI / p_androide-SHAMS-SOTO / src / analyse_log][ar] |
 
 [rapp]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/Rapport-SHAMS-SOTO.pdf>
 [cdc]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/Cahier_charges-SHAMS-SOTO.pdf>
@@ -47,3 +50,5 @@ Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées 
 [flgoc]: <https://github.com/nekonaute/thymioPYPI/blob/master/OctoPY/rpifiles/experiments/config_FollowLightGenOnline.cfg>
 [flgc]: <https://github.com/nekonaute/thymioPYPI/blob/master/OctoPY/rpifiles/experiments/config_FollowLightGen.cfg>
 [aegc]: <https://github.com/nekonaute/thymioPYPI/blob/master/OctoPY/rpifiles/experiments/config_ApplyEvolvedGenome.cfg>
+
+[ar]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/src/analyse_log>
