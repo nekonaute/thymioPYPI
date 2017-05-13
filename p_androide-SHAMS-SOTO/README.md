@@ -20,7 +20,7 @@ UPMC 2017
 
 ## Sources :
 
-Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées aux emplacements où elle doivent être pour s'exécuter. La marche à suivre pour cela est spécfier dans le manuel d'OctoPY.
+Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées aux emplacements où elles doivent être pour s'exécuter. La marche à suivre pour cela est spécfiée dans le manuel.
 
 | Expérience | Dossier correspondant |
 | ------ | ------ |
@@ -40,7 +40,7 @@ Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées 
 
 [rapp]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Rapport-SHAMS-SOTO.pdf>
 [cdc]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Cahier_charges-SHAMS-SOTO.pdf>
-[bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Bibilographie-SHAMS-SOTO.pdf>
+[bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Bibliographie-SHAMS-SOTO.pdf>
 [man]: <https://github.com/nekonaute/thymioPYPI/blob/master/Robocologie_manual.pdf>
 
 [flgo]: <https://github.com/nekonaute/thymioPYPI/tree/master/OctoPY/rpifiles/experiments/FollowLightGenOnline>

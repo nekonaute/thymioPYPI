@@ -38,9 +38,9 @@ Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées 
 | ------ |
 |[thymioPYPI / p_androide-SHAMS-SOTO / src / analyse_log][ar] |
 
-[rapp]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/Rapport-SHAMS-SOTO.pdf>
-[cdc]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/Cahier_charges-SHAMS-SOTO.pdf>
-[bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/Bibilographie-SHAMS-SOTO.pdf>
+[rapp]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Rapport-SHAMS-SOTO.pdf>
+[cdc]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Cahier_charges-SHAMS-SOTO.pdf>
+[bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/Bibliographie-SHAMS-SOTO.pdf>
 [man]: <https://github.com/nekonaute/thymioPYPI/blob/master/Robocologie_manual.pdf>
 
 [flgo]: <https://github.com/nekonaute/thymioPYPI/tree/master/OctoPY/rpifiles/experiments/FollowLightGenOnline>
@@ -51,4 +51,4 @@ Nos sources étant uniquement exécutables via OctoPY, nous les avons laissées 
 [flgc]: <https://github.com/nekonaute/thymioPYPI/blob/master/OctoPY/rpifiles/experiments/config_FollowLightGen.cfg>
 [aegc]: <https://github.com/nekonaute/thymioPYPI/blob/master/OctoPY/rpifiles/experiments/config_ApplyEvolvedGenome.cfg>
 
-[ar]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SOTO_SHAMS/src/analyse_log>
+[ar]: <https://github.com/nekonaute/thymioPYPI/blob/master/p_androide-SHAMS-SOTO/src/analyse_log>
