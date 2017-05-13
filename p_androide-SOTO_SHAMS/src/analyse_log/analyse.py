@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import matplotlib.pyplot as plt
-import math
 
 
 """
@@ -14,7 +13,7 @@ Encadrant : Nicolas Bredeche
 Analyse des résultats de la simulation FollowLightGenOnline et FollowLightGen
 """
 
-
+save = False
 num_robot = [3,11]
 
 # ============ courbe de fitness pour FollowLightGenOnline (typical run)
@@ -67,7 +66,8 @@ for robot in num_robot:
 	plt.ylabel('fitness')
 	plt.xticks(range(0,nb_gen+1,5), range(0,nb_gen+1,5))
 	plt.legend(loc='best')
-	#plt.savefig('runOnRPI'+str(robot)+'-online.png')
+	if save:
+		plt.savefig('runOnRPI'+str(robot)+'-online.png')
 	plt.show()
 	
 # ============ courbe de fitness pour FollowLightGen avec broadcast et leader
@@ -121,7 +121,7 @@ for l in data_gene:
 
 x = range(1,4)
 
-plt.plot(x,data_leader,label="leader",color="red")	
+#plt.plot(x,data_leader,label="leader",color="red")	
 
 plt.boxplot(data_gene)	
 plt.plot(x,means,label="moyenne",color="green")
@@ -131,7 +131,8 @@ plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.xticks(x,x)
 plt.legend(loc='best')
-#plt.savefig('broadcast_leader-distributed.png')
+if save:
+	plt.savefig('broadcast_leader-distributed.png')
 plt.show()
 
 # ============ courbe de fitness pour FollowLightGen avec neighbors et leader
@@ -169,8 +170,7 @@ for i in range(18):
 		if j != num_robot.index(8):
 			data_gene[i].append(data_others[j][i])
 
-data_gene.reverse()
-data_leader.reverse()
+data_leader = data_leader[:18]
 
 # moyennes
 means = []
@@ -184,17 +184,25 @@ for l in data_gene:
 data_gene = data_gene[:]
 
 x = range(1,len(data_gene)+1)
+print len(data_leader)
+print len(x)
 
 plt.boxplot(data_gene)	
 plt.plot(x,data_leader,label="leader",color="red")
 plt.plot(x,means,label="moyenne",color="green")
+
+"""
+for i in range(len(data_gene)):
+	plt.scatter([i+1]*len(data_gene[i]),data_gene[i],color="black")
+"""
 
 plt.title('')
 plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
 plt.xticks(x,x)
-#plt.savefig('neighbors_no_leader-distributed.png')
+if save:
+	plt.savefig('neighbors_leader-distributed.png')
 plt.show()
 
 # ============ courbe de fitness pour FollowLightGen avec neighbors et sans leader
@@ -252,5 +260,6 @@ plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
 plt.xticks(x,x)
-#plt.savefig('neighbors_no_leader-distributed.png')
+if save:
+	plt.savefig('neighbors_no_leader-distributed.png')
 plt.show()
