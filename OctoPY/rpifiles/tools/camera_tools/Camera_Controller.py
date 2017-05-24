@@ -28,7 +28,7 @@ class Camera_Controller(threading.Thread):
         self.processing_buffer_lock = threading.Lock()
 
     def load_camera_settings(self,camera_settings):
-        self.aexposure = camera_settings['aexposure']
+        self.exposure_mode = camera_settings['exposure_mode']
         self.awb = camera_settings['awb']
         self.awb_gains = camera_settings['awb_gains']
         self.resolution = camera_settings['resolution']
@@ -41,13 +41,16 @@ class Camera_Controller(threading.Thread):
         self.camera = PiCamera()
         # wait for camera to heat up sensors
         time.sleep(2)
+        # default awb on
         if not self.awb:
-            # default on
-            self.camera.awb_mode = "off"
+            self.camera.awb_mode = 'off'
             self.camera.awb_gains = self.awb_gains
-        if not self.aexposure:
-            #self.camera.shutter_speed = self.camera.exposure_speed
-            self.camera.exposure_mode = "sports" #'off'
+        # default exposure_mode on
+        if self.exposure_mode == 'off':
+            self.camera.exposure_mode = 'off'
+            self.camera.shutter_speed = self.camera.exposure_speed
+        if self.exposure_mode == 'motion':
+            self.camera.exposure_mode = 'sports'
         self.camera.resolution = self.resolution
         self.camera.framerate = self.framerate
 
@@ -64,7 +67,6 @@ class Camera_Controller(threading.Thread):
             if not self.running:
                 break
             with self.processing_buffer_lock:
-                #print "captured image"
                 self.processing_buffer = frame.array.copy() # keep a copy
             self.image_buffer.seek(0)
             self.image_buffer.truncate()

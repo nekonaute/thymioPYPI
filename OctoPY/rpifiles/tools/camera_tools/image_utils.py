@@ -32,6 +32,20 @@ def show_image(image,window='image',still=True,fps=25.):
     cv2.destroyAllWindows()
     #cv2.waitKey(int((1/fps)*1000)) # in ms
 
+def automatic_canny(gray_image):
+    """
+        Use Canny edge detction algorythm
+    """
+    y,x = gray_image.shape
+    win_frac = 3
+    l_image = gray_image[y/win_frac:y-(y/win_frac),(x/win_frac):x/(win_frac-1)-((x/win_frac))]
+    r_image = gray_image[y/win_frac:y-(y/win_frac),x/(win_frac-1)-(x/win_frac):x-(x/win_frac)]
+    v = (np.mean(l_image) + np.mean(r_image))/2.
+    lower = int(max(0, (1.0 - sigma) * v))
+    upper = int(min(255, (1.0 + sigma) * v))
+    edge_image = cv2.Canny(gray_image, lower, upper)
+    return edge_image
+
 def read_image(path):
     """
     load as UNIT8 image

@@ -38,7 +38,7 @@ class Detector():
         shutdown()
             - shutdown the camera module and frame stram.
 
-        set_preprocessing_function(preprocessing_function)
+        set_pre_processing_function(preprocessing_function)
             - set the user defined preprocessing_function.
 
         get_results() -> (newresults, results)
@@ -55,12 +55,16 @@ class Detector():
     """
     def __init__(self):
         self.image_processor = Image_Processor()
+        self.image_processor.set_pre_processing_function(self.pre_processing_function)
         self.image_processor.set_post_processing_function(self.post_processing_function)
 
-    def set_preprocessing_function(self,preprocessing_function):
-        self.image_processor.set_preprocessing_function(preprocessing_function)
+    def set_pre_processing_function(self,pre_processing_function):
+        self.image_processor.set_pre_processing_function(pre_processing_function)
 
-    def post_processing_function(self,preprocessing_output):
+    def pre_processing_function(self,pre_processing_input):
+        return pre_processing_input
+
+    def post_processing_function(self,pre_processing_output):
         """
             This method must implement the operations to be applyed to the
             preprocessing output resutls.
@@ -83,7 +87,7 @@ class Image_Processor(threading.Thread):
         self.camera_controller = Camera_Controller()
         self.initialize_results()
         self.initialize_locks()
-        self.set_preprocessing_function()
+        self.set_pre_processing_function()
         self.set_post_processing_function()
 
     def initialize_results(self):
@@ -97,7 +101,7 @@ class Image_Processor(threading.Thread):
         self.running = False
         self.camera_controller.shutdown()
 
-    def set_preprocessing_function(self,pre_processing=lambda x:x):
+    def set_pre_processing_function(self,pre_processing=lambda x:x):
         self.pre_processing = pre_processing
         self.pre_result = None
 

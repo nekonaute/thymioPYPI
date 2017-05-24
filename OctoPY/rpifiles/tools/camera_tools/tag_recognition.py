@@ -83,8 +83,8 @@ def estimate_distance(rect,actual_side_size=2,frame_h=1080,v_aov=41.,eps=10e-3):
     # tag values are in cm
     # plus approximating the arc with a segment leads to different values
     # after taking measures the problem is resolved "empirically"
-    rect_coeff = 14.1785
-    return actual_side_size/float(projected_angle)*rect_coeff
+    rect_coeff_mul = 27.4785
+    return (actual_side_size/float(projected_angle))*rect_coeff_mul
 
 def identify_tag_id(tag_image,tiles_x=3,tiles_y=3):
     """
@@ -211,14 +211,15 @@ def detect_tags(gray_image, ar, actual_side_size=2, sigma=0.3):
 
 # using kernprof -v -l for profiling
 # @profile
-def edge_detection(gray_image, sigma=0.3):
+def edge_detection(gray_image, sigma=0.6):
     """
         Use Canny edge detction algorythm
     """
     # compute the mean of image
     y,x = gray_image.shape
-    l_image = gray_image[y/3:y-(y/3),(x/3):x/2-((x/3))]
-    r_image = gray_image[y/3:y-(y/3),x/2-(x/3):x-(x/3)]
+    win_frac = 3
+    l_image = gray_image[y/win_frac:y-(y/win_frac),(x/win_frac):x/(win_frac-1)-((x/win_frac))]
+    r_image = gray_image[y/win_frac:y-(y/win_frac),x/(win_frac-1)-(x/win_frac):x-(x/win_frac)]
     v = (np.mean(l_image) + np.mean(r_image))/2.
     lower = int(max(0, (1.0 - sigma) * v))
     upper = int(min(255, (1.0 + sigma) * v))
@@ -235,7 +236,7 @@ def is_tag_cnt(cnt_p, cnt_c, ar, sigma, eps):
 
 # using kernprof -v -l for profiling
 # @profile
-def find_tags_contours(edge_image, ar, sigma=0.3, eps=20):
+def find_tags_contours(edge_image, ar, sigma=0.6, eps=20):
     """
     Tag Robust detection is achieved by creating a series of tests
     There are 5 layers of countours for each tag. Tag info is stored in the
