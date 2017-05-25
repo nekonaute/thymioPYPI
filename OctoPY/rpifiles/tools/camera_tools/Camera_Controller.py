@@ -19,7 +19,7 @@ class Camera_Controller(threading.Thread):
         self.initialize_locks()
 
     def killCam(self):
-		self.camera.close()
+	self.camera.close()
 
     def shutdown(self):
         self.running = False
