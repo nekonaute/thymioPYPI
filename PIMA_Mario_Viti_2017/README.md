@@ -14,7 +14,7 @@ UPMC 2017
 | Document | Files |
 | ------ | ------ |
 | Bibliography | [thymioPYPI / PIMA_Mario_Viti_2017 / Carnet_de_bord_master_1_informatique_Mario_Viti.pdf][bibli] |
-| User manual | [thymioPYPI / Robocologie_manual.pdf][man] |
+| User manual Section V | [thymioPYPI / Robocologie_manual.pdf][man] |
 
 ## Source Code :
 
