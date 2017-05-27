@@ -1,8 +1,8 @@
 
-# Projcet P-IMA : 
+# Projcet P-IMA :
 
 ## Informations :
-Teacher : 
+Teacher :
 - Nicolas Bredeche
 
 Student :
@@ -28,8 +28,10 @@ UPMC 2017
 
 | Validation and measurement |
 | ------ |
-|[thymioPYPI / PIMA_Mario_Viti_2017 / validation ][val] |
-|[thymioPYPI / PIMA_Mario_Viti_2017 / validation / validations.ipynb][valnb] |
+|  validation | [thymioPYPI / PIMA_Mario_Viti_2017 / validation ][val] |
+|  validation notebook | [thymioPYPI / PIMA_Mario_Viti_2017 / validation / validations.ipynb][valnb] |
+|  tracking evaluation | [thymioPYPI / PIMA_Mario_Viti_2017 / track_evaluation ][trkval] |
+|  tracking evaluation notebook | [thymioPYPI / PIMA_Mario_Viti_2017 / track_evaluation / track_eval.ipynb ][trkvalnb] |
 
 [bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/Carnet%20de%20bord_master_1_informatique_Mario_Viti.pdf>
 [man]: <https://github.com/nekonaute/thymioPYPI/blob/master/Robocologie_manual.pdf>
@@ -38,3 +40,6 @@ UPMC 2017
 [fltg]: <https://github.com/nekonaute/thymioPYPI/tree/master/OctoPY/rpifiles/experiments/FollowTAG>
 [val]: <https://github.com/nekonaute/thymioPYPI/tree/master/PIMA_Mario_Viti_2017/validation>
 [valnb]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/validation/validations.ipynb>
+
+[trkval]: <https://github.com/nekonaute/thymioPYPI/tree/master/PIMA_Mario_Viti_2017/track_evaluation>
+[trkvalnb]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/track_evaluation/track_eval.ipynb>
