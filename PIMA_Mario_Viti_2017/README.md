@@ -13,6 +13,7 @@ UPMC 2017
 ## Resume :
 | Document | Files |
 | ------ | ------ |
+| report | [thymioPYPI / PIMA_Mario_Viti_2017 / PIMA_2017.pdf][rep] |
 | Bibliography | [thymioPYPI / PIMA_Mario_Viti_2017 / Carnet_de_bord_master_1_informatique_Mario_Viti.pdf][bibli] |
 | User manual: Sec. V | [thymioPYPI / Robocologie_manual.pdf][man] |
 
@@ -33,6 +34,7 @@ UPMC 2017
 |  tracking evaluation | [thymioPYPI / PIMA_Mario_Viti_2017 / track_evaluation ][trkval] |
 |  tracking evaluation notebook | [thymioPYPI / PIMA_Mario_Viti_2017 / track_evaluation / track_eval.ipynb ][trkvalnb] |
 
+[rep]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/PIMA2017.pdf>
 [bibli]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/Carnet%20de%20bord_master_1_informatique_Mario_Viti.pdf>
 [man]: <https://github.com/nekonaute/thymioPYPI/blob/master/Robocologie_manual.pdf>
 [cam_tool]: <https://github.com/nekonaute/thymioPYPI/tree/master/OctoPY/rpifiles/tools/camera_tools>
@@ -43,3 +45,4 @@ UPMC 2017
 
 [trkval]: <https://github.com/nekonaute/thymioPYPI/tree/master/PIMA_Mario_Viti_2017/track_evaluation>
 [trkvalnb]: <https://github.com/nekonaute/thymioPYPI/blob/master/PIMA_Mario_Viti_2017/track_evaluation/track_eval.ipynb>
+
