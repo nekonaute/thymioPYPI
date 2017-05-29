@@ -20,7 +20,7 @@ RUNNING = True
 TESTING = False
 VALIDATION = False
 TRACKING_EVAL = False
-motion_EVAL = True
+motion_EVAL = False
 
 from Image_Processor import Detector
 import settings
