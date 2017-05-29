@@ -17,7 +17,7 @@ class Tag_Detector(Detector):
         self.color_image = None
         self.set_pre_processing_function(image_utils.convert_to_HSV)
         self.count_curr_frame = 0
-        self.frame_buffer_size = 2
+        self.frame_buffer_size = 3
         self.positions = {}
 
     def post_processing_function(self,image):

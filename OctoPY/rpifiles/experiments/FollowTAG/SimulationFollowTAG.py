@@ -7,10 +7,9 @@ import time
 import numpy as np
 import cv2
 
-from camera_tools import Tag_Detector, tag_recognition
-from camera_tools import settings
-from camera_tools.tag_recognition import CNT,IDS,DST,ROT
-
+from tools.camera_tools import Tag_Detector, tag_recognition
+from tools.camera_tools import settings
+from tools.camera_tools.tag_recognition import CNT,IDS,DST,ROT
 
 class SimulationFollowTAG(Simulation.Simulation) :
 	"""
@@ -40,19 +39,19 @@ class SimulationFollowTAG(Simulation.Simulation) :
 
 	def go_left(self):
 		self.mainLogger.debug('SimulationFollowTAG - go_left')
-		l_r_motor = [125.0, 250.0]
+		l_r_motor = [105.0, 300.0]
 		self.tController.writeMotorsSpeedRequest(l_r_motor)
 		#self.waitForControllerResponse()
 
 	def go_right(self):
 		self.mainLogger.debug('SimulationFollowTAG - go_right')
-		l_r_motor = [250.0, 125.0]
+		l_r_motor = [300.0, 105.0]
 		self.tController.writeMotorsSpeedRequest(l_r_motor)
 		#self.waitForControllerResponse()
 
 	def go_slow(self):
 		self.mainLogger.debug('SimulationFollowTAG - stop')
-		l_r_motor = [70.0, 70.0]
+		l_r_motor = [150.0, 150.0]
 		self.tController.writeMotorsSpeedRequest(l_r_motor)
 		#self.waitForControllerResponse()
 

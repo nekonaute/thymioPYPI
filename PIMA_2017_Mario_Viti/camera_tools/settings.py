@@ -40,5 +40,5 @@ camera_settings = {
     # motion: motion setting minimize motion blur buy augmenting shutter speed;
     # off: sets exposure time to shutter speed depending on the framerate;
     # on: autoexposure;
-    'exposure_mode' : 'motion' #'motion' , #'off', #'on'
+    'exposure_mode' : 'motion' , #'off', #'on'
 }

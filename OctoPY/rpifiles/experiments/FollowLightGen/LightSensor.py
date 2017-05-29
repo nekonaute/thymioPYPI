@@ -34,7 +34,7 @@ class LightAndTagSensor(Detector):
 		self.tag_results = None
 		self.perf_time = None
 		self.color_image = None
-		self.set_preprocessing_function(image_utils.convert_to_HSV)
+		self.set_pre_processing_function(image_utils.convert_to_HSV)
 		self.count_curr_frame = 0
 		self.frame_buffer_size = 3
 		self.mainLogger=mainLogger

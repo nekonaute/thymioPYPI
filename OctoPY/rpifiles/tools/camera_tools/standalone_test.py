@@ -20,6 +20,7 @@ RUNNING = True
 TESTING = False
 VALIDATION = False
 TRACKING_EVAL = False
+motion_EVAL = True
 
 from Image_Processor import Detector
 import settings
@@ -111,8 +112,12 @@ if __name__ == '__main__':
     while(RUNNING):
         newresults, tags_info = tag_detection_experiment.get_results()
         tags_contours, tags_ids, tags_distances, tags_rotations = tags_info
-
+        if newresults and len(tags_contours)==0:
+            if motion_EVAL:
+                validation.update_motion_eval(0)
         if newresults and len(tags_contours)>0:
+            if motion_EVAL:
+                validation.update_motion_eval(1)
             if VALIDATION:
                 validation.update(tags_ids,tags_distances)
             message = 'distances: ' + `tags_distances`
@@ -131,8 +136,11 @@ if __name__ == '__main__':
 
         # CTRL-Z
         if TESTING:
+            print np.max(tag_detection_experiment.prec_frame), np.min(tag_detection_experiment.prec_frame)
             TESTING = False
             print "press any key to close window."
+            if motion_EVAL:
+                print validation.eval_cont()
             if TRACKING_EVAL:
                 if not tag_detection_experiment.overlapp_image == None:
                     #image_utils.show_image(tag_detection_experiment.overlapp_image)
@@ -148,6 +156,8 @@ if __name__ == '__main__':
             rgb_image = image_utils.draw_contours(rgb_image,tags_contours)
             image_utils.show_image(rgb_image)
     tag_detection_experiment.shutdown()
+    if motion_EVAL:
+        validation.save_motion_eval()
     if TRACKING_EVAL:
         validation.save_track_eval()
     if VALIDATION:
