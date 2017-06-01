@@ -292,3 +292,4 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		#set config_FollowLightGen.cfg
 		#put rpifiles/experiments/FollowLightGen ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
 		#put rpifiles/experiments/config_FollowLightGen.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
+		#put /home/pi/thymioPYPI/OctoPY/rpifiles/ThymioController.py ~/dev/thymioPYPI/OctoPY/rpifiles/ThymioController.py

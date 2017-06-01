@@ -50,6 +50,8 @@ class ThymioController(threading.Thread):
 		self.__color = [0,0,0]
 		self.__sound = [0,0]
 		
+		self.blbl = '-1'
+		
 		self.__newValue = {"PSValues":False, "GroundSensorsValues":False, "MotorSpeed":False, "AccValues":False}
 
 		# Init the main loop
@@ -60,16 +62,20 @@ class ThymioController(threading.Thread):
 		asebaNetworkObject = bus.get_object('ch.epfl.mobots.Aseba', '/')
 		self.__asebaNetwork = dbus.Interface(asebaNetworkObject, dbus_interface='ch.epfl.mobots.AsebaNetwork')
 		# Load the aesl file
+		self.blbl = '1'
 		self.__asebaNetwork.LoadScripts(AESL_PATH, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
+		self.__mainLogger.critical(self.__asebaNetwork.GetNodesList())
 		# Schedules first run of the controller
 		glib.idle_add(self.__execute)
 	
 	def __dbusError(self, e):
 		# there was an error on D-Bus, stop loop
-		self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-		self.__mainLogger.critical('dbus error: %s' % str(e) + "\nNow sleeping for 1 second and retrying...")
-		time.sleep(1)
-		raise Exception("dbus error")
+		if self.blbl=='1' or True:	
+			self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+			self.__mainLogger.critical('dbus error: %s' % str(e) + "\nNow sleeping for 1 second and retrying... "+self.blbl)
+			time.sleep(1)
+		self.__mainLogger.critical(self.blbl)
+		#raise Exception("dbus error")
 
 	def __dbusEventReply(self):
 		# correct replay on D-Bus, ignore
@@ -79,6 +85,7 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
+				self.blbl = '2'
 				self.__asebaNetwork.SendEventName(eventName, params, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 				ok = True
 			except:
@@ -88,6 +95,7 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
+				self.blbl = '3'
 				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError)
 				ok = True
 			except:
