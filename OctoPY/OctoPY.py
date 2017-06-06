@@ -134,6 +134,7 @@ class OctoPY() :
 	def lookUp(self, rangeArg, getHostname) :
 		try :
 			self.__logger.info("lookUp - executing nmap")
+			self.__logger.info(str(paramiko.__version__))
 
 			# Popen calls the nmap command in the range specified by rangeArg
 			proc = subprocess.Popen(["nmap", "-sn", rangeArg], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -171,7 +172,7 @@ class OctoPY() :
 
 			if getHostname :
 				self.__logger.info("lookUp - Gathering thymios' hostnames")
-
+				
 				self.__hashThymiosHostnames = {}
 
 				# We query each thymio for its hostname
@@ -184,9 +185,11 @@ class OctoPY() :
 
 					# We don't want to be bothered with paramiko logging unless it's critical
 					paramikoLogger = logging.getLogger('paramiko')
-					paramikoLogger.setLevel('CRITICAL')
+					self.__logger.info(str(IP))
+					#paramikoLogger.setLevel('CRITICAL')
 
 					# Connection on the raspberry
+					self.__logger.info(str(IP))
 					ssh.connect(str(IP), username = PIUSERNAME, password = PIPASSWORD)
 
 					# Executing command hostname
