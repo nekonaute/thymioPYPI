@@ -163,3 +163,5 @@ if __name__ == '__main__':
     if VALIDATION:
         validation.save_stats()
     print "good bye."
+				
+#put /home/pi/thymioPYPI/OctoPY/rpifiles/tools/camera_tools/standalone_test.py ~/dev/thymioPYPI/OctoPY/rpifiles/tools/camera_tools/

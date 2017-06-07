@@ -53,6 +53,7 @@ class Camera_Controller(threading.Thread):
             self.camera.exposure_mode = 'sports'
         self.camera.resolution = self.resolution
         self.camera.framerate = self.framerate
+        
 
     def initialize_image_buffer(self):
         self.image_buffer = PiRGBArray(self.camera,size=self.frame_resize_resolution)

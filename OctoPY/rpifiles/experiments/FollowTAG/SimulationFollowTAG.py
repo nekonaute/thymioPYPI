@@ -92,8 +92,8 @@ class SimulationFollowTAG(Simulation.Simulation) :
 	set config_FollowTAG.cfg
 	
 	To copy experiments to thymios:
-	put ~/thymioPYPI/OctoPY/rpifiles/config_FollowTAG.cfg ~/dev/thymioPYPI/OctoPY/rpifiles	
-	put ~/thymioPYPI/OctoPY/rpifiles/FollowTAG ~/dev/thymioPYPI/OctoPY/rpifiles
+	put ~/thymioPYPI/OctoPY/rpifiles/experiments/config_FollowTAG.cfg ~/dev/thymioPYPI/OctoPY/rpifiles/experiments	
+	put ~/thymioPYPI/OctoPY/rpifiles/experiments/FollowTAG ~/dev/thymioPYPI/OctoPY/rpifiles/experiments
 	
 	To update thymios:
 	put ~/thymioPYPI/OctoPY/rpifiles/MainController.py ~/dev/thymioPYPI/OctoPY/rpifiles

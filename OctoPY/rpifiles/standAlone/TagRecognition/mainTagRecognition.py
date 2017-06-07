@@ -31,7 +31,7 @@ class MainTagRecognition :
 		time.sleep(3)
 
 	def searchTags(self) :
-		frame = self.camera.capture(self.rawCapture, format="bgr", use_video_port=True):
+		frame = self.camera.capture(self.rawCapture, format="bgr", use_video_port=True)
 
 		# grab the raw NumPy array representing the image, then initialize the timestamp
 		# and occupied/unoccupied text
@@ -50,7 +50,7 @@ class MainTagRecognition :
 			self.log("****** Brightness changed : {} ******".format(self.camera.brightness))
 
 		# tests on image
-		# Return the list of tuples with 
+		# Return the list of tuples with 
 		# (robot's number, robot's orientation string, robot's orientation angle, robot's distance, robot's direction from me)
 		results = tg.found_tag_img(image, demo = self.demo, save=self.save)
 
