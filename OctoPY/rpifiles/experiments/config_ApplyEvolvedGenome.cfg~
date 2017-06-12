@@ -27,7 +27,7 @@ int resolution_Y = 300
 int brightness = 60
 
 
-#
+# attente entre 2 itérations
 float wait = 0.1
 
 # Genome we want to apply

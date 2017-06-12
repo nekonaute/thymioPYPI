@@ -63,7 +63,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no07" or self.hostname=="pi3no06":
+		if self.hostname=="pi3no04":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])
@@ -156,7 +156,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			self.tags_ids.append(tags_ids)
 			if len(self.tags_ids)>self.histo_size:
 				self.tags_ids.pop(0)
-			self.mainLogger.simu(str(self.tags_ids))
+			#self.mainLogger.simu(str(self.tags_ids))
 		else:
 			self.lightValue, lightLR = (150,1)
 			self.tags_ids.append([])
@@ -221,7 +221,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			try :
 				currRecipientsList = self.hostname
 				recipientsList = Params.params.hostnames
-				recipientsList = recipientsList.split(',')
+				#recipientsList = recipientsList.split(',')
 				idsList = Params.params.ids
 				idsList = idsList.split(',')
 				
@@ -235,7 +235,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				myValue = str(fitness)+'$'+str(genome.gene)			
 				
 				#self.mainLogger.simu("broadcast - "+currRecipientsList)
-				self.sendMessage(recipients = currRecipientsList, value = myValue)              
+				#self.sendMessage(recipients = currRecipientsList, value = myValue)    
+				self.sendMessage(recipients = recipientsList, value = myValue)          
 			except :
 				self.mainLogger.error('"SimulationFollowLightGen - error in broadcast()' )
 		
