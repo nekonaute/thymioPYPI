@@ -60,11 +60,11 @@ class Genome:
 		return (self.sigmoide(sum_g), self.sigmoide(sum_d))
 		
 		
-	def mutationGaussienne(self):
+	def mutationGaussienne(self,sigma):
 		copyGenome = Genome(self.logger, geneValue = copy.deepcopy(self.gene))
 		
 		for i in range (len(self.gene)) :
-			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], Params.params.sigma)
+			copyGenome.gene[i] = np.random.normal(copyGenome.gene[i], sigma)
 			
 		return copyGenome 		
 		

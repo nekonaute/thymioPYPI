@@ -63,7 +63,7 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no04":
+		if self.hostname=="pi3no22":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])
@@ -119,13 +119,14 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 				#self.genome = None
 				self.fitnessWindow = []
 			
-			self.tController.writeMotorsSpeedRequest([0, 0])
+			self.tController.writeMotorsSpeedRequest([150,150])
 			self.waitForControllerResponse()
 			
 			if len(self.genomeList) > 0:
-				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize))
+				self.genome = self.applyVariation(self.select(self.genomeList,Params.params.tournamentSize),Params.params.sigma)
 			else:
-				self.genome = self.applyVariation(self.genome)
+				self.genome = self.applyVariation(self.genome,Params.params.sigma*1000)
+				self.mainLogger.simu("SimulationFollowLigtGen - step() : variation seul avec sigma="+str(Params.params.sigma*1000))
 
 			self.genomeList=[]	
 			
@@ -259,8 +260,8 @@ class SimulationFollowLightGen(Simulation.Simulation) :
 		
 		return Genome.Genome(self.mainLogger,geneValue=selectedGene)
 		
-	def applyVariation(self,selectedGenome):
-		return selectedGenome.mutationGaussienne()	
+	def applyVariation(self,selectedGenome,sigma):
+		return selectedGenome.mutationGaussienne(sigma)	
 		
 	"""
 	Fonctions de communications

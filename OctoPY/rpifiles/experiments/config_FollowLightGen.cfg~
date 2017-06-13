@@ -48,10 +48,10 @@ float wait = 0.1
 int windowSize = 20
 
 # taille du tournoi
-int tournamentSize = 3
+int tournamentSize = 1
 
 # valeur sigma
-float sigma = 0.001
+float sigma = 2.0
 
 
 # An evolved genome we want to spread (will be set on pi3no08)
