@@ -103,7 +103,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
-		
+		"""
 		# evaluation de la génération
 		if self.iter%Params.params.lifetime != 0:
 			if self.genome!=None:
@@ -136,6 +136,12 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		
 		if self.iter==Params.params.duration:
 			self.stop()
+		"""
+		
+		self.tController.readMicRequest()
+		self.waitForControllerResponse()
+		micIntensity = self.tController.getMicValues()
+		self.mainLogger.simu("micIntensity = "+ str(micIntensity))		
 		
 	def getSensors(self):
 		

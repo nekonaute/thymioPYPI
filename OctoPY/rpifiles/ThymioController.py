@@ -49,10 +49,9 @@ class ThymioController(threading.Thread):
 		self.__motorspeed = [0,0]
 		self.__color = [0,0,0]
 		self.__sound = [0,0]
+		self.__mic = 0
 		
-		self.blbl = '-1'
-		
-		self.__newValue = {"PSValues":False, "GroundSensorsValues":False, "MotorSpeed":False, "AccValues":False}
+		self.__newValue = {"PSValues":False, "GroundSensorsValues":False, "MotorSpeed":False, "AccValues":False, "MicValues":False}
 
 		# Init the main loop
 		dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -62,7 +61,6 @@ class ThymioController(threading.Thread):
 		asebaNetworkObject = bus.get_object('ch.epfl.mobots.Aseba', '/')
 		self.__asebaNetwork = dbus.Interface(asebaNetworkObject, dbus_interface='ch.epfl.mobots.AsebaNetwork')
 		# Load the aesl file
-		self.blbl = '1'
 		self.__asebaNetwork.LoadScripts(AESL_PATH, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 		self.__mainLogger.critical(self.__asebaNetwork.GetNodesList())
 		# Schedules first run of the controller
@@ -70,11 +68,9 @@ class ThymioController(threading.Thread):
 	
 	def __dbusError(self, e):
 		# there was an error on D-Bus, stop loop
-		if self.blbl=='1' or True:	
-			self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
-			self.__mainLogger.critical('dbus error: %s' % str(e) + "\nNow sleeping for 1 second and retrying... "+self.blbl)
-			time.sleep(1)
-		self.__mainLogger.critical(self.blbl)
+		self.__mainLogger.critical('Error in ThymioController: ' + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+		self.__mainLogger.critical('dbus error: %s' % str(e) + "\nNow sleeping for 1 second and retrying... ")
+		time.sleep(1)
 		#raise Exception("dbus error")
 
 	def __dbusEventReply(self):
@@ -85,7 +81,6 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
-				self.blbl = '2'
 				self.__asebaNetwork.SendEventName(eventName, params, reply_handler=self.__dbusEventReply, error_handler=self.__dbusError)
 				ok = True
 			except:
@@ -95,7 +90,6 @@ class ThymioController(threading.Thread):
 		ok = False
 		while not ok:
 			try:
-				self.blbl = '3'
 				self.__asebaNetwork.GetVariable("thymio-II", varName, reply_handler=replyHandler, error_handler=self.__dbusError)
 				ok = True
 			except:
@@ -153,6 +147,13 @@ class ThymioController(threading.Thread):
 	
 	def __dbusGetAcc(self):
 		self.__dbusGetVariable("acc", self.__dbusGetAccReply)
+		
+	def __dbusGetMicReply(self,r):
+		self.__acc = r
+		self.__newValue["MicValues"] = True
+	
+	def __dbusGetMic(self):
+		self.__dbusGetVariable("mic.intensity", self.__dbusGetAccReply)
 
 	def __execute(self):
 		# Notifying that simulation has been set
@@ -177,6 +178,9 @@ class ThymioController(threading.Thread):
 						# Write motorspeed
 						self.__dbusSetMotorspeed() # IF COMMENTED: wheels don't move
 					elif request == MessageRequest.ACC:
+						# Read accelerometer values
+						self.__dbusGetAcc()
+					elif request == MessageRequest.MIC:
 						# Read accelerometer values
 						self.__dbusGetAcc()
 					elif request == MessageRequest.MOTORSREAD :
@@ -222,6 +226,11 @@ class ThymioController(threading.Thread):
 		with self.__performActionReq :
 			self.__request.append(MessageRequest.ACC)
 			self.__performActionReq.notify()
+			
+	def readMicRequest(self) :
+		with self.__performActionReq :
+			self.__request.append(MessageRequest.MIC)
+			self.__performActionReq.notify()
 
 	def writeMotorsSpeedRequest(self, motorspeed):
 		with self.__performActionReq:
@@ -266,6 +275,10 @@ class ThymioController(threading.Thread):
 	def getAccValues(self):
 		self.__newValue["AccValues"] = True
 		return self.__acc
+		
+	def getMicValues(self):
+		self.__newValue["MicValues"] = True
+		return self.__mic
 		
 	def isNewValue(self, varName):
 		"""
