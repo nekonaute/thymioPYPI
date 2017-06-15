@@ -87,7 +87,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		
 		self.ls.start()		
 		
-		self.tController.writeSoundRequest([200,1])
+		#self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()
 
 	def postActions(self) :
@@ -140,8 +140,13 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		
 		self.tController.readMicRequest()
 		self.waitForControllerResponse()
+		new = self.tController.isNewValue("MicValues")
 		micIntensity = self.tController.getMicValues()
-		self.mainLogger.simu("micIntensity = "+ str(micIntensity))		
+		micIntensity = int(micIntensity[0])
+		if new and micIntensity!=0:
+			self.mainLogger.simu("micIntensity = "+ str(micIntensity) +" "+ str(type(micIntensity))+" "+str(type(self.tController.getMicValues())))
+			time.sleep(2)
+			
 		
 	def getSensors(self):
 		

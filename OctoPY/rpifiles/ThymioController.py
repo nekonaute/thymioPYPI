@@ -20,7 +20,7 @@ class MessageRequest() :
 	NONE = -1
 
 	# Read requests
-	SENSORS, GROUND, STOP, MOTORSREAD, ACC = range(0, 5)
+	SENSORS, GROUND, STOP, MOTORSREAD, ACC, MIC = range(0, 6)
 
 	# Write requests
 	MOTORS, COLOR, SOUND = range(10, 13)
@@ -49,7 +49,7 @@ class ThymioController(threading.Thread):
 		self.__motorspeed = [0,0]
 		self.__color = [0,0,0]
 		self.__sound = [0,0]
-		self.__mic = 0
+		self.__mic = [0]
 		
 		self.__newValue = {"PSValues":False, "GroundSensorsValues":False, "MotorSpeed":False, "AccValues":False, "MicValues":False}
 
@@ -149,11 +149,11 @@ class ThymioController(threading.Thread):
 		self.__dbusGetVariable("acc", self.__dbusGetAccReply)
 		
 	def __dbusGetMicReply(self,r):
-		self.__acc = r
+		self.__mic = r
 		self.__newValue["MicValues"] = True
 	
 	def __dbusGetMic(self):
-		self.__dbusGetVariable("mic.intensity", self.__dbusGetAccReply)
+		self.__dbusGetVariable("mic.intensity", self.__dbusGetMicReply)
 
 	def __execute(self):
 		# Notifying that simulation has been set
@@ -182,7 +182,7 @@ class ThymioController(threading.Thread):
 						self.__dbusGetAcc()
 					elif request == MessageRequest.MIC:
 						# Read accelerometer values
-						self.__dbusGetAcc()
+						self.__dbusGetMic()
 					elif request == MessageRequest.MOTORSREAD :
 						# Read motorspeed
 						self.__dbusGetMotorSpeed()
@@ -285,7 +285,7 @@ class ThymioController(threading.Thread):
 		Return True if the value of varName has been updated by the Thymio since the 
 		last time the user got the value.
 		
-		:varName: String, "MotorSpeed", "PSValues", "GroundSensorsValues" or "AccValues"	
+		:varName: String, "MotorSpeed", "PSValues", "GroundSensorsValues", "AccValues" or "MicValues"	
 		:return: boolean
 		"""
 		if varName not in self.__newValue.keys():
