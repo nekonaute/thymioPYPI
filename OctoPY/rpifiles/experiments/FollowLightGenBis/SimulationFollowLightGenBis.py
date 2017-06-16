@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- 
 
 """
-P_ANDROIDE UPMC 2017
+Stage UPMC ISIR 2017
 Encadrant : Nicolas Bredeche
 
 @author Parham SHAMS
@@ -51,6 +51,10 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		self.hostname = None						# hostname
 		self.tags_ids = []
 		self.histo_size = 40
+		
+		# Braitenberg
+		
+		self.__probaTurn = 0.001
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenBis - preActions()")
@@ -89,6 +93,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		
 		#self.tController.writeSoundRequest([200,1])
 		self.waitForControllerResponse()
+		
 
 	def postActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenBis - postActions()")		
@@ -103,41 +108,88 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
-		"""
-		# evaluation de la génération
-		if self.iter%Params.params.lifetime != 0:
-			if self.genome!=None:
-				self.move()
-				if self.iter%Params.params.lifetime>Params.params.windowSize:
-					self.fitness = self.computeFitness()
-					self.broadcast(self.genome,self.fitness)
-			
-			# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
-		# changement de génération	
-		else:
-			if self.genome!=None:
-				self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
-				#self.genome = None
-				self.fitnessWindow = []
-			
-			self.tController.writeMotorsSpeedRequest([150,150])
+		
+		# Braitenberg		
+		if self.iter%Params.params.lifetime==0 and (self.iter/Params.params.lifetime)%5==0:
+			self.mainLogger.simu("SimulationFollowLightGenBis - step() : BRAITENBERG")
+			self.tController.writeColorRequest([32, 32, 32])
 			self.waitForControllerResponse()
-			
-			if len(self.genomeList) > 0:
-				self.genome = self.applyVariation(self.select(self.genomeList),Params.params.sigma)
+			for z in xrange(20*Params.params.lifetime):
+				try :
+					self.tController.readSensorsRequest()
+					self.waitForControllerResponse()
+					PSValues = self.tController.getPSValues()
+		
+					noObstacle = True
+					for i in range(5) :
+						if PSValues[i] > 0 :
+							noObstacle = False
+							break
+		
+					if noObstacle :
+						# Probability to do a left a right turn
+						rand = random.random()
+		
+						if rand < self.__probaTurn :
+							rand = random.random()
+		
+							if rand < 0.5 :
+								self.tController.writeMotorsSpeedRequest([200, 0])
+							else :
+								self.tController.writeMotorsSpeedRequest([0, 200])
+							self.waitForControllerResponse()
+							time.sleep(0.5)
+		
+						self.tController.writeMotorsSpeedRequest([500, 500])
+					else :
+						self.Braitenberg(PSValues)
+				except :
+					self.mainLogger.critical('SimulationDefault - Unexpected error : ')# + str(sys.exc_info()[0]) + ' - ' + traceback.format_exc())
+				z+=1
+				#time.sleep(Params.params.wait)
+			self.iter+=Params.params.lifetime-1
+			self.mainLogger.simu("SimulationFollowLightGenBis - step() : FIN BRAITENBERG")
+			self.tController.writeColorRequest([0, 0, 0])
+			self.waitForControllerResponse()
+				
+					
+		# Fin Braitenberg		
+		
+		else:
+			# evaluation de la génération
+			if self.iter%Params.params.lifetime != 0:
+				if self.genome!=None:
+					self.move()
+					if self.iter%Params.params.lifetime>Params.params.windowSize:
+						self.fitness = self.computeFitness()
+						self.broadcast(self.genome,self.fitness)
+				
+				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
+			# changement de génération	
 			else:
-				self.genome = self.applyVariation(self.genome,Params.params.sigma*1000)
-				self.mainLogger.critical("SimulationFollowLightGenBis - step() : NE DOIT PAS ARRIVER")
-
-			self.genomeList=[]	
-			
-		self.iter+=1
-		time.sleep(Params.params.wait)
-		
-		if self.iter==Params.params.duration:
+				if self.genome!=None:
+					self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
+					#self.genome = None
+					self.fitnessWindow = []
+				
+				self.tController.writeMotorsSpeedRequest([150,150])
+				self.waitForControllerResponse()
+				
+				if len(self.genomeList) > 0:
+					self.genome = self.applyVariation(self.select(self.genomeList),Params.params.sigma)
+				else:
+					self.genome = self.applyVariation(self.genome,Params.params.sigma*1000)
+					self.mainLogger.critical("SimulationFollowLightGenBis - step() : NE DOIT PAS ARRIVER")
+	
+				self.genomeList=[]	
+				
+		if self.iter>=Params.params.duration+Params.params.duration/5:
 			self.stop()
-		"""
+
+		self.iter+=1
+		time.sleep(Params.params.wait)		
 		
+		"""
 		self.tController.readMicRequest()
 		self.waitForControllerResponse()
 		new = self.tController.isNewValue("MicValues")
@@ -146,7 +198,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		if new and micIntensity!=0:
 			self.mainLogger.simu("micIntensity = "+ str(micIntensity) +" "+ str(type(micIntensity))+" "+str(type(self.tController.getMicValues())))
 			time.sleep(2)
-			
+		"""	
 		
 	def getSensors(self):
 		
@@ -266,13 +318,17 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		s = 0.0
 		for i in xrange(len(l)):
 			s+=l[i][0]
-		lbis=[i[0]/s for i in l]
-		cumsum_array=np.cumsum(lbis)
-		rand = random.random()
-		for j in xrange(len(cumsum_array)):
-			if rand<=cumsum_array[j]:
-				return Genome.Genome(self.mainLogger,geneValue=l[j][1])
-		
+		if s!=0:
+			lbis=[i[0]/s for i in l]
+			cumsum_array=np.cumsum(lbis)
+			rand = random.random()
+			for j in xrange(len(cumsum_array)):
+				if rand<=cumsum_array[j]:
+					return Genome.Genome(self.mainLogger,geneValue=l[j][1])
+		else:
+			return Genome.Genome(self.mainLogger,geneValue=l[0][1]) 			
+			
+			
 	def applyVariation(self,selectedGenome,sigma):
 		l=[]
 		l.append(Params.params.pcopy)
@@ -318,6 +374,39 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					self.mainLogger.error('SimulationFollowLightGenBis - Receiving message from ' + str(sender) + ' without value data : ' + str(data))
 		else :
 			self.mainLogger.error('SimulationFollowLightGenBis - Receiving message without sender : ' + str(data))	
+	
+	def Braitenberg(self, proxSensors) :
+		
+		leftWheel = [0.1, 0.05, 0.001, -0.06, -0.15]
+		rightWheel = [-0.12, -0.07, 0.002, 0.055, 0.11]
+
+		# Braitenberg algorithm
+		totalLeft = 0
+		totalRight = 0
+		for i in range(5) :
+			value = 0.0
+
+			if proxSensors[i] > 0.0 :
+				value = 4500 - proxSensors[i]
+
+				if value < 0.0 :
+					value = 0.0
+
+			# self.log(str(i) + "/" + str(proxSensors[i]) + "/" + str(value))
+			totalLeft = totalLeft + (value * leftWheel[i])
+			totalRight = totalRight + (value * rightWheel[i])
+
+		# Add a constant speed
+		# if not avoidance :
+		# 	totalRight = totalRight + 150
+		# 	totalLeft = totalLeft + 150
+		# else :
+		totalRight = totalRight + 200
+		totalLeft = totalLeft + 200
+
+		self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
+
+		return True
 		
 		
 		#set config_FollowLightGenBis.cfg

@@ -41,8 +41,17 @@ class Genome:
 				self.size=size
 	
 	def sigmoide(self,x):
-		
-		return (1/(1+ math.exp(-3*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
+		#self.logger.critical("test0 : "+str(x))
+		#self.logger.critical("test1 : "+str(math.exp(-3*x)))
+		#self.logger.critical("test2 : "+str(1/(1+math.exp(-3*x))))
+		try:
+			a = (1/(1+ math.exp(-3*x))) * Params.params.maxSpeedValue *2  - Params.params.maxSpeedValue
+			return a
+		except OverflowError:
+			if x>0:
+				return 100000
+			else:
+				return -10000
 		
 	def evaluation(self, sensors):
 		
