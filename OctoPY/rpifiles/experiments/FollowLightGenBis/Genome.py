@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """
-P_ANDROIDE UPMC 2017
+Stage UPMC ISIR 2017
 Encadrant : Nicolas Bredeche
 
-@author Tanguy SOTO
 @author Parham SHAMS
 
 Classe Genome utilisée pour représenter le génome de l'algorithme génétique de suivi de lumière.

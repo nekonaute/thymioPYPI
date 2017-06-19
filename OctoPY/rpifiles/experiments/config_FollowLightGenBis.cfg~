@@ -38,16 +38,16 @@ int brightness = 60
 int duration = 3000
 
 # nombre d'itérations d'une génération
-int lifetime = 60
+int lifetime = 120
 
 # attente entre 2 itérations en s (durée d'une génération : lifetime*wait)
 float wait = 0.1
 
 # nombre d'itérations précédentes et comptant dans la fitness
-int windowSize = 20
+int windowSize = 60
 
 # valeur sigma
-float sigma = 0.001
+float sigma = 0.1
 
 # valeurs proba de variations
 float pcopy = 0.5

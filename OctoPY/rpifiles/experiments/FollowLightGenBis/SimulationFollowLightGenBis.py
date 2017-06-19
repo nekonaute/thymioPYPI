@@ -111,7 +111,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		
 		# Braitenberg		
 		if self.iter%Params.params.lifetime==0 and (self.iter/Params.params.lifetime)%5==0:
-			self.mainLogger.simu("SimulationFollowLightGenBis - step() : BRAITENBERG")
+			#self.mainLogger.simu("SimulationFollowLightGenBis - step() : BRAITENBERG")
 			self.tController.writeColorRequest([32, 32, 32])
 			self.waitForControllerResponse()
 			for z in xrange(20*Params.params.lifetime):
@@ -148,13 +148,12 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				z+=1
 				#time.sleep(Params.params.wait)
 			self.iter+=Params.params.lifetime-1
-			self.mainLogger.simu("SimulationFollowLightGenBis - step() : FIN BRAITENBERG")
+			#self.mainLogger.simu("SimulationFollowLightGenBis - step() : FIN BRAITENBERG")
 			self.tController.writeColorRequest([0, 0, 0])
 			self.waitForControllerResponse()
 				
-					
-		# Fin Braitenberg		
-		
+				
+		# Fin Braitenberg
 		else:
 			# evaluation de la génération
 			if self.iter%Params.params.lifetime != 0:
@@ -176,6 +175,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				self.waitForControllerResponse()
 				
 				if len(self.genomeList) > 0:
+					#self.mainLogger.simu("SimulationFollowLightGenBis - step() : len(genomeList)"+str(len(self.genomeList)))
 					self.genome = self.applyVariation(self.select(self.genomeList),Params.params.sigma)
 				else:
 					self.genome = self.applyVariation(self.genome,Params.params.sigma*1000)
