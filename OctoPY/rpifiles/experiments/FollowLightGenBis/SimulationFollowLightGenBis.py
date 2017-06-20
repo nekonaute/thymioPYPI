@@ -45,6 +45,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		self.ls = LightSensor.LightAndTagSensor(self.mainLogger) 	# capteur de lumière
 		self.genome = Genome.Genome(mainLogger,size=18) 	# (7 capteurs de proximité, 1 biais, 1 entrée binaire pour la lumière) * 2 (moteurs)
 		self.genomeList = []						# liste de couples contenant les génomes reçus et la fitness associée
+		self.fitnessList = []						# Liste des fitnesses calculées durant une génération
 		self.iter = 1							# nombre d'itérations total
 		self.fitness = 0							# fitness du robot
 		self.fitnessWindow = []					# valeurs de fitness du robot		
@@ -155,6 +156,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				
 		# Fin Braitenberg
 		else:
+			"""
 			# evaluation de la génération
 			if self.iter%Params.params.lifetime != 0:
 				if self.genome!=None:
@@ -162,7 +164,21 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					if self.iter%Params.params.lifetime>Params.params.windowSize:
 						self.fitness = self.computeFitness()
 						self.broadcast(self.genome,self.fitness)
-				
+			"""
+			# evaluation de la génération
+			if self.iter%Params.params.lifetime != 0:
+				if self.genome!=None:
+					self.move()
+					if self.iter%Params.params.lifetime>Params.params.windowSize:
+						self.fitness = self.computeFitness()
+						self.fitnessList.append(self.fitness)
+						
+						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
+							fitnessNP = np.asarray(self.fitnessList)
+															
+							self.broadcast(self.genome,fitnessNP.mean())
+							#self.broadcast(self.genome,fitnessNP.max())
+							#self.broadcast(self.genome,fitnessNP.min())
 				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
 			# changement de génération	
 			else:
@@ -341,8 +357,8 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		elif rand<=cumsum[1]:
 			return selectedGenome.mutationGaussienne(sigma)
 		elif rand<=cumsum[2]:
-			self.genome = Genome.Genome(self.mainLogger,size=18)
 			self.mainLogger.simu("SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME")
+			return Genome.Genome(self.mainLogger,size=18)
 		else:
 			self.mainLogger.critical("SimulationFollowLightGen - applyVariation() : problem with the probabilities of mutation")
 		
