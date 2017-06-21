@@ -179,6 +179,8 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 							self.broadcast(self.genome,fitnessNP.mean())
 							#self.broadcast(self.genome,fitnessNP.max())
 							#self.broadcast(self.genome,fitnessNP.min())
+							
+							self.fitnessList = []
 				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
 			# changement de génération	
 			else:
@@ -291,7 +293,10 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		return cur_fit/len(self.fitnessWindow)
 		
 	def getTransitiveAcceleration(self):
-		return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
+		if self.left<0 or self.right<0:
+			return 0
+		else:
+			return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
 		
 	def getAngularAcceleration(self):
 		return abs(self.left - self.right) / (2*Params.params.maxSpeedValue)
@@ -342,6 +347,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				if rand<=cumsum_array[j]:
 					return Genome.Genome(self.mainLogger,geneValue=l[j][1])
 		else:
+			self.mainLogger.simu("SimulationFollowLightGenBis - select() : somme des fitness est nulle")
 			return Genome.Genome(self.mainLogger,geneValue=l[0][1]) 			
 			
 			
@@ -357,6 +363,9 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		elif rand<=cumsum[1]:
 			return selectedGenome.mutationGaussienne(sigma)
 		elif rand<=cumsum[2]:
+			a,b,c=random.randint(0,255),random.randint(0,255),random.randint(0,255)
+			self.tController.writeColorRequest([a, b, c])
+			self.waitForControllerResponse()
 			self.mainLogger.simu("SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME")
 			return Genome.Genome(self.mainLogger,size=18)
 		else:
