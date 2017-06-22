@@ -109,7 +109,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 
 	def step(self) :
 		self.mainLogger.debug("SimulationFollowLigtGen - step()")
-		
+		"""
 		# Braitenberg		
 		if self.iter%Params.params.lifetime==0 and (self.iter/Params.params.lifetime)%5==0:
 			#self.mainLogger.simu("SimulationFollowLightGenBis - step() : BRAITENBERG")
@@ -153,9 +153,9 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 			self.tController.writeColorRequest([0, 0, 0])
 			self.waitForControllerResponse()
 				
-				
+		"""		
 		# Fin Braitenberg
-		else:
+		if True:
 			"""
 			# evaluation de la génération
 			if self.iter%Params.params.lifetime != 0:
@@ -172,7 +172,13 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					if self.iter%Params.params.lifetime>Params.params.windowSize:
 						self.fitness = self.computeFitness()
 						self.fitnessList.append(self.fitness)
-						
+						if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
+							fitnessNP = np.asarray(self.fitnessList)
+															
+							self.broadcast(self.genome,fitnessNP.mean())
+							#self.broadcast(self.genome,fitnessNP.max())
+							#self.broadcast(self.genome,fitnessNP.min())
+							
 						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
@@ -363,6 +369,8 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		elif rand<=cumsum[1]:
 			return selectedGenome.mutationGaussienne(sigma)
 		elif rand<=cumsum[2]:
+			if self.iter/Params.params.lifetime>30:
+				return selectedGenome.mutationGaussienne(sigma)
 			a,b,c=random.randint(0,255),random.randint(0,255),random.randint(0,255)
 			self.tController.writeColorRequest([a, b, c])
 			self.waitForControllerResponse()
