@@ -68,7 +68,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no22":
+		if self.hostname=="pi3no02":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])
@@ -175,15 +175,15 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 						if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							self.broadcast(self.genome,fitnessNP.mean())
-							#self.broadcast(self.genome,fitnessNP.max())
+							#self.broadcast(self.genome,fitnessNP.mean())
+							self.broadcast(self.genome,fitnessNP.max())
 							#self.broadcast(self.genome,fitnessNP.min())
 							
 						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							self.broadcast(self.genome,fitnessNP.mean())
-							#self.broadcast(self.genome,fitnessNP.max())
+							#self.broadcast(self.genome,fitnessNP.mean())
+							self.broadcast(self.genome,fitnessNP.max())
 							#self.broadcast(self.genome,fitnessNP.min())
 							
 							self.fitnessList = []

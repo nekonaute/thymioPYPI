@@ -4,18 +4,17 @@ import matplotlib.pyplot as plt
 
 
 """
-P_ANDROIDE UPMC 2017
+STAGE UPMC ISIR 2017
 Encadrant : Nicolas Bredeche
 
-@author Tanguy SOTO
 @author Parham SHAMS
 
-Analyse des résultats de la simulation FollowLightGenOnline et FollowLightGen
+Analyse des résultats de la simulation FollowLightGenBis
 """
 
 save = True
 num_robot = [3,11]
-
+"""
 # ============ courbe de fitness pour FollowLightGenOnline (typical run)
 
 for robot in num_robot:
@@ -134,13 +133,13 @@ plt.legend(loc='best')
 if save:
 	plt.savefig('__broadcast_leader-distributed.png')
 plt.show()
-
-# ============ courbe de fitness pour FollowLightGen avec neighbors et leader
+"""
+# ============ courbe de fitness pour FollowLightGenBis avec leader
 	
-num_robot = [3,5,7,8,11]
+num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("../log/LOG-expericences-2017_05_10/distributed/neighbors_leader.log","r")
+f = open("AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
@@ -148,29 +147,34 @@ data_leader = []
 
 curr_data=[]
 
+new_random_gen=[]
+
 for i in range(len(s)):
 	l = s[i].split(" ")
 	
 	if l[0]=="ROBOT":
 		if len(curr_data)>0:
 			data_others.append(curr_data)
-		
+		ind=0
 		curr_data=[]
 	elif len(l)>6 and l[6]=="ended":
-		curr_data.append(float(l[7]))
+		curr_data.append(float(l[7]))	
+		ind+=1
+	elif len(l)>8 and l[8]=="NEW":
+		new_random_gen.append(ind)
 		
 data_others.append(curr_data)
-data_leader = data_others[num_robot.index(8)]
+data_leader = data_others[num_robot.index(2)]
 
 data_gene = []
 
-for i in range(18):
+for i in range(60):
 	data_gene.append([])
 	for j in range(len(data_others)):
-		if j != num_robot.index(8):
+		if j != num_robot.index(2):
 			data_gene[i].append(data_others[j][i])
 
-data_leader = data_leader[:18]
+data_leader = data_leader[:60]
 
 # moyennes
 means = []
@@ -191,31 +195,37 @@ plt.boxplot(data_gene)
 plt.plot(x,data_leader,label="leader",color="red")
 plt.plot(x,means,label="moyenne",color="green")
 
-"""
-for i in range(len(data_gene)):
-	plt.scatter([i+1]*len(data_gene[i]),data_gene[i],color="black")
-"""
+
+#for i in range(len(data_gene)):
+#	plt.scatter([i+1]*len(data_gene[i]),data_gene[i],color="black")
+
 
 plt.title('')
 plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
-plt.xticks(x,x)
+#plt.xticks(x,x)
+list_color = ['red' if i in new_random_gen else 'black' for i in range(len(x))]
+plt.xticks(x, rotation=90)
+for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
+	ticklabel.set_color(tickcolor)
 if save:
 	plt.savefig('__neighbors_leader-distributed.png')
 plt.show()
 
-# ============ courbe de fitness pour FollowLightGen avec neighbors et sans leader
-	
-num_robot = [3,5,7,8,11]
+# ============ courbe de fitness pour FollowLightGenBis sans leader
+"""
+#num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("../log/LOG-expericences-2017_05_10/distributed/neighbors_no_leader.log","r")
+f = open("AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
 
 curr_data=[]
+
+new_random_gen =[]
 
 for i in range(len(s)):
 	l = s[i].split(" ")
@@ -223,21 +233,27 @@ for i in range(len(s)):
 	if l[0]=="ROBOT":
 		if len(curr_data)>0:
 			data_others.append(curr_data)
-		
+			#print curr_data
+		ind=0		
 		curr_data=[]
 	elif len(l)>6 and l[6]=="ended":
-		curr_data.append(min(0.5,float(l[7])))
+		#print str(float(l[7]))
+		#curr_data.append(min(0.5,float(l[7])))
+		curr_data.append(float(l[7]))
+		ind+=1
+	elif len(l)>8 and l[8]=="NEW":
+		new_random_gen.append(ind)
 		
 data_others.append(curr_data)
 
 data_gene = []
 
-for i in range(26):
+for i in range(len(curr_data)): #nb generations
 	data_gene.append([])
 	for j in range(len(data_others)):
 		data_gene[i].append(data_others[j][i])
 
-data_gene.reverse()
+#data_gene.reverse()
 
 # moyennes
 means = []
@@ -253,13 +269,19 @@ data_gene = data_gene[:]
 x = range(1,len(data_gene)+1)
 
 plt.boxplot(data_gene)	
-plt.plot(x,means,label="moyenne",color="green")
+plt.plot(x,means,label="moyenne",color="red")
 
 plt.title('')
 plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
-plt.xticks(x,x)
+list_color = ['red' if i in new_random_gen else 'black' for i in range(len(x))]
+print list_color
+print new_random_gen
+plt.xticks(x, rotation=90)
+for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
+	ticklabel.set_color(tickcolor)
 if save:
-	plt.savefig('__neighbors_no_leader-distributed.png')
+	plt.savefig('boxplot.png')
 plt.show()
+"""

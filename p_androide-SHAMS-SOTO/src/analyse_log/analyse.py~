@@ -13,7 +13,7 @@ Encadrant : Nicolas Bredeche
 Analyse des résultats de la simulation FollowLightGenOnline et FollowLightGen
 """
 
-save = True
+save = False
 num_robot = [3,11]
 
 # ============ courbe de fitness pour FollowLightGenOnline (typical run)
