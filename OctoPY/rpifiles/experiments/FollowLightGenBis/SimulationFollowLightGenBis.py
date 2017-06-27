@@ -68,7 +68,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no02":
+		if self.hostname=="pi3no22":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])

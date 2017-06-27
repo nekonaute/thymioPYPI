@@ -1,0 +1,203 @@
+2016-12-16 16:53:43,120 - DEBUG: MainController - Running.
+2016-12-16 16:53:43,121 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:54:12,079 - DEBUG: CommandsListener - Received command from (192.168.0.210, 38807)
+2016-12-16 16:54:12,080 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:54:12,082 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x7644e710>
+2016-12-16 16:54:12,083 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-16 16:54:12,084 - DEBUG: MainController - Command 5 received.
+2016-12-16 16:54:12,084 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:54:12,093 - DEBUG: MainController - Treating command : 5
+2016-12-16 16:54:12,093 - DEBUG: MainController - Setting simulation...
+2016-12-16 16:55:00,192 - DEBUG: CommandsListener - Received command from (192.168.0.210, 38816)
+2016-12-16 16:55:00,193 - DEBUG: CommandsListener - Receiving command...
+2016-12-16 16:55:00,195 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76450940>
+2016-12-16 16:55:00,195 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-16 16:55:00,196 - DEBUG: MainController - Command 0 received.
+2016-12-16 16:55:00,197 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-16 16:55:00,218 - DEBUG: MainController - Treating command : 0
+2016-12-16 16:55:00,219 - DEBUG: MainController - Loading simulation...
+2016-12-16 16:55:00,220 - DEBUG: Params - Parsing configuration file.
+2016-12-16 16:55:01,382 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
+2016-12-16 16:55:01,383 - DEBUG: ThymioController - Running.
+2016-12-16 16:55:03,885 - SIMU: ======================================
+2016-12-16 16:55:03,886 - SIMU: ====== SimulationFollowLightGenBis ======
+2016-12-16 16:55:03,887 - SIMU: ======================================
+2016-12-16 16:55:03,887 - SIMU: -------------------
+2016-12-16 16:55:03,888 - SIMU: Parameters :
+2016-12-16 16:55:03,889 - SIMU: duration 3000
+2016-12-16 16:55:03,890 - SIMU: lifetime 60
+2016-12-16 16:55:03,890 - SIMU: sleep 0.1
+2016-12-16 16:55:03,891 - SIMU: windowSize 20
+2016-12-16 16:55:03,892 - SIMU: probabilities pcopy pgauss prandom 0.4 0.4 0.2
+2016-12-16 16:55:03,893 - SIMU: sigma 0.1
+2016-12-16 16:55:03,893 - SIMU: -------------------
+2016-12-16 16:55:03,894 - SIMU: Start :
+2016-12-16 16:55:12,585 - SIMU: 1 generation ended 0.0
+2016-12-16 16:55:21,220 - SIMU: 2 generation ended 0.0
+2016-12-16 16:55:21,225 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-16 16:55:30,320 - SIMU: 3 generation ended 0.0
+2016-12-16 16:55:38,925 - SIMU: 4 generation ended 0.522980379384
+2016-12-16 16:55:47,320 - SIMU: 5 generation ended 0.0896114714209
+2016-12-16 16:55:55,615 - SIMU: 6 generation ended 0.0368484346749
+2016-12-16 16:56:04,213 - SIMU: 7 generation ended 0.0159304265413
+2016-12-16 16:56:13,041 - SIMU: 8 generation ended 0.0545637811397
+2016-12-16 16:56:21,015 - SIMU: 9 generation ended 0.0360706453298
+2016-12-16 16:56:29,809 - SIMU: 10 generation ended 0.0235526916083
+2016-12-16 16:56:38,407 - SIMU: 11 generation ended 0.264510023368
+2016-12-16 16:56:47,404 - SIMU: 12 generation ended 0.441775290006
+2016-12-16 16:56:56,342 - SIMU: 13 generation ended 0.411380534424
+2016-12-16 16:57:05,180 - SIMU: 14 generation ended 0.0782241925438
+2016-12-16 16:57:13,754 - SIMU: 15 generation ended 0.0124335533057
+2016-12-16 16:57:22,098 - SIMU: 16 generation ended 0.0636160590634
+2016-12-16 16:57:30,688 - SIMU: 17 generation ended 0.059729255556
+2016-12-16 16:57:38,934 - SIMU: 18 generation ended 0.0234136575049
+2016-12-16 16:57:47,195 - SIMU: 19 generation ended 0.0179883338829
+2016-12-16 16:57:55,532 - SIMU: 20 generation ended 0.0526224539995
+2016-12-16 16:58:04,124 - SIMU: 21 generation ended 0.0475631074976
+2016-12-16 16:58:04,130 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-16 16:58:12,889 - SIMU: 22 generation ended 0.0
+2016-12-16 16:58:21,228 - SIMU: 23 generation ended 0.442459242086
+2016-12-16 16:58:29,748 - SIMU: 24 generation ended 0.065052369541
+2016-12-16 16:58:38,690 - SIMU: 25 generation ended 0.0869255149864
+2016-12-16 16:58:47,537 - SIMU: 26 generation ended 0.0404608939456
+2016-12-16 16:58:47,541 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-16 16:58:56,056 - SIMU: 27 generation ended 0.569884345199
+2016-12-16 16:59:04,043 - SIMU: 28 generation ended 0.0
+2016-12-16 16:59:12,776 - SIMU: 29 generation ended 0.0428816357459
+2016-12-16 16:59:12,779 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-16 16:59:21,816 - SIMU: 30 generation ended 0.0
+2016-12-16 16:59:30,001 - SIMU: 31 generation ended 0.03973775703
+2016-12-16 16:59:38,610 - SIMU: 32 generation ended 0.0287398293357
+2016-12-16 16:59:47,406 - SIMU: 33 generation ended 0.0398685488072
+2016-12-16 16:59:55,778 - SIMU: 34 generation ended 0.0386181963358
+2016-12-16 17:00:03,744 - SIMU: 35 generation ended 0.0395829683135
+2016-12-16 17:00:11,979 - SIMU: 36 generation ended 0.0379672445622
+2016-12-16 17:00:19,970 - SIMU: 37 generation ended 0.0368953605149
+2016-12-16 17:00:28,570 - SIMU: 38 generation ended 0.0372995702891
+2016-12-16 17:00:36,932 - SIMU: 39 generation ended 0.0330410827955
+2016-12-16 17:00:45,564 - SIMU: 40 generation ended 0.0378368568019
+2016-12-16 17:00:54,125 - SIMU: 41 generation ended 0.0503696121441
+2016-12-16 17:01:02,650 - SIMU: 42 generation ended 0.0484428546491
+2016-12-16 17:01:11,202 - SIMU: 43 generation ended 0.0629026856662
+2016-12-16 17:01:19,825 - SIMU: 44 generation ended 0.0547523648138
+2016-12-16 17:01:28,413 - SIMU: 45 generation ended 0.066585924282
+2016-12-16 17:01:36,754 - SIMU: 46 generation ended 0.0673464193893
+2016-12-16 17:01:45,141 - SIMU: 47 generation ended 0.0644932129308
+2016-12-16 17:01:53,325 - SIMU: 48 generation ended 0.0621998856913
+2016-12-16 17:02:01,956 - SIMU: 49 generation ended 0.0473830232037
+2016-12-16 17:02:10,455 - SIMU: 50 generation ended 0.0350374491429
+2016-12-16 17:02:18,680 - SIMU: 51 generation ended 0.0434107350768
+2016-12-16 17:02:27,173 - SIMU: 52 generation ended 0.0436247300596
+2016-12-16 17:02:35,581 - SIMU: 53 generation ended 0.021772498386
+2016-12-16 17:02:43,941 - SIMU: 54 generation ended 0.0380634633926
+2016-12-16 17:02:52,677 - SIMU: 55 generation ended 0.0320519524019
+2016-12-16 17:03:01,575 - SIMU: 56 generation ended 0.0286863261479
+2016-12-16 17:03:10,477 - SIMU: 57 generation ended 0.0415575270681
+2016-12-16 17:03:19,607 - SIMU: 58 generation ended 0.0278976612951
+2016-12-16 17:03:28,298 - SIMU: 59 generation ended 0.0387329303079
+2016-12-16 17:03:36,544 - SIMU: 60 generation ended 0.0131457820967
+2016-12-16 17:03:36,600 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:36,602 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:36,672 - SIMU: -------------------
+2016-12-16 17:03:36,673 - SIMU: End :
+2016-12-16 17:03:36,674 - SIMU: fitness_champion 0.0131457820967
+2016-12-16 17:03:36,674 - SIMU: champion [0.3808456867318688, 0.7894270456400616, 0.3662760460153706, -1.1595345936477877, 0.29077206316136855, 0.26741308925865925, -0.30914611653338464, -1.121205684381175, 0.9004675145598454, 0.5109032289107589, 0.0824462001130895, 0.033738584364017624, -0.17885968157162097, 0.16137110465389404, 1.293526689449392, -0.7759899972494647, 0.970665627296016, 0.8861124299170248]
+2016-12-16 17:03:36,675 - SIMU: ======================================
+2016-12-16 17:03:37,023 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:37,338 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:37,553 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:38,369 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:39,336 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:41,152 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:41,317 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:41,482 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:41,897 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:42,266 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:42,381 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:43,147 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:43,863 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:45,630 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:45,662 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:45,927 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:46,042 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:46,758 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:46,775 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:47,591 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:48,856 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:50,624 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:50,657 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:50,872 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:50,936 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:51,452 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:51,717 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:52,633 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:53,101 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:54,967 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:55,183 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:55,297 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:55,563 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:55,878 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:56,043 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:56,809 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:58,074 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:59,641 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:03:59,957 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:00,021 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:00,337 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:00,602 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:01,067 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:01,383 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:02,199 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:04,364 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:04,381 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:04,546 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:04,661 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:05,026 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:05,693 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:05,808 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:07,273 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:09,190 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:09,305 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:09,520 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:09,586 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:09,701 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:10,718 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:10,782 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:11,649 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:13,615 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:13,780 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:13,995 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:14,110 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:14,111 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:14,927 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:15,044 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:16,810 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:18,476 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:18,493 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:19,059 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:19,091 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:19,256 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:19,822 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:19,887 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:21,152 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:23,068 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:23,101 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:23,516 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:23,581 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:23,696 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:24,262 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:24,577 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:25,942 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:27,709 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:27,974 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:28,289 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:28,454 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:28,819 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:29,235 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:29,550 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:30,551 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:32,866 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:35,587 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:37,652 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:04:55,171 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 17:04:57,138 - ERROR: MainController - Request for simulation stop while no simulation started.
