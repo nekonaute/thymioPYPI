@@ -1,24 +1,4 @@
-2016-12-17 03:20:50,323 - DEBUG: MainController - Running.
-2016-12-17 03:20:50,325 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 03:21:06,065 - DEBUG: CommandsListener - Received command from (192.168.0.210, 57454)
-2016-12-17 03:21:06,066 - DEBUG: CommandsListener - Receiving command...
-2016-12-17 03:21:06,070 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76407710>
-2016-12-17 03:21:06,071 - DEBUG: CommandsListener - Transmitting command 5 to controller.
-2016-12-17 03:21:06,071 - DEBUG: MainController - Command 5 received.
-2016-12-17 03:21:06,072 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 03:21:06,093 - DEBUG: MainController - Treating command : 5
-2016-12-17 03:21:06,094 - DEBUG: MainController - Setting simulation...
-2016-12-17 03:21:41,931 - DEBUG: CommandsListener - Received command from (192.168.0.210, 57463)
-2016-12-17 03:21:41,932 - DEBUG: CommandsListener - Receiving command...
-2016-12-17 03:21:41,934 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76409648>
-2016-12-17 03:21:41,935 - DEBUG: CommandsListener - Transmitting command 0 to controller.
-2016-12-17 03:21:41,935 - DEBUG: MainController - Command 0 received.
-2016-12-17 03:21:41,936 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 03:21:41,968 - DEBUG: MainController - Treating command : 0
-2016-12-17 03:21:41,968 - DEBUG: MainController - Loading simulation...
-2016-12-17 03:21:41,969 - DEBUG: Params - Parsing configuration file.
-2016-12-17 03:21:44,563 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
-2016-12-17 03:21:44,565 - DEBUG: ThymioController - Running.
+ROBOT 6
 2016-12-17 03:21:47,173 - SIMU: ======================================
 2016-12-17 03:21:47,175 - SIMU: ====== SimulationFollowLightGenBis ======
 2016-12-17 03:21:47,176 - SIMU: ======================================
@@ -103,6 +83,3 @@
 2016-12-17 03:31:55,100 - SIMU: fitness_champion 1.0
 2016-12-17 03:31:55,102 - SIMU: champion [-7.83633901299841, 4.002235509285385, -17.04961112949422, -6.722911833290353, -5.027551133757886, -6.458896974592462, 9.261855099528798, 3.8272590178244776, 12.503536122248267, 10.447890638622093, 11.483795128060052, -11.310607577854475, 5.676981297424522, 14.474226684780321, 6.104467909332405, 10.115692299786543, 15.297018847275528, 4.404991531355722]
 2016-12-17 03:31:55,103 - SIMU: ======================================
-2016-12-17 03:31:57,535 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-17 03:31:59,750 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-17 03:32:03,016 - ERROR: MainController - Request for sending com message while no simulation started.

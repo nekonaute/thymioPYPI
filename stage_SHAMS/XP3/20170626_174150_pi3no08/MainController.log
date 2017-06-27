@@ -1,24 +1,4 @@
-2016-12-16 16:07:47,870 - DEBUG: MainController - Running.
-2016-12-16 16:07:47,872 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:07:52,284 - DEBUG: CommandsListener - Received command from (192.168.0.210, 34714)
-2016-12-16 16:07:52,285 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 16:07:52,290 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x763c3710>
-2016-12-16 16:07:52,291 - DEBUG: CommandsListener - Transmitting command 5 to controller.
-2016-12-16 16:07:52,292 - DEBUG: MainController - Command 5 received.
-2016-12-16 16:07:52,292 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:07:52,341 - DEBUG: MainController - Treating command : 5
-2016-12-16 16:07:52,342 - DEBUG: MainController - Setting simulation...
-2016-12-16 16:08:17,302 - DEBUG: CommandsListener - Received command from (192.168.0.210, 34723)
-2016-12-16 16:08:17,303 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 16:08:17,305 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x763c5648>
-2016-12-16 16:08:17,305 - DEBUG: CommandsListener - Transmitting command 0 to controller.
-2016-12-16 16:08:17,306 - DEBUG: MainController - Command 0 received.
-2016-12-16 16:08:17,307 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:08:17,313 - DEBUG: MainController - Treating command : 0
-2016-12-16 16:08:17,314 - DEBUG: MainController - Loading simulation...
-2016-12-16 16:08:17,315 - DEBUG: Params - Parsing configuration file.
-2016-12-16 16:08:18,091 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
-2016-12-16 16:08:18,092 - DEBUG: ThymioController - Running.
+ROBOT 8
 2016-12-16 16:08:20,534 - SIMU: ======================================
 2016-12-16 16:08:20,536 - SIMU: ====== SimulationFollowLightGenBis ======
 2016-12-16 16:08:20,536 - SIMU: ======================================
@@ -101,20 +81,3 @@
 2016-12-16 16:18:08,835 - SIMU: fitness_champion 0.109379883832
 2016-12-16 16:18:08,837 - SIMU: champion [-8.115332022249518, 3.3701456401574568, -17.689304808316216, -6.274275017380237, -4.8799225943605125, -6.769605944703385, 9.636460014902653, 4.432295765703657, 12.389005263274694, 9.753663113852271, 11.433090682459175, -9.940691077783697, 5.044820349086728, 13.793151886845619, 5.744590366927121, 8.878602445806777, 14.863280671547646, 3.471175790851523]
 2016-12-16 16:18:08,838 - SIMU: ======================================
-2016-12-16 16:18:08,966 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:09,999 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:10,464 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:11,497 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:13,863 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:14,732 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:16,047 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:16,163 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:18,880 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:19,699 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:21,015 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:21,882 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:23,599 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:25,865 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:28,980 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:52,601 - ERROR: MainController - Request for simulation stop while no simulation started.
-2016-12-16 16:18:55,603 - ERROR: MainController - Request for simulation stop while no simulation started.

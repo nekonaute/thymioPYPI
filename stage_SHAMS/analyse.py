@@ -135,11 +135,11 @@ if save:
 plt.show()
 """
 # ============ courbe de fitness pour FollowLightGenBis avec leader
-	
+"""
 num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("AllRobots.log","r")
+f = open("XP1/AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
@@ -192,8 +192,8 @@ print len(data_leader)
 print len(x)
 
 plt.boxplot(data_gene)	
-plt.plot(x,data_leader,label="leader",color="red")
-plt.plot(x,means,label="moyenne",color="green")
+#plt.plot(x,data_leader,label="leader",color="red")
+plt.plot(x,means,label="moyenne",color="red")
 
 
 #for i in range(len(data_gene)):
@@ -215,10 +215,11 @@ plt.show()
 
 # ============ courbe de fitness pour FollowLightGenBis sans leader
 """
+
 #num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("AllRobots.log","r")
+f = open("XP3/AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
@@ -284,4 +285,3 @@ for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
 if save:
 	plt.savefig('boxplot.png')
 plt.show()
-"""

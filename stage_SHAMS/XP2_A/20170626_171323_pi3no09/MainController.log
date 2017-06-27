@@ -1,24 +1,4 @@
-2016-12-16 15:37:44,597 - DEBUG: MainController - Running.
-2016-12-16 15:37:44,598 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 15:38:10,356 - DEBUG: CommandsListener - Received command from (192.168.0.210, 60609)
-2016-12-16 15:38:10,357 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 15:38:10,360 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76401710>
-2016-12-16 15:38:10,360 - DEBUG: CommandsListener - Transmitting command 5 to controller.
-2016-12-16 15:38:10,361 - DEBUG: MainController - Command 5 received.
-2016-12-16 15:38:10,362 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 15:38:10,368 - DEBUG: MainController - Treating command : 5
-2016-12-16 15:38:10,369 - DEBUG: MainController - Setting simulation...
-2016-12-16 15:39:44,993 - DEBUG: CommandsListener - Received command from (192.168.0.210, 60618)
-2016-12-16 15:39:44,994 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 15:39:44,995 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76403648>
-2016-12-16 15:39:44,996 - DEBUG: CommandsListener - Transmitting command 0 to controller.
-2016-12-16 15:39:44,997 - DEBUG: MainController - Command 0 received.
-2016-12-16 15:39:44,998 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 15:39:45,003 - DEBUG: MainController - Treating command : 0
-2016-12-16 15:39:45,005 - DEBUG: MainController - Loading simulation...
-2016-12-16 15:39:45,005 - DEBUG: Params - Parsing configuration file.
-2016-12-16 15:39:45,727 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
-2016-12-16 15:39:45,728 - DEBUG: ThymioController - Running.
+ROBOT 9
 2016-12-16 15:39:48,228 - SIMU: ======================================
 2016-12-16 15:39:48,229 - SIMU: ====== SimulationFollowLightGenBis ======
 2016-12-16 15:39:48,230 - SIMU: ======================================
@@ -98,54 +78,3 @@
 2016-12-16 15:49:00,885 - SIMU: fitness_champion 0.0505734488184
 2016-12-16 15:49:00,886 - SIMU: champion [0.19791965614514623, -0.24426119940752303, 0.38176997837797166, 0.2500696018232184, -1.054473013850936, 0.3769540412480088, 0.8673933107845959, 0.2435854218585761, 0.03834167794113861, 0.934958610891693, -0.24530217500034865, 0.3244111757467084, 1.1541760129886918, 0.30423520701663676, 0.4825696190305764, -1.2114993951588913, 0.5289226369105502, 0.5763309256784104]
 2016-12-16 15:49:00,886 - SIMU: ======================================
-2016-12-16 15:49:01,905 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:02,321 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:02,837 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:04,002 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:04,003 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:04,669 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:04,734 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:07,551 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:07,552 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:07,584 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:09,000 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:09,666 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:09,831 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:09,896 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:12,462 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:12,527 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:12,692 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:14,208 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:14,273 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:14,739 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:17,205 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:17,420 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:17,484 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:19,151 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:19,867 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:19,985 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:21,501 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:22,468 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:22,500 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:24,167 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:24,483 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:24,515 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:26,581 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:27,096 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:27,663 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:28,379 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:29,494 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:29,659 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:31,125 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:32,541 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:33,058 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:33,423 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:34,190 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:34,655 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:36,623 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:37,738 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:38,906 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:39,773 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:42,775 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 15:49:50,444 - ERROR: MainController - Request for simulation stop while no simulation started.
-2016-12-16 15:49:52,910 - ERROR: MainController - Request for simulation stop while no simulation started.

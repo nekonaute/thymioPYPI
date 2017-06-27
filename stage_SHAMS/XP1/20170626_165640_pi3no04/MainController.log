@@ -1,24 +1,4 @@
-2016-12-17 02:20:34,567 - DEBUG: MainController - Running.
-2016-12-17 02:20:34,568 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 02:20:50,590 - DEBUG: CommandsListener - Received command from (192.168.0.210, 33673)
-2016-12-17 02:20:50,591 - DEBUG: CommandsListener - Receiving command...
-2016-12-17 02:20:50,595 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x7643f710>
-2016-12-17 02:20:50,597 - DEBUG: CommandsListener - Transmitting command 5 to controller.
-2016-12-17 02:20:50,598 - DEBUG: MainController - Command 5 received.
-2016-12-17 02:20:50,600 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 02:20:50,603 - DEBUG: MainController - Treating command : 5
-2016-12-17 02:20:50,604 - DEBUG: MainController - Setting simulation...
-2016-12-17 02:21:26,455 - DEBUG: CommandsListener - Received command from (192.168.0.210, 33682)
-2016-12-17 02:21:26,456 - DEBUG: CommandsListener - Receiving command...
-2016-12-17 02:21:26,458 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76441940>
-2016-12-17 02:21:26,460 - DEBUG: CommandsListener - Transmitting command 0 to controller.
-2016-12-17 02:21:26,461 - DEBUG: MainController - Command 0 received.
-2016-12-17 02:21:26,462 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-17 02:21:26,478 - DEBUG: MainController - Treating command : 0
-2016-12-17 02:21:26,479 - DEBUG: MainController - Loading simulation...
-2016-12-17 02:21:26,480 - DEBUG: Params - Parsing configuration file.
-2016-12-17 02:21:28,189 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
-2016-12-17 02:21:28,190 - DEBUG: ThymioController - Running.
+ROBOT 4
 2016-12-17 02:21:30,793 - SIMU: ======================================
 2016-12-17 02:21:30,795 - SIMU: ====== SimulationFollowLightGenBis ======
 2016-12-17 02:21:30,796 - SIMU: ======================================

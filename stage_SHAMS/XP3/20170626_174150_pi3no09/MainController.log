@@ -1,24 +1,4 @@
-2016-12-16 16:07:34,550 - DEBUG: MainController - Running.
-2016-12-16 16:07:34,552 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:07:39,062 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51942)
-2016-12-16 16:07:39,063 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 16:07:39,065 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76401710>
-2016-12-16 16:07:39,066 - DEBUG: CommandsListener - Transmitting command 5 to controller.
-2016-12-16 16:07:39,067 - DEBUG: MainController - Command 5 received.
-2016-12-16 16:07:39,068 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:07:39,068 - DEBUG: MainController - Treating command : 5
-2016-12-16 16:07:39,069 - DEBUG: MainController - Setting simulation...
-2016-12-16 16:08:04,079 - DEBUG: CommandsListener - Received command from (192.168.0.210, 51951)
-2016-12-16 16:08:04,080 - DEBUG: CommandsListener - Receiving command...
-2016-12-16 16:08:04,082 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76403620>
-2016-12-16 16:08:04,083 - DEBUG: CommandsListener - Transmitting command 0 to controller.
-2016-12-16 16:08:04,084 - DEBUG: MainController - Command 0 received.
-2016-12-16 16:08:04,085 - DEBUG: CommandsListener - Waiting on accept...
-2016-12-16 16:08:04,092 - DEBUG: MainController - Treating command : 0
-2016-12-16 16:08:04,093 - DEBUG: MainController - Loading simulation...
-2016-12-16 16:08:04,094 - DEBUG: Params - Parsing configuration file.
-2016-12-16 16:08:04,853 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
-2016-12-16 16:08:04,854 - DEBUG: ThymioController - Running.
+ROBOT 9
 2016-12-16 16:08:07,359 - SIMU: ======================================
 2016-12-16 16:08:07,361 - SIMU: ====== SimulationFollowLightGenBis ======
 2016-12-16 16:08:07,362 - SIMU: ======================================
@@ -104,41 +84,3 @@
 2016-12-16 16:17:40,059 - SIMU: fitness_champion 0.733227108614
 2016-12-16 16:17:40,060 - SIMU: champion [-8.72973190953905, 3.337808058601565, -17.79303023888174, -6.268799786811293, -5.102210807419702, -6.980664496577993, 10.171638844441922, 3.6935462948844986, 12.509004244425528, 10.422317131459787, 11.190686924643327, -10.051683890475262, 5.160909721656115, 13.588842504027745, 6.0573267034813245, 9.280249081179916, 14.823045675112663, 4.09349077286536]
 2016-12-16 16:17:40,060 - SIMU: ======================================
-2016-12-16 16:17:40,499 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:41,214 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:42,880 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:42,913 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:43,078 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:44,894 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:45,210 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:45,576 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:46,691 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:47,306 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:47,672 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:47,937 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:49,603 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:50,019 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:50,286 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:51,702 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:52,568 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:52,633 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:53,048 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:55,414 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:55,479 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:55,644 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:56,759 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:57,224 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:17:58,257 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:00,623 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:01,489 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:02,805 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:02,921 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:05,638 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:06,455 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:07,770 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:08,637 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:10,404 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:12,619 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:15,735 - ERROR: MainController - Request for sending com message while no simulation started.
-2016-12-16 16:18:39,407 - ERROR: MainController - Request for simulation stop while no simulation started.
-2016-12-16 16:18:42,374 - ERROR: MainController - Request for simulation stop while no simulation started.
