@@ -85,3 +85,15 @@ ROBOT 8
 2016-12-16 17:06:09,577 - SIMU: fitness_champion 0.0414114454927
 2016-12-16 17:06:09,579 - SIMU: champion [0.7891172161834147, 0.7431502242370969, 0.48886636090588886, -1.0523900001633364, 0.23625242489991127, 0.43867747958917813, 0.07813597926389391, -0.6579400337137091, 0.8425772791774722, 0.6919830753301417, 0.18125044194467171, 0.42069335128594987, 0.0780294866476162, 0.1848087291915107, 1.430479642546159, 0.1540643494687004, 0.6784822308116163, 0.7151000924634026]
 2016-12-16 17:06:09,580 - SIMU: ======================================
+2016-12-16 17:06:09,655 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:09,970 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:10,147 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:10,512 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:10,928 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:11,243 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:12,245 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:14,560 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:17,280 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:19,395 - ERROR: MainController - Request for sending com message while no simulation started.
+2016-12-16 17:06:36,864 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-16 17:06:38,831 - ERROR: MainController - Request for simulation stop while no simulation started.

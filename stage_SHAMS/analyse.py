@@ -219,7 +219,7 @@ plt.show()
 #num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("XP3/AllRobots.log","r")
+f = open("XP6_B/AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
@@ -277,8 +277,8 @@ plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
 list_color = ['red' if i in new_random_gen else 'black' for i in range(len(x))]
-print list_color
-print new_random_gen
+#print list_color
+#print new_random_gen
 plt.xticks(x, rotation=90)
 for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
 	ticklabel.set_color(tickcolor)
