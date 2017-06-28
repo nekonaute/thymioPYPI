@@ -8,7 +8,7 @@ Encadrant : Nicolas Bredeche
 @author Tanguy SOTO
 @author Parham SHAMS
 
-Application d'un génome évolué avec SimulationFollowLightGen(Online)
+Application d'un génome évolué avec SimulationFollowLightGen(Bis)(Online)
 """
 
 import Simulation
