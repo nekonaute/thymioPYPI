@@ -21,6 +21,7 @@ import LightSensor
 import Genome
 
 from tools.camera_tools.tag_recognition import CNT,IDS,DST
+from tools.camera_tools import settings
 import numpy as np
 import cv2
 
@@ -53,7 +54,10 @@ class SimulationPushObjectGenOnline(Simulation.Simulation) :
 		self.fitnessChallenger = 0					# fitness du challenger
 		self.sigma = Params.params.sigma				# sigma
 		self.sleep = Params.params.wait
+		
+		# PushObjectGenOnline
 		self.distList = []
+		self.image_shape = settings.camera_settings['resolution']
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationPushObjectGenOnline - preActions()")
@@ -160,7 +164,7 @@ class SimulationPushObjectGenOnline(Simulation.Simulation) :
 		for d in self.distList:
 			s+=d							
 							
-		speedValue = s #* \
+		speedValue = s * self.getTransitiveAcceleration() #* \
 				   #(1 - max_sensors)#*self.lightValue
 				   #(1 - self.getAngularAcceleration()) * \
 							
@@ -227,19 +231,18 @@ class SimulationPushObjectGenOnline(Simulation.Simulation) :
 					lightLR=0
 				else:
 					lightLR=1
-				self.mainLogger.simu('SimulationPushObjectGenOnline - following tag: %d' % tags_ids[nearest] +str(type(tag_dist)))
+				self.mainLogger.simu('SimulationPushObjectGenOnline - following tag: %d' % tags_ids[nearest] +str(tag_dist))
 				
 			else:
-				tag_dist=9999999999999999999
+				tag_dist=[9999999999999999999]
 		else:
-			tag_dist=9999999999999999999
+			tag_dist=[9999999999999999999]
 					
-		self.mainLogger.simu('SimulationPushObjectGenOnline - following tag: ' +str(type(tag_dist)))
 		
 		if not v:
 			tag_dist=0
 		else:
-			tag_dist=1/tag_dist
+			tag_dist=1/tag_dist[0]
 			
 		self.distList.append(tag_dist)
 		if len(self.distList)>=20:
@@ -260,7 +263,10 @@ class SimulationPushObjectGenOnline(Simulation.Simulation) :
 		self.waitForControllerResponse()			
 		
 	def getTransitiveAcceleration(self):
-		return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
+		if self.left<0 or self.right<0:
+			return 0
+		else:
+			return abs(self.left + self.right) / (2*Params.params.maxSpeedValue)
 		
 	def getAngularAcceleration(self):
 		return abs(self.left - self.right) / (2*Params.params.maxSpeedValue)
