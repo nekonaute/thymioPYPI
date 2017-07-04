@@ -47,7 +47,7 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 		self.genomeList = []						# liste de couples contenant les génomes reçus et la fitness associée
 		self.fitnessList = []						# Liste des fitnesses calculées durant une génération
 		self.iter = 1								# nombre d'itérations total
-		self.fitness = 0							# fitness du robot
+		self.fitness = [0,0]						# couple fitness1 et fitness 2 du robot
 		self.fitnessWindow = []						# valeurs de fitness du robot		
 		self.hostname = None						# hostname
 		self.tags_ids = []
@@ -175,16 +175,16 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 						if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							#self.broadcast(self.genome,fitnessNP.mean())
-							self.broadcast(self.genome,fitnessNP.max())
-							#self.broadcast(self.genome,fitnessNP.min())
-							
+							#self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
+							self.broadcast(self.genome,np.max(fitnessNP,axis=0))
+							#self.broadcast(self.genome,np.min(fitnessNP,axis=0))
+						
 						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							#self.broadcast(self.genome,fitnessNP.mean())
-							self.broadcast(self.genome,fitnessNP.max())
-							#self.broadcast(self.genome,fitnessNP.min())
+							#self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
+							self.broadcast(self.genome,np.max(fitnessNP,axis=0))
+							#self.broadcast(self.genome,np.min(fitnessNP,axis=0))
 							
 							self.fitnessList = []
 				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
@@ -288,15 +288,18 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 		if speedValue<0:
 			speedValue=0					
 							
-		self.fitnessWindow.append(speedValue)
+		self.fitnessWindow.append([speedValue,self.lightValue])
 
 		#self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
 		
-		cur_fit = 0.0
+		cur_fit1 = 0.0
+		cur_fit2 = 0.0
+
 		for f in self.fitnessWindow:
-			cur_fit += f	
+			cur_fit1 += f[0]
+			cur_fit2 += f[1]
 		
-		return cur_fit/len(self.fitnessWindow)
+		return [cur_fit1/len(self.fitnessWindow),cur_fit2/len(self.fitnessWindow)]
 		
 	def getTransitiveAcceleration(self):
 		if self.left<0 or self.right<0:
@@ -322,7 +325,7 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 						currRecipientsList+=str(recipientsList[i])
 						break
 			
-			myValue = str(fitness)+'$'+str(genome.gene)			
+			myValue = str(fitness[0])+'$'+str(fitness[1])+'$'+str(genome.gene)			
 			
 			#self.mainLogger.simu("broadcast - "+currRecipientsList)
 			#self.sendMessage(recipients = currRecipientsList, value = myValue)    
@@ -336,24 +339,46 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 	def select(self,genes):
 		""" 
 		Selectionne un genome parmis ceux contenus dans genes, en effectuant 
-		une sélection en fitness prop
+		une sélection en fit prop (en aggregant les deux fitnesses par une somme ponderee)
+		parmi les solutions non dominées au sens de Pareto (max f1 et max f2)
 		"""
 		
-		self.mainLogger.debug("SimulationFollowLightGen - select()")
+		self.mainLogger.debug("SimulationPushObjectGen - select()")
 		
 		l=list(genes)
+		
+		# on calcule les solutions non dominees au sens de Pareto (max f1 max f2)
+		f1=[]
+		f2=[]
+		to_remove=[] #liste des indices des dominés
+		for i in range(len(l)):
+			f1.append(l[i][0][0])
+			f2.append(l[i][0][1])
+		pareto = self.pareto_frontier(f1,f2)		
+
+		for i in range(len(l)):
+			if l[i][0][0] not in pareto[0] or l[i][0][1] not in pareto[1]:
+				to_remove.append(i)
+				
+		to_remove.reverse()
+		for i in to_remove:
+			l.remove(i)
+			
+		if len(l)==0:
+			self.mainLogger.critical("SimulationPushObjectGen - select() : pas de solution retenue")		
+		
 		s = 0.0
 		for i in xrange(len(l)):
-			s+=l[i][0]
+			s+=0.5*l[i][0][0]+0.5*l[i][0][1]
 		if s!=0:
-			lbis=[i[0]/s for i in l]
+			lbis=[i[0]/s for i in l] 
 			cumsum_array=np.cumsum(lbis)
 			rand = random.random()
 			for j in xrange(len(cumsum_array)):
 				if rand<=cumsum_array[j]:
 					return Genome.Genome(self.mainLogger,geneValue=l[j][1])
 		else:
-			self.mainLogger.simu("SimulationPushObjectGen - select() : somme des fitness est nulle")
+			self.mainLogger.simu("SimulationPushObjectGen - select() : somme des fitness ponderee est nulle")
 			return Genome.Genome(self.mainLogger,geneValue=l[0][1]) 			
 			
 			
@@ -397,8 +422,8 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 			if sender!=self.hostname:
 				if "value" in data.keys():
 					value = data["value"].split("$")
-					fitness = float(value[0])
-					gene = ast.literal_eval(value[1])
+					fitness = [float(value[0]),float(value[1])]
+					gene = ast.literal_eval(value[2])
 					
 					self.genomeList.append((fitness,gene))
 					
@@ -440,6 +465,29 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 		self.tController.writeMotorsSpeedRequest([totalLeft, totalRight])
 
 		return True
+	
+	def pareto_frontier(Xs, Ys, maxX = True, maxY = True):
+		"""
+		Fonction qui renvoie la frontiere de Pareto des points donnes en parametre par les listes Xs et Ys.
+		Par defaut maxX et maxY sont a True, ce qui signifie que l'on renvoie la frontiere de Pareto 
+		correspndant a la maximisation en X et en Y
+		"""
+		# Sort the list in either ascending or descending order of X
+		myList = sorted([[Xs[i], Ys[i]] for i in range(len(Xs))], reverse=maxX)
+		# Start the Pareto frontier with the first value in the sorted list
+		p_front = [myList[0]]    
+		# Loop through the sorted list
+		for pair in myList[1:]:
+			if maxY: 
+				if pair[1] >= p_front[-1][1]: # Look for higher values of Y…
+					p_front.append(pair) # … and add them to the Pareto frontier
+			else:
+				if pair[1] <= p_front[-1][1]: # Look for lower values of Y…
+					p_front.append(pair) # … and add them to the Pareto frontier
+		# Turn resulting pairs back into a list of Xs and Ys
+		p_frontX = [pair[0] for pair in p_front]
+		p_frontY = [pair[1] for pair in p_front]
+		return p_frontX, p_frontY
 		
 		
 		#set config_PushObjectGen.cfg
