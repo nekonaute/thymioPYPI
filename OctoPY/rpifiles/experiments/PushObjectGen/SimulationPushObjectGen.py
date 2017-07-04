@@ -282,13 +282,14 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 			max_sensors = max(max_sensors,proxSensors[i])
 								
 		speedValue = (self.getTransitiveAcceleration()) * \
-				   (1 - self.getAngularAcceleration()) * \
-				   (1 - max_sensors)
-							
+				   (1 - self.getAngularAcceleration())
+		
+		evitement = (1 - max_sensors)
+		
 		if speedValue<0:
 			speedValue=0					
 							
-		self.fitnessWindow.append([speedValue,self.lightValue])
+		self.fitnessWindow.append([speedValue,evitement])
 
 		#self.mainLogger.info(str((self.getTransitiveAcceleration()))+" "+str((1 - self.getAngularAcceleration()))+" "+str((1 - max_sensors))+" "+str(self.lightValue))		
 		
