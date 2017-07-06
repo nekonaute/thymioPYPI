@@ -68,7 +68,7 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 			proc.wait()
 		
 		# Genome we want to spread
-		if self.hostname=="pi3no22":
+		if self.hostname=="pi3no02":
 			genes = Params.params.genome.split(",") # genome que l'on veut appliquer
 			for i in range(len(genes)):
 				genes[i] = float(genes[i])
@@ -175,15 +175,15 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 						if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							#self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
-							self.broadcast(self.genome,np.max(fitnessNP,axis=0))
+							self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
+							#self.broadcast(self.genome,np.max(fitnessNP,axis=0))
 							#self.broadcast(self.genome,np.min(fitnessNP,axis=0))
 						
 						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
 							fitnessNP = np.asarray(self.fitnessList)
 															
-							#self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
-							self.broadcast(self.genome,np.max(fitnessNP,axis=0))
+							self.broadcast(self.genome,np.mean(fitnessNP,axis=0))
+							#self.broadcast(self.genome,np.max(fitnessNP,axis=0))
 							#self.broadcast(self.genome,np.min(fitnessNP,axis=0))
 							
 							self.fitnessList = []
@@ -191,7 +191,7 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 			# changement de génération	
 			else:
 				if self.genome!=None:
-					self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
+					self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended f1="+str(self.fitness[0])+" f2="+str(self.fitness[1]))
 					#self.genome = None
 					self.fitnessWindow = []
 				
@@ -287,7 +287,10 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 		evitement = (1 - max_sensors)
 		
 		if speedValue<0:
-			speedValue=0					
+			speedValue=0			
+			
+		if max_sensors<0:
+			max_sensors=0	
 							
 		self.fitnessWindow.append([speedValue,evitement])
 
@@ -340,8 +343,9 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 	def select(self,genes):
 		""" 
 		Selectionne un genome parmis ceux contenus dans genes, en effectuant 
-		une sélection en fit prop (en aggregant les deux fitnesses par une somme ponderee)
-		parmi les solutions non dominées au sens de Pareto (max f1 et max f2)
+		une sélection en fit prop (en aggregant les deux fitnesses par une moyenne des deux fitnesses 
+		ou par une moyenne harmonique des deux fitnesses)	parmi les solutions 
+		non dominées au sens de Pareto (max f1 et max f2)
 		"""
 		
 		self.mainLogger.debug("SimulationPushObjectGen - select()")
@@ -355,24 +359,26 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 		for i in range(len(l)):
 			f1.append(l[i][0][0])
 			f2.append(l[i][0][1])
-		pareto = self.pareto_frontier(f1,f2)		
-
+		#self.mainLogger.simu("SimulationPushObjectGen - select()"+str(f1)+str(len(f1)))
+		pareto = self.pareto_frontier(f1,f2,True,True)		
+		
 		for i in range(len(l)):
 			if l[i][0][0] not in pareto[0] or l[i][0][1] not in pareto[1]:
 				to_remove.append(i)
 				
 		to_remove.reverse()
 		for i in to_remove:
-			l.remove(i)
+			l.pop(i)
 			
 		if len(l)==0:
 			self.mainLogger.critical("SimulationPushObjectGen - select() : pas de solution retenue")		
 		
 		s = 0.0
 		for i in xrange(len(l)):
-			s+=0.5*l[i][0][0]+0.5*l[i][0][1]
+			s += 0.5*l[i][0][0]+0.5*l[i][0][1] # moyenne pondérée
+			s += 2.0*l[i][0][0]*l[i][0][1]/(l[i][0][0]+l[i][0][1]) # moyenne harmonique
 		if s!=0:
-			lbis=[i[0]/s for i in l] 
+			lbis=[(0.5*i[0][0]+0.5*i[0][1]) /s for i in l] 
 			cumsum_array=np.cumsum(lbis)
 			rand = random.random()
 			for j in xrange(len(cumsum_array)):
@@ -467,12 +473,13 @@ class SimulationPushObjectGen(Simulation.Simulation) :
 
 		return True
 	
-	def pareto_frontier(Xs, Ys, maxX = True, maxY = True):
+	def pareto_frontier(self, Xs, Ys, maxX = True, maxY = True):
 		"""
 		Fonction qui renvoie la frontiere de Pareto des points donnes en parametre par les listes Xs et Ys.
 		Par defaut maxX et maxY sont a True, ce qui signifie que l'on renvoie la frontiere de Pareto 
 		correspndant a la maximisation en X et en Y
 		"""
+		
 		# Sort the list in either ascending or descending order of X
 		myList = sorted([[Xs[i], Ys[i]] for i in range(len(Xs))], reverse=maxX)
 		# Start the Pareto frontier with the first value in the sorted list
