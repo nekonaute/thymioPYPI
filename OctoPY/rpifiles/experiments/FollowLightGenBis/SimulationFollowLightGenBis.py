@@ -7,7 +7,7 @@ Encadrant : Nicolas Bredeche
 
 @author Parham SHAMS
 
-Comportement évolutionniste de suivi de lumière basé sur VanillaEE
+Comportement évolutionniste d'évitement d obstacles basé sur VanillaEE
 """
 import time
 import random
@@ -56,6 +56,11 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		# Braitenberg
 		
 		self.__probaTurn = 0.001
+		
+		# generations (synchronisation avec pi3no03 comme leader/reference)
+		
+		self.gen_bool = False
+		self.gen = 0
 
 	def preActions(self) :
 		self.mainLogger.debug("SimulationFollowLightGenBis - preActions()")
@@ -166,32 +171,58 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 						self.broadcast(self.genome,self.fitness)
 			"""
 			# evaluation de la génération
-			if self.iter%Params.params.lifetime != 0:
+			#if self.iter%Params.params.lifetime != 0:
+			if self.gen_bool == False:
 				if self.genome!=None:
 					self.move()
 					if self.iter%Params.params.lifetime>Params.params.windowSize:
 						self.fitness = self.computeFitness()
 						self.fitnessList.append(self.fitness)
-						if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
-							fitnessNP = np.asarray(self.fitnessList)
-															
-							#self.broadcast(self.genome,fitnessNP.mean())
-							self.broadcast(self.genome,fitnessNP.max())
-							#self.broadcast(self.genome,fitnessNP.min())
-							
-						if self.iter%Params.params.lifetime==Params.params.lifetime-1:
-							fitnessNP = np.asarray(self.fitnessList)
-															
-							#self.broadcast(self.genome,fitnessNP.mean())
-							self.broadcast(self.genome,fitnessNP.max())
-							#self.broadcast(self.genome,fitnessNP.min())
-							
-							self.fitnessList = []
+					if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
+						fitnessNP = np.asarray(self.fitnessList)
+														
+						self.broadcast(self.genome,fitnessNP.mean())
+						#self.broadcast(self.genome,fitnessNP.max())
+						#self.broadcast(self.genome,fitnessNP.min())
+					"""	
+					if self.iter%Params.params.lifetime==Params.params.lifetime-1:
+						fitnessNP = np.asarray(self.fitnessList)
+														
+						#self.broadcast(self.genome,fitnessNP.mean())
+						self.broadcast(self.genome,fitnessNP.max())
+						#self.broadcast(self.genome,fitnessNP.min())
+						
+						self.fitnessList = []
+					"""
+					
+					# le robot leader previent les autres que la generation est finie
+					if self.hostname=="pi3no03" and self.iter%Params.params.lifetime == 0:
+						fitnessNP = np.asarray(self.fitnessList)
+														
+						self.broadcast(self.genome,fitnessNP.mean(),True)
+						#self.broadcast(self.genome,fitnessNP.max(),True)
+						#self.broadcast(self.genome,fitnessNP.min(),True)
+						self.gen_bool = True
+						self.fitnessList = []
 				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
 			# changement de génération	
 			else:
+				# les autres robots que le leader envoient leur fitness
+				if self.hostname!="pi3no03":
+					fitnessNP = np.asarray(self.fitnessList)
+													
+					self.broadcast(self.genome,fitnessNP.mean())
+					#self.broadcast(self.genome,fitnessNP.max())
+					#self.broadcast(self.genome,fitnessNP.min())
+					self.fitnessList = []
+					
+				# temps necessaire pour que tout le monde envoie et recoive les infos de fin de generation
+				time.sleep(4)		
+				
+				self.gen+=1
 				if self.genome!=None:
-					self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
+					# old self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
+					self.mainLogger.simu(str(self.gen)+" generation ended "+str(self.fitness))
 					#self.genome = None
 					self.fitnessWindow = []
 				
@@ -206,12 +237,12 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					self.mainLogger.critical("SimulationFollowLightGenBis - step() : NE DOIT PAS ARRIVER")
 	
 				self.genomeList=[]	
+				self.gen_bool=False
 				
-		if self.iter>=Params.params.duration+Params.params.duration/5:
+		if self.gen==Params.params.duration/Params.params.lifetime:
 			self.stop()
 
 		self.iter+=1
-		time.sleep(Params.params.wait)		
 		
 		"""
 		self.tController.readMicRequest()
@@ -307,7 +338,10 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 	def getAngularAcceleration(self):
 		return abs(self.left - self.right) / (2*Params.params.maxSpeedValue)
 	
-	def broadcast(self,genome,fitness):
+	def broadcast(self,genome,fitness,boolean = False):
+		"""
+		le parametre boolean indique si on doit changer de generation ou pas
+		"""
 		try :
 			currRecipientsList = self.hostname
 			recipientsList = Params.params.hostnames
@@ -322,7 +356,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 						currRecipientsList+=str(recipientsList[i])
 						break
 			
-			myValue = str(fitness)+'$'+str(genome.gene)			
+			myValue = str(fitness)+'$'+str(genome.gene)+'$'+str(boolean)
 			
 			#self.mainLogger.simu("broadcast - "+currRecipientsList)
 			#self.sendMessage(recipients = currRecipientsList, value = myValue)    
@@ -369,7 +403,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		elif rand<=cumsum[1]:
 			return selectedGenome.mutationGaussienne(sigma)
 		elif rand<=cumsum[2]:
-			if self.iter/Params.params.lifetime>30:
+			if self.gen>30:
 				return selectedGenome.mutationGaussienne(sigma)
 			a,b,c=random.randint(0,255),random.randint(0,255),random.randint(0,255)
 			self.tController.writeColorRequest([a, b, c])
@@ -399,6 +433,8 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					value = data["value"].split("$")
 					fitness = float(value[0])
 					gene = ast.literal_eval(value[1])
+					if sender=="pi3no03" and value[2]=='True':		
+						self.gen_bool = True
 					
 					self.genomeList.append((fitness,gene))
 					
