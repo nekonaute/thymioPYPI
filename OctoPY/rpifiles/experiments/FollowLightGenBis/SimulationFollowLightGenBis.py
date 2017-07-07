@@ -217,12 +217,12 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					self.fitnessList = []
 					
 				# temps necessaire pour que tout le monde envoie et recoive les infos de fin de generation
-				time.sleep(4)		
-				
+				time.sleep(0.5)		
+				self.mainLogger.simu(str(self.gen)+" generation ended "+str(self.fitness))
 				self.gen+=1
 				if self.genome!=None:
 					# old self.mainLogger.simu(str(self.iter/Params.params.lifetime)+" generation ended "+str(self.fitness))
-					self.mainLogger.simu(str(self.gen)+" generation ended "+str(self.fitness))
+					#self.mainLogger.simu("Nombre de fitnesses recues"+str(len(self.genomeList)))
 					#self.genome = None
 					self.fitnessWindow = []
 				
@@ -239,10 +239,11 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				self.genomeList=[]	
 				self.gen_bool=False
 				
-		if self.gen==Params.params.duration/Params.params.lifetime:
+		if self.gen>Params.params.duration/Params.params.lifetime:
 			self.stop()
 
 		self.iter+=1
+		time.sleep(Params.params.wait)
 		
 		"""
 		self.tController.readMicRequest()
@@ -403,7 +404,7 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 		elif rand<=cumsum[1]:
 			return selectedGenome.mutationGaussienne(sigma)
 		elif rand<=cumsum[2]:
-			if self.gen>30:
+			if self.gen>Params.params.duration/(2*Params.params.lifetime):
 				return selectedGenome.mutationGaussienne(sigma)
 			a,b,c=random.randint(0,255),random.randint(0,255),random.randint(0,255)
 			self.tController.writeColorRequest([a, b, c])

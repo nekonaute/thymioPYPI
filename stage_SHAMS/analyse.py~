@@ -219,7 +219,7 @@ plt.show()
 #num_robot = [2,3,4,5,6,7,8,9,11]
 
 # on a les lignes
-f = open("XP6_A/AllRobots.log","r")
+f = open("mean/XP1_100gen/AllRobots.log","r")
 s = f.readlines()
 
 data_others = []
@@ -258,8 +258,17 @@ for i in range(len(curr_data)): #nb generations
 
 # moyennes
 means = []
+maxes = []
+maxEver = []
 for l in data_gene:
 	s=0
+	max_gen=max(l)
+	if len(maxEver)>0:
+		maxx=max(maxEver[-1],max_gen)
+	else:
+		maxx=max_gen
+	maxes.append(max_gen)
+	maxEver.append(maxx)
 	for v in l:
 		s+=v
 	s/=len(l)
@@ -269,19 +278,25 @@ data_gene = data_gene[:]
 
 x = range(1,len(data_gene)+1)
 
-plt.boxplot(data_gene)	
+#plt.boxplot(data_gene)	
 plt.plot(x,means,label="moyenne",color="red")
+plt.plot(x,maxes,label="max",color="green")
+plt.plot(x,maxEver,label="maxEver",color="purple")
 
 plt.title('')
 plt.xlabel('generation')
 plt.ylabel('fitness')
 plt.legend(loc="best")
+"""
 list_color = ['red' if i in new_random_gen else 'black' for i in range(len(x))]
 #print list_color
 #print new_random_gen
 plt.xticks(x, rotation=90)
 for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
 	ticklabel.set_color(tickcolor)
+"""
+
+plt.xticks(range(0,len(data_gene)+1,5))
 if save:
 	plt.savefig('boxplot.png')
 plt.show()
