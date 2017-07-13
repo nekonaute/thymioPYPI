@@ -1,0 +1,154 @@
+2016-12-17 05:12:06,737 - DEBUG: MainController - Running.
+2016-12-17 05:12:06,739 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-17 05:12:30,810 - DEBUG: CommandsListener - Received command from (192.168.0.210, 39363)
+2016-12-17 05:12:30,811 - DEBUG: CommandsListener - Receiving command...
+2016-12-17 05:12:30,814 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76444710>
+2016-12-17 05:12:30,814 - DEBUG: CommandsListener - Transmitting command 5 to controller.
+2016-12-17 05:12:30,815 - DEBUG: MainController - Command 5 received.
+2016-12-17 05:12:30,816 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-17 05:12:30,857 - DEBUG: MainController - Treating command : 5
+2016-12-17 05:12:30,858 - DEBUG: MainController - Setting simulation...
+2016-12-17 05:12:51,914 - DEBUG: CommandsListener - Received command from (192.168.0.210, 39371)
+2016-12-17 05:12:51,915 - DEBUG: CommandsListener - Receiving command...
+2016-12-17 05:12:51,916 - DEBUG: CommandsListener - Received <Utils.Message instance at 0x76446648>
+2016-12-17 05:12:51,917 - DEBUG: CommandsListener - Transmitting command 0 to controller.
+2016-12-17 05:12:51,918 - DEBUG: MainController - Command 0 received.
+2016-12-17 05:12:51,918 - DEBUG: CommandsListener - Waiting on accept...
+2016-12-17 05:12:51,926 - DEBUG: MainController - Treating command : 0
+2016-12-17 05:12:51,927 - DEBUG: MainController - Loading simulation...
+2016-12-17 05:12:51,928 - DEBUG: Params - Parsing configuration file.
+2016-12-17 05:12:52,598 - CRITICAL: dbus.Array([dbus.String(u'thymio-II')], signature=dbus.Signature('s'))
+2016-12-17 05:12:52,599 - DEBUG: ThymioController - Running.
+2016-12-17 05:12:55,036 - SIMU: ======================================
+2016-12-17 05:12:55,037 - SIMU: ====== SimulationFollowLightGenBis ======
+2016-12-17 05:12:55,038 - SIMU: ======================================
+2016-12-17 05:12:55,038 - SIMU: -------------------
+2016-12-17 05:12:55,039 - SIMU: Parameters :
+2016-12-17 05:12:55,040 - SIMU: duration 6000
+2016-12-17 05:12:55,040 - SIMU: lifetime 60
+2016-12-17 05:12:55,041 - SIMU: sleep 0.1
+2016-12-17 05:12:55,042 - SIMU: windowSize 20
+2016-12-17 05:12:55,042 - SIMU: probabilities pcopy pgauss prandom 0.4 0.4 0.2
+2016-12-17 05:12:55,043 - SIMU: sigma 0.1
+2016-12-17 05:12:55,044 - SIMU: -------------------
+2016-12-17 05:12:55,044 - SIMU: Start :
+2016-12-17 05:13:06,200 - SIMU: 0 generation ended 0.0
+2016-12-17 05:13:16,550 - SIMU: 1 generation ended 0.442939440195
+2016-12-17 05:13:26,873 - SIMU: 2 generation ended 0.242408892253
+2016-12-17 05:13:36,963 - SIMU: 3 generation ended 0.533612854491
+2016-12-17 05:13:36,971 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:13:48,737 - SIMU: 4 generation ended 0.0
+2016-12-17 05:13:58,820 - SIMU: 5 generation ended 0.375808973684
+2016-12-17 05:14:08,487 - SIMU: 6 generation ended 0.054245867814
+2016-12-17 05:14:08,492 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:14:18,400 - SIMU: 7 generation ended 0.0
+2016-12-17 05:14:29,906 - SIMU: 8 generation ended 0.103709295335
+2016-12-17 05:14:38,989 - SIMU: 9 generation ended 0.0
+2016-12-17 05:14:49,790 - SIMU: 10 generation ended 0.0
+2016-12-17 05:14:49,801 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:15:00,060 - SIMU: 11 generation ended 0.0
+2016-12-17 05:15:00,080 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:15:10,348 - SIMU: 12 generation ended 0.0105760936783
+2016-12-17 05:15:20,890 - SIMU: 13 generation ended 0.0
+2016-12-17 05:15:30,468 - SIMU: 14 generation ended 0.0
+2016-12-17 05:15:30,478 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:15:39,848 - SIMU: 15 generation ended 0.0
+2016-12-17 05:15:50,591 - SIMU: 16 generation ended 0.0895342284173
+2016-12-17 05:16:01,115 - SIMU: 17 generation ended 0.187775818402
+2016-12-17 05:16:12,203 - SIMU: 18 generation ended 0.413741229471
+2016-12-17 05:16:21,849 - SIMU: 19 generation ended 0.0
+2016-12-17 05:16:32,071 - SIMU: 20 generation ended 0.0
+2016-12-17 05:16:32,076 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:16:42,265 - SIMU: 21 generation ended 0.0
+2016-12-17 05:16:52,794 - SIMU: 22 generation ended 0.000910273806029
+2016-12-17 05:17:02,552 - SIMU: 23 generation ended 0.0
+2016-12-17 05:17:13,517 - SIMU: 24 generation ended 0.0
+2016-12-17 05:17:23,079 - SIMU: 25 generation ended 0.0
+2016-12-17 05:17:33,790 - SIMU: 26 generation ended 0.0
+2016-12-17 05:17:33,799 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:17:44,693 - SIMU: 27 generation ended 0.0
+2016-12-17 05:17:44,697 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:17:54,688 - SIMU: 28 generation ended 0.0
+2016-12-17 05:17:54,698 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:18:03,759 - SIMU: 29 generation ended 0.0
+2016-12-17 05:18:13,653 - SIMU: 30 generation ended 0.382362566597
+2016-12-17 05:18:23,209 - SIMU: 31 generation ended 0.215514718587
+2016-12-17 05:18:32,775 - SIMU: 32 generation ended 0.0291769501249
+2016-12-17 05:18:42,295 - SIMU: 33 generation ended 0.0128556309138
+2016-12-17 05:18:51,755 - SIMU: 34 generation ended 0.00182776263559
+2016-12-17 05:18:51,765 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:19:01,392 - SIMU: 35 generation ended 0.0130338809489
+2016-12-17 05:19:11,386 - SIMU: 36 generation ended 0.0115059682878
+2016-12-17 05:19:20,549 - SIMU: 37 generation ended 0.0
+2016-12-17 05:19:20,555 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:19:30,713 - SIMU: 38 generation ended 0.0
+2016-12-17 05:19:40,610 - SIMU: 39 generation ended 0.0
+2016-12-17 05:19:50,727 - SIMU: 40 generation ended 0.0
+2016-12-17 05:20:00,367 - SIMU: 41 generation ended 0.0
+2016-12-17 05:20:10,353 - SIMU: 42 generation ended 0.0
+2016-12-17 05:20:10,367 - SIMU: SimulationFollowLightGen - applyVariation() : NEW RANDOM GENOME
+2016-12-17 05:20:19,917 - SIMU: 43 generation ended 0.0
+2016-12-17 05:20:29,898 - SIMU: 44 generation ended 0.0
+2016-12-17 05:20:39,838 - SIMU: 45 generation ended 0.0
+2016-12-17 05:20:49,375 - SIMU: 46 generation ended 0.0
+2016-12-17 05:20:59,731 - SIMU: 47 generation ended 0.123050569551
+2016-12-17 05:21:10,023 - SIMU: 48 generation ended 0.0
+2016-12-17 05:21:20,854 - SIMU: 49 generation ended 0.370184520956
+2016-12-17 05:21:31,916 - SIMU: 50 generation ended 0.0307181471337
+2016-12-17 05:21:42,278 - SIMU: 51 generation ended 0.046851436552
+2016-12-17 05:21:51,647 - SIMU: 52 generation ended 0.0406860310627
+2016-12-17 05:22:01,991 - SIMU: 53 generation ended 0.0346293015059
+2016-12-17 05:22:12,024 - SIMU: 54 generation ended 0.00828933127889
+2016-12-17 05:22:21,913 - SIMU: 55 generation ended 0.0136211549967
+2016-12-17 05:22:31,609 - SIMU: 56 generation ended 0.0118577655324
+2016-12-17 05:22:40,961 - SIMU: 57 generation ended 0.0139894838137
+2016-12-17 05:22:52,038 - SIMU: 58 generation ended 0.0480031176506
+2016-12-17 05:23:01,552 - SIMU: 59 generation ended 0.0338106538607
+2016-12-17 05:23:11,504 - SIMU: 60 generation ended 0.0341248943319
+2016-12-17 05:23:22,504 - SIMU: 61 generation ended 0.0390722122823
+2016-12-17 05:23:33,556 - SIMU: 62 generation ended 0.0407762375499
+2016-12-17 05:23:43,931 - SIMU: 63 generation ended 0.0364151581964
+2016-12-17 05:23:54,677 - SIMU: 64 generation ended 0.0319119666073
+2016-12-17 05:24:04,900 - SIMU: 65 generation ended 0.0213180182036
+2016-12-17 05:24:15,753 - SIMU: 66 generation ended 0.972954487127
+2016-12-17 05:24:25,820 - SIMU: 67 generation ended 0.186208951457
+2016-12-17 05:24:35,820 - SIMU: 68 generation ended 0.0531371177954
+2016-12-17 05:24:46,679 - SIMU: 69 generation ended 0.425902254877
+2016-12-17 05:24:56,598 - SIMU: 70 generation ended 0.820640944311
+2016-12-17 05:25:07,494 - SIMU: 71 generation ended 0.224125303319
+2016-12-17 05:25:18,510 - SIMU: 72 generation ended 0.62516555855
+2016-12-17 05:25:28,855 - SIMU: 73 generation ended 0.529180049842
+2016-12-17 05:25:39,058 - SIMU: 74 generation ended 0.930479805748
+2016-12-17 05:25:50,557 - SIMU: 75 generation ended 0.149824964783
+2016-12-17 05:26:00,753 - SIMU: 76 generation ended 0.755610469308
+2016-12-17 05:26:11,264 - SIMU: 77 generation ended 0.551195357704
+2016-12-17 05:26:21,690 - SIMU: 78 generation ended 0.61294011807
+2016-12-17 05:26:32,321 - SIMU: 79 generation ended 0.810320993055
+2016-12-17 05:26:42,145 - SIMU: 80 generation ended 0.854260535022
+2016-12-17 05:26:52,178 - SIMU: 81 generation ended 0.27776747677
+2016-12-17 05:27:02,334 - SIMU: 82 generation ended 0.709914340141
+2016-12-17 05:27:12,366 - SIMU: 83 generation ended 0.00154011453576
+2016-12-17 05:27:22,761 - SIMU: 84 generation ended 0.0521510420787
+2016-12-17 05:27:33,054 - SIMU: 85 generation ended 0.581667772378
+2016-12-17 05:27:43,347 - SIMU: 86 generation ended 0.555681359089
+2016-12-17 05:27:53,381 - SIMU: 87 generation ended 0.364565622008
+2016-12-17 05:28:03,602 - SIMU: 88 generation ended 0.657517965011
+2016-12-17 05:28:14,032 - SIMU: 89 generation ended 0.768282045732
+2016-12-17 05:28:24,360 - SIMU: 90 generation ended 0.85142892506
+2016-12-17 05:28:35,125 - SIMU: 91 generation ended 0.628903397405
+2016-12-17 05:28:45,377 - SIMU: 92 generation ended 0.469429470038
+2016-12-17 05:28:55,505 - SIMU: 93 generation ended 0.718507372255
+2016-12-17 05:29:05,701 - SIMU: 94 generation ended 0.568738210549
+2016-12-17 05:29:16,595 - SIMU: 95 generation ended 0.689896534343
+2016-12-17 05:29:26,625 - SIMU: 96 generation ended 0.646188735002
+2016-12-17 05:29:36,762 - SIMU: 97 generation ended 0.42486504149
+2016-12-17 05:29:48,212 - SIMU: 98 generation ended 0.865388307559
+2016-12-17 05:29:58,512 - SIMU: 99 generation ended 0.458540974378
+2016-12-17 05:30:08,839 - SIMU: 100 generation ended 0.521987224035
+2016-12-17 05:30:08,970 - SIMU: -------------------
+2016-12-17 05:30:08,971 - SIMU: End :
+2016-12-17 05:30:08,972 - SIMU: fitness_champion 0.521987224035
+2016-12-17 05:30:08,973 - SIMU: champion [0.7696519060697763, 0.025849370730380045, 0.18611815480826205, -1.8699652770737472, -1.1917875355692362, -0.0330633628372872, -0.5885219819095794, 0.3483107610017603, 0.8436936886603881, 0.8525656720615785, 1.1477333924953634, 1.3352204461588233, -0.9940453054911137, 0.062006528602684685, -0.11109462931759884, -0.32097671305598247, 0.7457702426143221, 1.465158184539394]
+2016-12-17 05:30:08,974 - SIMU: ======================================
+2016-12-17 05:30:34,262 - ERROR: MainController - Request for simulation stop while no simulation started.
+2016-12-17 05:30:40,879 - ERROR: MainController - Request for simulation stop while no simulation started.

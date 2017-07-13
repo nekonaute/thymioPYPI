@@ -218,68 +218,126 @@ plt.show()
 
 #num_robot = [2,3,4,5,6,7,8,9,11]
 
+data_gene_fin = []
+
 # on a les lignes
-f = open("mean/XP1_100gen/AllRobots.log","r")
-s = f.readlines()
+for z in xrange(1,3):
+	name_fic = "max/XP"+str(z)+"_100gen"
+	f = open(name_fic+"/AllRobots.log","r")
+	s = f.readlines()
 
-data_others = []
+	data_others = []
 
-curr_data=[]
+	curr_data=[]
 
-new_random_gen =[]
+	new_random_gen =[]
 
-for i in range(len(s)):
-	l = s[i].split(" ")
+	for i in range(len(s)):
+		l = s[i].split(" ")
 	
-	if l[0]=="ROBOT":
-		if len(curr_data)>0:
-			data_others.append(curr_data)
-			#print curr_data
-		ind=0		
-		curr_data=[]
-	elif len(l)>6 and l[6]=="ended":
-		#print str(float(l[7]))
-		#curr_data.append(min(0.5,float(l[7])))
-		curr_data.append(float(l[7]))
-		ind+=1
-	elif len(l)>8 and l[8]=="NEW":
-		new_random_gen.append(ind)
+		if l[0]=="ROBOT":
+			if len(curr_data)>0:
+				data_others.append(curr_data)
+				#print curr_data
+			ind=0		
+			curr_data=[]
+		elif len(l)>6 and l[6]=="ended":
+			#print str(float(l[7]))
+			#curr_data.append(min(0.5,float(l[7])))
+			curr_data.append(float(l[7]))
+			ind+=1
+		elif len(l)>8 and l[8]=="NEW":
+			new_random_gen.append(ind)
 		
-data_others.append(curr_data)
+	data_others.append(curr_data)
 
-data_gene = []
+	data_gene = []
 
-for i in range(len(curr_data)): #nb generations
-	data_gene.append([])
-	for j in range(len(data_others)):
-		data_gene[i].append(data_others[j][i])
+	for i in range(len(curr_data)): #nb generations
+		data_gene.append([])
+		for j in range(len(data_others)):
+			data_gene[i].append(data_others[j][i])
 
-#data_gene.reverse()
+	if z==1: # on le fait qu'une seule fois	
+		for i in range(len(curr_data)): #nb generations
+			data_gene_fin.append([])
+		#data_gene_fin = [[] for zzz in xrange(len(curr_data))]
 
-# moyennes
+	# moyennes
+	means = []
+	maxes = []
+	maxEver = []
+	for l in range(len(data_gene)):
+		s=0
+		max_gen=max(data_gene[l])
+		if len(maxEver)>0:
+			maxx=max(maxEver[-1],max_gen)
+		else:
+			maxx=max_gen
+		maxes.append(max_gen)
+		maxEver.append(maxx)
+		for v in data_gene[l]:
+			s+=v
+		s/=len(data_gene[l])
+		means.append(s)
+		#print(str(l) + str(len(data_gene_fin)))
+		data_gene_fin[l].append(max_gen)
+
+	data_gene = data_gene[:]
+
+	x = range(1,len(data_gene)+1)
+
+	#plt.boxplot(data_gene)	
+	plt.figure()
+	plt.plot(x,means,label="mean",color="red")
+	plt.plot(x,maxes,label="max",color="green")
+	plt.plot(x,maxEver,label="maxEver",color="purple")
+
+	plt.title('')
+	plt.xlabel('generation')
+	plt.ylabel('fitness')
+	plt.legend(loc="best")
+	"""
+	list_color = ['red' if i in new_random_gen else 'black' for i in range(len(x))]
+	#print list_color
+	#print new_random_gen
+	plt.xticks(x, rotation=90)
+	for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
+		ticklabel.set_color(tickcolor)
+	"""
+
+	plt.xticks(range(0,len(data_gene)+1,5))
+	if save:
+		plt.savefig(name_fic+'/courbe'+str(z)+'.png')
+	#plt.show()
+	
+	f.close()
+	
 means = []
 maxes = []
 maxEver = []
-for l in data_gene:
+for l in range(len(data_gene_fin)):
 	s=0
-	max_gen=max(l)
+	max_gen=max(data_gene_fin[l])
 	if len(maxEver)>0:
 		maxx=max(maxEver[-1],max_gen)
 	else:
 		maxx=max_gen
 	maxes.append(max_gen)
 	maxEver.append(maxx)
-	for v in l:
+	for v in data_gene_fin[l]:
 		s+=v
-	s/=len(l)
+	s/=len(data_gene_fin[l])
 	means.append(s)
+	data_gene_fin[l].append(max_gen)
 
-data_gene = data_gene[:]
+data_gene_fin = data_gene_fin[:]
 
-x = range(1,len(data_gene)+1)
+x = range(1,len(data_gene_fin)+1)
 
-#plt.boxplot(data_gene)	
-plt.plot(x,means,label="moyenne",color="red")
+#plt.boxplot(data_gene_fin)	
+plt.figure()
+plt.plot(x,means,label="mean",color="red")
 plt.plot(x,maxes,label="max",color="green")
 plt.plot(x,maxEver,label="maxEver",color="purple")
 
@@ -296,7 +354,7 @@ for ticklabel, tickcolor in zip(plt.gca().get_xticklabels(), list_color):
 	ticklabel.set_color(tickcolor)
 """
 
-plt.xticks(range(0,len(data_gene)+1,5))
+plt.xticks(range(0,len(data_gene_fin)+1,5))
 if save:
-	plt.savefig('boxplot.png')
-plt.show()
+	plt.savefig(name_fic+'/Multirun.png')
+#plt.show()

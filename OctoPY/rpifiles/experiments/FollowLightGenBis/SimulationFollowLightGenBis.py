@@ -181,9 +181,9 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					if self.iter%Params.params.lifetime==Params.params.lifetime/2-1:
 						fitnessNP = np.asarray(self.fitnessList)
 														
-						self.broadcast(self.genome,fitnessNP.mean())
+						#self.broadcast(self.genome,fitnessNP.mean())
 						#self.broadcast(self.genome,fitnessNP.max())
-						#self.broadcast(self.genome,fitnessNP.min())
+						self.broadcast(self.genome,fitnessNP.min())
 					"""	
 					if self.iter%Params.params.lifetime==Params.params.lifetime-1:
 						fitnessNP = np.asarray(self.fitnessList)
@@ -199,9 +199,9 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 					if self.hostname=="pi3no03" and self.iter%Params.params.lifetime == 0:
 						fitnessNP = np.asarray(self.fitnessList)
 														
-						self.broadcast(self.genome,fitnessNP.mean(),True)
+						#self.broadcast(self.genome,fitnessNP.mean(),True)
 						#self.broadcast(self.genome,fitnessNP.max(),True)
-						#self.broadcast(self.genome,fitnessNP.min(),True)
+						self.broadcast(self.genome,fitnessNP.min(),True)
 						self.gen_bool = True
 						self.fitnessList = []
 				# réception des (fitness,génome) des autres robots implicite grâce à receiveComMessage()	
@@ -211,9 +211,9 @@ class SimulationFollowLightGenBis(Simulation.Simulation) :
 				if self.hostname!="pi3no03":
 					fitnessNP = np.asarray(self.fitnessList)
 													
-					self.broadcast(self.genome,fitnessNP.mean())
+					#self.broadcast(self.genome,fitnessNP.mean())
 					#self.broadcast(self.genome,fitnessNP.max())
-					#self.broadcast(self.genome,fitnessNP.min())
+					self.broadcast(self.genome,fitnessNP.min())
 					self.fitnessList = []
 					
 				# temps necessaire pour que tout le monde envoie et recoive les infos de fin de generation
