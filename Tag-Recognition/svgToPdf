@@ -1,0 +1,2 @@
+rsvg-convert -a -f pdf -o t.pdf *.svg 
+rm *.svg
